@@ -85,7 +85,7 @@ quantis = {}
 for what, folder in \
     ['ssp2_calc', ssp_calc100], \
     ['ssp2_orig', ssp_orig100]:
-    quantis[what] = pd.read_csv(Path(meta.path.main, 'data', 'output', folder, 'ndc_targets.csv'))
+    quantis[what] = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', folder, 'ndc_targets.csv'))
 
 path_to_file = Path(meta.path.main, 'plots', 'ndc_quantifications', 'ssp2_calc100pc_vs_orig100pc.png')
 plotting()
@@ -95,7 +95,7 @@ quantis = {}
 for what, folder in \
     ['ssp2_calc', ssp_calc], \
     ['ssp2_calc_100%', ssp_calc100]:
-    quantis[what] = pd.read_csv(Path(meta.path.main, 'data', 'output', folder, 'ndc_targets.csv'))
+    quantis[what] = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', folder, 'ndc_targets.csv'))
 
 path_to_file = Path(meta.path.main, 'plots', 'ndc_quantifications', 'ssp2_calcRealCov_vs_calc100pc.png')
 plotting()
@@ -105,7 +105,7 @@ quantis = {}
 for what, folder in \
     ['ssp2_orig', ssp_orig], \
     ['ssp2_orig_100%', ssp_orig100]:
-    quantis[what] = pd.read_csv(Path(meta.path.main, 'data', 'output', folder, 'ndc_targets.csv'))
+    quantis[what] = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', folder, 'ndc_targets.csv'))
 
 path_to_file = Path(meta.path.main, 'plots', 'ndc_quantifications', 'ssp2_origRealCov_vs_orig100pc.png')
 plotting()
@@ -122,7 +122,7 @@ def plotting2():
         [f'calc', folder_calc], \
         [f'orig', folder_orig]:
         
-        quantis = pd.read_csv(Path(meta.path.main, 'data', 'output', folder, 
+        quantis = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', folder, 
             'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
         
         # BL emissions.
@@ -246,16 +246,16 @@ for cat, cat_LU in ['IPCM0EL', 'exclLU'], ['IPC0', 'inclLU']:
     ndcs_emi = pd.read_csv(
         Path(meta.path.preprocess, f'infos_from_ndcs_emi_{cat_LU}.csv'), index_col=0)
     
-    quantis_calc = pd.read_csv(Path(meta.path.main, 'data', 'output', ssp_calc, 
+    quantis_calc = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', ssp_calc, 
         'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
-    quantis_orig = pd.read_csv(Path(meta.path.main, 'data', 'output', ssp_orig, 
+    quantis_orig = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', ssp_orig, 
         'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
     
     year = '2030'
     txt_all = 'iso3,type_calc,type_orig,bl,bl_global_share,diff,tar_calc,tar_calc_ndc,tar_orig,tar_orig_ndc'
     txt_all += ',refyr_emi_ssp,refyr_emi_ndc,diff_emi_refyr'
     
-    bau = pd.read_csv(Path(meta.path.main, 'data', 'output', ssp_calc100, 
+    bau = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', ssp_calc100, 
         'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
     bau = bau.loc[(bau.condi == 'emi_bau') & (bau.category == cat), :]
     bau.index = bau.iso3
@@ -274,7 +274,7 @@ for cat, cat_LU in ['IPCM0EL', 'exclLU'], ['IPC0', 'inclLU']:
         
         for folder in folders:
             
-            quantis = pd.read_csv(Path(meta.path.main, 'data', 'output', folder, 
+            quantis = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', folder, 
                 'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
             
             try:
@@ -327,7 +327,7 @@ for cat, cat_LU in ['IPCM0EL', 'exclLU'], ['IPC0', 'inclLU']:
                 colour_emi_ndc = (0, .5, 0)
                 
                 # SSP data and target.
-                quantis = pd.read_csv(Path(meta.path.main, 'data', 'output', folder, 
+                quantis = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', folder, 
                     'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
                 quantis_LU = quantis.loc[(quantis.iso3 == iso3) & (quantis.category == 'IPCMLULUCF'), :]
                 quantis = quantis.loc[(quantis.iso3 == iso3) & (quantis.category == cat), :]

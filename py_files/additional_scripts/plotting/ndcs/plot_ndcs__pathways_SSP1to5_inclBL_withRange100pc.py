@@ -30,16 +30,16 @@ def plotting_together_types_onePlot():
     for folder, folder100, ssps in zip(folders_calc, folders_calc100, meta.ssps.scens.short):
         
         ptws_calc[ssps] = pd.read_csv(
-            Path(meta.path.output, folder, 'ndc_targets_pathways_per_group.csv'))
+            Path(meta.path.output, 'output_for_paper', folder, 'ndc_targets_pathways_per_group.csv'))
         ptws_calc[f"{ssps}_100pc"] = pd.read_csv(
-            Path(meta.path.output, folder100, 'ndc_targets_pathways_per_group.csv'))
+            Path(meta.path.output, 'output_for_paper', folder100, 'ndc_targets_pathways_per_group.csv'))
    
     for folder, folder100, ssps in zip(folders_orig, folders_orig100, meta.ssps.scens.short):
         
         ptws_orig[ssps] = pd.read_csv(
-            Path(meta.path.output, folder, 'ndc_targets_pathways_per_group.csv'))
+            Path(meta.path.output, 'output_for_paper', folder, 'ndc_targets_pathways_per_group.csv'))
         ptws_orig[f"{ssps}_100pc"] = pd.read_csv(
-            Path(meta.path.output, folder100, 'ndc_targets_pathways_per_group.csv'))
+            Path(meta.path.output, 'output_for_paper', folder100, 'ndc_targets_pathways_per_group.csv'))
     
     for ssps in meta.ssps.scens.short:
         
@@ -53,42 +53,42 @@ def plotting_together_types_onePlot():
     for folder, ssps in zip(folders_calc_constant_path, meta.ssps.scens.short):
         
         ptws_calc_const[ssps] = pd.read_csv(
-            Path(meta.path.output, folder, 'ndc_targets_pathways_per_group.csv'))
+            Path(meta.path.output, 'output_for_paper', folder, 'ndc_targets_pathways_per_group.csv'))
     
     for folder, ssps in zip(folders_orig_constant_path, meta.ssps.scens.short):
         
         ptws_orig_const[ssps] = pd.read_csv(
-            Path(meta.path.output, folder, 'ndc_targets_pathways_per_group.csv'))
+            Path(meta.path.output, 'output_for_paper', folder, 'ndc_targets_pathways_per_group.csv'))
     
     for folder, ssps in zip(folders_calc_baselineUncondi, meta.ssps.scens.short):
         
         ptws_calc_blUncondi[ssps] = pd.read_csv(
-            Path(meta.path.output, folder, 'ndc_targets_pathways_per_group.csv'))
+            Path(meta.path.output, 'output_for_paper', folder, 'ndc_targets_pathways_per_group.csv'))
     
     for folder, ssps in zip(folders_orig_baselineUncondi, meta.ssps.scens.short):
         
         ptws_orig_blUncondi[ssps] = pd.read_csv(
-            Path(meta.path.output, folder, 'ndc_targets_pathways_per_group.csv'))
+            Path(meta.path.output, 'output_for_paper', folder, 'ndc_targets_pathways_per_group.csv'))
     
     for folder, ssps in zip(folders_calc_fao, meta.ssps.scens.short):
         
         ptws_calc_fao[ssps] = pd.read_csv(
-            Path(meta.path.output, folder, 'ndc_targets_pathways_per_group.csv'))
+            Path(meta.path.output, 'output_for_paper', folder, 'ndc_targets_pathways_per_group.csv'))
     
     for folder, ssps in zip(folders_calc_unfccc, meta.ssps.scens.short):
         
         ptws_calc_unfccc[ssps] = pd.read_csv(
-            Path(meta.path.output, folder, 'ndc_targets_pathways_per_group.csv'))
+            Path(meta.path.output, 'output_for_paper', folder, 'ndc_targets_pathways_per_group.csv'))
     
     for folder, ssps in zip(folders_orig_fao, meta.ssps.scens.short):
         
         ptws_orig_fao[ssps] = pd.read_csv(
-            Path(meta.path.output, folder, 'ndc_targets_pathways_per_group.csv'))
+            Path(meta.path.output, 'output_for_paper', folder, 'ndc_targets_pathways_per_group.csv'))
     
     for folder, ssps in zip(folders_orig_unfccc, meta.ssps.scens.short):
         
         ptws_orig_unfccc[ssps] = pd.read_csv(
-            Path(meta.path.output, folder, 'ndc_targets_pathways_per_group.csv'))
+            Path(meta.path.output, 'output_for_paper', folder, 'ndc_targets_pathways_per_group.csv'))
     
     # Plotting.
     colours_ssps = pd.read_csv(

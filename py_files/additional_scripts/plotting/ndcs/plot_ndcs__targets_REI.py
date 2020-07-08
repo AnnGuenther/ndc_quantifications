@@ -18,9 +18,9 @@ meta = setup_metadata()
 path_to_folder_100pc_calc = 'ndcs_20200628_2122_typeCalc_SSP2_pccov100'
 path_to_folder_calc = 'ndcs_20200628_2120_SSP2_typeCalc'
 
-tars_100_all = pd.read_csv(Path(meta.path.output, 
+tars_100_all = pd.read_csv(Path(meta.path.output, 'output_for_paper',
     path_to_folder_100pc_calc, 'ndc_targets.csv'))
-tars_not100_all = pd.read_csv(Path(meta.path.output, 
+tars_not100_all = pd.read_csv(Path(meta.path.output, 'output_for_paper',
     path_to_folder_calc, 'ndc_targets.csv'))
 cols = ['tar_emi_exclLU', 'tar_emi_inclLU', 
         'emi_bl_exclLU_refyr', 'emi_bl_exclLU_taryr',

@@ -21,18 +21,18 @@ path_to_folder_calc = 'ndcs_20200628_2120_SSP2_typeCalc'
 path_to_folder_100pc_orig = 'ndcs_20200702_0830_SSP2_typeOrig_pccov100'
 path_to_folder_orig = 'ndcs_20200702_0829_SSP2_typeOrig'
 
-tars_100_all = pd.read_csv(Path(meta.path.output, 
+tars_100_all = pd.read_csv(Path(meta.path.output, 'output_for_paper',
     path_to_folder_100pc_calc, 'ndc_targets.csv'))
 
-tars_100_all_orig = pd.read_csv(Path(meta.path.output, 
+tars_100_all_orig = pd.read_csv(Path(meta.path.output, 'output_for_paper',
     path_to_folder_100pc_orig, 'ndc_targets.csv'))
 
-ptws_100_ssp2_all = pd.read_csv(Path(meta.path.output, 
+ptws_100_ssp2_all = pd.read_csv(Path(meta.path.output, 'output_for_paper',
     path_to_folder_100pc_calc, 'ndc_targets_pathways_per_country.csv'))
 tars_100_ssp2_all = pd.read_csv(Path(meta.path.output, 
     path_to_folder_100pc_calc, 'ndc_targets.csv'))
 
-ptws_100_ssp2_orig_all = pd.read_csv(Path(meta.path.output, 
+ptws_100_ssp2_orig_all = pd.read_csv(Path(meta.path.output, 'output_for_paper',
     path_to_folder_100pc_orig, 'ndc_targets_pathways_per_country.csv'))
 tars_100_ssp2_orig_all = pd.read_csv(Path(meta.path.output, 
     path_to_folder_100pc_orig, 'ndc_targets.csv'))
@@ -54,9 +54,9 @@ for ssp, file in \
     ['ssp3', 'ndcs_20200628_2229_SSP3_typeCalc'], \
     ['ssp4', 'ndcs_20200628_2243_SSP4_typeCalc'], \
     ['ssp5', 'ndcs_20200628_2258_SSP5_typeCalc']:
-    ptws_not100_all[ssp] = pd.read_csv(Path(meta.path.output, 
+    ptws_not100_all[ssp] = pd.read_csv(Path(meta.path.output, 'output_for_paper',
         file, 'ndc_targets_pathways_per_country.csv'))
-    tars_not100_all[ssp] = pd.read_csv(Path(meta.path.output, 
+    tars_not100_all[ssp] = pd.read_csv(Path(meta.path.output, 'output_for_paper',
         file, 'ndc_targets.csv'))
 
 ptws_not100_all_orig = {}
@@ -67,9 +67,9 @@ for ssp, file in \
     ['ssp3', 'ndcs_20200702_0839_SSP3_typeOrig'], \
     ['ssp4', 'ndcs_20200702_0844_SSP4_typeOrig'], \
     ['ssp5', 'ndcs_20200702_0848_SSP5_typeOrig']:
-    ptws_not100_all_orig[ssp] = pd.read_csv(Path(meta.path.output, 
+    ptws_not100_all_orig[ssp] = pd.read_csv(Path(meta.path.output, 'output_for_paper',
         file, 'ndc_targets_pathways_per_country.csv'))
-    tars_not100_all_orig[ssp] = pd.read_csv(Path(meta.path.output, 
+    tars_not100_all_orig[ssp] = pd.read_csv(Path(meta.path.output, 'output_for_paper',
         file, 'ndc_targets.csv'))
 
 # %%

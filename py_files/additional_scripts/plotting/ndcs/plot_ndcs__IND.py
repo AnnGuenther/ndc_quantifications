@@ -23,9 +23,9 @@ Latex table with information regarding India's target with pc_cov != 100% and pc
 path_to_folder_100pc_calc = 'ndcs_20200628_2122_SSP2_typeCalc_pccov100'
 path_to_folder_calc = 'ndcs_20200628_2120_SSP2_typeCalc'
 
-tars_100 = pd.read_csv(Path(meta.path.output, 
+tars_100 = pd.read_csv(Path(meta.path.output, 'output_for_paper',
     path_to_folder_100pc_calc, 'ndc_targets.csv'))
-tars_not100 = pd.read_csv(Path(meta.path.output, 
+tars_not100 = pd.read_csv(Path(meta.path.output, 'output_for_paper',
     path_to_folder_calc, 'ndc_targets.csv'))
 
 print("Based on quantifications under SSP2 and an assumed 100\% coverage, India's emissions target ranges between " +

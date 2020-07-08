@@ -16,7 +16,7 @@ import helpers_functions as hpf
 meta = setup_metadata()
 
 path_to_folder_calc = 'ndcs_20200628_2120_SSP2_typeCalc'
-tars_calc = pd.read_csv(Path(meta.path.output, path_to_folder_calc, 'ndc_targets.csv'))
+tars_calc = pd.read_csv(Path(meta.path.output, 'output_for_paper', path_to_folder_calc, 'ndc_targets.csv'))
 
 ndcs_onylLU = pd.read_csv(
     Path(meta.path.preprocess, 'infos_from_ndcs_emi_onlyLU.csv'), index_col=0)
