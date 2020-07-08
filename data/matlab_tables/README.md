@@ -1,0 +1,18 @@
+- These tables are output from the **PRIMAP Emissions Module** (MATLAB-based, PIK).
+- File names: **entity_category_class_type_scenario_source**.
+
+- The **PRIMAPHIST21** data are also available online (https://dataservices.gfz-potsdam.de/pik/showshort.php?id=escidoc:4736895).
+- The **SSP** data are also available online (https://zenodo.org/record/3638137#.XwXPCuexWuU).
+- **Entities**: 
+  - **AR4**: emissions data in the Global Warming Potential (GWP) from the IPCC 4th assessment report (AR4).
+  - **KYOTOGHG**: CO2 + CH4 + N2O + HFCS + PFCS + SF6 + NF3.
+- **Categories**:
+  - **IPCM0EL**: national totals, excl. LULUCF and international bunkers.
+  - **IPC1**: Energy.
+  - **IPC2**: IPPU.
+  - **IPCMAG**: Agriculture.
+  - **IPC4**: Waste.
+  - **IPC5**: Other.
+  - **IPCMLULUCF**: LULUCF.
+- **Scenarios**:
+  - **HISTCR**: historical emissions data with country reported data prioritised.
