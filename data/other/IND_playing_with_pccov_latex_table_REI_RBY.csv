@@ -1,0 +1,10 @@
+\textbf{REI\_RBY} & \textbf{refyr: 2005} & \textbf{taryr: 2030} & \textbf{A} & \textbf{+} & \textbf{B} & \textbf{-} & \textbf{C} & \textbf{=} & \textbf{D} & \textbf{E} & \textbf{F} \tabularnewline \hline
+ GDP (PPP) in 2011 US\$ & 3.1e+12* & 1.7e+13* & & & & & & & & & \tabularnewline
+ Emissions (excl. LULUCF) & 1807* & 3965* & & & & & & & & & \tabularnewline \hline
+ \textbf{pc\_cov (increase)} & 66\%* & 81\%* & 4130 & + & 3965 & - & 3212 & = & 4883 & +170\% & +23\% \tabularnewline 
+ pc\_cov (decrease) & 81\% & 66\% & 5069 & + & 3965 & - & 2617 & = & 6417 & +255\% & +62\% \tabularnewline 
+ \textbf{pc\_cov (100\%)} & 100\% & 100\% & 6258 & + & 3965 & - & 3965 & = & 6258 & +246\% & +58\% \tabularnewline 
+ pc\_cov (50\%) & 50\% & 50\% & 3129 & + & 3965 & - & 1982 & = & 5112 & +183\% & +29\% \tabularnewline \hline
+ pc\_cov (edge case, no mitigation) & 0\% & 0\% & 0 & + & 3965 & - & 0 & = & 3965 & +119\% & -0\% \tabularnewline 
+ pc\_cov (edge case, unrealistic) & 0\% & 100\% & 0 & + & 3965 & - & 3965 & = & 0 & --100\% & --100\% \tabularnewline 
+ pc\_cov (edge case, unrealistic) & 100\% & 0\% & 6258 & + & 3965 & - & 0 & = & 10223 & +466\% & +158\%

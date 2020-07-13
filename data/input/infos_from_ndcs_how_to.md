@@ -1,0 +1,1 @@
+**Row 'BaseYear'**: can only be integer or NaN or empty, do not put in anything else (not, e.g.: 2005 [p. 3])

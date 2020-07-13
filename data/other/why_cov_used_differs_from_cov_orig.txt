@@ -1,0 +1,113 @@
+
+AND: IPC2: orig NAN, used YES. 
+ARE: all gases are NaN.
+ARE: CO2: orig NAN, used YES. 
+ARE: CH4: orig NAN, used YES. 
+ARE: N2O: orig NAN, used YES. 
+ATG: IPC2: orig NAN, used YES. 
+AZE: SF6: orig NAN, used YES. 
+AZE: NF3: orig NAN, used YES. 
+AZE: IPC2: orig NAN, used YES. 
+BFA: HFCS: orig NAN, used YES. 
+BFA: PFCS: orig NAN, used YES. 
+BFA: SF6: orig NAN, used YES. 
+BFA: NF3: orig NAN, used YES. 
+BFA: IPC2: orig NAN, used YES. 
+BHR: all gases are NaN.
+BHR: CO2: orig NAN, used YES. 
+BHR: CH4: orig NAN, used YES. 
+BHR: N2O: orig NAN, used YES. 
+BHS: IPC2: orig NAN, used YES. The country has economy-wide coverage.
+BHS: IPCMAG: orig NAN, used YES. The country has economy-wide coverage.
+BHS: IPC4: orig NAN, used YES. The country has economy-wide coverage.
+BOL: all gases are NaN.
+BOL: CO2: orig NAN, used YES. 
+BOL: CH4: orig NAN, used YES. 
+BOL: N2O: orig NAN, used YES. 
+COK: all gases are NaN.
+COK: CO2: orig NAN, used YES. 
+COK: CH4: orig NAN, used YES. 
+COK: N2O: orig NAN, used YES. 
+COM: IPC2: orig NAN, used YES. 
+CRI: IPC2: orig NAN, used YES. 
+DMA: IPC2: orig NAN, used YES. 
+EGY: all gases are NaN.
+EGY: CO2: orig NAN, used YES. 
+EGY: CH4: orig NAN, used YES. 
+EGY: N2O: orig NAN, used YES. 
+FSM: IPC2: orig NAN, used YES. 
+FSM: IPCMAG: orig NAN, used YES. 
+FSM: IPC4: orig NAN, used YES. 
+GIN: all gases are NaN.
+GIN: CO2: orig NAN, used YES. 
+GIN: CH4: orig NAN, used YES. 
+GIN: N2O: orig NAN, used YES. 
+GNQ: all gases are NaN.
+GNQ: CO2: orig NAN, used YES. 
+GNQ: CH4: orig NAN, used YES. 
+GNQ: N2O: orig NAN, used YES. 
+IND: all gases are NaN.
+IND: CO2: orig NAN, used YES. 
+IND: CH4: orig NAN, used YES. 
+IND: N2O: orig NAN, used YES. 
+KWT: all gases are NaN.
+KWT: CO2: orig NAN, used YES. 
+KWT: CH4: orig NAN, used YES. 
+KWT: N2O: orig NAN, used YES. 
+LAO: all gases are NaN.
+LAO: CO2: orig NAN, used YES. 
+LAO: CH4: orig NAN, used YES. 
+LAO: N2O: orig NAN, used YES. 
+LCA: IPC2: orig NAN, used YES. The country has economy-wide coverage.
+LCA: IPCMAG: orig NAN, used YES. The country has economy-wide coverage.
+LCA: IPC4: orig NAN, used YES. The country has economy-wide coverage.
+MDG: IPC2: orig NAN, used YES. The country has economy-wide coverage.
+MHL: IPC2: orig NAN, used YES. The country has economy-wide coverage.
+MHL: IPCMAG: orig NAN, used YES. The country has economy-wide coverage.
+MLI: IPC2: orig NAN, used YES. The country has economy-wide coverage.
+MLI: IPC4: orig NAN, used YES. The country has economy-wide coverage.
+MMR: all gases are NaN.
+MMR: CO2: orig NAN, used YES. 
+MMR: CH4: orig NAN, used YES. 
+MMR: N2O: orig NAN, used YES. 
+NPL: all gases are NaN.
+NPL: CO2: orig NAN, used YES. 
+NPL: CH4: orig NAN, used YES. 
+NPL: N2O: orig NAN, used YES. 
+PAK: all gases are NaN.
+PAK: CO2: orig NAN, used YES. 
+PAK: CH4: orig NAN, used YES. 
+PAK: N2O: orig NAN, used YES. 
+PHL: all gases are NaN.
+PHL: CO2: orig NAN, used YES. 
+PHL: CH4: orig NAN, used YES. 
+PHL: N2O: orig NAN, used YES. 
+QAT: CO2: orig NAN, used YES. 
+QAT: IPC2: orig NAN, used YES. 
+SLV: all gases are NaN.
+SLV: CO2: orig NAN, used YES. 
+SLV: CH4: orig NAN, used YES. 
+SLV: N2O: orig NAN, used YES. 
+SOM: all gases are NaN.
+SOM: CO2: orig NAN, used YES. 
+SOM: CH4: orig NAN, used YES. 
+SOM: N2O: orig NAN, used YES. 
+SYC: IPC2: orig NO, used YES. The country has economy-wide coverage.
+SYC: IPCMAG: orig NO, used YES. The country has economy-wide coverage.
+SYC: IPCMLULUCF: orig NO, used YES. The country has economy-wide coverage.
+SYR: all gases are NaN.
+SYR: CO2: orig NAN, used YES. 
+SYR: CH4: orig NAN, used YES. 
+SYR: N2O: orig NAN, used YES. 
+TLS: IPC2: orig NAN, used YES. The country has economy-wide coverage.
+TZA: all gases are NaN.
+TZA: CO2: orig NAN, used YES. 
+TZA: CH4: orig NAN, used YES. 
+TZA: N2O: orig NAN, used YES. 
+TZA: IPC2: orig NAN, used YES. The country has economy-wide coverage.
+TZA: IPCMAG: orig NAN, used YES. The country has economy-wide coverage.
+UGA: IPC2: orig NAN, used YES. 
+VNM: IPC2: orig NO, used YES. The country has economy-wide coverage.
+WSM: IPC2: orig NAN, used YES. The country has economy-wide coverage.
+WSM: IPCMAG: orig NAN, used YES. The country has economy-wide coverage.
+WSM: IPC4: orig NAN, used YES. The country has economy-wide coverage.

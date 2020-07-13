@@ -1,0 +1,6 @@
+\textbf{RBU} & \textbf{taryr: 2030} & \textbf{A} & \textbf{+} & \textbf{B} & \textbf{-} & \textbf{C} & \textbf{=} & \textbf{D} & \textbf{E} & \textbf{F} \tabularnewline \hline
+ Emissions (excl. LULUCF) & 3965 & & & & & & & & \tabularnewline \hline
+ pc\_cov (50\%) & 50\% & 1288 & + & 3965 & - & 1982 & = & 3271 & / & --18\% \tabularnewline 
+ pc\_cov (81\%) & 81\% & 2087 & + & 3965 & - & 3212 & = & 2840 & / & --28\% \tabularnewline 
+ pc\_cov (100\%) & 100\% & 2577 & + & 3965 & - & 3965 & = & 2577 & / & --35\% \tabularnewline \hline
+ pc\_cov (edge case, no mitigation) & 0\% & 0 & + & 3965 & - & 0 & = & 3965 & / & -0\%
