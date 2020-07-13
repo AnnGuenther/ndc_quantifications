@@ -1,6 +1,0 @@
-condi_rge,r,g,b
-baseline_emissions,.3,.6,.3
-unconditional_worst,1,.3,.3
-unconditional_best,1,.6,.6
-conditional_worst,.6,.6,1
-conditional_best,.3,.3,1
