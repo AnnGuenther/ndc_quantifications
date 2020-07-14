@@ -178,7 +178,7 @@ YL = [yvals_int[0] - .5, yvals_int[-1] + .5]
 
 #fig = plt.figure(figsize=(15, 5))
 fig = plt.figure(figsize=(14, 5))
-for irange in ctrs_3.keys():
+for irange, panel in zip(ctrs_3.keys(), ['(a)', '(b)', '(c)']):
     axa = fig.add_subplot(1, 1, 1)
     
     # Put in a rectangle to separate the sectors and gases:
@@ -241,6 +241,7 @@ for irange in ctrs_3.keys():
     axa.set_yticklabels(yvals_lbls, rotation=30, ha='right', va='top', fontweight='bold')
     axa.set_xlim(XL)
     axa.set_ylim(YL)
+    axa.text(XL[0] + .01*np.diff(XL), YL[1] + .27*np.diff(YL), panel, fontweight='bold')
     
     #txt = {'Global': .18, 'share': .11, '2017': .04}
     txt = {'Global': .23, 'share': .16, '2017': .09}
@@ -576,7 +577,7 @@ XL = [xvals_int[0] - 1, xvals_int[-1] + 1]
 YL = [yvals_int[0] - .5, yvals_int[-1] + .5]
 
 fig = plt.figure(figsize=(14, 5))
-for irange in ctrs_3.keys():
+for irange, panel in zip(ctrs_3.keys(), ['(a)', '(b)', '(c)']):
     axa = fig.add_subplot(1, 1, 1)
     
     # Put in a rectangle to separate the emissions, pop and gdp:
@@ -650,6 +651,7 @@ for irange in ctrs_3.keys():
     axa.set_yticklabels(yvals_lbls, ha='right', va='top', fontweight='bold')#, rotation=30)
     axa.set_xlim(XL)
     axa.set_ylim(YL)
+    axa.text(XL[0] + .01*np.diff(XL), YL[1] + .05*np.diff(YL), panel, fontweight='bold')
     
     axa.text(XL[1] + .005 * np.diff(XL), YL[1] - .005 * np.diff(YL), 'Emissions', 
         rotation=90, fontweight='bold', ha='left', va='top')

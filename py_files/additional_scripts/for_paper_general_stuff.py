@@ -42,6 +42,21 @@ global_share_2017 = 100. * kyotoghg_ipcm0el.__global_share__(years=year)
 
 # %%
 """
+How many countries with which GWP.
+"""
+iso3 = ['AFG', 'ARM', 'AND', 'ARE', 'ATG', 'ALB', 'AGO', 'ARG', 'AUS', 'AZE', 'BIH', 'BRB', 'BGD', 'BFA', 'BHR', 'BDI', 'BEN', 'BRN', 'BOL', 'BRA', 'BHS', 'BTN', 'BWA', 'BLR', 'BLZ', 'CAN', 'COD', 'CAF', 'COG', 'CHE', 'CIV', 'COK', 'CHL', 'CMR', 'CHN', 'COL', 'CRI', 'CUB', 'CPV', 'DJI', 'DMA', 'DOM', 'DZA', 'ECU', 'EGY', 'ERI', 'ETH', 'EU28', 'FJI', 'FSM', 'GAB', 'GRD', 'GEO', 'GHA', 'GMB', 'GIN', 'GNQ', 'GTM', 'GNB', 'GUY', 'HND', 'HTI', 'IDN', 'ISR', 'IND', 'IRQ', 'IRN', 'ISL', 'JAM', 'JOR', 'JPN', 'KEN', 'KGZ', 'KHM', 'KIR', 'COM', 'KNA', 'PRK', 'KOR', 'KWT', 'KAZ', 'LAO', 'LBN', 'LCA', 'LIE', 'LKA', 'LBR', 'LSO', 'MAR', 'MCO', 'MDA', 'MNE', 'MDG', 'MHL', 'MKD', 'MLI', 'MMR', 'MNG', 'MRT', 'MUS', 'MDV', 'MWI', 'MEX', 'MYS', 'MOZ', 'NAM', 'NER', 'NGA', 'NIC', 'NOR', 'NPL', 'NRU', 'NIU', 'NZL', 'OMN', 'PAN', 'PER', 'PNG', 'PHL', 'PAK', 'PSE', 'PLW', 'PRY', 'QAT', 'SRB', 'RUS', 'RWA', 'SAU', 'SLB', 'SYC', 'SDN', 'SGP', 'SLE', 'SMR', 'SEN', 'SOM', 'SUR', 'SSD', 'STP', 'SLV', 'SYR', 'SWZ', 'TCD', 'TGO', 'THA', 'TJK', 'TLS', 'TKM', 'TUN', 'TON', 'TUR', 'TTO', 'TUV', 'TZA', 'UKR', 'UGA', 'USA', 'URY', 'UZB', 'VCT', 'VEN', 'VNM', 'VUT', 'WSM', 'YEM', 'ZAF', 'ZMB', 'ZWE', 'AUT', 'BEL', 'BGR', 'CYP', 'CZE', 'DEU', 'DNK', 'EST', 'ESP', 'FIN', 'FRA', 'GBR', 'GRC', 'HRV', 'HUN', 'IRL', 'ITA', 'LTU', 'LUX', 'LVA', 'MLT', 'NLD', 'POL', 'PRT', 'ROU', 'SWE', 'SVN', 'SVK']
+gwp = ['SAR', 'SAR', 'SAR', 'NaN', 'SAR', 'SAR', 'AR4', 'SAR', 'AR4', 'NaN', 'NaN', 'NaN', 'SAR', '', '', 'SAR', 'AR4', 'NaN', 'NaN', 'AR5', 'SAR', 'NaN', 'NaN', 'SAR', 'AR4', 'AR4', 'NaN', 'NaN', 'SAR', 'AR4', 'SAR', 'NaN', 'AR4', 'AR4', 'NaN', 'SAR', 'NaN', '', 'AR4', 'SAR', 'SAR', 'SAR', 'AR4', 'SAR', 'NaN', 'NaN', 'AR4', 'AR4', 'NaN', 'AR4', '', 'AR4', 'SAR', 'SAR', 'AR4', 'NaN', 'NaN', 'SAR', 'NaN', 'NaN', 'SAR', 'SAR', 'AR4', 'SAR', '', '', 'NaN', 'NaN', 'NaN', 'NaN', 'AR4', 'SAR', 'SAR', 'SAR', '', 'SAR', 'NaN', 'SAR', 'SAR', 'NaN', 'AR4', 'NaN', 'NaN', 'NaN', 'NaN', '', 'NaN', 'SAR', 'SAR', 'AR4', 'AR4', 'SAR', 'SAR', 'AR5', 'SAR', '', '', 'NaN', 'NaN', 'NaN', 'NaN', '', 'AR5', 'SAR', 'SAR', 'SAR', 'NaN', 'AR4', '', 'AR5', '', 'NaN', 'NaN', 'AR4', 'NaN', '', 'SAR', 'NaN', 'NaN', '', 'SAR', 'NaN', 'SAR', '', 'AR4', 'AR4', 'NaN', '', 'NaN', 'SAR', 'SAR', 'AR5', 'SAR', 'SAR', '', '', '', 'NaN', 'NaN', '', 'NaN', 'AR4', 'AR4', 'SAR', 'AR4', 'AR4', 'NaN', 'NaN', 'AR4', '', 'AR4', 'SAR', 'NaN', 'NaN', 'AR4', 'SAR', 'AR4', 'SAR', '', 'AR4', '', 'AR4', 'NaN', 'NaN', 'SAR', 'AR4', 'SAR', 'NaN', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+pdS = pd.Series(gwp, index=iso3)
+pdS[pdS == 'NaN'] = np.nan
+pdS[pdS == ''] = np.nan
+pdS[pdS == 'SAR'] = 'AR2'
+for gwp in ['AR2', 'AR4', 'AR5']:
+    countries = pdS[pdS == gwp].index.to_list()
+    print(f"% {gwp}: {len(countries)} countries, representing " +
+          f"{global_share_2017.reindex(index=countries).sum().values[0] :.1f}% of 2017 KYOTOGHG_IPCM0EL emissions.")
+
+# %%
+"""
 Countries with ABS and AEI targets (type_calc): which part of emissions are not covered?
 """
 
@@ -576,30 +591,30 @@ Per SSP.
 """
 
 folders_calc = [
-    'ndc_quantifications_20200628_2218_SSP1_typeCalcForAllCountries',
-    'ndc_quantifications_20200628_2120_SSP2_typeCalcForAllCountries',
-    'ndc_quantifications_20200628_2229_SSP3_typeCalcForAllCountries',
-    'ndc_quantifications_20200628_2243_SSP4_typeCalcForAllCountries',
-    'ndc_quantifications_20200628_2258_SSP5_typeCalcForAllCountries']
+    'ndcs_20200628_2218_SSP1_typeCalc',
+    'ndcs_20200628_2120_SSP2_typeCalc',
+    'ndcs_20200628_2229_SSP3_typeCalc',
+    'ndcs_20200628_2243_SSP4_typeCalc',
+    'ndcs_20200628_2258_SSP5_typeCalc']
 folders_calc100 = [
-    'ndc_quantifications_20200628_2221_SSP1pccov100ForAllCountries_typeCalcForAllCountries',
-    'ndc_quantifications_20200628_2122_SSP2pccov100ForAllCountries_typeCalcForAllCountries',
-    'ndc_quantifications_20200628_2234_SSP3pccov100ForAllCountries_typeCalcForAllCountries',
-    'ndc_quantifications_20200628_2248_SSP4pccov100ForAllCountries_typeCalcForAllCountries',
-    'ndc_quantifications_20200628_2301_SSP5pccov100ForAllCountries_typeCalcForAllCountries']
+    'ndcs_20200628_2221_SSP1_typeCalc_pccov100',
+    'ndcs_20200628_2122_SSP2_typeCalc_pccov100',
+    'ndcs_20200628_2234_SSP3_typeCalc_pccov100',
+    'ndcs_20200628_2248_SSP4_typeCalc_pccov100',
+    'ndcs_20200628_2301_SSP5_typeCalc_pccov100']
 
 folders_orig = [
-    'ndc_quantifications_20200702_0834_SSP1_typeOrigForAllCountries',
-    'ndc_quantifications_20200702_0829_SSP2_typeOrigForAllCountries',
-    'ndc_quantifications_20200702_0839_SSP3_typeOrigForAllCountries',
-    'ndc_quantifications_20200702_0844_SSP4_typeOrigForAllCountries',
-    'ndc_quantifications_20200702_0848_SSP5_typeOrigForAllCountries']
+    'ndcs_20200702_0834_SSP1_typeOrig',
+    'ndcs_20200702_0829_SSP2_typeOrig',
+    'ndcs_20200702_0839_SSP3_typeOrig',
+    'ndcs_20200702_0844_SSP4_typeOrig',
+    'ndcs_20200702_0848_SSP5_typeOrig']
 folders_orig100 = [
-    'ndc_quantifications_20200702_0836_SSP1_pccov100ForAllCountries_typeOrigForAllCountries',
-    'ndc_quantifications_20200702_0830_SSP2_pccov100ForAllCountries_typeOrigForAllCountries',
-    'ndc_quantifications_20200702_0840_SSP3_pccov100ForAllCountries_typeOrigForAllCountries',
-    'ndc_quantifications_20200702_0845_SSP4_pccov100ForAllCountries_typeOrigForAllCountries',
-    'ndc_quantifications_20200702_0849_SSP5_pccov100ForAllCountries_typeOrigForAllCountries']
+    'ndcs_20200702_0836_SSP1_typeOrig_pccov100',
+    'ndcs_20200702_0830_SSP2_typeOrig_pccov100',
+    'ndcs_20200702_0840_SSP3_typeOrig_pccov100',
+    'ndcs_20200702_0845_SSP4_typeOrig_pccov100',
+    'ndcs_20200702_0849_SSP5_typeOrig_pccov100']
 
 years_int = list(range(1990, 2030))
 years_str = [str(xx) for xx in years_int]
@@ -617,7 +632,7 @@ for ssp, count in zip(meta.ssps.scens.short, range(len(folders_calc))):
         [folders_calc100, ax_calc_100, 'calc 100%'], [folders_orig100, ax_orig_100, 'orig 100%']:
         
         data = pd.read_csv(
-            Path(meta.path.output, folder[count], 'ndc_targets_pathways_per_group.csv'))
+            Path(meta.path.output, 'output_for_paper', folder[count], 'ndc_targets_pathways_per_group.csv'))
         data = data.loc[(data.group == 'EARTH') & (data.condi.isin(['emi_bau', 'unconditional', 'conditional']))]
         for ind in data.index:
             axa.plot(years_int, data.loc[ind, years_str].values, label=f"{data.condi[ind]}_{data.rge[ind]}")
@@ -642,7 +657,7 @@ for ssp, count in zip(meta.ssps.scens.short, range(len(folders_calc))):
         tars_above_bl = []
         
         data = pd.read_csv(
-            Path(meta.path.output, folder[count], 'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
+            Path(meta.path.output, 'output_for_paper', folder[count], 'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
         
         for iso3 in sorted(data.iso3.unique()):
             
@@ -680,32 +695,6 @@ SSP2 type_calc and type_orig.
 """
 print("Countries with higher condi_best 2030 values for 100% coverage than for estimated coverage.")
 
-folders_calc = [
-    'ndc_quantifications_20200628_2218_SSP1_typeCalcForAllCountries',
-    'ndc_quantifications_20200628_2120_SSP2_typeCalcForAllCountries',
-    'ndc_quantifications_20200628_2229_SSP3_typeCalcForAllCountries',
-    'ndc_quantifications_20200628_2243_SSP4_typeCalcForAllCountries',
-    'ndc_quantifications_20200628_2258_SSP5_typeCalcForAllCountries']
-folders_calc100 = [
-    'ndc_quantifications_20200628_2221_SSP1pccov100ForAllCountries_typeCalcForAllCountries',
-    'ndc_quantifications_20200628_2122_SSP2pccov100ForAllCountries_typeCalcForAllCountries',
-    'ndc_quantifications_20200628_2234_SSP3pccov100ForAllCountries_typeCalcForAllCountries',
-    'ndc_quantifications_20200628_2248_SSP4pccov100ForAllCountries_typeCalcForAllCountries',
-    'ndc_quantifications_20200628_2301_SSP5pccov100ForAllCountries_typeCalcForAllCountries']
-
-folders_orig = [
-    'ndc_quantifications_20200702_0834_SSP1_typeOrigForAllCountries',
-    'ndc_quantifications_20200702_0829_SSP2_typeOrigForAllCountries',
-    'ndc_quantifications_20200702_0839_SSP3_typeOrigForAllCountries',
-    'ndc_quantifications_20200702_0844_SSP4_typeOrigForAllCountries',
-    'ndc_quantifications_20200702_0848_SSP5_typeOrigForAllCountries']
-folders_orig100 = [
-    'ndc_quantifications_20200702_0836_SSP1_pccov100ForAllCountries_typeOrigForAllCountries',
-    'ndc_quantifications_20200702_0830_SSP2_pccov100ForAllCountries_typeOrigForAllCountries',
-    'ndc_quantifications_20200702_0840_SSP3_pccov100ForAllCountries_typeOrigForAllCountries',
-    'ndc_quantifications_20200702_0845_SSP4_pccov100ForAllCountries_typeOrigForAllCountries',
-    'ndc_quantifications_20200702_0849_SSP5_pccov100ForAllCountries_typeOrigForAllCountries']
-
 for condi, rge in ['unconditional', 'worst'], ['conditional', 'best']:
     
     print(f"\n{condi}, {rge}")
@@ -717,9 +706,9 @@ for condi, rge in ['unconditional', 'worst'], ['conditional', 'best']:
             [folders_orig[count], folders_orig100[count], 'type_orig']:
             print(f"\n{what}")
             data = pd.read_csv(
-                Path(meta.path.output, folder, 'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
+                Path(meta.path.output, 'output_for_paper', folder, 'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
             data100 = pd.read_csv(
-                Path(meta.path.output, folder100, 'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
+                Path(meta.path.output, 'output_for_paper', folder100, 'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
             isos = ""
             for iso3 in data.iso3.unique():
                 if data100.loc[(data100.iso3 == iso3) & (data100.condi == condi) & (data100.rge == rge), '2030'].values[0] \
@@ -737,7 +726,7 @@ year_lu = 2017
 print(f"Global Kyoto GHG LULUCF, {year_lu}")
 
 # Latex table.
-txt = f"Prioritised data sources & Total & Net sources & Net sinks  & {year_lu :.0f} \\\\ \\hline \n"
+txt = f"Prioritised data sources & Total & Net sources & Net sinks  & Year {year_lu :.0f} \\\\ \\hline \n"
 
 for fao in ['', 'UNFCCC', 'FAO']:
     
@@ -760,7 +749,11 @@ for fao in ['', 'UNFCCC', 'FAO']:
     txt += f" & {1/1000*lulucf.data.sum().values[0]:.1f}"
     txt += f" & {1/1000*lulucf.data[lulucf.data > 0.].sum().values[0]:.1f}"
     txt += f" & {1/1000*lulucf.data[lulucf.data < 0.].sum().values[0]:.1f}"
-    txt += " & Gg~CO$_2$eq (AR4) \\\\ \n"
+    
+    if fao == 'UNFCCC':
+        txt += " & Gg~CO$_2$eq (AR4) \\\\ \n"
+    else:
+        txt += " & \\\\ \n"
 
 kyotoghg_ipcm0el_act = get_table(Path(meta.path.matlab, 'KYOTOGHGAR4_IPCM0EL_TOTAL_NET_HISTCR_' + 
     meta.primap.current_version['emi'] + '.csv')).__reindex__(years=year_lu)
