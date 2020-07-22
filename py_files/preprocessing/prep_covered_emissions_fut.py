@@ -17,20 +17,24 @@ def prep_covered_emissions_fut(database, meta, coverage, info_per_country, prefe
     - For countries that cover nothing: set pccov_fut to 0 (0%).
     - For countries that cover all sectors (excl. LULUCF), but not all gases: 
         the SSP entity_IPCM0EL emissions per gas are used to calculate pc\_cov\_fut.
-      - SSP data are available for KYOTOGHG, CO$_2$, CH$_4$, N$_2$O and FGASES:
-        - For countries that cover only some FGASES, the \% share between HFCS, PFCS, 
-            SF$_6$ and NF$_3$ is kept constant (at mean over last 6 available values).
-        - The share per gas is applied to the future KYOTOGHG\_IPCM0EL emissions data.
+      
+        - SSP data are available for KYOTOGHG, CO2, CH4, N2O and FGASES:
+    
+            - For countries that cover only some FGASES, the \% share between HFCS, PFCS, SF6 and NF3 is kept constant (at mean over last 6 available PRIMAP-hist values).
+            - The share per gas is applied to the future KYOTOGHG\_IPCM0EL emissions data.
+    
     - For countries that do not cover all sectors:
-      - For countries that have a mean coverage of > 90% in 2010 - 2017: use the mean over 2010 - 2017.
-      - For countries that have a mean coverage of < 10% in 2010 - 2017: use the mean over 2010 - 2017.
-      - Calculate the slope of pc\_cov\_his (2010 to most recent year with available data ("mry")).
-        - If abs(slope) < lim_slope: use the mean over 2010 to mry.
-        - If abs(slope) > lim_slope: calculate pc\_cov\_fut from the correlation between emi\_tot\_his and emi\_cov\_his. For 2010 to mry.
-            - If any(pc\_cov\_fut) > 90\%, but not all(pc\_cov\_fut) > 90\% --> set the pc\_cov\_fut > 90\% to 90\%.
-            - If any(pc\_cov\_fut) < 10\%, but not all(pc\_cov\_fut) < 10\% --> set the pc\_cov\_fut < 10\% to 10\%.
-            - Set min(pc\_cov\_fut) to 0\% and max(pc\_cov\_fut) to 100\%.
-    - If no future emissions data are available: use the mean over 2010 to mry?!
+        
+        - Calculate the slope of pc\_cov\_his (2010 to most recent year with available data ("mry")).
+            
+            - If abs(slope) < lim_slope: use the mean over 2010 to mry.
+            - If abs(slope) > lim_slope: calculate pc\_cov\_fut from the correlation between emi\_tot\_his and emi\_cov\_his. For 2010 to mry.
+                
+                - If any(pc\_cov\_fut) > 90\%, but not all(pc\_cov\_fut) > 90\% --> set the pc\_cov\_fut > 90\% to 90\%.
+                - If any(pc\_cov\_fut) < 10\%, but not all(pc\_cov\_fut) < 10\% --> set the pc\_cov\_fut < 10\% to 10\%.
+                - If any(pc\_cov\_fut) > 100\% or < 0\% use the mean instead.
+    
+    - If no future emissions data are available: use the mean over 2010 to mry.
     
     The future emicov / pccov values depend on the chosen SSP scenario.
     
@@ -38,13 +42,13 @@ def prep_covered_emissions_fut(database, meta, coverage, info_per_country, prefe
     preference_pccov_fut can be 'mean' or 'corr'.
     
     'mean':
-        Check for the countries for which the slope of a regression to the last available 
-        years of pccov_his is less than slope_lim.
+        Check for the countries for which the slope of a regression to the last available years of pccov_his is less than slope_lim.
         Use the mean over the years as pccov_fut.
-        For the others check the correlation between emitot and emicov and decide 
-        whether to better use this correlation for pccov_fut.
+        For the others check the correlation between emitot and emicov and decide whether to better use this correlation for pccov_fut.
     'corr':
         Take the correlation between emitot and emicov, unless it is too 'bad', then take the mean.
+    
+    Default: 'corr'.
     """
     
     # %%

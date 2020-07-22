@@ -33,18 +33,13 @@ def get_conversion_to_nice_unit(data, unitFrom, **kwargs):
     # %%
     import numpy as np
     import pandas as pd
-    from helpers_functions.units.get_illion_from_power import get_illion_from_power
-    from helpers_functions.units.get_conversion_illion import get_conversion_illion
-    from helpers_functions.units.get_conversion_unit import get_conversion_unit
-    from helpers_functions.units.get_baseunit import get_baseunit
-    from helpers_functions.units.get_units_and_operators import get_units_and_operators
-    from helpers_functions.data_manipulation.format_sci_multipliers_of_3 import format_sci_multipliers_of_3
+    import helpers_functions as hpf
     
     # %%
-    unitBase, families = get_baseunit(unitFrom)
+    unitBase, families = hpf.get_baseunit(unitFrom)
     data = (pd.DataFrame(np.array(data)) if not isinstance(data, pd.DataFrame) else data)
-    data = data.abs() * get_conversion_unit(unitFrom, unitBase)
-    units, operators = get_units_and_operators(unitBase)
+    data = data.abs() * hpf.get_conversion_unit(unitFrom, unitBase)
+    units, operators = hpf.get_units_and_operators(unitBase)
     if 'numerator_or_denominator' in kwargs.keys():
         numerator_or_denominator = kwargs['numerator_or_denominator']
     #endif
@@ -75,14 +70,14 @@ def get_conversion_to_nice_unit(data, unitFrom, **kwargs):
     
     maxi = data.max().max()
     if not np.isnan(maxi):
-        sciformat = format_sci_multipliers_of_3(maxi)[0]
+        sciformat = hpf.format_sci_multipliers_of_3(maxi)[0]
         sci_split = [float(xx) for xx in sciformat.split('e')]
         if len(sci_split) > 1:
             if numerator_or_denominator == 'numerator':
                 power = sci_split[-1]
                 if abs(power) > 1:
-                    illion_new = get_illion_from_power(power, length)
-                    multiplier = get_conversion_illion('One', illion_new)
+                    illion_new = hpf.get_illion_from_power(power, length)
+                    multiplier = hpf.get_conversion_illion('One', illion_new)
                     if any(['Pers' in unitBase, 'GKD' in unitBase]):
                         unit_new = illion_new + ' ' + unitBase
                     else:
@@ -92,8 +87,8 @@ def get_conversion_to_nice_unit(data, unitFrom, **kwargs):
             elif numerator_or_denominator == 'denominator':
                 power = -1 * sci_split[-1]
                 if abs(power) > 1:
-                    illion_new = get_illion_from_power(power, length)
-                    multiplier = 1. / get_conversion_illion('One', illion_new)
+                    illion_new = hpf.get_illion_from_power(power, length)
+                    multiplier = 1. / hpf.get_conversion_illion('One', illion_new)
                     unit_act = unitBase.split('/')
                     if any(['Pers' in unit_act[1], 'GKD' in unit_act[1]]):
                         unit_new = unit_act[0] + ' / ' + illion_new + ' ' + unit_act[1]

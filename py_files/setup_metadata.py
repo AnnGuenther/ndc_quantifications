@@ -8,13 +8,13 @@ Last updated in 03/2020
 def setup_metadata():
     """
     Set up the general metadata.
-    If you want to change the folder for the preprocessed data, do it here.
+    If you want/need to change the folder for the preprocessed data, do it here.
 
-    Returns
-    -------
-    meta : class
+    Returns:
+
+    meta : class.
         Meta data needed in the quantifications and plotting routines.
-
+    
     """
     # %%
     from pathlib import Path
@@ -23,7 +23,10 @@ def setup_metadata():
     
     import helpers_functions as hpf
     
-    # %% Path.
+    # %%
+    """
+    meta.path: paths to different folders.
+    """
     
     # Store general information in class meta.
     meta = hpf.create_class(name='meta')
@@ -46,7 +49,10 @@ def setup_metadata():
     #####################################
     meta.path.pc_cov = Path(meta.path.preprocess, 'pc_cov_20200702_0825')
     
-    # %% ISOS.
+    # %%
+    """
+    meta.isos: iso3 codes of EARTH, EU, conversion from iso3 to short country names.
+    """
     
     # ISO3s of EARTH and EU28.
     meta.isos = hpf.create_class(name='isos')
@@ -57,7 +63,10 @@ def setup_metadata():
         hpf.convert_isos_and_country_names(meta.isos.EARTH_EU28, 'ISO3', 'ShortName'), 
         index=meta.isos.EARTH_EU28).to_dict()
     
-    # %% SSPs.
+    # %%
+    """
+    SSPs: Shared Socioeconomic Pathways; info on available marker scenarios.
+    """
     
     # Available SSP scenarios.
     meta.ssps = hpf.create_class(name='ssps')
@@ -80,7 +89,10 @@ def setup_metadata():
         'ent': 'GDPPPP', 'cat': 'ECO', 'clss': 'TOTAL', 'tpe': 'NET',
         'scen': meta.ssps.scens, 'srce': 'PMSSPBIEMISC'}
         
-    # %% Nomenclature.
+    # %%
+    """
+    Nomenclature: table meta-data nomenclature.
+    """
     
     # Nomenclature of PRIMAPDB tables & of the classes in database.
     meta.nomenclature = hpf.create_class(name='nomenclature',
@@ -94,7 +106,11 @@ def setup_metadata():
         'gwp': 'gwp', 'note': 'note', 'scenario': 'scen', 'source': 'srce', 
         'tablename': 'tablename', 'type': 'tpe', 'unit': 'unit', 'family': 'family'}
     
-    # %% PRIMAP.
+    # %%
+    # ###
+    """
+    PRIMAP-hist: info on sources and scenarios (emi, pop, gdp).
+    """
     
     # Info on sources / scenarios.
     meta.primap = hpf.create_class(name='primap')
@@ -111,26 +127,38 @@ def setup_metadata():
         'ent': 'GDPPPP', 'cat': 'ECO', 'clss': 'TOTAL', 'tpe': 'NET',
         'scen': 'HISTORY', 'srce': 'PMHSOCIOECO21'}
     
-    # %% Units
-    
+    # %%
+    """
+    Default-units
+    """
+
     # Preferred units.
     meta.units = hpf.create_class(name='units')
     meta.units.default = {'emi': 'MtCO2eq', 'pop': 'Pers', 'gdp': '2011GKD'}
     
-    # %% GWPs.
+    # %%
+    """
+    GWPs
+    """
     
     meta.gwps = hpf.create_class(name='gwps')
     meta.gwps.default = 'AR4'
     meta.gwps.all = ['SAR', 'AR2', 'AR4', 'AR5', 'AR5CCF']
     
-    # %% LULUCF source-priorisation.
+    # %%
+    """
+    LULUCF source-priorisation
+    """
     
     meta.lulucf = hpf.create_class(name='lulucf',
         source_prioritisation = [
             'CRF2019', 'CRF2018', 'BUR3IPCC2006I', 'BUR2IPCC2006I', 'BUR1IPCC2006I',
             'UNFCCC2019BI', 'FAO2019BI'])
     
-    # %% Gases.
+    # %%
+    """
+    Gases: basket-members, labels.
+    """
     
     meta.gases = hpf.create_class(name='gases', main=['CO2', 'CH4', 'N2O'])
     meta.gases.fgases = ['HFCS', 'PFCS', 'SF6', 'NF3']
@@ -142,7 +170,10 @@ def setup_metadata():
         'CO2': 'CO$_2$', 'CH4': 'CH$_4$', 'N2O': 'N$_2$O', 'HFCS': 'HFCs',
         'PFCS': 'PFCs', 'SF6': 'SF$_6$', 'NF3': 'NF$_3$', 'KYOTOGHG': 'Kyoto GHG', 'FGASES': 'F-gases'}
     
-    # %% Sectors.
+    # %%
+    """
+    Sectors: main sectors, labels.
+    """
     
     meta.sectors = hpf.create_class(name='sectors')
     meta.sectors.main = hpf.create_class(name='main')
@@ -155,7 +186,10 @@ def setup_metadata():
         'ENERGY': 'Energy', 'IPPU': 'IPPU', 'AGRICULTURE': 'Agriculture', 
         'WASTE': 'Waste', 'OTHER': 'Other', 'LULUCF': 'LULUCF'}
     
-    # %% Categories.
+    # %%
+    """
+    Categories: main categories, labels.
+    """
     
     meta.categories = hpf.create_class(name='categories')
     meta.categories.main = hpf.create_class(name='main')
@@ -169,7 +203,10 @@ def setup_metadata():
         'IPC5': 'Other', 'IPCMLULUCF': 'LULUCF',
         'IPCM0EL': 'Total (excl. LULUCF)', 'IPC0': 'Total (incl. LULUCF)'}
     
-    # %% Nice labels for sources.
+    # %%
+    """
+    Nice labels for sources
+    """
     
     meta.sources = hpf.create_class(name='sources')
     meta.sources.srce_to_label = {
@@ -179,6 +216,10 @@ def setup_metadata():
         'PRIMAPHIST21': 'PRIMAP-hist v2.1', 'PRIMAPHIST20': 'PRIMAP-hist v2.0'}
     
     # %%
+    """
+    NDC types.
+    """
+    
     meta.ndcs = hpf.create_class(name = 'ndcs')
     meta.ndcs.types = ['ABS', 'RBY', 'RBU', 'ABU', 'REI', 'AEI', 'NGT']
     # %%

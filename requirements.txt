@@ -1,0 +1,16 @@
+pandas
+numpy
+pathlib
+copy
+matplotlib
+warnings
+re
+os
+sys
+inspect
+scipy
+cartopy
+csv
+json
+time
+importlib

@@ -6,6 +6,10 @@ Last updated in April 2020.
 
 # %%
 def ndcs_some_final_testing(database, meta):
+
+    """
+    Doing some testing of the constructed global pathways.
+    """
     
     import pandas as pd
     from pathlib import Path

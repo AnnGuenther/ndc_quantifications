@@ -19,11 +19,9 @@ def ndcs_check_options_for_target_calculations(meta):
         sys.exit("No valid value given for method_pathways (input file).")
     
     # %%
-    """
-    calculate_targets_for
-    If it is not to be used, use the default for all countries.
-    Make new entry meta.calculate_targets_for_ctr with the final ISO3s for which targets should be calculated.
-    """
+    # calculate_targets_for
+    # If it is not to be used, use the default for all countries.
+    # Make new entry meta.calculate_targets_for_ctr with the final ISO3s for which targets should be calculated.
         
     # If it is not to be used, use it for all countries.
     if not meta.calculate_targets_for['use_it']:
@@ -32,10 +30,8 @@ def ndcs_check_options_for_target_calculations(meta):
         meta.calculate_targets_for_ctr = check_countries(meta.calculate_targets_for['countries'], meta)
     
     # %%
-    """
-    ndcs_type_prioritisations
-    If it is not to be used, use the default for all countries.
-    """
+    # ndcs_type_prioritisations
+    # If it is not to be used, use the default for all countries.
     
     # If it is not to be used, use the default for all countries.
     if not meta.ndcs_type_prioritisations['use_it']:
@@ -72,10 +68,8 @@ def ndcs_check_options_for_target_calculations(meta):
         meta.ndcs_type_prioritisations['countries'] = check_countries(meta.ndcs_type_prioritisations['countries'], meta)
     
     # %%
-    """
-    For countries without unconditional target: use the baseline emissions for the unconditional 
-    pathway even if the conditional target is worse than the baseline (in 2030)?
-    """
+    # For countries without unconditional target: use the baseline emissions for the unconditional 
+    # pathway even if the conditional target is worse than the baseline (in 2030)?
     
     if meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi not in [True, False]:
         
@@ -84,9 +78,7 @@ def ndcs_check_options_for_target_calculations(meta):
              "as the given input is not supported.")
     
     # %%
-    """
-    set_pccov_to_100
-    """
+    # set_pccov_to_100
     
     if meta.set_pccov_to_100['use_it']:
         if ((type(meta.set_pccov_to_100['countries']) == str 
@@ -97,9 +89,7 @@ def ndcs_check_options_for_target_calculations(meta):
         meta.set_pccov_to_100['countries'] = check_countries(meta.set_pccov_to_100['countries'], meta)
     
     # %%
-    """
-    strengthen_targets
-    """
+    # strengthen_targets
     
     if meta.strengthen_targets['use_it']:
         
@@ -126,14 +116,13 @@ def ndcs_check_options_for_target_calculations(meta):
                 meta.strengthen_targets['countries'] = check_countries(meta.strengthen_targets['countries'], meta)
     
     #%%
-    """meta.use_ndc_emissions_if_available"""
+    # meta.use_ndc_emissions_if_available
     if meta.use_ndc_emissions_if_available not in [True, False]:
         meta.use_ndc_emissions_if_available = True
         print(f"meta.use_ndc_emissions_if_available set to {meta.use_ndc_emissions_if_available} as given value could not be used.")
         
     # %%
     return meta
-#enddef
 
 # %%
 def check_countries(countries, meta):

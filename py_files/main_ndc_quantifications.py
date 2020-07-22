@@ -4,18 +4,32 @@
 """
 Author: Annika Günther, annika.guenther@pik-potsdam.de
 Last updated in 03/2020.
-
-Calculation of NDC mitigation target emissions
 """
 
 # %%
 def main_ndc_quantifications(input_file, lulucf_prio):
     """
-    input_file = 'input_SSP2_typeCalcForAllCountries'
-    """
+    Calculation of NDC mitigation target emissions. Main file.
+
+    # -------------------------
     
-    # %%
-    """
+    Input examples:
+
+        input_file = 'input_SSP2_typeCalcForAllCountries' (name of input-file, stored in /MODIFY_INPUT_HERE).
+        
+        lulucf_prio = '' or 'UNFCCC' or 'FAO'. 
+
+            - If it is '' the default LULUCF prioritisation is used (CRF, BUR, UNFCCC, FAO).
+            - For 'UNFCCC': UNFCCC, CRF, BUR, FAO.
+            - For 'FAO': FAO, CRF, BUR, UNFCCC.
+    
+    # -------------------------
+    
+    Per country, target year, target type, conditionality, and range, the target emissions and emissions pathways are calculated.
+    The target is calculated once including, and excluding LULUCF.
+    
+    # -------------------------
+    
     Target types
     
     ABS:
@@ -32,16 +46,30 @@ def main_ndc_quantifications(input_file, lulucf_prio):
         E.g., 350 MtCO2eq reduction compared to BAU emissions in 2030.
     REI:
         Relative emissions intensity reduction.
-        Compared to base year. 
-            E.g., 20% emissions intensity reduction compared to 2010 emissions intensity in 2030.
-        Or compared to BAU. 
-            This is basically a simple RRB target, but some NDCs state it.
+        Compared to base year. E.g., 20% emissions intensity reduction compared to 2010 emissions intensity in 2030.
+        Or compared to BAU. This is basically a simple RRB target, but some NDCs state it as intensity targets.
     AEI: 
         Absolute emissions intensity. 
         E.g., 2.1 tCO2eq/cap in 2030.
     NGT: 
         Non-GHG targets. 
         Nothing is calculated, baseline emissions are assumed.
+    
+    # -------------------------
+    
+    Per country one target type is chosen for the aggregation to a global pathway.
+    This is generally the type_orig or type_calc.
+
+    type_orig: what is said (+/-) in the NDC, e.g., 20\% reduction compared to BAU (RBU).
+        In this case the comparison emissions are prioritised (comparison runs with 'external' input data).
+    
+    type_calc: what seems more suitable for the pathway calculations, e.g., if for the BAU target a quantification is given in the NDC (ABS).
+        In this case the emissions given in the NDCs are prioritised.
+
+    # -------------------------
+    
+    Globally and regionally aggregated emissions pathways are given with the output suitable for the MATLAB PRIMAP Emissions / Climate Module.
+    They can be used to derive 2100 temperature estimates corresponding to the calculated 1990-2030 pathways.
     """
     
     # %%
@@ -66,9 +94,7 @@ def main_ndc_quantifications(input_file, lulucf_prio):
     print("output path '" + str(meta.path.output_ndcs) + "' ...")
     
     # %%
-    """
-    Add some information to meta.
-    """
+    # Add some information to meta.
     
     # Target types.
     meta.target_types = ['ABS', 'RBY', 'RBU', 'ABU', 'REI', 'AEI', 'NGT']
@@ -89,9 +115,8 @@ def main_ndc_quantifications(input_file, lulucf_prio):
     # %%        
     
     """
-    Read time series 1990-2050. For all countries in meta.isos.EARTH.
-    For the EU28 countries, the targets are calculated separately 
-    (using the EU28 NDC info for each of the countries).
+    Read input time series 1990-2050. For all countries in meta.isos.EARTH.
+    For the EU28 countries, the targets are calculated separately (using the EU28 NDC info for each of the countries).
     In the end, a pathway is calculated for EU28.
     
     Read tables:
@@ -120,6 +145,10 @@ def main_ndc_quantifications(input_file, lulucf_prio):
             {'table': 'GDPPPP_ECO_TOTAL_NET_' + meta.ssps.chosen + 'FILLED_PMSSPBIEMISC.csv', 
              'unit': meta.units.default['gdp']}}
 
+    """
+    If it is type_calc: use the ndc-emissions if available.
+    For type_orig: use the comparison data.
+    """
     if meta.use_ndc_emissions_if_available:
         tablenames['emi_bl_exclLU'] = \
             {'table': 'KYOTOGHG_IPCM0EL_TOTAL_NET_NDC' + meta.ssps.chosen + f'_NDCPMSSPBIE{lulucf_prio}.csv', 
@@ -205,16 +234,12 @@ def main_ndc_quantifications(input_file, lulucf_prio):
     setattr(database, 'emi_bl_inclLU', table)
     
     # %%
-    """
-    Read in the coverage_used. Needed for output and LULUCF check in ndcs_calculate_targets.py.
-    """
+    # Read in the coverage_used. Needed for output and LULUCF check in ndcs_calculate_targets.py.
     
     path_to_coverage = Path(meta.path.preprocess, 'coverage_used_per_gas_and_per_sector_and_combi.csv')
     meta.coverage = pd.read_csv(path_to_coverage, index_col=0)
     
-    """
-    Read in the emissions (exclLU/inclLU/onlyLU) retrieved from the NDCs.
-    """
+    # Read in the emissions (exclLU/inclLU/onlyLU) retrieved from the NDCs.
     for case in ['exclLU', 'inclLU', 'onlyLU']:
         table = pd.read_csv(Path(meta.path.preprocess, f'infos_from_ndcs_emi_{case}.csv'), index_col=0). \
             reindex(index=meta.isos.EARTH)
@@ -223,7 +248,7 @@ def main_ndc_quantifications(input_file, lulucf_prio):
         
     # %%
     """
-    Write relevant input-info to an .md-file in the output-folder.
+    Write relevant input-info to log_file.md in the output-folder.
     In this file one will find the necessary information to re-run the calculations with the same setup.
     """
     
@@ -257,6 +282,7 @@ def main_ndc_quantifications(input_file, lulucf_prio):
     # %%
     """
     Correct or modify the calculation options given in input_file if necessary.
+    ndcs_check_options_for_target_calculations(meta).
     """
     
     meta = mnf.ndcs_check_options_for_target_calculations(meta)
@@ -264,6 +290,7 @@ def main_ndc_quantifications(input_file, lulucf_prio):
     """
     TARGETS
     Calculate the target emissions per country and un/conditional & best/worst & year.
+    ndcs_calculate_targets(database, meta).
     """
     
     calculated_targets = mnf.ndcs_calculate_targets(database, meta)
@@ -274,6 +301,7 @@ def main_ndc_quantifications(input_file, lulucf_prio):
     
     Calculate the emissions pathways for un/conditional_best/worst targets, per country.
     For countries without targets use the baseline emissions (if available).
+    ndcs_calculate_pathways_per_country(database, calculated_targets, meta)
     """
     
     pathways_per_country = mnf.ndcs_calculate_pathways_per_country(
@@ -284,17 +312,15 @@ def main_ndc_quantifications(input_file, lulucf_prio):
     Group-pathways.
     
     Calculate the emissions pathways for un/conditional_best/worst targets, per group of countries.
+    ndcs_calculate_pathways_per_group(pathways_per_country, meta)
     """
     
-    pathways_groups, pathways_countries = \
-        mnf.ndcs_calculate_pathways_per_group(
+    pathways_groups, pathways_countries = mnf.ndcs_calculate_pathways_per_group(
             pathways_per_country, meta)
     
-    """
-    Write out the pathways to csv-files to be used in the Matlab PRIMAP Emissions Module and Climate Module
-    to calculate temperatures that correspond to the NDC emissions pathways.
-    Used are the pathways for 'EARTH'.
-    """
+    # Write out the pathways to csv-files to be used in the Matlab PRIMAP Emissions Module and Climate Module
+    # to calculate temperatures that correspond to the NDC emissions pathways.
+    # Used are the pathways for 'EARTH'.
     
     mnf.ndcs_get_pathways_for_matlab(
         pathways_countries, pathways_groups, meta)

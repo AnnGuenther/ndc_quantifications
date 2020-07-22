@@ -20,10 +20,10 @@ def get_available_tables_from_folder(path_to_folder, iso3, **kwargs):
     """
     
     # %%
-    import helpers_functions as hpf
     import numpy as np
     import os
     from pathlib import Path
+    import helpers_functions as hpf
     
     # %%
     #path_to_folder = Path('C://Users', 'annikag', 'primap', 'datatables_csv', 'proc_SSP2018_23Jul19')

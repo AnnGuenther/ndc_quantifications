@@ -13,11 +13,11 @@ and our corresponding sum (only for the countries with values in that year).
 """
 
 # %%
-import helpers_functions as hpf
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
+import helpers_functions as hpf
 from setup_metadata import setup_metadata
 
 # %%

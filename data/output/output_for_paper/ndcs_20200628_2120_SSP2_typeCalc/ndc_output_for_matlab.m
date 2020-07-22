@@ -1,7 +1,7 @@
 
 %%
 % Matlab file with the information from NDC quantifications to be read in.
-% (ndc_quantifications_in_python/ndc_quantifications/output/ndc_quantification_xxx/pathways_for_matlab/ndc_output_for_matlab.m)
+% (ndc_quantifications/output/ndcs_xxx/ndc_output_for_matlab.m)
 %%
 NDCISIPEDIA = struct;
     

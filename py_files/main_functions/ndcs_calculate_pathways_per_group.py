@@ -8,9 +8,12 @@ Last updated in 03/2020
 def ndcs_calculate_pathways_per_group(
     pathways_per_country, meta):
     """
-    Calculate the emissions pathway for a group of countries by summing up all available per-country pathways, 
+    Calculate the emissions pathways for a group of countries by summing up all available per-country pathways, 
     per un/conditional_best/worst (chosing one of the target types per country).
     And using baseline emissions where no target is available.
+
+    Chosen per-country pathways stored in ndc_targets_pathways_per_country_used_for_group_pathways.csv.
+    Group pathways stored in ndc_targets_pathways_per_group.csv.
     """
     
     # %%
@@ -19,6 +22,8 @@ def ndcs_calculate_pathways_per_group(
         """
         Get the 'chosen' country-pathways that will be used for the group pathways.
         Depend on the preferred (and available) target types.
+
+        Chosen per-country pathways stored in ndc_targets_pathways_per_country_used_for_group_pathways.csv.
         """
         
         import pandas as pd
@@ -65,7 +70,7 @@ def ndcs_calculate_pathways_per_group(
                         tar_used = meta.ndcs_info.loc[iso_ndc, 'TYPE_CALC']
                 
                 else:
-                    # Chose the prioritised target types if available, else use TYPE_CALC or baseline_emissions.
+                    # Choose the prioritised target types if available, else use TYPE_CALC or baseline_emissions.
                     if iso_act in meta.ndcs_type_prioritisations['countries']:
                         
                         tar_chosen = []
@@ -82,14 +87,16 @@ def ndcs_calculate_pathways_per_group(
                                 if len(tars_available_now) > 0:
                                     tar_chosen += [type_prio]
                         
-                        # Chose the prioritised target types if available, else use TYPE_CALC or baseline_emissions.
+                        # Choose the prioritised target types if available, else use TYPE_CALC or baseline_emissions.
                         tar_used = (tar_chosen[0] if len(tar_chosen) > 0 else meta.ndcs_info.loc[iso_ndc, 'TYPE_CALC'])
                     
                     else: # TYPE_CALC or baseline_emissions.
                         tar_used = meta.ndcs_info.loc[iso_ndc, 'TYPE_CALC']
                     
-                    # If the target type is NGT, try to chose another type.
+                    # If the target type is NGT, try to choose another type.
                     # Preferably ABS, RBY or RBU.
+                    # TODO: check that. If the type_orig is NGT, we use ABS, RBY, or RBU nevertheless?
+                    # Better use type_calc in that case?
                     if tar_used == 'NGT':
                         tars_available = [xx 
                             for xx in pathways_per_country.loc[pathways_per_country.iso3 == iso_act, 'tar_type_used'].unique()
@@ -133,14 +140,13 @@ def ndcs_calculate_pathways_per_group(
     def calc_pathways_of_group(input_pathways, ptws_groups, ptws_chosen_per_country, 
         meta, group_act, tars_to_use):
         """
-        Calculate the group pathways (for un/conditional best/worst).
+        Calculate the group pathways (for un/conditional best/worst; using the chosen country-pathways).
         """
         
         import pandas as pd
         import numpy as np
         from warnings import warn
-        from helpers_functions.isos.get_isos_for_groups import get_isos_for_groups
-        from helpers_functions.data_manipulation.ratios_w_zeros import ratios_w_zeros
+        import helpers_functions as hpf
         
         # Set up 'ptws' for the current group.
         condi_rges = ['unconditional_worst', 'unconditional_best', 'conditional_worst', 'conditional_best']
@@ -156,7 +162,7 @@ def ndcs_calculate_pathways_per_group(
         elif group_act == 'EARTH':
             isos_group = meta.isos.EARTH
         else:
-            isos_group = sorted(get_isos_for_groups(group_act, 'ISO3'))
+            isos_group = sorted(hpf.get_isos_for_groups(group_act, 'ISO3'))
         
         isos_group = [xx for xx in isos_group if xx in meta.isos.EARTH + ['EU28']]
         if 'EU28' in isos_group:
@@ -187,7 +193,7 @@ def ndcs_calculate_pathways_per_group(
             cov_case = 'cov'
             bl_case = '_exclLU'
             ptws.loc['pc_' + cov_case + bl_case, meta.years.all] = \
-                100. * ratios_w_zeros(
+                100. * hpf.ratios_w_zeros(
                     ptws.loc[
                         (ptws.rge == input_pathways['emi_' + cov_case + bl_case]['rge']) &
                         (ptws.entity == input_pathways['emi_' + cov_case + bl_case]['ent']) &
@@ -204,7 +210,7 @@ def ndcs_calculate_pathways_per_group(
                 [input_pathways['pc_' + cov_case + bl_case]['ent'], 
                 input_pathways['pc_' + cov_case + bl_case]['cat'], '%', meta.gwps.default]
             
-            # Sum over time series of IPCM0EL/IPC0 & un/conditional & worst/best.
+            # Sum over time series of IPCM0EL un/conditional & worst/best.
             cat = 'IPCM0EL'
             for condi in ['unconditional', 'conditional']:
                 for rge in ['worst', 'best']:

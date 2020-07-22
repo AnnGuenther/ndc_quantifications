@@ -66,15 +66,14 @@ For the others, the baseline emissions will be used.
 countries: 'all', or e.g., ['EU28', 'AUS', 'CHN'], or e.g., get_isos_groups(['ANNEXI']).
 
 Default:
-meta.calculate_targets_for = {
-    'use_it': True, 
-    'countries': 'all'}
+meta.calculate_targets_for = {'use_it': True, 'countries': 'all'}
 
 Example:
 cat_countries = ['ARG', 'AUS', 'BTN', 'BRA', 'CAN', 'CHL', 'CHN', 'CRI', 'EU28',
     'ETH', 'GMB', 'IND', 'IDN', 'JPN', 'KAZ', 'KEN', 'MEX', 'MAR',
     'NPL', 'NZL','NOR', 'PER', 'PHL', 'RUS', 'SAU', 'SGP', 'ZAF',
     'KOR', 'CHE', 'TUR', 'ARE', 'USA', 'UKR', 'VNM']
+
 meta.calculate_targets_for = {'use_it': True, 'countries': cat_countries}
 """
 
@@ -106,10 +105,7 @@ is only applied to those countries.
 Else, the pathway is calculated based on TYPE_CALC.
 
 Default:
-meta.ndcs_type_prioritisations = {
-    'use_it': True, 
-    'ndcs_type_prioritisations': ['TYPE_CALC'], 
-    'countries': 'all'}
+meta.ndcs_type_prioritisations = {'use_it': True, 'ndcs_type_prioritisations': ['TYPE_CALC'], 'countries': 'all'}
 """
 
 meta.ndcs_type_prioritisations = {

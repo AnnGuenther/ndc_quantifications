@@ -9,6 +9,8 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
     """
     Calculate the pathway per country and target (per un/conditional best/worst).
     Only for IPCM0EL.
+
+    Stored in 'ndc_targets_pathways_per_country.csv'.
     """
     
     # %%
@@ -117,13 +119,13 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
         the pathway has a 0% reduction in meta.years.pathways[0], and in 2030 the given
         20% reduction, with a linear increase between meta.years.pathways[0] and 2030.
         
-        If there is no target for the first year of meta.years.pathways, put in the baseline emissions.
+        Use the baseline emissions for 2020.
         Calculate the percentage level (how much percent of the baseline emissions do 
         the single target emissions represent).
         pc_level: interpolate between available values, and keep the last available value of pc_level constant
         (if meta.method_pathways == 'constant_percentages'), or keep the last emissions level constant
         (if meta.method_pathways == 'constant_emissions').
-        .
+        
         E.g., 2020 is 100%, 2030 is 80%. For 2025 it is 100% + (80%-100%)/(2030-2020) * (2025-2020) = 90%.
         All values of pc_level are 100% (= baseline emissions) if there are no available_years.
         baseline emissions are used in years before the first meta.years.pathways.
@@ -220,6 +222,7 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
         
         """
         Keep the emissions constant after last available target if meta.method_pathways == 'constant_emissions'.
+        Else the pc_level is kept constant.
         """
         if meta.method_pathways == 'constant_emissions':
             ptw_calc.loc['pathway', range(available_years[-1], meta.years.pathways[-1] + 1)] = \
@@ -242,6 +245,9 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
     # %%
     def add_baseline_emissions(emi_bl_act, meta, iso_act, columns):
         
+        """
+        Add the baseline emissions for each iso3 (as un/conditional best/worst pathways).
+        """
         import pandas as pd
         
         targets_act = pd.DataFrame(
@@ -369,7 +375,9 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
                 
                 ptws_all = ptws_all.append(ptws_tars_act, ignore_index=True)
                 
-        # For each country, even if it does have a different target, also give out 'baseline_emissions'.
+        """
+        For each country, even if it does have a different target, also give out 'baseline_emissions'.
+        """
         ptws_all = ptws_all.append(
             add_baseline_emissions(emi_bl_act, meta, iso_act, ptws_all.columns), ignore_index=True)            
     

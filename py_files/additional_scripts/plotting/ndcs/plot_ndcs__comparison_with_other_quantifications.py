@@ -6,9 +6,9 @@ Last updated in 04/2020
 # %%
 import pandas as pd
 import matplotlib.pyplot as plt
+from pathlib import Path
 import helpers_functions as hpf
 from setup_metadata import setup_metadata
-from pathlib import Path
 
 # %%
 meta = setup_metadata()

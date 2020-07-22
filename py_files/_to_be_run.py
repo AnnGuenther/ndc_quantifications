@@ -9,11 +9,13 @@ from main_ndc_quantifications import main_ndc_quantifications
 
 # %%
 """
-Put in the name of the wanted input-file here.
-You can also run several in a row.
+Script to run the NDC quantifications (main_ndc_quantifications).
+This includes per-country target emissions, pathways, and globally aggregated pathways.
+
+Put in the name(s) of the wanted input-file(s) here. You can run several input-files in a row.
 
 Default:
-main_ndc_quantifications('input_test', '')
+main_ndc_quantifications('input_SSP2_typeCalc_pccov100', '')
 """
 
 # # SSP2

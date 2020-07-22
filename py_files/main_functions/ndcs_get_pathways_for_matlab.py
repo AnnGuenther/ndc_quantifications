@@ -11,7 +11,7 @@ def ndcs_get_pathways_for_matlab(pathways_countries_in, pathways_groups_in, meta
     To be used in the PRIMAP Emissions Module / Climate Module to calculate temperatures 
     for the emissions pathways).
     
-    Creates csv-files with the data and .m-files to be used in Matlab for reading in the csv-files.
+    Creates csv-files with the data, and one .m-file to be used in Matlab for reading in the csv-files.
     """
     
     # %%

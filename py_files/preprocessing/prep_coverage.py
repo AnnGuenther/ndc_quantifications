@@ -12,17 +12,20 @@ def prep_coverage(meta, infos_from_ndcs, info_per_country):
     """
     Calculate the part of historical emissions that is covered by an NDC.
     
-    - If the country does not have an (I)NDC: nothing is covered.
+    If the country does not have an (I)NDC: nothing is covered.
+    
     Else:
+    
     - Assessment based on PRIMAP-hist HISTCR emissions time series.
     - Categories and gases assessed (per country):
+      
       - Main categories (IPC1, IPC2, IPCMAG, IPC4 and IPC5; namely Energy, IPPU, Agriculture, Waste and Other; excludes LULUCF).
-      - Kyoto GHGs: CO$_2$, CH$_4$, N$_2$O, HFCS, PFCS, SF$_6$, NF$_3$.
+      - Kyoto GHGs: CO2, CH4, N2O, HFCS, PFCS, SF6, NF3.
+    
     - For each of these categories / gases, the information on whether they are covered by the country's NDC is provided (csv-input, assessed by A. Günther).
-    - If no information is available for all gases: only CO$_2$ assumed to be covered (in the csv-file already?!).
-    - If no information is available for all sectors: only energy assumed to be covered. Case never happened.
+    - If no information is available for all gases: CO2, CH4, and N2O are assumed to be covered (in the csv-file already).
     - If any of HFCS, PFCS, SF6 or NF3 is covered, put IPPU to covered (F-gases only relevant in IPC2).
-    - If all sectors (IPC1, 2, MAG, 4) are covered ('YES'), the category "Other" (IPC5) is set to "YES" (in the csv-file already?!).
+    - If all sectors (IPC1, 2, MAG, 4) are covered, the category "Other" (IPC5) is set to "YES" (in the csv-file already).
     - For all category + gas combinations, the emissions are counted as covered, if neither the category nor the gas are assumed not to be covered (neither category nor gas can contain a "NO").
     
     Here, matrices on the coverage (Yes: covered, No: not-covered) are created.

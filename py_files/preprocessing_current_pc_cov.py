@@ -5,6 +5,11 @@ Last updated in 03/2020
 """
 
 # %%
+"""
+Preprocessing to calculate the part of emissions covered by national mitigation targets.
+"""
+
+# %%
 import pandas as pd
 import os
 from copy import deepcopy
@@ -40,8 +45,7 @@ info_per_country = pd.DataFrame(index=meta.isos.EARTH)
 Read in all datatables in folder meta.path.preprocess/tables.
 
 All read into class 'database', with the tablenames as attributes.
-The attributes are classes again, with attributes entity, category, 
-data, family, etc. (see meta.nomenclature.attrs).
+The meta-data are classes again, with attributes entity, category, data, unit, etc. (see meta.nomenclature.attrs).
 """
 
 print("Read in all datatables in folder preprocess/tables.")
@@ -56,9 +60,7 @@ for file in files:
         database = prep.prep_read_in_tables(file, path_to_files, database, meta)
 
 # %%
-"""
-Get PRIMAP emissions for KYOTOGHG_IPCM0EL, POP and GDPPPP. For easier use.
-"""
+# Get PRIMAP emissions for KYOTOGHG_IPCM0EL, POP and GDPPPP. For easier use.
 
 primap = {}
 for tpe in ['emi', 'pop', 'gdp']:
@@ -72,17 +74,20 @@ for tpe in ['emi', 'pop', 'gdp']:
 """
 Calculate the part of historical emissions that is covered by an NDC.
 
-- If the country does not have an (I)NDC: nothing is covered.
+If the country does not have an (I)NDC: nothing is covered.
+
 Else:
+
 - Assessment based on PRIMAP-hist HISTCR emissions time series.
 - Categories and gases assessed (per country):
+  
   - Main categories (IPC1, IPC2, IPCMAG, IPC4 and IPC5; namely Energy, IPPU, Agriculture, Waste and Other; excludes LULUCF).
-  - Kyoto GHGs: CO$_2$, CH$_4$, N$_2$O, HFCS, PFCS, SF$_6$, NF$_3$.
+  - Kyoto GHGs: CO2, CH4, N2O, HFCS, PFCS, SF6, NF3.
+
 - For each of these categories / gases, the information on whether they are covered by the country's NDC is provided (csv-input, assessed by A. Günther).
-- If no information is available for all gases: only CO$_2$ assumed to be covered (in the csv-file already?!).
-- If no information is available for all sectors: only energy assumed to be covered. Case never happened.
+- If no information is available for all gases: CO2, CH4, and N2O are assumed to be covered (in the csv-file already).
 - If any of HFCS, PFCS, SF6 or NF3 is covered, put IPPU to covered (F-gases only relevant in IPC2).
-- If all sectors (IPC1, 2, MAG, 4) are covered ('YES'), the category "Other" (IPC5) is set to "YES" (in the csv-file already?!).
+- If all sectors (IPC1, 2, MAG, 4) are covered, the category "Other" (IPC5) is set to "YES" (in the csv-file already).
 - For all category + gas combinations, the emissions are counted as covered, if neither the category nor the gas are assumed not to be covered (neither category nor gas can contain a "NO").
 
 Here, matrices on the coverage (Yes: covered, No: not-covered) are created.
@@ -111,9 +116,8 @@ Or: all ANNEX-I parties cover everything, and the rest only Energy and CO2.
 # %% Covered part of historical emissions (KYOTOGHG_IPCM0EL).
 
 """
-The covered part of emissions (in 'emissions') is calculated here for historical years, 
-for which data per sector and gas combination are available.
-The assessment is based on the information in coverage.used_per_combi (all entries are 'YES' or 'NO').
+The covered part of emissions (in 'emissions') is calculated here for historical years, for which data per sector and gas combination are available.
+The assessment is based on the information in coverage.used_per_combi (all entries are already 'YES' or 'NO', no 'NAN' entries).
 All combinations with 'YES' are summed up to emicov_his, and all combinations with 'NO' are summed up to eminotcov_his.
 
 For KYOTOGHG_IPCM0EL, excluding LULUCF.
@@ -141,18 +145,24 @@ Calculate the part of future emissions covered by an NDC (KYOTOGHG_IPCM0EL)
 - For countries that cover nothing: set pccov_fut to 0 (0%).
 - For countries that cover all sectors (excl. LULUCF), but not all gases: 
     the SSP entity_IPCM0EL emissions per gas are used to calculate pc\_cov\_fut.
-  - SSP data are available for KYOTOGHG, CO$_2$, CH$_4$, N$_2$O and FGASES:
-    - For countries that cover only some FGASES, the \% share between HFCS, PFCS, 
-        SF$_6$ and NF$_3$ is kept constant (at mean over last 6 available values).
-    - The share per gas is applied to the future KYOTOGHG\_IPCM0EL emissions data.
+  
+    - SSP data are available for KYOTOGHG, CO2, CH4, N2O and FGASES:
+
+        - For countries that cover only some FGASES, the \% share between HFCS, PFCS, SF6 and NF3 is kept constant (at mean over last 6 available PRIMAP-hist values).
+        - The share per gas is applied to the future KYOTOGHG\_IPCM0EL emissions data.
+
 - For countries that do not cover all sectors:
-  - Calculate the slope of pc\_cov\_his (2010 to most recent year with available data ("mry")).
-    - If abs(slope) < lim_slope: use the mean over 2010 to mry.
-    - If abs(slope) > lim_slope: calculate pc\_cov\_fut from the correlation between emi\_tot\_his and emi\_cov\_his. For 2010 to mry.
-        - If any(pc\_cov\_fut) > 90\%, but not all(pc\_cov\_fut) > 90\% --> set the pc\_cov\_fut > 90\% to 90\%.
-        - If any(pc\_cov\_fut) < 10\%, but not all(pc\_cov\_fut) < 10\% --> set the pc\_cov\_fut < 10\% to 10\%.
-        - Set min(pc\_cov\_fut) to 0\% and max(pc\_cov\_fut) to 100\%.
-- If no future emissions data are available: use the mean over 2010 to mry?!
+    
+    - Calculate the slope of pc\_cov\_his (2010 to most recent year with available data ("mry")).
+        
+        - If abs(slope) < lim_slope: use the mean over 2010 to mry.
+        - If abs(slope) > lim_slope: calculate pc\_cov\_fut from the correlation between emi\_tot\_his and emi\_cov\_his. For 2010 to mry.
+            
+            - If any(pc\_cov\_fut) > 90\%, but not all(pc\_cov\_fut) > 90\% --> set the pc\_cov\_fut > 90\% to 90\%.
+            - If any(pc\_cov\_fut) < 10\%, but not all(pc\_cov\_fut) < 10\% --> set the pc\_cov\_fut < 10\% to 10\%.
+            - If any(pc\_cov\_fut) > 100\% or < 0\% use the mean instead.
+
+- If no future emissions data are available: use the mean over 2010 to mry.
 
 The future emicov / pccov values depend on the chosen SSP scenario.
 
@@ -160,13 +170,13 @@ One can give a preference for the calculation method of pccov_fut.
 preference_pccov_fut can be 'mean' or 'corr'.
 
 'mean':
-    Check for the countries for which the slope of a regression to the last available 
-    years of pccov_his is less than slope_lim.
+    Check for the countries for which the slope of a regression to the last available years of pccov_his is less than slope_lim.
     Use the mean over the years as pccov_fut.
-    For the others check the correlation between emitot and emicov and decide 
-    whether to better use this correlation for pccov_fut.
+    For the others check the correlation between emitot and emicov and decide whether to better use this correlation for pccov_fut.
 'corr':
     Take the correlation between emitot and emicov, unless it is too 'bad', then take the mean.
+
+Default: 'corr'.
 """
 
 print("    Future (IPCM0EL)")
@@ -188,10 +198,9 @@ database, info_per_country, coverage = \
     prep.prep_covered_emissions_fut(database, meta, coverage, info_per_country, preference_pccov_fut, primap,
     first_year_for_slope, slope_lim, rvalue_lim)
 
-"""
-Also calculate the pc_cov_fut using the growth rates of the last available historical years
-per gas+sector combi.
-"""
+# Also calculate the pc_cov_fut using the growth rates of the last available historical years
+# per gas+sector combi.
+# Results are not great ...
 
 # Results aren't great:
 #database, info_per_country, coverage = \
@@ -199,12 +208,10 @@ per gas+sector combi.
 #    first_year_for_slope)
 
 # %%
-"""
-Calculate LULUCF emissions covered by an NDC.
+# Calculate LULUCF emissions covered by an NDC.
 
-Based on KYOTOGHG_IPCMLULUCF_TOTAL_NET_INTEREXTRAPOL_VARIOUS emissions time series (1990 - 2050).
-If LULUCF and CO$_2$ are not "NO", put KYOTOGHG_IPCMLULUCF to covered. Ignoring the information on CH4 and N2O.
-"""
+# Based on KYOTOGHG_IPCMLULUCF_TOTAL_NET_INTEREXTRAPOL_VARIOUS emissions time series (1990 - 2050).
+# If LULUCF and CO$_2$ are not "NO", put KYOTOGHG_IPCMLULUCF to covered. Ignoring the information on CH4 and N2O.
 
 #database = prep.prep_lulucf_covered_emissions(database, coverage, 'constant')
 #database = prep.prep_lulucf_covered_emissions(database, coverage, 'linear')
@@ -222,5 +229,9 @@ info_per_country.to_csv(Path(meta.path.pc_cov, 'info_per_country_pccov.csv'))
 
 print("##### UPDATE the current pc_cov-folder to " + str(meta.path.pc_cov) + 
       " in setup_metadata.py (if this pc_cov should be used)! #####")
+
+"""
+Update the current pc_cov-folder in setup_metadata after running preprocessing_current_pc_cov.py.
+"""
 
 # %%

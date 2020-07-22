@@ -249,7 +249,7 @@ SSP5BLREMMP for GDPPPP filled with mean over available SSPs ().
 SSP5BLREMMP for GDPPPP filled with PRIMAP data (extrapolated with linear regression over last 6 available values).
 ",FAO2019BI
 ARE,,UNFCCC2019BI
-ARG,,BUR2IPCC2006I
+ARG,,UNFCCC2019BI
 ARM,,UNFCCC2019BI
 ATA,"SSP1BLIMAGE for CO2 filled with mean over available SSPs ().
 SSP1BLIMAGE for CO2 filled with PRIMAP data (extrapolated with linear regression over last 6 available values).
@@ -755,7 +755,7 @@ SSP4BLGCAM4 for GDPPPP filled with PRIMAP data (extrapolated with linear regress
 SSP5BLREMMP for GDPPPP filled with mean over available SSPs ().
 SSP5BLREMMP for GDPPPP filled with PRIMAP data (extrapolated with linear regression over last 6 available values).
 ",FAO2019BI
-COL,,BUR2IPCC2006I
+COL,,UNFCCC2019BI
 COM,,FAO2019BI
 CPV,"SSP1BLIMAGE for FGASES filled with mean over available SSPs ().
 SSP1BLIMAGE for FGASES filled with PRIMAP data (extrapolated with linear regression over last 6 available values).
@@ -1125,7 +1125,7 @@ SSP5BLREMMP for FGASES filled with mean over available SSPs ().
 SSP5BLREMMP for FGASES filled with PRIMAP data (extrapolated with linear regression over last 6 available values).
 ",FAO2019BI
 HUN,,CRF2019
-IDN,,BUR2IPCC2006I
+IDN,,UNFCCC2019BI
 IND,,UNFCCC2019BI
 IOT,"SSP1BLIMAGE for CO2 filled with mean over available SSPs ().
 SSP1BLIMAGE for CO2 filled with PRIMAP data (extrapolated with linear regression over last 6 available values).
@@ -1661,7 +1661,7 @@ SSP4BLGCAM4 for GDPPPP filled with PRIMAP data (extrapolated with linear regress
 SSP5BLREMMP for GDPPPP filled with mean over available SSPs ().
 SSP5BLREMMP for GDPPPP filled with PRIMAP data (extrapolated with linear regression over last 6 available values).
 ",CRF2019
-MDA,,BUR2IPCC2006I
+MDA,,UNFCCC2019BI
 MDG,,UNFCCC2019BI
 MDV,"SSP1BLIMAGE for FGASES filled with mean over available SSPs ().
 SSP1BLIMAGE for FGASES filled with PRIMAP data (extrapolated with linear regression over last 6 available values).
@@ -1674,7 +1674,7 @@ SSP4BLGCAM4 for FGASES filled with PRIMAP data (extrapolated with linear regress
 SSP5BLREMMP for FGASES filled with mean over available SSPs ().
 SSP5BLREMMP for FGASES filled with PRIMAP data (extrapolated with linear regression over last 6 available values).
 ",FAO2019BI
-MEX,,BUR2IPCC2006I
+MEX,,UNFCCC2019BI
 MHL,"SSP1BLIMAGE for CO2 filled with mean over available SSPs ().
 SSP1BLIMAGE for CO2 filled with PRIMAP data (extrapolated with linear regression over last 6 available values).
 SSP2BLMESGB for CO2 filled with mean over available SSPs ().
@@ -1746,7 +1746,7 @@ SSP4BLGCAM4 for GDPPPP filled with PRIMAP data (extrapolated with linear regress
 SSP5BLREMMP for GDPPPP filled with mean over available SSPs ().
 SSP5BLREMMP for GDPPPP filled with PRIMAP data (extrapolated with linear regression over last 6 available values).
 ",
-MKD,,BUR2IPCC2006I
+MKD,,UNFCCC2019BI
 MLI,"SSP1BLIMAGE for FGASES filled with mean over available SSPs ().
 SSP1BLIMAGE for FGASES filled with PRIMAP data (extrapolated with linear regression over last 6 available values).
 SSP2BLMESGB for FGASES filled with mean over available SSPs ().
@@ -1771,7 +1771,7 @@ SSP5BLREMMP for FGASES filled with mean over available SSPs ().
 SSP5BLREMMP for FGASES filled with PRIMAP data (extrapolated with linear regression over last 6 available values).
 ",FAO2019BI
 MNE,,UNFCCC2019BI
-MNG,,BUR1IPCC2006I
+MNG,,UNFCCC2019BI
 MOZ,,FAO2019BI
 MRT,,BUR1IPCC2006I
 MSR,"SSP1BLIMAGE for CO2 filled with mean over available SSPs ().
@@ -2898,7 +2898,7 @@ SSP4BLGCAM4 for FGASES filled with mean over available SSPs ().
 SSP4BLGCAM4 for FGASES filled with PRIMAP data (extrapolated with linear regression over last 6 available values).
 SSP5BLREMMP for FGASES filled with mean over available SSPs ().
 SSP5BLREMMP for FGASES filled with PRIMAP data (extrapolated with linear regression over last 6 available values).
-",BUR1IPCC2006I
+",UNFCCC2019BI
 THA,,FAO2019BI
 TJK,,UNFCCC2019BI
 TKL,"SSP1BLIMAGE for CO2 filled with mean over available SSPs ().

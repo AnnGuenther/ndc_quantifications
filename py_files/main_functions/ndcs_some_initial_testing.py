@@ -7,7 +7,7 @@ Last updated in 04/2020.
 # %%
 def ndcs_some_initial_testing(database, meta):
     """
-    Check input data for 'how many countries have no / missing data' and 'are the values of pc_n/cov between 0 and 1'.
+    Check input data for 'how many countries have no / missing data' and 'are the values of pc_cov/ncov between 0 and 1'.
     Does not check whether the emissions / pop / gdp data seem realistic.
     """
     
