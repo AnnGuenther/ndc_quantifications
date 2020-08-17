@@ -85,7 +85,7 @@ plt.close(fig)
 YL = [1.5, 7]
 XL = [-.5, 3.5]
 
-fig = plt.figure(figsize=(8, 6))
+fig = plt.figure(figsize=(10, 6))
 axa = fig.add_subplot(1, 1, 1)
 for temp in np.arange(YL[0], YL[1]+1, .25):
     axa.plot([-1, 5], [temp, temp], 'k:', linewidth=.2)
@@ -127,15 +127,40 @@ for ssp in meta.ssps.scens.short[:-1]:
         
         pccov = 'pccov_real'
         
+        # Add a 'legend'.
+        if (ssp == 'SSP4' and tpe == 'type_orig'):
+            plt_leg = True
+            x_txt = count + .7
+            x_txt2 = count + 1.1
+            x_txt_add = .22
+            x_plt_add = .12
+            fontsize = 8
+        else:
+            plt_leg = False
+        
         yval_low = temps.loc[(temps.SSP == ssp) & (temps.type == tpe) & (temps.pccov == pccov), 
             'BAU_68_percent_low'].values[0]
         yval_high = temps.loc[(temps.SSP == ssp) & (temps.type == tpe) & (temps.pccov == pccov), 
             'BAU_68_percent_high'].values[0]
         axa.fill_between([count + x_add - .1, count + x_add + .1], 
                          [yval_low, yval_low], [yval_high, yval_high], color=colour_ssp, alpha=.2)
+        
         yval = temps.loc[(temps.SSP == ssp) & (temps.type == tpe) & (temps.pccov == pccov), 
             'BAU_68_percent_median'].values[0]
         axa.plot([count + x_add - .1, count + x_add + .1], [yval, yval], color=colour_ssp)
+        if plt_leg:
+            axa.fill_between([x_txt - .1, x_txt + .1], 
+                             [yval_low, yval_low], [yval_high, yval_high], color=colour_ssp, alpha=.2)
+            axa.plot([x_txt - .1, x_txt + .1], [yval, yval], color=colour_ssp)
+            
+            axa.plot([x_txt, x_txt + x_plt_add], [yval_high, yval_high], 'k', linewidth=.5)
+            axa.plot([x_txt, x_txt + x_plt_add], [yval_low, yval_low], 'k', linewidth=.5)
+            axa.plot([x_txt, x_txt + x_plt_add], [yval, yval], 'k', linewidth=.5)
+            
+            axa.text(x_txt, YL[1] - .02*np.diff(YL), 'Ref. Scen.', rotation=90, ha='center', va='top', fontweight='bold')
+            axa.text(x_txt + x_txt_add, yval_low, '16th', rotation=90, ha='center', va='center', fontsize=fontsize)
+            axa.text(x_txt + x_txt_add, yval_high, '84th', rotation=90, ha='center', va='center', fontsize=fontsize)
+            axa.text(x_txt + x_txt_add, yval, '50th', rotation=90, ha='center', va='center', fontsize=fontsize)
         
         yvals_low = temps.loc[(temps.SSP == ssp) & (temps.type == tpe) & (temps.pccov == pccov), 
             [f'NDC{xx}_68_percent_low' for xx in ['UCW', 'UCB', 'CW', 'CB']]].values[0]
@@ -147,13 +172,32 @@ for ssp in meta.ssps.scens.short[:-1]:
         yvals = temps.loc[(temps.SSP == ssp) & (temps.type == tpe) & (temps.pccov == pccov), 
             [f'NDC{xx}_68_percent_median' for xx in ['UCW', 'UCB', 'CW', 'CB']]].values[0]
         axa.plot([count + x_add, count + x_add], [min(yvals), max(yvals)], color=colour_ssp)
+        
         print(f"% {ssp} {tpe} {pccov} targets (median): {min(yvals) :.1f} - {max(yvals) :.1f}°C.")
         
         axa.scatter([count + x_add]*4, temps.loc[(temps.SSP == ssp) & (temps.type == tpe) & (temps.pccov == pccov), 
             [f'NDC{xx}_68_percent_median' for xx in ['UCW', 'UCB', 'CW', 'CB']]].values[0], marker='.', color=colour_ssp)
-   
+        
+        if plt_leg:
+            axa.fill_between([x_txt2 - .05, x_txt2 + .05], [min(yvals_low), min(yvals_low)], 
+                             [max(yvals_high), max(yvals_high)], color=colour_ssp, alpha=.4)
+            axa.plot([x_txt2, x_txt2], [min(yvals), max(yvals)], color=colour_ssp)
+            axa.scatter([x_txt2]*4, temps.loc[(temps.SSP == ssp) & (temps.type == tpe) & (temps.pccov == pccov), 
+                [f'NDC{xx}_68_percent_median' for xx in ['UCW', 'UCB', 'CW', 'CB']]].values[0], marker='.', color=colour_ssp)
+            
+            axa.plot([x_txt2, x_txt2 + x_plt_add], [min(yvals_low), min(yvals_low)], 'k', linewidth=.5)
+            axa.plot([x_txt2, x_txt2 + x_plt_add], [max(yvals_high), max(yvals_high)], 'k', linewidth=.5)
+            axa.plot([x_txt2, x_txt2 + x_plt_add], [min(yvals), min(yvals)], 'k', linewidth=.5)
+            axa.plot([x_txt2, x_txt2 + x_plt_add], [max(yvals), max(yvals)], 'k', linewidth=.5)
+            
+            axa.text(x_txt2, YL[1] - .02*np.diff(YL), 'NDC estimates', rotation=90, ha='center', va='top', fontweight='bold')
+            axa.text(x_txt2 + x_txt_add, min(yvals_low), f'16th\nlowest', rotation=90, ha='center', va='center', fontsize=fontsize)
+            axa.text(x_txt2 + x_txt_add, max(yvals_high), f'84th\nhighest', rotation=90, ha='center', va='center', fontsize=fontsize)
+            axa.text(x_txt2 + x_txt_add, (min(yvals) + max(yvals))/2, f'50th\nun-/conditional', rotation=90, ha='center', va='center', fontsize=fontsize)
+           
     count += 1
 
+XL = [XL[0], XL[1]+1]
 axa.set_xlim(XL)
 axa.set_ylim(YL)
 axa.text(-.3, YL[1] - .02*np.diff(YL), 'prio NDCs (100%)', rotation=90, ha='center', va='top', fontweight='bold')

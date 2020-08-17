@@ -1,0 +1,21 @@
+\babel@toc {english}{}
+\contentsline {chapter}{\numberline {1}setup\_metadata}{3}{chapter.1}%
+\contentsline {chapter}{\numberline {2}preprocessing\_general}{5}{chapter.2}%
+\contentsline {chapter}{\numberline {3}preprocessing.prep\_read\_in\_tables}{7}{chapter.3}%
+\contentsline {chapter}{\numberline {4}preprocessing.prep\_ssps\_fill\_gaps}{9}{chapter.4}%
+\contentsline {chapter}{\numberline {5}preprocessing.prep\_ssps\_split\_fgases}{11}{chapter.5}%
+\contentsline {chapter}{\numberline {6}preprocessing.prep\_lulucf}{13}{chapter.6}%
+\contentsline {chapter}{\numberline {7}preprocessing\_current\_pc\_cov}{15}{chapter.7}%
+\contentsline {chapter}{\numberline {8}preprocessing.prep\_coverage}{17}{chapter.8}%
+\contentsline {chapter}{\numberline {9}preprocessing.prep\_covered\_emissions\_his}{19}{chapter.9}%
+\contentsline {chapter}{\numberline {10}preprocessing.prep\_covered\_emissions\_fut}{21}{chapter.10}%
+\contentsline {chapter}{\numberline {11}MODIFY\_INPUT\_HERE.input\_default}{23}{chapter.11}%
+\contentsline {chapter}{\numberline {12}\_to\_be\_run}{25}{chapter.12}%
+\contentsline {chapter}{\numberline {13}main\_ndc\_quantifications}{27}{chapter.13}%
+\contentsline {chapter}{\numberline {14}main\_functions.ndcs\_some\_initial\_testing}{29}{chapter.14}%
+\contentsline {chapter}{\numberline {15}main\_functions.ndcs\_check\_options\_for\_target\_calculations}{31}{chapter.15}%
+\contentsline {chapter}{\numberline {16}main\_functions.ndcs\_calculate\_targets}{33}{chapter.16}%
+\contentsline {chapter}{\numberline {17}main\_functions.ndcs\_calculate\_pathways\_per\_country}{37}{chapter.17}%
+\contentsline {chapter}{\numberline {18}main\_functions.ndcs\_calculate\_pathways\_per\_group}{39}{chapter.18}%
+\contentsline {chapter}{\numberline {19}main\_functions.ndcs\_some\_final\_testing}{41}{chapter.19}%
+\contentsline {chapter}{\numberline {20}ndcs\_\_target\_calculations\_for\_input\_xlsx}{43}{chapter.20}%

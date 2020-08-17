@@ -100,7 +100,8 @@ plt.close(fig)
 # %%
 # Only plot population and GDP, witout legend and annotation (for paper).
 linewdth_all = 1.5
-linestyle = {'SSP1BLIMAGE': '-.', 'SSP2BLMESGB': '-', 'SSP3BLAIMCGE': '--', 'SSP4BLGCAM4': ':', 'SSP5BLREMMP': (0, (3, 5, 1, 5))}
+# linestyle = {'SSP1BLIMAGE': '-.', 'SSP2BLMESGB': '-', 'SSP3BLAIMCGE': '--', 'SSP4BLGCAM4': ':', 'SSP5BLREMMP': (0, (3, 5, 1, 5))}
+linestyle = {'SSP1BLIMAGE': '--', 'SSP2BLMESGB': '-', 'SSP3BLAIMCGE': '--', 'SSP4BLGCAM4': ':', 'SSP5BLREMMP': ':'}
 
 fig = plt.figure(figsize=(13, 5))
 ax_pop = fig.add_subplot(1, 2, 1)

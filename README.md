@@ -41,3 +41,7 @@ If you have access to the MATLAB-based PRIMAP Emissions and Climate Module you c
 ----
 
 The python code is stored in a Spyder project.
+
+--------
+
+Further information can be found in /docs/build/html/index.html or /docs/build/latex/ndcmitiq.pdf.

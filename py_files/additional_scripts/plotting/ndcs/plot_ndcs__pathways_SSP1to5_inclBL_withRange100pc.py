@@ -64,10 +64,10 @@ def plotting_together_types_onePlot_diff():
         
         diff = ptws_calc[ssps].loc[(ptws_calc[ssps].group == 'EARTH') & (ptws_calc[ssps].condi == 'emi_bau'), '2030'].values[0] - \
             ptws_orig[ssps].loc[(ptws_orig[ssps].group == 'EARTH') & (ptws_orig[ssps].condi == 'emi_bau'), '2030'].values[0]
-        print(f"% Difference between bau for calc and orig {ssps}: {diff/1000 :+.1f} Gg CO2eq_AR4.")
+        print(f"% Difference between bau for calc and orig {ssps}: {diff/1000 :+.1f} Gt CO2eq_AR4.")
         diff = ptws_calc[f"{ssps}_100pc"].loc[(ptws_calc[f"{ssps}_100pc"].group == 'EARTH') & (ptws_calc[f"{ssps}_100pc"].condi == 'emi_bau'), '2030'].values[0] - \
             ptws_orig[f"{ssps}_100pc"].loc[(ptws_orig[f"{ssps}_100pc"].group == 'EARTH') & (ptws_orig[f"{ssps}_100pc"].condi == 'emi_bau'), '2030'].values[0]
-        print(f"% Difference between bau for calc_100% and orig_100% {ssps}: {diff/1000 :+.1f} Gg CO2eq_AR4.")
+        print(f"% Difference between bau for calc_100% and orig_100% {ssps}: {diff/1000 :+.1f} Gt CO2eq_AR4.")
     
     for folder, ssps in zip(folders_calc_constant_path, meta.ssps.scens.short):
         
@@ -286,7 +286,7 @@ def plotting_together_types_onePlot_diff():
     #YL = [0, ylim_max]
     YL = [axa.get_ylim()[0], ylim_max*1.1]
     
-    axa.set_ylabel('emissions / Gg CO$_2$eq AR4', fontweight='bold')
+    axa.set_ylabel('emissions / Gt CO$_2$eq AR4', fontweight='bold')
     axa.xaxis.set_ticks(range(1990, 2031, 5))
     axa.yaxis.set_ticks(range(20, 90, 5))
     axa.yaxis.set_ticks_position('both')

@@ -113,7 +113,7 @@ out_earth = output.loc['EARTH', :]
 value = "{:.3f}".format(1e-3 * table_tot.loc[:, year].reindex(index=meta.isos.EARTH).sum())
 value = '~'.join(re.findall('...?',value[:value.find('.')][::-1]))[::-1]+value[value.find('.'):]
 
-txt = str(year) + ": " + value + "~" + 'Gg CO$_2$eq' + " & \multicolumn{2}" + \
+txt = str(year) + ": " + value + "~" + 'Gt CO$_2$eq' + " & \multicolumn{2}" + \
     "} & \multicolumn{2}".join(["{|c}{\\bfseries " + xx if xx != 'All Kyoto GHGs' 
     else "{||c}{\\bfseries " + xx for xx in 
     ['CO$_2$', 'CH$_4$', 'N$_2$O', 'F-gases', 'All Kyoto GHGs']])
@@ -165,7 +165,7 @@ out_earth = output.loc['EARTH', :]
 value = "{:.3f}".format(1e-3 * table_tot.loc[:, year].reindex(index=meta.isos.EARTH).sum())
 value = '~'.join(re.findall('...?',value[:value.find('.')][::-1]))[::-1]+value[value.find('.'):]
 
-txt = str(year) + ": " + value + "~" + 'Gg CO$_2$eq' + " & " + \
+txt = str(year) + ": " + value + "~" + 'Gt CO$_2$eq' + " & " + \
     " & ".join(["\\bfseries " + xx for xx in 
     ['All gases', 'CO$_2$', 'CH$_4$', 'N$_2$O', 'HFCs', 'PFCs', 'SF$_6$', 'NF$_3$']])
 txt += " \\tabularnewline \hline \hline"

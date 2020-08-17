@@ -85,41 +85,6 @@ def get_text(txt, path_to_file):
     return txt_new
 
 # %%
-def get_text2(txt, path_to_file):
-    
-    txt_act = hpf.read_text_from_file(Path(meta.path.py_files, path_to_file.replace('.', os.path.sep) + '.py'))
-    
-    path_to_file = (str(path_to_file)).replace(str(meta.path.py_files), '').replace('.py', '')
-    path_to_file = path_to_file.replace(os.path.sep, '.')
-    
-    txt_new = f"\n\n{path_to_file}\n******************************************************************************"
-#    txt_new += f"\n.. automodule:: {path_to_file}\n"
-    
-    locs = [xx for xx in range(len(txt_act[:-2])) if txt_act[xx:xx+3] == '"""']
-    
-    count = 0
-    countries = []
-    
-    for ind in range(len(locs)):
-        
-        if count <= len(locs):
-            
-            try:
-                txt_count = txt_act[locs[count]+3:locs[count+1]]
-                count += 2
-                
-                if 'Author:' not in txt_count:
-                    countries += [txt_count.replace('\n', '')]
-            
-            except:
-                pass
-    
-    txt_new += '\nCountries for which something (some emissions based on data provided within the NDC ' + \
-        f' or target emissions) was calculated in {path_to_file}:\n{", ".join(sorted(countries))}.'
-    
-    return txt_new
-
-# %%
 txt = '\n*Comments: in the code, use (3 times " newline text newline 3 times ") for comments.* '
 txt += '*Do not forget the new lines, else it will not appear in this documentation.*'
 txt += """
@@ -137,12 +102,11 @@ and information on how to run the code can be found in the README in the main fo
 
 """
 
-
 for path_to_file in files:
     txt += get_text(txt, path_to_file)
 
-txt += get_text2(txt, 'ndcs__target_calculations_for_input_xlsx')
-
+txt += 'Countries for which something (some emissions based on data provided within the NDC ' + \
+    f' or target emissions) were calculated: ndcs__target_calculations_for_input_xlsx.'
 
 hpf.write_text_to_file(txt, Path(meta.path.main, 'docs', 'source', 'code.rst'))
 

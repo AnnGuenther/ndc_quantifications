@@ -168,7 +168,7 @@ def plotting_together_types_onePlot_diff():
     
     linewdth_all = 1
     # linestyle = {'SSP1': '-.', 'SSP2': '-', 'SSP3': '--', 'SSP4': ':', 'SSP5': (0, (3, 5, 1, 5))}
-    linestyle = {'SSP1': ':', 'SSP2': '-', 'SSP3': '--', 'SSP4': ':', 'SSP5': '--'}
+    linestyle = {'SSP1': '--', 'SSP2': '-', 'SSP3': '--', 'SSP4': ':', 'SSP5': ':'}
     
     ylim_max = 0
     

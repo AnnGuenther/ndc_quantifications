@@ -934,9 +934,4 @@ main_functions.ndcs_some_final_testing
 **check_four()**
 
         Check if the target pathways for EARTH seem ok.
-        
-
-ndcs__target_calculations_for_input_xlsx
-******************************************************************************
-Countries for which something (some emissions based on data provided within the NDC  or target emissions) was calculated in ndcs__target_calculations_for_input_xlsx:
-AFG, AGO, ALB, AND, ARG, ARM, AZE, BDI, BEN, BGD, BIH, BLR, BRB, BTN, BWA, CAF, CHE, CHL, CIV, CMR, COD, COG, COK, COL, COM, CRI, CUB, DJI, DMA, DOM, ECU, ERI, FJI, FSM, GAB, GEO, GHA, GIN, GMB, GTM, HND, HTI, IDN, IND, ISR, JAM, JOR, JPN, KEN, KHM, KIR, KOR, LAO, LBN, LCA, LIE, LKA, LSO, MAR, MCO, MDA, MDG, MDV, MEX, MHL, MKD, MLI, MNG, MOZ, MRT, MUS, MWI, MYS, NAM, NER, NGA, NOR, OMN, PAK, PER, PRY, PSE, RWA, SEN, SLB, SMR, STP, SYC, TCD, TGO, THA, TJK, TLS, TUN, TZA, UGA, UKR, URY, USA, VCT, VNM, WSM, ZMB.
+        Countries for which something (some emissions based on data provided within the NDC  or target emissions) were calculated: ndcs__target_calculations_for_input_xlsx.

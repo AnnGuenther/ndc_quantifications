@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Author: Annika Günther, annika.guenther@pik-potsdam.pd
-Last updated in 03/2020.
+Last updated in 08/2020.
 """
 
 # %%
@@ -502,7 +502,7 @@ for gas in ['FGASES', 'HFCS', 'PFCS', 'SF6', 'NF3']:
         print(f"%     The global share of {gas} in 2017 is {(100. * gas_act.data.sum()/fgases.data.sum().values[0]).values[0] :.1f}% of total FGASESAR4_IPCM0EL.")
     
 # %%
-# Covered part of emissions: globally.
+# Covered share of emissions: globally.
 # Pay attention to the countries that do not have (I)NDCs.
 ndcs = pd.read_csv(Path(meta.path.preprocess, 'infos_from_ndcs.csv'), index_col=0).reindex(index=meta.isos.EARTH)
 countries_without_indc = [xx for xx in meta.isos.EARTH if (type(ndcs.loc[xx, 'NDC_INDC']) != str or ndcs.loc[xx, 'NDC_INDC'] not in ['NDC', 'INDC'])]
@@ -520,8 +520,8 @@ pc_cov = 100. * emi_cov.div(emi_tot)
 
 # Create latex table with emi_tot, emi_cov and pc_cov.
 txt = 'Year & ' + ' & '.join([str(xx) for xx in years_cov]) + " \\\\ \n" + \
-    'Total emissions (Gg CO$_2$eq AR4) & ' + ' & '.join(['{:.1f}'.format(xx) for xx in emi_tot]) + " \\\\ \n" + \
-    'Covered emissions (Gg CO$_2$eq AR4) & ' + ' & '.join(['{:.1f}'.format(xx) for xx in emi_cov]) + " \\\\ \n" + \
+    'Total emissions (Gt CO$_2$eq AR4) & ' + ' & '.join(['{:.1f}'.format(xx) for xx in emi_tot]) + " \\\\ \n" + \
+    'Covered emissions (Gt CO$_2$eq AR4) & ' + ' & '.join(['{:.1f}'.format(xx) for xx in emi_cov]) + " \\\\ \n" + \
     'Share of covered emissions (\%) & ' + ' & '.join(['{:.1f}'.format(xx) for xx in pc_cov])
 
 hpf.write_text_to_file(txt, Path(meta.path.main, 'data', 'other', 'covered_emissions_table_latex.csv'))
@@ -735,9 +735,9 @@ for fao in ['', 'UNFCCC', 'FAO']:
     lulucf = get_table(Path(meta.path.preprocess, 'tables', f'KYOTOGHG_IPCMLULUCF_TOTAL_NET_INTERLIN_VARIOUS{fao}.csv')). \
         __reindex__(isos=meta.isos.EARTH).__reindex__(years=year_lu)
     
-    print(f'all together: {1/1000*lulucf.data.sum().values[0]:.1f} GgCO2eq AR4')
-    print(f'all positive: {1/1000*lulucf.data[lulucf.data > 0.].sum().values[0]:.1f} GgCO2eq AR4')
-    print(f'all negative: {1/1000*lulucf.data[lulucf.data < 0.].sum().values[0]:.1f} GgCO2eq AR4')
+    print(f'all together: {1/1000*lulucf.data.sum().values[0]:.1f} Gt CO2eq AR4')
+    print(f'all positive: {1/1000*lulucf.data[lulucf.data > 0.].sum().values[0]:.1f} Gt CO2eq AR4')
+    print(f'all negative: {1/1000*lulucf.data[lulucf.data < 0.].sum().values[0]:.1f} Gt CO2eq AR4')
     
     if fao == '':
         txt += "CRF, BUR, UNFCCC, FAO"
@@ -751,14 +751,14 @@ for fao in ['', 'UNFCCC', 'FAO']:
     txt += f" & {1/1000*lulucf.data[lulucf.data < 0.].sum().values[0]:.1f}"
     
     if fao == 'UNFCCC':
-        txt += " & Gg~CO$_2$eq (AR4) \\\\ \n"
+        txt += " & Gt~CO$_2$eq (AR4) \\\\ \n"
     else:
         txt += " & \\\\ \n"
 
 kyotoghg_ipcm0el_act = get_table(Path(meta.path.matlab, 'KYOTOGHGAR4_IPCM0EL_TOTAL_NET_HISTCR_' + 
     meta.primap.current_version['emi'] + '.csv')).__reindex__(years=year_lu)
-print(f'\nGlobal Kyoto GHG IPCM0EL {1/1000*kyotoghg_ipcm0el_act.data.sum().values[0]:.1f} GgCO2eq AR4')
+print(f'\nGlobal Kyoto GHG IPCM0EL {1/1000*kyotoghg_ipcm0el_act.data.sum().values[0]:.1f} Gt CO2eq AR4')
 
-hpf.write_text_to_file(txt[:-2], Path(meta.path.main, 'data', 'other', 'lulucf_comparison_of_prio_EARTH_AR4_GgCO2eq_latex.txt'))
+hpf.write_text_to_file(txt[:-2], Path(meta.path.main, 'data', 'other', 'lulucf_comparison_of_prio_EARTH_AR4_GtCO2eq_latex.txt'))
 
 # %%

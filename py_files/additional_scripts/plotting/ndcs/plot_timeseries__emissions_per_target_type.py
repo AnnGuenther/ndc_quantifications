@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Author: Annika Günther, annika.guenther@pik-potsdam.de
-Last updated in 04/2020.
+Last updated in 08/2020.
 """
 
 # %%
@@ -193,7 +193,7 @@ def plotting_both():
         axa.yaxis.set_ticks_position('both')
     
     #ax1.set_xlabel('years', fontweight='bold')
-    ax1.set_ylabel('emissions / Gg CO$_2$eq (AR4)', fontweight='bold')
+    ax1.set_ylabel('emissions / Gt CO$_2$eq (AR4)', fontweight='bold')
     for axa in [ax1, ax2]:
         axa.set_xlabel('year', fontweight='bold')
         axa.set_xticks(np.arange(1990, 2040, 10))
