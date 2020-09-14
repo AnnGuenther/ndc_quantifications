@@ -115,7 +115,7 @@ def ndcs_calculate_targets(database, meta):
         return meta, ict, ndc_value_exclLU, ndc_value_inclLU
     
     # %%
-    def quantification_per_country(iso_act, meta, lulucf_first_try, calculated_targets, txt):
+    def quantification_per_country(iso_act, meta, lulucf_first_try, calculated_targets, txt, txt_targets):
         
         """
         Per country get the information on the different available target types, and get the calculation data for
@@ -260,8 +260,8 @@ def ndcs_calculate_targets(database, meta):
                     """
                     Calculate the mitigated target year emissions depending on the target type.
                     """
-                    ict, txt = calculate_targets_depending_on_type(
-                        ict, iso_act, refyr, taryr, ndc_value_exclLU, ndc_value_inclLU, meta, lulucf_first_try, txt)
+                    ict, txt, txt_targets = calculate_targets_depending_on_type(
+                        ict, iso_act, refyr, taryr, ndc_value_exclLU, ndc_value_inclLU, meta, lulucf_first_try, txt, txt_targets)
                     
                     # # Put Fyson2019 LULUCF 2030 emissions in output, not used further.
                     # if iso_act in meta.lulucf_fyson.index:
@@ -277,11 +277,17 @@ def ndcs_calculate_targets(database, meta):
                     # Add 'ict' to 'quantis_iso'.
                     quantis_iso = quantis_iso.append(ict, ignore_index=True)
         
-        return quantis_iso, txt
+        return quantis_iso, txt, txt_targets
     
     # %%
     def calculate_targets_depending_on_type(
-        ict, iso_act, refyr, taryr, ndc_value_exclLU, ndc_value_inclLU, meta, lulucf_first_try, txt):
+        ict, iso_act, refyr, taryr, ndc_value_exclLU, ndc_value_inclLU, meta, lulucf_first_try, txt, txt_targets):
+        
+        # txt_targets stores the information on how exactly the target was calculated.
+        txt_targets += f"\n\n## tar_type_used: {ict['tar_type_used']}, refyr: {refyr}, taryr: {taryr}, {ict['condi']}_{ict['rge']}"
+        txt_targets += f"\n- ndc_value_exclLU: {ndc_value_exclLU} ({ict['ndc_value_exclLU']})"
+        txt_targets += f"\n- ndc_value_inclLU: {ndc_value_inclLU} ({ict['ndc_value_inclLU']})"
+        txt_targets += f"\n- lulucf_first_try: {lulucf_first_try}"
         
         """
         Calculation of targets: excluding LULUCF and including LULUCF.
@@ -297,18 +303,33 @@ def ndcs_calculate_targets(database, meta):
         ndcs_emi_exclLU = database.emi_bl_exclLU_ndcs.loc[iso_act, :]
         ndcs_emi_onlyLU = database.emi_bl_onlyLU_ndcs.loc[iso_act, :]
         
+        txt_targets += "\n- Emissions values from NDCs:"
+        txt_targets += f"\n  - ndcs_emi_inclLU for refyr and taryr: {ndcs_emi_inclLU[[refyr, taryr]].values}"
+        txt_targets += f"\n  - ndcs_emi_exclLU for refyr and taryr: {ndcs_emi_exclLU[[refyr, taryr]].values}"
+        txt_targets += f"\n  - ndcs_emi_onlyLU for refyr and taryr: {ndcs_emi_onlyLU[[refyr, taryr]].values}"
+        
         """
         Calculate the NDC-level for relative targets. E.g., target is -20%, so the level is 80% (100%-20%).
         """
         if ict['tar_type_used'] in ['RBY', 'RBU', 'REI']:
+            
             ndc_level_exclLU = 1. + ndc_value_exclLU / 100.
             ndc_level_inclLU = 1. + ndc_value_inclLU / 100.
+            
+            txt_targets += f"\n- ndc_level_exclLU = 1. + ndc_value_exclLU / 100. = " + \
+                f"1. + {ndc_value_exclLU} / 100. = {ndc_level_exclLU}"
+            txt_targets += f"\n- ndc_level_inclLU = 1. + ndc_value_inclLU / 100. = " + \
+                f"1. + {ndc_value_inclLU} / 100. = {ndc_level_inclLU}"
         
         """
         Get the information on whether LULUCF is included in the target or not.
         """
         is_LU_covered_valinfo = (True if not np.isnan(ndc_value_inclLU) else False)
         is_LU_covered_secinfo = (True if ict['lulucf'].upper() == 'YES' else False)
+        txt_targets += "\n- LULUCF"
+        txt_targets += f"\n  - is_LU_covered_valinfo: {is_LU_covered_valinfo}"
+        txt_targets += f"\n  - is_LU_covered_secinfo: {is_LU_covered_secinfo}"
+        
         if is_LU_covered_valinfo:
             if not is_LU_covered_secinfo:
                 if (not np.isnan(ndc_value_exclLU) and not np.isnan(ndc_value_inclLU)):
@@ -321,43 +342,68 @@ def ndcs_calculate_targets(database, meta):
         """
         Get the LULUCF data for the reference and target year.
         """
+        txt_targets += "\n  - Get the LULUCF data for the reference and target year (bl_onlyLU_refyr/taryr)."
         for yr_int, yr_str in [refyr, 'refyr'], [taryr, 'taryr']:
+            
             bl_onlyLU_act = np.nan
+            
             if (not ndcs_emi_onlyLU.isnull().all() or not ndcs_emi_inclLU.isnull().all()):
+                
                 if not np.isnan(ndcs_emi_onlyLU[yr_int]):
+                    
                     bl_onlyLU_act = ndcs_emi_onlyLU[yr_int]
                     txt += f"    {iso_act} {ict['tar_type_used']} emi_onlyLU {yr_int}: ndcs_emi_onlyLU used."
+                    txt_targets += f"\n    - emi_onlyLU {yr_int}: ndcs_emi_onlyLU used ({bl_onlyLU_act})."
+                    
                 elif (not np.isnan(ndcs_emi_inclLU[yr_int]) and not np.isnan(ndcs_emi_exclLU[yr_int])):
+                    
                     bl_onlyLU_act = ndcs_emi_inclLU[yr_int] - ndcs_emi_exclLU[yr_int]
                     txt += f"    {iso_act} {ict['tar_type_used']} emi_onlyLU {yr_int}: there are values for " + \
                         "ndcs_emi_inclLU and ndcs_emi_exclLU, but not for ndcs_emi_onlyLU?!"
-                    txt += f"    {iso_act} {ict['tar_type_used']} emi_onlyLU {yr_int}: ndcs_emi_onlyLU used."
+                    txt += f"    {iso_act} {ict['tar_type_used']} emi_onlyLU {yr_int}: ndcs_emi_inclLU minus ndcs_emi_exclLU used."
+                    txt_targets += f"\n    - emi_onlyLU {yr_int}: ndcs_emi_inclLU[yr_int] - ndcs_emi_exclLU[yr_int] = " + \
+                        f"{ndcs_emi_inclLU[yr_int]} - {ndcs_emi_exclLU[yr_int]} = {bl_onlyLU_act}"
+                    
             if np.isnan(bl_onlyLU_act):
                 if (not np.isnan(ndcs_emi_inclLU[yr_int]) and not np.isnan(ict[f'emi_bl_exclLU_{yr_str}'])):
+                    
                     # Here, the bl_onlyLU depends on the chosen SSP ...
                     bl_onlyLU_act = ndcs_emi_inclLU[yr_int] - ict[f'emi_bl_exclLU_{yr_str}']
                     txt += f"    {iso_act} {ict['tar_type_used']} emi_onlyLU {yr_int}: ndcs_emi_inclLU minus external_emi_exclLU used."
+                    txt_targets += f"\n    - emi_onlyLU {yr_int}: ndcs_emi_inclLU minus external_emi_exclLU used. " + \
+                        f"ndcs_emi_inclLU[yr_int] - ict[f'emi_bl_exclLU_{yr_str}'] = {ndcs_emi_inclLU[yr_int]} - {ict[f'emi_bl_exclLU_{yr_str}']} = " + \
+                        f"{bl_onlyLU_act}"
+                    
             if np.isnan(bl_onlyLU_act):
+                
                 bl_onlyLU_act = ict[f'emi_bl_LU_{yr_str}']
                 txt += f"{iso_act} {ict['tar_type_used']} emi_onlyLU {yr_int}: external_emi_onlyLU used."
+                txt_targets += f"\n    - emi_onlyLU {yr_int}: external_emi_onlyLU used ({bl_onlyLU_act})."
             
             if yr_str == 'refyr':
                 bl_onlyLU_refyr = ict[f'emi_bl_onlyLU_{yr_str}'] = bl_onlyLU_act
+                txt_targets += f"\n    - bl_onlyLU_refyr = {bl_onlyLU_refyr}"
             else:
                 bl_onlyLU_taryr = ict[f'emi_bl_onlyLU_{yr_str}'] = bl_onlyLU_act
+                txt_targets += f"\n    - bl_onlyLU_taryr = {bl_onlyLU_taryr}"
         
-        def calc_targets_inclLU_exclLU(tar_emi_exclLU, tar_emi_inclLU, bl_onlyLU_taryr, tar_type_used, txt):
+        def calc_targets_inclLU_exclLU(tar_emi_exclLU, tar_emi_inclLU, bl_onlyLU_taryr, tar_type_used, txt, txt_targets):
             
             """
             If not both, inclLU and exclLU information are given:
             calculate the 'other case' from the given case.
             """
-
+            
+            txt_targets += "\n### Function calc_targets_inclLU_exclLU()" + \
+                "\nIf not both, inclLU and exclLU information are given calculate the 'other case' from the given case."
+            
             """
             If no inclLU target is given, calculate it as the sum over tar_emi_exclLU and bl_LU.
             """
             if np.isnan(tar_emi_inclLU):
                 tar_emi_inclLU = np.nansum([tar_emi_exclLU, bl_onlyLU_taryr]) # nansum to prevent 'no-result' due to missing bl_onlyLU.
+                txt_targets += f"\n- tar_emi_inclLU is nan. So calculate tar_emi_inclLU = np.nansum([tar_emi_exclLU, bl_onlyLU_taryr]) = " + \
+                    f"np.nansum([{tar_emi_exclLU}, {bl_onlyLU_taryr}]) = {tar_emi_inclLU}"
             
             """
             Options to calculate the exclLU target from the given inclLU target:
@@ -371,9 +417,14 @@ def ndcs_calculate_targets(database, meta):
                     If no exclLU target is given, subtract the target year onlyLU estimate from the inclLU target (like CAT).
             """
             if np.isnan(tar_emi_exclLU):
-                                
+                
+                txt_targets += f"\n- tar_emi_exclLU is nan. So calculate it."
+                
                 if lulucf_first_try:
+                    
                     tar_emi_exclLU = np.nansum([tar_emi_inclLU, -bl_onlyLU_taryr])
+                    txt_targets += f"\n- lulucf_first_try, so tar_emi_exclLU = np.nansum([tar_emi_inclLU, -bl_onlyLU_taryr]) = " + \
+                        f"np.nansum([{tar_emi_inclLU}, - {bl_onlyLU_taryr}]) = {tar_emi_exclLU}."
                 
                 """
                 If it needs a second try due to the LULUCF part (if the exclLU target is negative, when calculate from the inclLU target):
@@ -384,19 +435,36 @@ def ndcs_calculate_targets(database, meta):
                     Get the ABU_inclLU and split it into the onlyLU and exclLU parts
                     (depending on the onlyLU and exclLU contributions in the target year).
                     """
+                    txt_targets += "\n- It is lulucf second try. Get the ABU_inclLU and split it into the onlyLU and exclLU parts " + \
+                        "(depending on the onlyLU and exclLU contributions in the target year)."
+                    
                     bl_inclLU_taryr = ndcs_emi_inclLU[taryr]
+                    txt_targets += f"\n  - bl_inclLU_taryr = ndcs_emi_inclLU[taryr] = {bl_inclLU_taryr}"
+                    
                     if (tar_type_used in ['RBY', 'RBU', 'REI'] or np.isnan(bl_inclLU_taryr)):
                         # For REI we could actually use given emissions data, if provided...
                         bl_inclLU_taryr = np.nansum([ict['emi_bl_exclLU_taryr'], bl_onlyLU_taryr])
+                        
                         txt += f"\n{iso_act} calculating tar_exclLU from tar_inclLU: the bl_inclLU_taryr is the sum over external_bl_exclLU_taryr and bl_onlyLU_taryr."
+                        txt_targets += "\n  - (tar_type_used in ['RBY', 'RBU', 'REI'] or np.isnan(bl_inclLU_taryr)):"
+                        txt_targets += "\n    - calculating tar_exclLU from tar_inclLU: the bl_inclLU_taryr is the sum over external_bl_exclLU_taryr and bl_onlyLU_taryr."
+                        txt_targets += f"\n    - bl_inclLU_taryr = np.nansum([ict['emi_bl_exclLU_taryr'], bl_onlyLU_taryr]) = " + \
+                            f"np.nansum([{ict['emi_bl_exclLU_taryr']}, {bl_onlyLU_taryr}]) = {bl_inclLU_taryr}"
                     
                     bl_exclLU_taryr = ndcs_emi_exclLU[taryr]
+                    txt_targets += f"\n  - bl_exclLU_taryr = ndcs_emi_exclLU[taryr] = {bl_exclLU_taryr}"
+                    
                     if (tar_type_used in ['RBY', 'RBU', 'REI'] or np.isnan(bl_exclLU_taryr)):
                         # For REI we could actually use given emissions data, if provided...
                         bl_exclLU_taryr = ict['emi_bl_exclLU_taryr']
+                        
                         txt += "\n{iso_act} calculating tar_exclLU from tar_inclLU: the bl_exclLU_taryr is the external_bl_exclLU_taryr."
+                        txt_targets += "\n  - (tar_type_used in ['RBY', 'RBU', 'REI'] or np.isnan(bl_exclLU_taryr)):"
+                        txt_targets += "\n    - calculating tar_exclLU from tar_inclLU: the bl_exclLU_taryr is the external_bl_exclLU_taryr."
+                        txt_targets += f"\n    - bl_exclLU_taryr = ict['emi_bl_exclLU_taryr'] = {bl_exclLU_taryr}"
                     
                     ABU_inclLU = tar_emi_inclLU - bl_inclLU_taryr
+                    txt_targets += f"\n  - ABU_inclLU = tar_emi_inclLU - bl_inclLU_taryr = {tar_emi_inclLU} - {bl_inclLU_taryr} = {ABU_inclLU}"
                     
                     # Target year baseline: share of onlyLU emissions and exclLU emissions.
                     # Split the ABU_inclLU into ABU_onlyLU and ABU_exclLU.
@@ -411,28 +479,39 @@ def ndcs_calculate_targets(database, meta):
                     # print(f"{iso_act}: ratio exclLU/inclLU used (hist: {ratio_exclLU_inclLU :.3f}, taryr: {bl_exclLU_taryr/bl_inclLU_taryr :.3f})!")
                     
                     ABU_exclLU = ABU_inclLU * bl_exclLU_taryr/bl_inclLU_taryr
+                    txt_targets += f"\n  - ABU_exclLU = ABU_inclLU * bl_exclLU_taryr/bl_inclLU_taryr = " + \
+                        f"{ABU_inclLU} * {bl_exclLU_taryr}/{bl_inclLU_taryr} = {ABU_exclLU}"
+                    
                     if ABU_exclLU > 0.:
                         print_txt = f"{iso_act} tar_exclLU from tar_inclLU: the ABU_exclLU is no reduction!!!"
                         print(print_txt)
                         txt += print_txt
+                        txt_targets += f"\n    - tar_exclLU from tar_inclLU: the ABU_exclLU is no reduction!!!"
                     if bl_onlyLU_taryr < 0.:
                         print_txt = f"{iso_act} tar_exclLU from tar_inclLU: the onlyLU taryr bl is negative, so the shares of ABU_onlyLU and ABU_exclLU might be weird!"
                         print(print_txt)
                         txt += print_txt
+                        txt_targets += f"\n    - tar_exclLU from tar_inclLU: the onlyLU taryr bl is negative, so the shares of ABU_onlyLU and ABU_exclLU might be weird!"
                     if bl_inclLU_taryr < 0.:
                         print_txt = f"{iso_act} tar_exclLU from tar_inclLU: the inclLU taryr bl is negative, so the shares of ABU_onlyLU and ABU_exclLU might be weird!"
                         print(print_txt)
                         txt += print_txt
+                        txt_targets += f"\n    - tar_exclLU from tar_inclLU: the inclLU taryr bl is negative, so the shares of ABU_onlyLU and ABU_exclLU might be weird!"
                     
                     """
                     tar_exclLU: bl_exclLU + ABU_exclLU (ABU_exclLU is negative).
                     """
                     tar_emi_exclLU = bl_exclLU_taryr + ABU_exclLU
+                    txt_targets += f"\n  - tar_emi_exclLU = bl_exclLU_taryr + ABU_exclLU = " + \
+                        f"{bl_exclLU_taryr} + {ABU_exclLU} = {tar_emi_exclLU}"
             
             ict['tar_emi_exclLU'] = tar_emi_exclLU
             ict['tar_emi_inclLU'] = tar_emi_inclLU
             
-            return txt
+            txt_targets += f"\n- tar_emi_exclLU = {tar_emi_exclLU}"
+            txt_targets += f"\n- tar_emi_inclLU = {tar_emi_inclLU}"
+            
+            return txt, txt_targets
         
         """
         ABS target: tar_emi is the given absolute emissions value.
@@ -442,47 +521,90 @@ def ndcs_calculate_targets(database, meta):
             tar_emi_exclLU = ndc_value_exclLU
             tar_emi_inclLU = ndc_value_inclLU
             
-            txt = calc_targets_inclLU_exclLU(tar_emi_exclLU, tar_emi_inclLU, bl_onlyLU_taryr, ict['tar_type_used'], txt)
+            txt_targets += "\n### tar_type_used = ABS"
+            txt_targets += "\ntar_emi is the given absolute emissions value."
+            
+            txt_targets += f"\n- tar_emi_exclLU = ndc_value_exclLU = {tar_emi_exclLU}"
+            txt_targets += f"\n- tar_emi_inclLU = ndc_value_inclLU = {tar_emi_inclLU}"
+            
+            txt, txt_targets = calc_targets_inclLU_exclLU(tar_emi_exclLU, tar_emi_inclLU, bl_onlyLU_taryr, ict['tar_type_used'], txt, txt_targets)
         
         """
         ABU target: tar_emi is the given baseline minus the absolute reduction.
         """
         if ict['tar_type_used'] == 'ABU':
             
+            txt_targets += "\n### tar_type_used = ABU"
+            txt_targets += "\ntar_emi is the given baseline minus the absolute reduction."
+            
             tar_emi_exclLU = np.nan
+            
             if not np.isnan(ndc_value_exclLU):
+                
                 bl_exclLU_taryr = ndcs_emi_exclLU[taryr]
+                txt_targets += f"\n- bl_exclLU_taryr = ndcs_emi_exclLU[taryr] = {bl_exclLU_taryr}"
+                
                 if np.isnan(bl_exclLU_taryr):
+                    
                     bl_exclLU_taryr = ict['emi_bl_exclLU_taryr']
+                    txt_targets += f"\n  - np.isnan(bl_exclLU_taryr), so bl_exclLU_taryr = ict['emi_bl_exclLU_taryr'] = {bl_exclLU_taryr}"
+                
                 tar_emi_exclLU = bl_exclLU_taryr + ndc_value_exclLU # ndc_value is negative for a reduction ...
+                txt_targets += f"\n- tar_emi_exclLU = bl_exclLU_taryr + ndc_value_exclLU = " + \
+                    f"{bl_exclLU_taryr} + {ndc_value_exclLU} = {tar_emi_exclLU} # ndc_value is negative for a reduction ..."
+                
                 if tar_emi_exclLU < 0.:
+                    
                     print_txt = f"{iso_act} ABS_exclLU from ABU_exclLU ({ndc_value_exclLU :.3f} MtCO2eq) is < 0 ({tar_emi_exclLU :.3f} MtCO2eq, " + \
-                        f"compared to baseline {bl_exclLU_taryr :.3f} MtCO2eq) " + \
-                        "and will be set to 0 MtCO2eq."
+                        f"compared to baseline {bl_exclLU_taryr :.3f} MtCO2eq) and will be set to 0 MtCO2eq."
                     print(print_txt)
                     txt += print_txt
+                    
+                    txt_targets += f"\n  - ABS_exclLU from ABU_exclLU ({ndc_value_exclLU :.3f} MtCO2eq) is < 0 ({tar_emi_exclLU :.3f} MtCO2eq, " + \
+                        f"compared to baseline {bl_exclLU_taryr :.3f} MtCO2eq) and will be set to 0 MtCO2eq."
             
             tar_emi_inclLU = np.nan
+            
             if not np.isnan(ndc_value_inclLU):
+                
                 bl_inclLU_taryr = ndcs_emi_inclLU[taryr]
+                txt_targets += f"\n- bl_inclLU_taryr = ndcs_emi_inclLU[taryr] = {bl_inclLU_taryr}"
+                
                 if np.isnan(bl_inclLU_taryr):
-                    bl_inclLU_taryr = np.nansum([ict['emi_bl_exclLU_taryr'], bl_onlyLU_taryr])
-                tar_emi_inclLU = bl_inclLU_taryr + ndc_value_inclLU
                     
-            txt = calc_targets_inclLU_exclLU(tar_emi_exclLU, tar_emi_inclLU, bl_onlyLU_taryr, ict['tar_type_used'], txt)
+                    bl_inclLU_taryr = np.nansum([ict['emi_bl_exclLU_taryr'], bl_onlyLU_taryr])
+                    txt_targets += f"\n  - np.isnan(bl_inclLU_taryr), so bl_inclLU_taryr = " + \
+                        "np.nansum([ict['emi_bl_exclLU_taryr'], bl_onlyLU_taryr]) = " + \
+                        f"np.nansum([{ict['emi_bl_exclLU_taryr']}, {bl_onlyLU_taryr}]) = {bl_inclLU_taryr}"
+                
+                tar_emi_inclLU = bl_inclLU_taryr + ndc_value_inclLU
+                txt_targets += f"\n- tar_emi_inclLU = bl_inclLU_taryr + ndc_value_inclLU = " + \
+                    f"{bl_inclLU_taryr} + {ndc_value_inclLU} = {tar_emi_inclLU}"
+            
+            txt_targets += f"\n- tar_emi_exclLU = ndc_value_exclLU = {tar_emi_exclLU}"
+            txt_targets += f"\n- tar_emi_inclLU = ndc_value_inclLU = {tar_emi_inclLU}"
+                    
+            txt, txt_targets = calc_targets_inclLU_exclLU(tar_emi_exclLU, tar_emi_inclLU, bl_onlyLU_taryr, ict['tar_type_used'], txt, txt_targets)
                     
         """
         AEI target: tar_emi is the given absolute emissions intensity multiplied by the target year GDP or POP.
         """
         if ict['tar_type_used'] == 'AEI':
             
+            txt_targets += f"\n### tar_type_used = AEI"
+            txt_targets += "\ntar_emi is the given absolute emissions intensity multiplied by the target year GDP or POP."
+            
             # Get the intensity reference (POP or GDP)
             if ('CAP' in str(ict['ndc_value_exclLU']).upper() or 
                 'CAP' in str(ict['ndc_value_inclLU']).upper()):
                 ref_act = ict['pop_taryr']
+                txt_targets += f"\n- 'CAP' in ndc_value_excl/inclLU: ref_act = ict['pop_taryr'] = {ref_act}"
+            
             elif ('GDP' in str(ict['ndc_value_exclLU']).upper() or
                   'GDP' in str(ict['ndc_value_inclLU']).upper()):
                 ref_act = ict['gdp_taryr']
+                txt_targets += f"\n- 'GDP' in ndc_value_excl/inclLU: ref_act = ict['gdp_taryr'] = {ref_act}"
+            
             else:
                 ref_act = np.nan
                 txt += f"\n- **{iso_act}** AEI:, it is not clear which reference to use. " + \
@@ -491,14 +613,25 @@ def ndcs_calculate_targets(database, meta):
             if not np.isnan(ref_act):
                 
                 tar_emi_exclLU = np.nan
+                
                 if not np.isnan(ndc_value_exclLU):
+                    
                     tar_emi_exclLU = ndc_value_exclLU * 1e-6 * ref_act
+                    txt_targets += f"\n- tar_emi_exclLU = ndc_value_exclLU * 1e-6 * ref_act = " + \
+                        f"{ndc_value_exclLU} * 1e-6 * {ref_act} = {tar_emi_exclLU}"
                 
                 tar_emi_inclLU = np.nan
-                if not np.isnan(ndc_value_inclLU):
-                    tar_emi_inclLU = ndc_value_inclLU * 1e-6 * ref_act
                 
-                txt = calc_targets_inclLU_exclLU(tar_emi_exclLU, tar_emi_inclLU, bl_onlyLU_taryr, ict['tar_type_used'], txt)
+                if not np.isnan(ndc_value_inclLU):
+                    
+                    tar_emi_inclLU = ndc_value_inclLU * 1e-6 * ref_act
+                    txt_targets += f"\n- tar_emi_inclLU = ndc_value_inclLU * 1e-6 * ref_act = " + \
+                        f"{ndc_value_inclLU} * 1e-6 * {ref_act} = {tar_emi_inclLU}"
+                
+                txt_targets += f"\n- tar_emi_exclLU = ndc_value_exclLU = {tar_emi_exclLU}"
+                txt_targets += f"\n- tar_emi_inclLU = ndc_value_inclLU = {tar_emi_inclLU}"
+                
+                txt, txt_targets = calc_targets_inclLU_exclLU(tar_emi_exclLU, tar_emi_inclLU, bl_onlyLU_taryr, ict['tar_type_used'], txt, txt_targets)
             
         """
         RBY, RBU or REI target.
@@ -512,34 +645,62 @@ def ndcs_calculate_targets(database, meta):
             # especially when LULUCF was a sink in the reference year, when the strength of 
             # a sink would increase a lot due to the intensity growth.
             
+            txt_targets += f"\n### tar_type_used = {ict['tar_type_used']}"
+            
             emi_cov_exclLU_refyr = ict['emi_bl_exclLU_refyr'] * ict['pc_cov_exclLU_refyr']
+            txt_targets += f"\n- emi_cov_exclLU_refyr = ict['emi_bl_exclLU_refyr'] * ict['pc_cov_exclLU_refyr'] = " + \
+                f"{ict['emi_bl_exclLU_refyr']} * {ict['pc_cov_exclLU_refyr']} = {emi_cov_exclLU_refyr}"
+            
             emi_notcov_exclLU_taryr = ict['emi_bl_exclLU_taryr'] * (1 - ict['pc_cov_exclLU_taryr'])
+            txt_targets += f"\n- emi_notcov_exclLU_taryr = ict['emi_bl_exclLU_taryr'] * (1 - ict['pc_cov_exclLU_taryr']) = " + \
+                f"{ict['emi_bl_exclLU_taryr']} * (1 - {ict['pc_cov_exclLU_taryr']}) = {emi_notcov_exclLU_taryr}"
             
             """
             REI compared to BAU is same as RBU.
             For REI_RBY, the emissions intensities must be used.
             """
             if ict['tar_type_used'] == 'REI' and refyr != taryr:
+                
                 intensity_growth = ict[ict['int_ref'].lower() + '_taryr'] / ict[ict['int_ref'].lower() + '_refyr']
+                txt_targets += f"\n- intensity_growth = ict[ict['int_ref'].lower() + '\_taryr'] / ict[ict['int_ref'].lower() + '\_refyr'] = " + \
+                    f"{ict[ict['int_ref'].lower() + '_taryr']} / {ict[ict['int_ref'].lower() + '_refyr']} = {intensity_growth}"
+                
             else:
+                
                 intensity_growth = 1.
+                txt_targets += "\n- intensity_growth = 1."
             
             # exclLU (gives nan if ndc_level_exclLU is nan).
             tar_emi_exclLU = intensity_growth * ndc_level_exclLU * emi_cov_exclLU_refyr + emi_notcov_exclLU_taryr
+            txt_targets += f"\n- tar_emi_exclLU = intensity_growth * ndc_level_exclLU * emi_cov_exclLU_refyr + emi_notcov_exclLU_taryr = " + \
+                f"{intensity_growth} * {ndc_level_exclLU} * {emi_cov_exclLU_refyr} + {emi_notcov_exclLU_taryr} = {tar_emi_exclLU}"
             
             """
             inclLU, LU is covered: include the emi_bl_onlyLU_refyr emissions in the target.
             If emi_bl_onlyLU_refyr is negative, only apply the reduction to the exclLU-part.
             And add the bl_onlyLU_refyr as is.
             """
+            txt_targets += "\n- tar_emi_inclLU"
             if bl_onlyLU_refyr < 0.:
+                
                 tar_emi_inclLU = intensity_growth * ndc_level_inclLU * emi_cov_exclLU_refyr + bl_onlyLU_refyr + emi_notcov_exclLU_taryr
+                txt_targets += "\n  - bl_onlyLU_refyr < 0., so add emi_bl_onlyLU_refyr as is."
+                txt_targets += "\n  - tar_emi_inclLU = intensity_growth * ndc_level_inclLU * emi_cov_exclLU_refyr + bl_onlyLU_refyr + emi_notcov_exclLU_taryr = " + \
+                    f"{intensity_growth} * {ndc_level_inclLU} * {emi_cov_exclLU_refyr} + {bl_onlyLU_refyr} + {emi_notcov_exclLU_taryr} = {tar_emi_inclLU}"
+                
             else:
+                
                 tar_emi_inclLU = intensity_growth * ndc_level_inclLU * (emi_cov_exclLU_refyr + bl_onlyLU_refyr) + emi_notcov_exclLU_taryr
+                txt_targets += "\n  - bl_onlyLU_refyr >= 0., so apply the reduction to the emi_bl_onlyLU_refyr part as well."
+                txt_targets += "\n  - tar_emi_inclLU = intensity_growth * ndc_level_inclLU * (emi_cov_exclLU_refyr + bl_onlyLU_refyr) + emi_notcov_exclLU_taryr = " + \
+                    f"{intensity_growth} * {ndc_level_inclLU} * ({emi_cov_exclLU_refyr} + {bl_onlyLU_refyr}) + {emi_notcov_exclLU_taryr} = {tar_emi_inclLU}"
             
-            txt = calc_targets_inclLU_exclLU(tar_emi_exclLU, tar_emi_inclLU, bl_onlyLU_taryr, ict['tar_type_used'], txt)
+            txt_targets += f"\n- tar_emi_exclLU = ndc_value_exclLU = {tar_emi_exclLU}"
+            txt_targets += f"\n- tar_emi_inclLU = ndc_value_inclLU = {tar_emi_inclLU}"
+            
+            txt, txt_targets = calc_targets_inclLU_exclLU(tar_emi_exclLU, tar_emi_inclLU, bl_onlyLU_taryr, ict['tar_type_used'], txt, txt_targets)
         
-        return ict, txt
+        return ict, txt, txt_targets
     
     # %%
     import pandas as pd
@@ -592,7 +753,16 @@ def ndcs_calculate_targets(database, meta):
     ['ABS', 'RBY', 'RBU', 'ABU', 'REI', 'AEI']).
     """
     txt = ''
+    
+    """
+    Write per country information to single txt-files (information on how the target was calculated, with equations)
+    """
+    path_txt_targets = Path(meta.path.output_ndcs, 'per_country_info_on_target_calculations')
+    Path(path_txt_targets).mkdir(parents=True, exist_ok=True)
+    
     for iso_act in sorted(list(set(set(meta.ndcs_info.index) - set(['EU28'])))):
+        
+        txt_targets = ""
         
         txt += f"\n{iso_act}\n"
         # TODO: say what the different methods are!
@@ -600,7 +770,7 @@ def ndcs_calculate_targets(database, meta):
         First run of quantifications.
         """
         lulucf_first_try = True
-        quantis_iso, txt = quantification_per_country(iso_act, meta, lulucf_first_try, calculated_targets, txt)
+        quantis_iso, txt, txt_targets = quantification_per_country(iso_act, meta, lulucf_first_try, calculated_targets, txt, txt_targets)
         
         """
         If any of the tar_exclLU are negative re-run the quantifications with different method.
@@ -609,14 +779,16 @@ def ndcs_calculate_targets(database, meta):
         if any(quantis_iso.tar_emi_exclLU < 0.):
             lulucf_first_try = False
             print_txt = f'{iso_act} LULUCF: second try as some tar_exclLU values < 0 ' + \
-                '(instead of subtracting the bl_onlyLU_taryr from tar_emi_inclLU to get tar_emi_exclLU: ' + \
-                '\n    splitting the absolute reduction into onlyLU and exclLU parts, ' + \
-                'based on contributions per sector in the target year).'
+                '(first try: subtracting the bl_onlyLU_taryr from tar_emi_inclLU to get tar_emi_exclLU; ' + \
+                '\n    second try: splitting the absolute reduction into onlyLU and exclLU parts, ' + \
+                'based on contributions of onlyLU and exclLU in the target year). ' + \
+                f'\n    Negative tar_exclLU for {quantis_iso.tar_type_used[quantis_iso.tar_emi_exclLU < 0.].unique()}, ' + \
+                f'with type_orig = {quantis_iso.tar_type_orig.unique()} and type_calc = {quantis_iso.tar_type_calc.unique()}.'
             print(print_txt)
             txt += print_txt
-            quantis_iso, txt = quantification_per_country(iso_act, meta, lulucf_first_try, calculated_targets, txt)
+            quantis_iso, txt, txt_targets = quantification_per_country(iso_act, meta, lulucf_first_try, calculated_targets, txt, txt_targets)
             if any(quantis_iso.tar_emi_exclLU < 0.):
-                print_txt = "    Second method also didn't work ... so the negative tar_emi_exclLU is set to 0."
+                print_txt = "    Second method also didn't work for all targets ... so the negative tar_emi_exclLU are set to 0."
                 print(print_txt)
                 txt += print_txt
             
@@ -624,6 +796,8 @@ def ndcs_calculate_targets(database, meta):
         
         # Add 'quantis_iso' to 'calculated_targets'.
         calculated_targets = calculated_targets.append(quantis_iso, ignore_index=True)
+        
+        hpf.write_text_to_file(txt_targets, Path(path_txt_targets, f"{iso_act}.md"))
     
     # Write out data.
     calculated_targets.to_csv(Path(meta.path.output_ndcs, 'ndc_targets.csv'), index=False)

@@ -15,10 +15,10 @@ def main_ndc_quantifications(input_file, lulucf_prio):
     
     Input examples:
 
-        input_file = 'input_SSP2_typeCalcForAllCountries' (name of input-file, stored in /MODIFY_INPUT_HERE).
+        input_file = 'input_SSP2_typeCalc' (name of input-file, stored in /MODIFY_INPUT_HERE).
         
         lulucf_prio = '' or 'UNFCCC' or 'FAO'. 
-
+            
             - If it is '' the default LULUCF prioritisation is used (CRF, BUR, UNFCCC, FAO).
             - For 'UNFCCC': UNFCCC, CRF, BUR, FAO.
             - For 'FAO': FAO, CRF, BUR, UNFCCC.
@@ -82,10 +82,12 @@ def main_ndc_quantifications(input_file, lulucf_prio):
     
     # %%
     # Load input and meta data (all in 'meta' from input_file).
+    print(f"input file {input_file}")
     meta = importlib.import_module('MODIFY_INPUT_HERE.' + input_file).meta
     
     # Check if output folder exists. If so, exit the calculations.
-    meta.path.output_ndcs = Path(meta.path.main, 'data', 'output', meta.output_folder + '_' + lulucf_prio)
+    meta.path.output_ndcs = Path(meta.path.main, 'data', 'output', meta.output_folder + 
+        ('_' + lulucf_prio if lulucf_prio!= '' else ''))
     if meta.path.output_ndcs.exists():
         sys.exit("main_ndc_quantifications.py: the output folder already exists. Nothing is calculated.")
         

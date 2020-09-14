@@ -84,40 +84,39 @@ unit_emi = 'tCO2eq'
 gwp = 'AR4'
 years = range(1990, 2030)
 
+case = 'CORR'
+
+# Datatables
+# Set the units to the baseunits.
+tables = hpf.create_class()    
+
+for ssp in ssp_scens:
+
+    setattr(tables, 'pccov_' + ssp, hpf.import_table_to_class_metadata_country_year_matrix(
+            Path(meta.path.pc_cov, f'KYOTOGHG_IPCM0EL_COV_PC_{ssp}FILLED_{case}.csv')). \
+            __reindex__(index=isos_to_be_plotted, columns=years))
     
-for case in ['CORR', 'GROWTH']:
-    
-    # Datatables
-    # Set the units to the baseunits.
-    tables = hpf.create_class()    
-    
-    for ssp in ssp_scens:
-    
-        setattr(tables, 'pccov_' + ssp, hpf.import_table_to_class_metadata_country_year_matrix(
-                Path(meta.path.pc_cov, f'KYOTOGHG_IPCM0EL_COV_PC_{ssp}FILLED_{case}.csv')). \
-                __reindex__(index=isos_to_be_plotted, columns=years))
-        
-        setattr(tables, 'emicov_' + ssp, hpf.import_table_to_class_metadata_country_year_matrix(
-                Path(meta.path.pc_cov, f'KYOTOGHG_IPCM0EL_COV_EMI_{ssp}FILLED_{case}.csv')).
-                __convert_unit__(unit_emi, entity='KYOTOGHG', gwp=gwp). \
-                __reindex__(index=isos_to_be_plotted, columns=years))
-        
-        setattr(tables, f'emitot_{ssp}', hpf.import_table_to_class_metadata_country_year_matrix(
-                Path(meta.path.preprocess, 'tables', f'KYOTOGHG_IPCM0EL_TOTAL_NET_{ssp}FILLED_PMSSPBIE.csv')).
-                __convert_unit__(unit_emi, entity='KYOTOGHG', gwp=gwp). \
-                __reindex__(index=isos_to_be_plotted, columns=years))
-    
-    setattr(tables, 'emitot_primap', hpf.import_table_to_class_metadata_country_year_matrix(
-            Path(meta.path.preprocess, 'tables', f"KYOTOGHG_IPCM0EL_TOTAL_NET_HISTCR_{meta.primap.current_version['emi']}.csv")).
+    setattr(tables, 'emicov_' + ssp, hpf.import_table_to_class_metadata_country_year_matrix(
+            Path(meta.path.pc_cov, f'KYOTOGHG_IPCM0EL_COV_EMI_{ssp}FILLED_{case}.csv')).
             __convert_unit__(unit_emi, entity='KYOTOGHG', gwp=gwp). \
             __reindex__(index=isos_to_be_plotted, columns=years))
     
-    fig = plt.figure(figsize=(10, 5))
-    
-    for iso3 in isos_to_be_plotted:
-         
-        plotting()
-    
-    plt.close(fig)
-    
+    setattr(tables, f'emitot_{ssp}', hpf.import_table_to_class_metadata_country_year_matrix(
+            Path(meta.path.preprocess, 'tables', f'KYOTOGHG_IPCM0EL_TOTAL_NET_{ssp}FILLED_PMSSPBIE.csv')).
+            __convert_unit__(unit_emi, entity='KYOTOGHG', gwp=gwp). \
+            __reindex__(index=isos_to_be_plotted, columns=years))
+
+setattr(tables, 'emitot_primap', hpf.import_table_to_class_metadata_country_year_matrix(
+        Path(meta.path.preprocess, 'tables', f"KYOTOGHG_IPCM0EL_TOTAL_NET_HISTCR_{meta.primap.current_version['emi']}.csv")).
+        __convert_unit__(unit_emi, entity='KYOTOGHG', gwp=gwp). \
+        __reindex__(index=isos_to_be_plotted, columns=years))
+
+fig = plt.figure(figsize=(10, 5))
+
+for iso3 in isos_to_be_plotted:
+     
+    plotting()
+
+plt.close(fig)
+
 # %%

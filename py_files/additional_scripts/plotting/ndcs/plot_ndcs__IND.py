@@ -145,21 +145,21 @@ for rge in ['best', 'worst']:
     ax1.plot(years_int, data.loc[(data.tar_type_used == 'REI') & (data.condi == condi) & 
         (data.rge == rge) & (data.category == 'IPCM0EL'), years_str].values[0], '-.', 
         color=colour_ssp2, linewidth=linewdth_notssp2,
-        label=('SSP2 target (excl. LULUCF)\nassumed 100% coverage' if rge == 'best' else '__nolegend__'))
+        label=('dmSSP2 target (excl. LULUCF)\nassumed 100% coverage' if rge == 'best' else '__nolegend__'))
     data = ptws_not100['ssp2']
     ax1.plot(years_int, data.loc[(data.tar_type_used == 'REI') & (data.condi == condi) & 
         (data.rge == rge) & (data.category == 'IPCM0EL'), years_str].values[0], '--', 
         color=colour_ssp2, linewidth=linewdth_notssp2,
-        label=("SSP2 target (excl. LULUCF)\nestimated coverage" if rge == 'best' else '__nolegend__'))
+        label=("dmSSP2 target (excl. LULUCF)\nestimated coverage" if rge == 'best' else '__nolegend__'))
 
 linewdth_vert = 3
 
 ax1.plot(years_int, ptws_100_ssp2.loc[(ptws_100_ssp2.condi == 'emi_bau') & 
     (ptws_100_ssp2.category == 'IPCM0EL'), years_str].values[0], color=colour_ssp2, 
-    label='SSP2 national totals (excl. LULUCF)', linewidth=linewdth_ssp2)
+    label='dmSSP2 national totals (excl. LULUCF)', linewidth=linewdth_ssp2)
 ax1.plot(years_int, ptws_not100['ssp2'].loc[(ptws_not100['ssp2'].condi == 'emi_cov') & 
     (ptws_not100['ssp2'].category == 'IPCM0EL'), years_str].values[0], ':', color=colour_ssp2, 
-    label='SSP2 covered emissions (excl. LULUCF)', linewidth=linewdth_ssp2)
+    label='dmSSP2 covered emissions (excl. LULUCF)', linewidth=linewdth_ssp2)
 
 # tars
 for ssp, add_x in zip(tars_not100.keys(), [-.6, -.3, 0, .3, .6]):
@@ -179,7 +179,7 @@ for ssp, add_x in zip(tars_not100.keys(), [-.6, -.3, 0, .3, .6]):
     
     # GDP
     ax2.plot(years_int, ptws_not100[ssp].loc[(ptws_not100[ssp].condi == 'gdp'), years_str].values[0],
-        color=colour_act, label=f'{ssp.upper()}', 
+        color=colour_act, label=f'dm{ssp.upper()}', 
         linewidth=(linewdth_ssp2 if ssp == 'ssp2' else linewdth_notssp2))
 
 for ssp, add_x in zip(tars_not100.keys(), [-.6, -.3, 0, .3, .6]):
@@ -212,9 +212,9 @@ ax1.plot([year, year], YL, 'k--', linewidth=.3)
 ax1.set_xlim(XL)
 ax1.set_ylim(YL)
 
-ax1.text(XL[0], YL[0] - np.diff(YL)*.15,
-    'Vertical lines: quantification of mitigation targets (dark blue) based on assumed 100% coverage; ' +
-    '(others) based on estimated coverage.')
+#ax1.text(XL[0], YL[0] - np.diff(YL)*.15,
+#    'Vertical lines: quantification of mitigation targets (dark blue) based on assumed 100% coverage; ' +
+#    '(others) based on estimated coverage.')
 
 ax2.set_xlim(XL)
 YL = ax2.get_ylim()
@@ -239,7 +239,7 @@ for axa in [ax1, ax2]:
             rotation=90, ha='center', va='bottom')
 
 ax1.set_ylabel('emissions / Mt CO$_2$eq AR4', fontweight='bold')
-ax2.set_ylabel('GDP (PPP) / 2011 US$', fontweight='bold')
+ax2.set_ylabel('GDP (PPP) / 2011 GK$', fontweight='bold')
 
 hpf.put_labels_to_subplots(ax1, ax2)
 

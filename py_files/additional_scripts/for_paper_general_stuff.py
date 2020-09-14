@@ -40,6 +40,32 @@ kyotoghg_ipcm0el = get_table(Path(meta.path.matlab, 'KYOTOGHGAR4_IPCM0EL_TOTAL_N
     meta.primap.current_version['emi'] + '.csv')).__reindex__(years=year)
 global_share_2017 = 100. * kyotoghg_ipcm0el.__global_share__(years=year)
 
+folders_calc = [
+    'ndcs_20200628_2218_SSP1_typeCalc',
+    'ndcs_20200628_2120_SSP2_typeCalc',
+    'ndcs_20200628_2229_SSP3_typeCalc',
+    'ndcs_20200628_2243_SSP4_typeCalc',
+    'ndcs_20200628_2258_SSP5_typeCalc']
+folders_calc100 = [
+    'ndcs_20200628_2221_SSP1_typeCalc_pccov100',
+    'ndcs_20200628_2122_SSP2_typeCalc_pccov100',
+    'ndcs_20200628_2234_SSP3_typeCalc_pccov100',
+    'ndcs_20200628_2248_SSP4_typeCalc_pccov100',
+    'ndcs_20200628_2301_SSP5_typeCalc_pccov100']
+
+folders_orig = [
+    'ndcs_20200702_0834_SSP1_typeOrig',
+    'ndcs_20200702_0829_SSP2_typeOrig',
+    'ndcs_20200702_0839_SSP3_typeOrig',
+    'ndcs_20200702_0844_SSP4_typeOrig',
+    'ndcs_20200702_0848_SSP5_typeOrig']
+folders_orig100 = [
+    'ndcs_20200702_0836_SSP1_typeOrig_pccov100',
+    'ndcs_20200702_0830_SSP2_typeOrig_pccov100',
+    'ndcs_20200702_0840_SSP3_typeOrig_pccov100',
+    'ndcs_20200702_0845_SSP4_typeOrig_pccov100',
+    'ndcs_20200702_0849_SSP5_typeOrig_pccov100']
+
 # %%
 """
 How many countries with which GWP.
@@ -415,9 +441,9 @@ for ssp in meta.ssps.scens.long:
     max_gdp = max([max_gdp, gdp_share])
     
     print('%', ssp, 'sum over global shares of countries without data (share for 2017)')
-    print(f"% emi: {emi_share :.1f}% ({len(emi_ssp_no_data)} counties, {', '.join(emi_ssp_no_data)})")
-    print(f"% pop: {pop_share :.1f}% ({len(pop_ssp_no_data)} counties, {', '.join(pop_ssp_no_data)})")
-    print(f"% gdp: {gdp_share :.1f}% ({len(gdp_ssp_no_data)} counties, {', '.join(gdp_ssp_no_data)})\n")
+    print(f"% emi: {emi_share :.1f}% ({len(emi_ssp_no_data)} countries, {', '.join(emi_ssp_no_data)})")
+    print(f"% pop: {pop_share :.1f}% ({len(pop_ssp_no_data)} countries, {', '.join(pop_ssp_no_data)})")
+    print(f"% gdp: {gdp_share :.1f}% ({len(gdp_ssp_no_data)} countries, {', '.join(gdp_ssp_no_data)})\n")
 
 print(f"% Maximal total shares (sum over all countries with missing data): emi {max_emi :.1f}%, pop {max_pop :.1f}%, gdp {max_gdp :.1f}%")
 
@@ -590,32 +616,6 @@ Plot the baseline emissions and the mitigated pathways (EARTH) for type_calc and
 Per SSP.
 """
 
-folders_calc = [
-    'ndcs_20200628_2218_SSP1_typeCalc',
-    'ndcs_20200628_2120_SSP2_typeCalc',
-    'ndcs_20200628_2229_SSP3_typeCalc',
-    'ndcs_20200628_2243_SSP4_typeCalc',
-    'ndcs_20200628_2258_SSP5_typeCalc']
-folders_calc100 = [
-    'ndcs_20200628_2221_SSP1_typeCalc_pccov100',
-    'ndcs_20200628_2122_SSP2_typeCalc_pccov100',
-    'ndcs_20200628_2234_SSP3_typeCalc_pccov100',
-    'ndcs_20200628_2248_SSP4_typeCalc_pccov100',
-    'ndcs_20200628_2301_SSP5_typeCalc_pccov100']
-
-folders_orig = [
-    'ndcs_20200702_0834_SSP1_typeOrig',
-    'ndcs_20200702_0829_SSP2_typeOrig',
-    'ndcs_20200702_0839_SSP3_typeOrig',
-    'ndcs_20200702_0844_SSP4_typeOrig',
-    'ndcs_20200702_0848_SSP5_typeOrig']
-folders_orig100 = [
-    'ndcs_20200702_0836_SSP1_typeOrig_pccov100',
-    'ndcs_20200702_0830_SSP2_typeOrig_pccov100',
-    'ndcs_20200702_0840_SSP3_typeOrig_pccov100',
-    'ndcs_20200702_0845_SSP4_typeOrig_pccov100',
-    'ndcs_20200702_0849_SSP5_typeOrig_pccov100']
-
 years_int = list(range(1990, 2030))
 years_str = [str(xx) for xx in years_int]
 
@@ -690,43 +690,109 @@ print(f"tar_exclLU negative from ABU_exclLU: {emi.data.loc['TON', 2017]/emitot*1
 
 # %%
 """
-How many countries for which 100% coverage targets are worse than estimated coverage targets?
+How many countries for which 100% coverage targets (exclLU) are worse than estimated coverage targets?
 SSP2 type_calc and type_orig.
 """
-print("Countries with higher condi_best 2030 values for 100% coverage than for estimated coverage.")
+print("Countries with higher 2030 targets (exclLU) for 100% coverage than for estimated coverage.")
 
 for condi, rge in ['unconditional', 'worst'], ['conditional', 'best']:
     
-    print(f"\n{condi}, {rge}")
+    txt = f"{condi}, {rge}"
     
     for ssp, count in zip(meta.ssps.scens.short, range(len(folders_calc))):
-        print(f"\n{ssp}")
+        
+        txt += f"\n  {ssp}"
+        
         for folder, folder100, what in \
             [folders_calc[count], folders_calc100[count], 'type_calc'], \
             [folders_orig[count], folders_orig100[count], 'type_orig']:
-            print(f"\n{what}")
+            
+            txt += f"\n    {what}"
+            
             data = pd.read_csv(
                 Path(meta.path.output, 'output_for_paper', folder, 'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
             data100 = pd.read_csv(
                 Path(meta.path.output, 'output_for_paper', folder100, 'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
-            isos = ""
+            
+            isos = []
             for iso3 in data.iso3.unique():
-                if data100.loc[(data100.iso3 == iso3) & (data100.condi == condi) & (data100.rge == rge), '2030'].values[0] \
-                    > data.loc[(data.iso3 == iso3) & (data.condi == condi) & (data.rge == rge), '2030'].values[0]:
-                    isos += f", {iso3}"
-            print(isos)
+                
+                data100_act = data100.loc[(data100.iso3 == iso3) & (data100.condi == condi) & (data100.rge == rge), '2030'].values[0]
+                data_act = data.loc[(data.iso3 == iso3) & (data.condi == condi) & (data.rge == rge), '2030'].values[0]
+                
+                if  data100_act > data_act:
+                    
+                    bl = data.loc[(data.iso3 == iso3) & (data.condi == 'emi_bau'), '2030'].values[0]
+                    isos += [f"{iso3} (" + infos_from_ndcs.loc[iso3, what.upper()] + 
+                             f", comparison to BL 100: {data100_act - bl :+.0f}, real: {data_act - bl :+.0f})"]
+            
+            txt += "\n      " + "\n      ".join(isos)
+    
+    print(txt)
+
+# %%
+# """
+# EARTH 2017 values for LULUCF (sum, all negatives, all positives).
+# And with FAO prioritisation.
+# """
+
+# year_lu = 2017
+# print(f"Global Kyoto GHG LULUCF, {year_lu}")
+
+# # Latex table.
+# txt = f"Prioritised data sources & Total & Net sources & Net sinks  & Year {year_lu :.0f} \\\\ \\hline \n"
+
+# for fao in ['', 'UNFCCC', 'FAO']:
+    
+#     print(f"\nVARIOUS{fao}")
+    
+#     lulucf = get_table(Path(meta.path.preprocess, 'tables', f'KYOTOGHG_IPCMLULUCF_TOTAL_NET_INTERLIN_VARIOUS{fao}.csv')). \
+#         __reindex__(isos=meta.isos.EARTH).__reindex__(years=year_lu)
+    
+#     print(f'all together: {1/1000*lulucf.data.sum().values[0]:.1f} Gt CO2eq AR4')
+#     print(f'all positive: {1/1000*lulucf.data[lulucf.data > 0.].sum().values[0]:.1f} Gt CO2eq AR4')
+#     print(f'all negative: {1/1000*lulucf.data[lulucf.data < 0.].sum().values[0]:.1f} Gt CO2eq AR4')
+    
+#     if fao == '':
+#         txt += "CRF, BUR, UNFCCC, FAO"
+#     elif fao == 'FAO':
+#         txt += "FAO, CRF, BUR, UNFCCC"
+#     elif fao == 'UNFCCC':
+#         txt += "UNFCCC, CRF, BUR, FAO"
+    
+#     txt += f" & {1/1000*lulucf.data.sum().values[0]:.1f}"
+#     txt += f" & {1/1000*lulucf.data[lulucf.data > 0.].sum().values[0]:.1f}"
+#     txt += f" & {1/1000*lulucf.data[lulucf.data < 0.].sum().values[0]:.1f}"
+    
+#     if fao == 'UNFCCC':
+#         txt += " & Gt~CO$_2$eq (AR4) \\\\ \n"
+#     else:
+#         txt += " & \\\\ \n"
+
+# kyotoghg_ipcm0el_act = get_table(Path(meta.path.matlab, 'KYOTOGHGAR4_IPCM0EL_TOTAL_NET_HISTCR_' + 
+#     meta.primap.current_version['emi'] + '.csv')).__reindex__(years=year_lu)
+# print(f'\nGlobal Kyoto GHG IPCM0EL {1/1000*kyotoghg_ipcm0el_act.data.sum().values[0]:.1f} Gt CO2eq AR4')
+
+# hpf.write_text_to_file(txt[:-5], Path(meta.path.main, 'data', 'other', 'lulucf_comparison_of_prio_EARTH_AR4_GtCO2eq_latex.txt'))
 
 # %%
 """
-EARTH 2017 values for LULUCF (sum, all negatives, all positives).
+EARTH 1990, 2000, 2010, 2017 values for LULUCF (sum, all negatives, all positives).
 And with FAO prioritisation.
 """
 
 year_lu = 2017
+years_lu = [1990, 2010, 2017, 2030]
+
 print(f"Global Kyoto GHG LULUCF, {year_lu}")
 
 # Latex table.
-txt = f"Prioritised data sources & Total & Net sources & Net sinks  & Year {year_lu :.0f} \\\\ \\hline \n"
+years_str = " & ".join([f"{xx :.0f}" for xx in years_lu])
+len_yrs = str(len(years_lu))
+txt = "Prioritised data sources & \multicolumn{" + len_yrs + "}{c |}{Total} & "
+txt += "\multicolumn{" + len_yrs + "}{c |}{Net sources} & "
+txt += "\multicolumn{" + len_yrs + "}{c}{Net sinks} \\\\ \\hline \n"
+txt += "Gt~CO$_2$eq AR4 & " + years_str + " & " + years_str + " & " + years_str + " \\\\ \\hline \n"
 
 for fao in ['', 'UNFCCC', 'FAO']:
     
@@ -746,19 +812,41 @@ for fao in ['', 'UNFCCC', 'FAO']:
     elif fao == 'UNFCCC':
         txt += "UNFCCC, CRF, BUR, FAO"
     
-    txt += f" & {1/1000*lulucf.data.sum().values[0]:.1f}"
-    txt += f" & {1/1000*lulucf.data[lulucf.data > 0.].sum().values[0]:.1f}"
-    txt += f" & {1/1000*lulucf.data[lulucf.data < 0.].sum().values[0]:.1f}"
+    lulucf = get_table(Path(meta.path.preprocess, 'tables', f'KYOTOGHG_IPCMLULUCF_TOTAL_NET_INTERLIN_VARIOUS{fao}.csv')). \
+        __reindex__(isos=meta.isos.EARTH).__reindex__(years=years_lu)
     
-    if fao == 'UNFCCC':
-        txt += " & Gt~CO$_2$eq (AR4) \\\\ \n"
-    else:
-        txt += " & \\\\ \n"
+    lu_data = " & ".join([f"{1/1000*xx :.1f}" for xx in lulucf.data.sum()])
+    txt += f" & {lu_data}"
+    lu_data = " & ".join([f"{1/1000*xx :.1f}" for xx in lulucf.data[lulucf.data > 0.].sum()])
+    txt += f" & {lu_data}"
+    lu_data = " & ".join([f"{1/1000*xx :.1f}" for xx in lulucf.data[lulucf.data < 0.].sum()])
+    txt += f" & {lu_data}"
+    
+    txt += " \\\\ \n"
 
 kyotoghg_ipcm0el_act = get_table(Path(meta.path.matlab, 'KYOTOGHGAR4_IPCM0EL_TOTAL_NET_HISTCR_' + 
     meta.primap.current_version['emi'] + '.csv')).__reindex__(years=year_lu)
 print(f'\nGlobal Kyoto GHG IPCM0EL {1/1000*kyotoghg_ipcm0el_act.data.sum().values[0]:.1f} Gt CO2eq AR4')
 
-hpf.write_text_to_file(txt[:-2], Path(meta.path.main, 'data', 'other', 'lulucf_comparison_of_prio_EARTH_AR4_GtCO2eq_latex.txt'))
+hpf.write_text_to_file(txt[:-5], Path(meta.path.main, 'data', 'other', 'lulucf_comparison_of_prio_EARTH_AR4_GtCO2eq_latex.txt'))
+
+# %%
+"""
+Share of covered emissions: global 2017 values, how much is covered, and how much does not have (I)NDCs.
+"""
+
+isos_no_indc = infos_from_ndcs.loc[meta.isos.EARTH, 'NDC_INDC']
+isos_no_indc = isos_no_indc[~isos_no_indc.isin(['NDC', 'INDC'])].index.to_list()
+emi_cov = hpf.import_table_to_class_metadata_country_year_matrix(
+    Path(meta.path.pc_cov, 'KYOTOGHG_IPCM0EL_COV_EMI_HISTORY_PRIMAPHIST21.csv')).data.loc[:, 2017]
+emi_ncov = hpf.import_table_to_class_metadata_country_year_matrix(
+    Path(meta.path.pc_cov, 'KYOTOGHG_IPCM0EL_NOTCOV_EMI_HISTORY_PRIMAPHIST21.csv')).data.loc[:, 2017]
+emi_tot = hpf.import_table_to_class_metadata_country_year_matrix(
+    Path(meta.path.preprocess, 'tables', 'KYOTOGHG_IPCM0EL_TOTAL_NET_HISTCR_PRIMAPHIST21.csv')).data.loc[:, 2017]
+print(f"% 2017 (exclLU)")
+print(f"% covered emissions (excl. USA): {100*emi_cov.loc[set(set(meta.isos.EARTH)-set(['USA']))].sum()/emi_tot.sum() :.0f}%")
+print(f"% not-covered emissions (excl. USA): {100*emi_ncov.sum()/emi_tot.sum() :.0f}%")
+print(f"% amongst not-covered emissions: {100*emi_tot['USA']/emi_tot.sum() :.0f}% from USA")
+print(f"% and from remaining non-(I)NDC countries: {100*emi_tot.reindex(isos_no_indc).sum()/emi_tot.sum() :.0f}%")
 
 # %%

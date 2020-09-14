@@ -106,10 +106,12 @@ def text_to_md_file():
                 txt_emi_trend += f"{trend_gas_txt[0]} emissions from the {trend_sec_txt[0]} sector, "
                 nr_trend = 1
             elif len(set(trend_sec)) == 2: # 2 sectors
-                txt_emi_trend += f"{trend_gas_txt[0]} emissions from the {trend_sec_txt[0]} and {trend_sec_txt[1]} sectors, "
+                txt_emi_trend += f"{trend_gas_txt[0]} emissions from the {trend_sec_txt[0]} and " + \
+                    f"{trend_sec_txt[1]} sectors, "
                 nr_trend = 2
             elif len(set(trend_sec)) > 2: # 3 sectors
-                txt_emi_trend += f"{trend_gas_txt[0]} emissions from the {trend_sec_txt[0]}, {trend_sec_txt[1]}, and {trend_sec_txt[2]} sectors, "
+                txt_emi_trend += f"{trend_gas_txt[0]} emissions from the {trend_sec_txt[0]}, " + \
+                    f"{trend_sec_txt[1]}, and {trend_sec_txt[2]} sectors, "
                 nr_trend = 3
         
         elif len(set(trend_gas)) == 2: # 2 gases
@@ -117,45 +119,56 @@ def text_to_md_file():
                 txt_emi_trend += f"{trend_gas_txt[0]} and {trend_gas_txt[1]} emissions from the {trend_sec_txt[0]} sector, "
                 nr_trend = 2
             elif len(set(trend_sec)) == 2: # 2 gases, 2 sectors
-                txt_emi_trend += f"{trend_gas_txt[0]} emissions from the {trend_sec_txt[0]} sector, "
-                txt_emi_trend += f"and {trend_gas_txt[1]} emissions from the {trend_sec_txt[1]} sector, "
+                txt_emi_trend += f"{trend_gas_txt[0]} emissions from the {trend_sec_txt[0]} sector, " + \
+                    f"and {trend_gas_txt[1]} emissions from the {trend_sec_txt[1]} sector, "
                 nr_trend = 2
             elif len(set(trend_sec)) > 2: # 2 gases, 3 sectors.
-                txt_emi_trend += f"{trend_gas_txt[0]} emissions from the {trend_sec_txt[0]} sector, "
-                txt_emi_trend += f"{trend_gas_txt[1]} emissions from the {trend_sec_txt[1]} sector, "
-                txt_emi_trend += f"and {trend_gas_txt[2]} emissions from the {trend_sec_txt[2]} sector, "
+                txt_emi_trend += f"{trend_gas_txt[0]} emissions from the {trend_sec_txt[0]} sector, " + \
+                    f"{trend_gas_txt[1]} emissions from the {trend_sec_txt[1]} sector, " + \
+                    f"and {trend_gas_txt[2]} emissions from the {trend_sec_txt[2]} sector, "
                 nr_trend = 3
         
         elif len(set(trend_gas)) > 2: # 3 gases
             if len(set(trend_sec)) == 1: # 3 gases, 1 sector
-                txt_emi_trend += f"{trend_gas_txt[0]}, {trend_gas_txt[1]} and {trend_gas_txt[2]} emissions from the {trend_sec_txt[0]} sector, "
+                txt_emi_trend += f"{trend_gas_txt[0]}, {trend_gas_txt[1]} and {trend_gas_txt[2]} " + \
+                    f"emissions from the {trend_sec_txt[0]} sector, "
                 nr_trend = 3
             elif len(set(trend_sec)) == 2: # 3 gases, 2 sectors
-                txt_emi_trend += f"{trend_gas_txt[0]} emissions from the {trend_sec_txt[0]} sector, "
-                txt_emi_trend += f"{trend_gas_txt[1]} emissions from the {trend_sec_txt[1]} sector, "
-                txt_emi_trend += f"and {trend_gas_txt[2]} emissions from the {trend_sec_txt[2]} sector, "
+                txt_emi_trend += f"{trend_gas_txt[0]} emissions from the {trend_sec_txt[0]} sector, " + \
+                    f"{trend_gas_txt[1]} emissions from the {trend_sec_txt[1]} sector, " + \
+                    f"and {trend_gas_txt[2]} emissions from the {trend_sec_txt[2]} sector, "
                 nr_trend = 3
             elif len(set(trend_sec)) > 2: # 3 gases, 3 sectors
-                txt_emi_trend += f"{trend_gas_txt[0]} emissions from the {trend_sec_txt[0]} sector, "
-                txt_emi_trend += f"{trend_gas_txt[1]} emissions from the {trend_sec_txt[1]} sector, "
-                txt_emi_trend += f"and {trend_gas_txt[2]} emissions from the {trend_sec_txt[2]} sector, "
+                txt_emi_trend += f"{trend_gas_txt[0]} emissions from the {trend_sec_txt[0]} sector, " + \
+                    f"{trend_gas_txt[1]} emissions from the {trend_sec_txt[1]} sector, " + \
+                    f"and {trend_gas_txt[2]} emissions from the {trend_sec_txt[2]} sector, "
                 nr_trend = 3
         
         if nr_trend == 1:
-            txt_emi_trend += f"which contributed {combi_slopes.loc[trend_gas[0] + '_' + trend_sec[0], 'share_yr_his'].sum() :.2f}% "
+            number = hpf.num_to_str_one_non_zero_decimal(
+                combi_slopes.loc[trend_gas[0] + '_' + trend_sec[0], 'share_yr_his'].sum())
+            txt_emi_trend += f"which contributed {number}% "
         elif nr_trend == 2:
-            txt_emi_trend += f"which contributed {combi_slopes.loc[trend_gas[0] + '_' + trend_sec[0], 'share_yr_his'].sum() :.2f}% "
-            txt_emi_trend += f"and {combi_slopes.loc[trend_gas[1] + '_' + trend_sec[1], 'share_yr_his'].sum() :.2f}% "
+            number1 = hpf.num_to_str_one_non_zero_decimal(
+                combi_slopes.loc[trend_gas[0] + '_' + trend_sec[0], 'share_yr_his'].sum())
+            number2 = hpf.num_to_str_one_non_zero_decimal(
+                combi_slopes.loc[trend_gas[1] + '_' + trend_sec[1], 'share_yr_his'].sum())
+            txt_emi_trend += f"which contributed {number1}% and {number2}% "
         elif nr_trend == 3:
-            txt_emi_trend += f"which contributed {combi_slopes.loc[trend_gas[0] + '_' + trend_sec[0], 'share_yr_his'].sum() :.2f}%, "
-            txt_emi_trend += f"{combi_slopes.loc[trend_gas[1] + '_' + trend_sec[1], 'share_yr_his'].sum() :.2f}%, "
-            txt_emi_trend += f"and {combi_slopes.loc[trend_gas[2] + '_' + trend_sec[2], 'share_yr_his'].sum() :.2f}% "
+            number1 = hpf.num_to_str_one_non_zero_decimal(
+                combi_slopes.loc[trend_gas[0] + '_' + trend_sec[0], 'share_yr_his'].sum())
+            number2 = hpf.num_to_str_one_non_zero_decimal(
+                combi_slopes.loc[trend_gas[1] + '_' + trend_sec[1], 'share_yr_his'].sum())
+            number3 = hpf.num_to_str_one_non_zero_decimal(
+                combi_slopes.loc[trend_gas[2] + '_' + trend_sec[2], 'share_yr_his'].sum())
+            txt_emi_trend += f"which contributed {number1}%, {number2}%, and {number3}% "
         
         txt_emi_trend += f"to {ctr}'s 2017 emissions.[^5]"
-        txt_emi_trend += "\n\n[^5]: Analysis based on the correlations between total national emissions (excl. LULUCF) "
-        txt_emi_trend += "versus the emissions of the combinations of main-sectors \& the gases CO$_2$, CH$_4$, N$_2$O and F-gases. "
+        txt_emi_trend += "\n\n[^5]: Analysis based on the correlations between total national emissions (excl. LULUCF) " + \
+            "versus the emissions of the combinations of main-sectors \& the gases CO$_2$, CH$_4$, N$_2$O and F-gases. "
         txt_emi_trend += f"Only data from {yrs_corr[0]} to {yrs_corr[-1]} are assessed. "
-        txt_emi_trend += f"The (up to) three gas \& sector combinations are chosen for which the slope of the regression line to the correlated values exceeds {lim_slope}.\n\n"
+        txt_emi_trend += "The (up to) three gas \& sector combinations are chosen for which the slope of the " + \
+            f"regression line to the correlated values exceeds {lim_slope}.\n\n"
     
     else:
         txt_emi_trend = ""
@@ -163,8 +176,8 @@ def text_to_md_file():
     # %%
     # Nicer unit lables.
     units_iso['emi'] = units_iso['emi']['unit'].replace('CO2', 'CO$_2$')
-    units_iso['gdp'] = units_iso['gdp']['unit'].replace('2011GKD', ' 2011 US\$')
-    units_iso['emi_gdp'] = units_iso['emi_gdp']['unit'].replace('CO2', 'CO$_2$').replace('2011GKD', ' 2011 US\$')
+    units_iso['gdp'] = units_iso['gdp']['unit'].replace('2011GKD', ' 2011 GK\$')
+    units_iso['emi_gdp'] = units_iso['emi_gdp']['unit'].replace('CO2', 'CO$_2$').replace('2011GKD', ' 2011 GK\$')
     units_iso['pop'] = units_iso['pop']['unit'].replace('Pers', ' Pers')
     units_iso['emi_pop'] = units_iso['emi_pop']['unit'].replace('CO2', 'CO$_2$').replace('Pers', ' Pers')
     
@@ -190,7 +203,7 @@ def text_to_md_file():
         # Put in the units.
         unit_act = getattr(tables_iso, 'ssp_' + tpe).unit
         unit_act = (unit_act.replace('CO2', 'CO$_2$') if 'CO2' in unit_act else unit_act)
-        unit_act = (unit_act.replace('2011GKD', ' 2011 US\$') if '2011GKD' in unit_act else unit_act)
+        unit_act = (unit_act.replace('2011GKD', ' 2011 GK\$') if '2011GKD' in unit_act else unit_act)
         unit_act = (unit_act.replace('Pers', ' Pers') if 'Pers' in unit_act else unit_act)
         overview_table.loc[tpe, 'unit'] = unit_act
     
@@ -202,23 +215,23 @@ def text_to_md_file():
     for tpe in mapping.keys():
         overview_table_str.loc[row, 'Year'] = str(yr_his)
         overview_table_str.loc[row+1, 'Year'] = str(yr_fut)
-        overview_table_str.loc[row, 'Total'] = \
-            '{:.2f}'.format(overview_table.loc[tpe, 'tot_his'])
-        overview_table_str.loc[row+1, 'Total'] = \
-            '{:.2f}'.format(overview_table.loc[tpe, 'tot_fut'])
-        overview_table_str.loc[row, 'Unit'] = overview_table.loc[tpe, 'unit']
-        overview_table_str.loc[row+1, 'Unit'] = overview_table.loc[tpe, 'unit']
-        overview_table_str.loc[row, 'Global share (\%)'] = \
-            '{:.2f}'.format(overview_table.loc[tpe, 'share_his'])
-        overview_table_str.loc[row+1, 'Global share (\%)'] = \
-            '{:.2f}'.format(overview_table.loc[tpe, 'share_fut'])
+        overview_table_str.loc[row, 'Total'] = hpf.num_to_str_one_non_zero_decimal(
+            overview_table.loc[tpe, 'tot_his'])
+        overview_table_str.loc[row+1, 'Total'] = hpf.num_to_str_one_non_zero_decimal(
+            overview_table.loc[tpe, 'tot_fut'])
+        overview_table_str.loc[[row, row+1], 'Unit'] = overview_table.loc[tpe, 'unit']
+        overview_table_str.loc[row, 'Global share (\%)'] = hpf.num_to_str_one_non_zero_decimal(
+            overview_table.loc[tpe, 'share_his'])
+        overview_table_str.loc[row+1, 'Global share (\%)'] = hpf.num_to_str_one_non_zero_decimal(
+            overview_table.loc[tpe, 'share_fut'])
         overview_table_str.loc[row, 'Rank'] = \
             '{:}'.format(overview_table.loc[tpe, 'rank_his'])
         overview_table_str.loc[row+1, 'Rank'] = \
             '{:}'.format(overview_table.loc[tpe, 'rank_fut'])
         row += 2
     
-    overview_table_str.insert(0, '', ['Emissions', '', 'GDP', '', 'Emissions per GDP', '', 'Population', '', 'Emissions per capita', ''])
+    overview_table_str.insert(0, '', 
+        ['Emissions', '', 'GDP', '', 'Emissions per GDP', '', 'Population', '', 'Emissions per capita', ''])
     
     # %%
     gases_table = pd.DataFrame(index=['KYOTOGHG'] + meta.gases.kyotoghg, columns=['emi', 'share'])
@@ -237,33 +250,47 @@ def text_to_md_file():
             ssps_table.loc[ssp, yr] = getattr(tables_iso, 'emi_' + ssp).data.loc[iso3, yr]
     
     # %%
-    tot_emi_his = '{:.2f}'.format(cats_table.loc['IPCM0EL', 'emi'])
+    tot_emi_his = hpf.num_to_str_one_non_zero_decimal(
+        cats_table.loc['IPCM0EL', 'emi'])
     highest_sec_his_1st = sec_to_label[meta.categories.main.cat_to_sec[
         cats_table.loc[meta.categories.main.exclLU, 'share'].sort_values(ascending=False).index[0]]]
-    highest_sec_his_share_1st = '{:.1f}'.format(cats_table.loc[meta.categories.main.exclLU, 'share'].sort_values(ascending=False)[0])
+    highest_sec_his_share_1st = hpf.num_to_str_one_non_zero_decimal(
+        cats_table.loc[meta.categories.main.exclLU, 'share'].sort_values(ascending=False)[0])
     highest_sec_his_2nd = sec_to_label[meta.categories.main.cat_to_sec[
         cats_table.loc[meta.categories.main.exclLU, 'share'].sort_values(ascending=False).index[1]]]
-    highest_sec_his_share_2nd = '{:.1f}'.format(cats_table.loc[meta.categories.main.exclLU, 'share'].sort_values(ascending=False)[1])
+    highest_sec_his_share_2nd = hpf.num_to_str_one_non_zero_decimal(
+        cats_table.loc[meta.categories.main.exclLU, 'share'].sort_values(ascending=False)[1])
     highest_sec_his_3rd = sec_to_label[meta.categories.main.cat_to_sec[
         cats_table.loc[meta.categories.main.exclLU, 'share'].sort_values(ascending=False).index[2]]]
-    highest_sec_his_share_3rd = '{:.1f}'.format(cats_table.loc[meta.categories.main.exclLU, 'share'].sort_values(ascending=False)[2])
+    highest_sec_his_share_3rd = hpf.num_to_str_one_non_zero_decimal(
+        cats_table.loc[meta.categories.main.exclLU, 'share'].sort_values(ascending=False)[2])
     highest_gas_his_1st = meta.gases.gas_to_label[gases_table.loc[meta.gases.kyotoghg, 'share'].sort_values(ascending=False).index[0]]
-    highest_gas_his_share_1st = '{:.1f}'.format(gases_table.loc[meta.gases.kyotoghg, 'share'].sort_values(ascending=False)[0])
+    highest_gas_his_share_1st = hpf.num_to_str_one_non_zero_decimal(
+        gases_table.loc[meta.gases.kyotoghg, 'share'].sort_values(ascending=False)[0])
     highest_gas_his_2nd = meta.gases.gas_to_label[gases_table.loc[meta.gases.kyotoghg, 'share'].sort_values(ascending=False).index[1]]
-    highest_gas_his_share_2nd = '{:.1f}'.format(gases_table.loc[meta.gases.kyotoghg, 'share'].sort_values(ascending=False)[1])
+    highest_gas_his_share_2nd = hpf.num_to_str_one_non_zero_decimal(
+        gases_table.loc[meta.gases.kyotoghg, 'share'].sort_values(ascending=False)[1])
     highest_gas_his_3rd = meta.gases.gas_to_label[gases_table.loc[meta.gases.kyotoghg, 'share'].sort_values(ascending=False).index[2]]
-    highest_gas_his_share_3rd = '{:.1f}'.format(gases_table.loc[meta.gases.kyotoghg, 'share'].sort_values(ascending=False)[2])
-    share_co2_his = '{:.1f}'.format(gases_table.loc['CO2', 'share'])
-    share_fgases_his = '{:.1f}'.format(gases_table.loc[meta.gases.fgases, 'share'].sum())
-    ssp2_2030 = '{:.2f}'.format(ssps_table.loc[ssp_for_overview[:4], 2030])
-    ssp2_2030_pc = '{:.1f}'.format(100. * (ssps_table.loc[ssp_for_overview[:4], 2030] / ssps_table.loc[ssp_for_overview[:4], 2017] - 1))
+    highest_gas_his_share_3rd = hpf.num_to_str_one_non_zero_decimal(
+        gases_table.loc[meta.gases.kyotoghg, 'share'].sort_values(ascending=False)[2])
+    #share_co2_his = '{:.1f}'.format(gases_table.loc['CO2', 'share'])
+    share_fgases_his = hpf.num_to_str_one_non_zero_decimal(
+        gases_table.loc[meta.gases.fgases, 'share'].sum())
+    ssp2_2030 = hpf.num_to_str_one_non_zero_decimal(
+        ssps_table.loc[ssp_for_overview[:4], 2030])
+    ssp2_2030_pc = hpf.num_to_str_one_non_zero_decimal(
+        100. * (ssps_table.loc[ssp_for_overview[:4], 2030] / ssps_table.loc[ssp_for_overview[:4], 2017] - 1))
     
     # %%
     # Share of CO2 in 2030 (SSP2).
     yr = 2030
-    share_co2_2030 = f"{100. * getattr(tables, 'emi_CO2_ssp2').data.loc[iso3, yr] / getattr(tables, 'ssp_emi').data.loc[iso3, yr] :.2f}%"
+    number = hpf.num_to_str_one_non_zero_decimal(
+        100. * getattr(tables, 'emi_CO2_ssp2').data.loc[iso3, yr] / getattr(tables, 'ssp_emi').data.loc[iso3, yr])
+    share_co2_2030 = f"{number}%"
     yr = 2050
-    share_co2_2050 = f"{100. * getattr(tables, 'emi_CO2_ssp2').data.loc[iso3, yr] / getattr(tables, 'ssp_emi').data.loc[iso3, yr] :.2f}%"
+    number = hpf.num_to_str_one_non_zero_decimal(
+        100. * getattr(tables, 'emi_CO2_ssp2').data.loc[iso3, yr] / getattr(tables, 'ssp_emi').data.loc[iso3, yr])
+    share_co2_2050 = f"{number}%"
     
     # %%
     # Calculate the linear regressions for gdp, pop and emi/gdp and emi/pop for 2010 to most recent value.
@@ -274,17 +301,29 @@ def text_to_md_file():
     _, _, pop_linreg = hpf.linear_regression(yrs_linreg, tables_iso.ssp_pop.data.loc[iso3, yrs_linreg])
     _, _, emi_pop_linreg = hpf.linear_regression(yrs_linreg, tables_iso.ssp_emi_pop.data.loc[iso3, yrs_linreg])
     
-    # %%    
-    table_combis = pd.DataFrame(index=['IPC1', 'IPC2', 'IPCMAG', 'IPCMLULUCF', 'IPC4', 'IPC5'],
-                          columns=meta.gases.kyotoghg)
+    # %%
+    cats = ['IPC1', 'IPC2', 'IPCMAG', 'IPCMLULUCF', 'IPC4', 'IPC5']
+    table_combis = pd.DataFrame(index=['NDCs', 'Adapted'] + cats,
+        columns=['NDCs', 'Adapted'] + meta.gases.kyotoghg)
+    
     for case in [xx for xx in cov_used.columns if '_' in xx]:
         
         ent, cat = case.split('_')
         table_combis.loc[cat, ent] = cov_used.loc[iso3, case]
     
+    table_combis.loc[cats, 'NDCs'] = \
+        cov_ndcs.loc[iso3, meta.categories.main.inclLU].values
+    table_combis.loc[cats, 'Adapted'] = \
+        cov_used.loc[iso3, meta.categories.main.inclLU].values
+    table_combis.loc['NDCs', meta.gases.kyotoghg] = \
+        cov_ndcs.loc[iso3, :].reindex(index=list(meta.gases.kyotoghg)).values
+    table_combis.loc['Adapted', meta.gases.kyotoghg] = \
+        cov_used.loc[iso3, :].reindex(index=list(meta.gases.kyotoghg)).values
     table_combis[table_combis.isnull()] = ''
-    table_combis.index = [sec_to_label[meta.categories.main.cat_to_sec[xx]] for xx in table_combis.index]
-    table_combis.insert(0, '', table_combis.index)
+    table_combis.index = \
+        ['NDCs', 'Adapted'] + [sec_to_label[meta.categories.main.cat_to_sec[xx]] 
+        for xx in table_combis.index[2:]]
+    table_combis.insert(0, '', table_combis.index.values)
     
     # %%
     ref_tabs = {} # Save the figure and table numbers with their 'names'.
@@ -315,64 +354,98 @@ def text_to_md_file():
     txt +="\n    Johannes Gütschow$^1$"
     txt +="\n\nAffiliations:  "
     txt +="\n    &ensp; 1. Potsdam Institute for Climate Impact Research, Germany"
-    txt +="\n\nPublished: [March 2020]  "
+    txt +="\n\nPublished: [September 2020]  "
     txt +="\nDoi: [to be added]"
     
     # %% Overview
     txt += "\n\n## Overview and key messages {#overview}"
-    
-    txt += f"\n\nIn {yr_his}, the national emissions of {ctr} were {tot_emi_his} {units_iso['emi']} "
-    txt += f"(GWP {meta.gwps.default}[^4], excluding LULUCF[^1] and bunkers emissions). "
-    txt += f"The highest share was emitted in the {highest_sec_his_1st} sector, followed by "
-    txt += f"{highest_sec_his_2nd} and {highest_sec_his_3rd}"
-    txt += f" ({highest_sec_his_share_1st}\%, {highest_sec_his_share_2nd}\%, and {highest_sec_his_share_3rd}\%, respectively). "
-    txt += f"The Kyoto GHG[^3] with the highest emissions in {yr_his} (in terms of CO$_2$ equivalent) was "
-    txt += f"{highest_gas_his_1st}, constituting " + ("as much as " if float(highest_gas_his_share_1st) > 70 else " ")
-    txt += f"{highest_gas_his_share_1st}\% of the national emissions. "
-    txt += f"Second largest contributor was {highest_gas_his_2nd}, followed by {highest_gas_his_3rd}"
-    txt += f" ({highest_gas_his_share_2nd}\%, and {highest_gas_his_share_3rd}\%, respectively). "
-    txt += "The total of F-gases[^2] " + ("only " if float(share_fgases_his) < 7 else "")
-    txt += f"represented {share_fgases_his}\%. "
-    txt += "Even though contributing a rather little part of GHG emissions in terms of CO$_2$ equivalents, "
-    txt += "F-gases are important due to their high GWPs and atmospheric lifetimes. "
-    txt += f"Following the downscaled {ssp_for_overview[:4]} pathway emissions, in 2030 {ctr} is estimated to emit "
-    txt += f"{ssp2_2030} {units_iso['emi']}, which would constitute "
+    ##
+    txt += f"\n\nIn {yr_his}, the national emissions of {ctr} were {tot_emi_his} {units_iso['emi']} " + \
+        f"(GWP {meta.gwps.default}[^4], excluding LULUCF[^1] and bunkers emissions). "
+    ##
+    txt += f"The highest share was emitted in the {highest_sec_his_1st} sector, followed by " + \
+        f"{highest_sec_his_2nd} and {highest_sec_his_3rd}" + \
+        f" ({highest_sec_his_share_1st}\%, {highest_sec_his_share_2nd}\%, and {highest_sec_his_share_3rd}\%, respectively). "
+    ##
+    txt += f"The Kyoto GHG[^3] with the highest emissions in {yr_his} (in terms of CO$_2$ equivalent) was " + \
+        f"{highest_gas_his_1st}, constituting " + ("as much as " if float(highest_gas_his_share_1st) > 70 else " ") + \
+        f"{highest_gas_his_share_1st}\% of the national emissions. "
+    ##
+    txt += f"Second largest contributor was {highest_gas_his_2nd}, followed by {highest_gas_his_3rd}" + \
+        f" ({highest_gas_his_share_2nd}\%, and {highest_gas_his_share_3rd}\%, respectively). "
+    ##
+    txt += "The total of F-gases[^2] " + ("only " if float(share_fgases_his) < 7 else "") + \
+        f"represented {share_fgases_his}\%. "
+    ##
+    txt += "Even though contributing a rather little part of GHG emissions in terms of CO$_2$ equivalents, " + \
+        "F-gases are important due to their high GWPs and atmospheric lifetimes. "
+    ##
+    txt += f"Following the downscaled {ssp_for_overview[:4]} pathway emissions, in 2030 {ctr} is estimated to emit " + \
+        f"{ssp2_2030} {units_iso['emi']}, which would constitute "
+    ##
     txt += (("an increase" if float(ssp2_2030_pc) < 10 else "a substantial increase")
-        if float(ssp2_2030_pc) > 0. else "a decrease") + f" of {ssp2_2030_pc}\% compared to {yr_his}. "
-    txt += f"The pathways SSP1 to 5 show a range of {ssps_table.loc[:, 2030].min() :.2f}"
-    txt += f" - {ssps_table.loc[:, 2030].max() :.2f} {units_iso['emi']} in 2030, and "
-    txt += f"{ssps_table.loc[:, 2050].min() :.2f} - {ssps_table.loc[:, 2050].max() :.2f} {units_iso['emi']} in 2050."
+        if float(ssp2_2030_pc) > 0. else "a decrease") + \
+        f" of {ssp2_2030_pc}\% compared to {yr_his}. "
+    ##
+    number1 = hpf.num_to_str_one_non_zero_decimal(
+        ssps_table.loc[:, 2030].min())
+    number2 = hpf.num_to_str_one_non_zero_decimal(
+        ssps_table.loc[:, 2030].max())
+    number3 = hpf.num_to_str_one_non_zero_decimal(
+        ssps_table.loc[:, 2050].min())
+    number4 = hpf.num_to_str_one_non_zero_decimal(
+        ssps_table.loc[:, 2050].max())
+    txt += f"The pathways SSP1 to 5 show a range of {number1}" + \
+        f" - {number2} {units_iso['emi']} in 2030, and " + \
+        f"{number3} - {number4} {units_iso['emi']} in 2050."
     
     # TODO: If CO2 is the highest share, don't repeat the pc share.
     
     # Footnotes.
     txt += "\n\n[^1]: *LULUCF*: Land use, land-use change and forestry. "
+    ##
     txt += "Emissions from LULUCF are excluded throughout the document, unless stated otherwise."
-    txt += "\n\n[^2]: *F-gases* (fluorinated gases): basket of HFCs, PFCs, "
-    txt += "SF$_6$ and NF$_3$. Some f-gases have very long atmospheric lifetimes and high Global Warming Potentials."
-    txt += "\n\n[^3]: *Kyoto GHG* basket (GreenHouse Gas): carbon dioxide (CO$_2$), methane (CH$_4$), "
-    txt += "nitrous oxide (N$_2$O), hydrofluorocarbons (HFCs), perfluorocarbons (PFCs), "
+    ##
+    txt += "\n\n[^2]: *F-gases* (fluorinated gases): basket of HFCs, PFCs, " + \
+        "SF$_6$ and NF$_3$. Some f-gases have very long atmospheric lifetimes and high Global Warming Potentials."
+    ##
+    txt += "\n\n[^3]: *Kyoto GHG* basket (GreenHouse Gas): carbon dioxide (CO$_2$), methane (CH$_4$), " + \
+        "nitrous oxide (N$_2$O), hydrofluorocarbons (HFCs), perfluorocarbons (PFCs), "
+    ##
     txt += "sulfur hexafluoride (SF$_6$), and nitrogen trifluoride (NF$_3$)."
-    txt += "\n\n[^4]: *Global Warming Potential (GWP)*: we use GWP values from the IPCC "
-    txt += ("4$^{th}$ Assessment Report (AR4). " if meta.gwps.default == 'AR4' else "")
-    txt += ("2$^{nd}$ Assessment Report (SAR). " if meta.gwps.default in ['SAR', 'AR2'] else "")
-    txt += "They reflect the forcing potential of one kilogram of a gas' emissions in comparison "
-    txt += "to one kilogram of CO$_2$ (GWP$_{CO2}$ = 1). "
+    ##
+    txt += "\n\n[^4]: *Global Warming Potential (GWP)*: we use GWP values from the IPCC " + \
+        ("4$^{th}$ Assessment Report (AR4). " if meta.gwps.default == 'AR4' else "") + \
+        ("2$^{nd}$ Assessment Report (SAR). " if meta.gwps.default in ['SAR', 'AR2'] else "")
+    ##
+    txt += "They reflect the forcing potential of one kilogram of a gas' emissions in comparison " + \
+        "to one kilogram of CO$_2$ (GWP$_{CO2}$ = 1). "
+    ##
     txt += "The GWPs used here correspond to a 100-yr period. "
-    txt += f"For CH$_4$ the AR4 GWP is {gwps['CH4'] :.0f}, for N$_2$O it is {gwps['N2O'] :.0f}"
-    txt += f", for SF$_6$ it is {gwps['SF6'] :.0f}, and for NF$_3$ it is {gwps['NF3'] :.0f}. "
-    txt += f"For the basket of HFC-gases it ranges between {gwps[hfcs].min() :.0f} and {gwps[hfcs].max() :.0f}"
-    txt += f", and for PFCs between {gwps.reindex(index=pfcs).min() :.0f} and {gwps.reindex(index=pfcs).max() :.0f}. "
-    txt += "When emissions of several GHGs are assessed, their emissions are weighted by their respective GWP "
-    txt += "and presented in CO$_2$ equivalents (CO2eq). "
-    txt += f"As to be seen in {ref_tabs['overview']}, the global share of {ctr}'s emissions in {yr_his} was "
-    txt += f"{overview_table.loc['emi', 'share_his'] :.2f}\%, while in {yr_fut} the global share is estimated to "
-    txt += ('increase to ' if overview_table.loc['emi', 'share_fut'] > overview_table.loc['emi', 'share_his'] else 'decrease to ')
-    txt += f"{overview_table.loc['emi', 'share_fut'] :.2f}\%."
-    txt += f" In {yr_his}, the country's global rank in terms of total emissions per GDP (PPP) was "
-    txt += f"{overview_table.loc['emi_gdp', 'rank_his']}, and "
-    txt += f"{overview_table.loc['emi_pop', 'rank_his']} regarding the per-capita emissions ("
-    txt += f"{overview_table.loc['emi_gdp', 'rank_fut']} and {overview_table.loc['emi_pop', 'rank_fut']} in {yr_fut})."
+    ##
+    txt += f"For CH$_4$ the AR4 GWP is {gwps['CH4'] :.0f}, for N$_2$O it is {gwps['N2O'] :.0f}" + \
+        f", for SF$_6$ it is {gwps['SF6'] :.0f}, and for NF$_3$ it is {gwps['NF3'] :.0f}. "
+    ##
+    txt += f"For the basket of HFC-gases it ranges between {gwps[hfcs].min() :.0f} and {gwps[hfcs].max() :.0f}" + \
+        f", and for PFCs between {gwps.reindex(index=pfcs).min() :.0f} and {gwps.reindex(index=pfcs).max() :.0f}. "
+    ##
+    txt += "When emissions of several GHGs are assessed, their emissions are weighted by their respective GWP " + \
+        "and presented in CO$_2$ equivalents (CO2eq). "
+    ##
+    number1 = hpf.num_to_str_one_non_zero_decimal(
+        overview_table.loc['emi', 'share_his'])
+    number2 = hpf.num_to_str_one_non_zero_decimal(
+        overview_table.loc['emi', 'share_fut'])
+    txt += f"As to be seen in {ref_tabs['overview']}, the global share of {ctr}'s emissions in {yr_his} was " + \
+        f"{number1}\%, while in {yr_fut} the global share is estimated to " + \
+        ('increase to ' if overview_table.loc['emi', 'share_fut'] > overview_table.loc['emi', 'share_his'] else 'decrease to ') + \
+        f"{number2}\%."
+    ##
+    txt += f" In {yr_his}, the country's global rank in terms of total emissions per GDP (PPP) was " + \
+        f"{overview_table.loc['emi_gdp', 'rank_his']}, and " + \
+        f"{overview_table.loc['emi_pop', 'rank_his']} regarding the per-capita emissions (" + \
+        f"{overview_table.loc['emi_gdp', 'rank_fut']} and {overview_table.loc['emi_pop', 'rank_fut']} in {yr_fut})."
+    ##
     
     txt += hpf.include_table_md(overview_table_str.columns, overview_table_str.values, 
         f"Total emissions, GDP (PPP) and population for {ctr}" + \
@@ -389,18 +462,23 @@ def text_to_md_file():
     txt += "\n\n### Non-LULUCF emissions"
     
     # Historical share.
-    txt += f"\n\nIn terms of accumulated historical emissions, {ctr}"
-    txt += f" contributed to the emissions from {yr_sum_1850} to {yr_his} by {sum_1850_share_iso :.3f}\%. "
-    txt += ("However, when " if abs(sum_1990_share_iso - sum_1850_share_iso) > 5 else "When ")
-    txt += f"only accounting for the years {yr_sum_1990} to {yr_his} its share "
-    txt += ("increases " if sum_1990_share_iso > sum_1850_share_iso else "decreases ")
-    txt += f"to {sum_1990_share_iso :.3f}\% ({yr_sum_1850} to {yr_his}: "
-    txt += f"{sum_1850_iso :.2f} {units_iso['emi']}, and {yr_sum_1990} to {yr_his}: "
-    txt += f"{sum_1990_iso :.2f} {units_iso['emi']})."
+    number = hpf.num_to_str_one_non_zero_decimal(sum_1850_share_iso)
+    txt += f"\n\nIn terms of accumulated historical emissions, {ctr}" + \
+        f" contributed to the emissions from {yr_sum_1850} to {yr_his} by {number}\%. "
+    number1 = hpf.num_to_str_one_non_zero_decimal(sum_1990_share_iso)
+    number2 = hpf.num_to_str_one_non_zero_decimal(sum_1850_iso)
+    number3 = hpf.num_to_str_one_non_zero_decimal(sum_1990_iso)
+    txt += ("However, when " if abs(sum_1990_share_iso - sum_1850_share_iso) > 5 else "When ") + \
+        f"only accounting for the years {yr_sum_1990} to {yr_his} its share " + \
+        ("increases " if sum_1990_share_iso > sum_1850_share_iso else "decreases ") + \
+        f"to {number1}\% ({yr_sum_1850} to {yr_his}: " + \
+        f"{number2} {units_iso['emi']}, and {yr_sum_1990} to {yr_his}: " + \
+        f"{number3} {units_iso['emi']})."
     
     txt += txt_emi_trend
     
-    txt += f"\nThe total CO$_2$ emissions are expected to be {share_co2_2030} of Kyoto GHG emissions in 2030 ({share_co2_2050} in 2050; SSP2)."
+    txt += f"\nThe total CO$_2$ emissions are expected to be {share_co2_2030} " + \
+        f"of Kyoto GHG emissions in 2030 ({share_co2_2050} in 2050; SSP2)."
     # Downscaled by Johannes.
     # TODO: Also show the ratio between gases for SSPs?
     
@@ -410,13 +488,14 @@ def text_to_md_file():
     # They are not constant and are not the same for the SSPs.
         
     # Historical emissions.
-    txt += hpf.include_figure_md(Path(meta.path.main, 'plots', 'time_series', 'emi_his_and_fut', f'emi_{iso3}_stacked.png'),
-        "'Stacked' timeseries of historical emissions per main-sector (a) and Kyoto GHG (b). " +
-        "Emissions from LULUCF are not considered.")
+    path_to_file = Path(meta.path.main, 'plots', 'time_series', 'emi_his_and_fut', f'emi_{iso3}_stacked.png')
+    caption = "'Stacked' timeseries of historical emissions per main-sector (a) and Kyoto GHG (b). " + \
+        "Emissions from LULUCF are not considered."
+    txt += hpf.include_figure_md(path_to_file, caption)
     
     # Historical emissions correlations.
-    txt += hpf.include_figure_md(Path(meta.path.main, 'plots', 'correlations', 'corrs_emis', f'corrs_sectors_entities_{iso3}.png'),
-        "Text")
+    path_to_file = Path(meta.path.main, 'plots', 'correlations', 'corrs_emis', f'corrs_sectors_entities_{iso3}.png')
+    txt += hpf.include_figure_md(path_to_file, "Text")
     
     # TODO: Maybe get the linear regressions of the different emissions time series (and share)
     # and check which ones increase/decrease most strongly.
@@ -428,33 +507,36 @@ def text_to_md_file():
     
     # %% LULUCF emissions
     txt += "\n\n### Emissions from LULUCF"
-    txt += hpf.include_figure_md(Path(meta.path.main, 'plots', 'time_series', 'lulucf', f'lulucf_{iso3}.png'),
-        "Timeseries of emissions from LULUCF (sum over CO$_2$, CH$_4$ and N$_2$O) as available from different data-sources. "
-        f"Indicated in pink is the timeseries used in our assessment of {ctr}'s NDC (if needed). "
-        "The timeseries were inter- and extrapolated with constant values to fill data gaps. "
-        "The not-filled data are shown as circles, while the filled timeseries are shown as solid lines.", width=80)
+    path_to_file = Path(meta.path.main, 'plots', 'time_series', 'lulucf', f'lulucf_{iso3}.png')
+    caption = "Timeseries of emissions from LULUCF (sum over CO$_2$, CH$_4$ and N$_2$O) as available from different data-sources. " + \
+        f"Indicated in pink is the timeseries used in our assessment of {ctr}'s NDC (if needed). " + \
+        "The timeseries were inter- and extrapolated with constant values to fill data gaps. " + \
+        "The not-filled data are shown as circles, while the filled timeseries are shown as solid lines."
+    txt += hpf.include_figure_md(path_to_file,
+        caption, width=80)
     # TODO: Only plot it for historical years, as it is kept constant afterwards there is nothing to see.
     # TODO: FAO2019 does not have circles but only a line, as the KYOTOGHG is the sum over CO2, CH4 and N2O ...
     
     # %% Socioeconomic data
     txt += "\n\n## Socioeconomic data"
-    txt += hpf.include_figure_md(Path(meta.path.main, 'plots', 'time_series', f'socioeco', f'socioeco_{iso3}.png'),
-           "Timeseries of GDP (PPP) (a & b) and population (c & d), and KyotoGHG_IPCM0EL emissions " +
-           "per GDP (PPP) or per capita (b & d).")
+    path_to_file = Path(meta.path.main, 'plots', 'time_series', f'socioeco', f'socioeco_{iso3}.png')
+    caption = "Timeseries of GDP (PPP) (a & b) and population (c & d), and KyotoGHG_IPCM0EL emissions " + \
+           "per GDP (PPP) or per capita (b & d)."
+    txt += hpf.include_figure_md(path_to_file, caption)
     
     # Historical data.
     gdp_trend = ('positive' if gdp_linreg.slope > 0. else 'negative')
     emi_gdp_trend = ('positive' if emi_gdp_linreg.slope > 0. else 'negative')
     pop_trend = ('positive' if pop_linreg.slope > 0. else 'negative')
     emi_pop_trend = ('positive' if emi_pop_linreg.slope > 0. else 'negative')
-    txt += f"\n\nAs presented in {ref_figs['socioeco']}, {ctr}'s GDP (PPP) showed "
-    txt += ('an increase ' if gdp_trend == 'positive' else 'a decrease ')
-    txt += "over the last years, and the emissions per GDP (PPP) had "
-    txt += ("a similar trend. " if emi_gdp_trend == 'positive' else "an opposite trend. ")
-    txt += "In recent years, the population "
-    txt += ("increased, " if pop_trend == 'positive' else "decreased, ")
-    txt += ("and " if (pop_trend == 'positive' and emi_pop_trend == 'positive') else "while ")
-    txt += "the per-capita emissions " + ("were on the rise. " if emi_gdp_linreg.slope > 0 else "dropped. ")
+    txt += f"\n\nAs presented in {ref_figs['socioeco']}, {ctr}'s GDP (PPP) showed " + \
+        ('an increase ' if gdp_trend == 'positive' else 'a decrease ') + \
+        "over the last years, and the emissions per GDP (PPP) had " + \
+        ("a similar trend. " if emi_gdp_trend == 'positive' else "an opposite trend. ")
+    txt += "In recent years, the population " + \
+        ("increased, " if pop_trend == 'positive' else "decreased, ") + \
+        ("and " if (pop_trend == 'positive' and emi_pop_trend == 'positive') else "while ") + \
+        "the per-capita emissions " + ("were on the rise. " if emi_gdp_linreg.slope > 0 else "dropped. ")
     
     # Future data.
     # EMI per GDP: de-coupled?
@@ -463,35 +545,36 @@ def text_to_md_file():
     yr_of_max = tables_iso.ssp_gdp.data.loc[iso3, yrs_fut].idxmax()
     txt += f"Following {ssp_for_overview[:4]}, the GDP (PPP) is projected to "
     txt += (f"increase after {yrs_fut_str[0]} and to drop again before {yrs_fut_str[-1]}. " 
-             if (yr_of_max > yrs_fut[0] and yr_of_max < yrs_fut[-1]) else "")
-    txt += (f"increase towards {yrs_fut_str[-1]}. " if yr_of_max == yrs_fut[-1] else "")
-    txt += (f"drop towards {yrs_fut_str[-1]}. " if yr_of_max == yrs_fut[0] else "")
+        if (yr_of_max > yrs_fut[0] and yr_of_max < yrs_fut[-1]) else "") + \
+        (f"increase towards {yrs_fut_str[-1]}. " if yr_of_max == yrs_fut[-1] else "") + \
+        (f"drop towards {yrs_fut_str[-1]}. " if yr_of_max == yrs_fut[0] else "")
     yr_of_max = tables_iso.ssp_emi_gdp.data.loc[iso3, yrs_fut].idxmax()
-    txt += "The emissions per GDP (PPP) are estimated to "
-    txt += (f"rise after {yrs_fut_str[0]} and to decrease again before {yrs_fut_str[-1]}. " 
-        if (yr_of_max > yrs_fut[0] and yr_of_max < yrs_fut[-1]) else "")
-    txt += (f"rise towards {yrs_fut_str[-1]}. " if yr_of_max == yrs_fut[-1] else "")
-    txt += (f"decrease towars {yrs_fut_str[-1]}. " if yr_of_max == yrs_fut[0] else "")
+    txt += "The emissions per GDP (PPP) are estimated to " + \
+        (f"rise after {yrs_fut_str[0]} and to decrease again before {yrs_fut_str[-1]}. " 
+        if (yr_of_max > yrs_fut[0] and yr_of_max < yrs_fut[-1]) else "") + \
+        (f"rise towards {yrs_fut_str[-1]}. " if yr_of_max == yrs_fut[-1] else "") + \
+        (f"decrease towars {yrs_fut_str[-1]}. " if yr_of_max == yrs_fut[0] else "")
     yr_of_max = tables_iso.ssp_pop.data.loc[iso3, yrs_fut].idxmax()
-    txt += f"{ctr}'s population is assumed to "
-    txt += (f"grow after {yrs_fut_str[0]} and to diminish again before {yrs_fut_str[-1]}" 
-        if (yr_of_max > yrs_fut[0] and yr_of_max < yrs_fut[-1]) else "")
-    txt += (f"grow towards {yrs_fut_str[-1]}" if yr_of_max == yrs_fut[-1] else "")
-    txt += (f"diminish towars {yrs_fut_str[-1]}" if yr_of_max == yrs_fut[0] else "")
+    txt += f"{ctr}'s population is assumed to " + \
+        (f"grow after {yrs_fut_str[0]} and to diminish again before {yrs_fut_str[-1]}" 
+        if (yr_of_max > yrs_fut[0] and yr_of_max < yrs_fut[-1]) else "") + \
+        (f"grow towards {yrs_fut_str[-1]}" if yr_of_max == yrs_fut[-1] else "") + \
+        (f"diminish towars {yrs_fut_str[-1]}" if yr_of_max == yrs_fut[0] else "")
     yr_of_max = tables_iso.ssp_emi_pop.data.loc[iso3, yrs_fut].idxmax()
-    txt += ", and the per-capita emissions are expected to "
-    txt += (f"increase after {yrs_fut_str[0]} and to decline again before {yrs_fut_str[-1]}. " 
-        if (yr_of_max > yrs_fut[0] and yr_of_max < yrs_fut[-1]) else "")
-    txt += (f"increase towards {yrs_fut_str[-1]}. " if yr_of_max == yrs_fut[-1] else "")
-    txt += ("decline towars {yrs_fut_str[-1]}. " if yr_of_max == yrs_fut[0] else "")
+    txt += ", and the per-capita emissions are expected to " + \
+        (f"increase after {yrs_fut_str[0]} and to decline again before {yrs_fut_str[-1]}. " 
+        if (yr_of_max > yrs_fut[0] and yr_of_max < yrs_fut[-1]) else "") + \
+        (f"increase towards {yrs_fut_str[-1]}. " if yr_of_max == yrs_fut[-1] else "") + \
+        ("decline towars {yrs_fut_str[-1]}. " if yr_of_max == yrs_fut[0] else "")
         
     # TODO: Maybe include some 'nice' words.
     
     # %% Correlation emi vs GDP or POP
     txt += "\n\n## Correlation between emissions and GDP / population"
-    txt += hpf.include_figure_md(Path(meta.path.main, 'plots', 'correlations', 'corrs_sectors_socioeco', f'corrs_sectors_socioeco_{iso3}.png'),
-        "Correlation between the GDP (PPP) (a) or population (b) and national total emissions (excl. LULUCF), and emissions per main-sector. "
-        "Black half-circles at the upper edge of the plot indicate the year of the value (increasing size with increasing years, 1990 to 2017).")
+    path_fo_file = Path(meta.path.main, 'plots', 'correlations', 'corrs_sectors_socioeco', f'corrs_sectors_socioeco_{iso3}.png')
+    caption = "Correlation between the GDP (PPP) (a) or population (b) and national total emissions (excl. LULUCF), and emissions per main-sector. " + \
+        "Black half-circles at the upper edge of the plot indicate the year of the value (increasing size with increasing years, 1990 to 2017)."
+    txt += hpf.include_figure_md(path_fo_file, caption)
     
     # %% Mitigation targets
     txt += "\n\n## Mitigation targets"
@@ -502,49 +585,44 @@ def text_to_md_file():
     #tar_to_long
     
     # %% Covered emissions
-    txt += "\n\n### Part of emissions covered by the mitigation targets"
+    txt += "\n\n### Share of emissions covered by the mitigation targets"
     # TODO: Rules for pccov.
     # TODO: Only include the coverage stuff if it has an (I)NDC.
     txt += ("" if iso3 not in meta.isos.EU28 else
         f"\n\nAs {ctr} is part of the NDC by the European Union (28), the coverage of the EU28 NDC is used.")
     
-    txt += hpf.include_figure_md(Path(meta.path.main, 'plots', str(meta.path.pc_cov).split('\\')[-1], f'pccov_{iso3}.png'),
-        f"Timeseries of {ctr}'s national emissions (excl. LULUCF) and the part of " +
-        f"emissions that is assumed to be covered by {ctr}'s mitigation target. " +
-        "Timeseries are shown for SSP1 to 5.")
+    path_to_file = Path(meta.path.main, 'plots', 'time_series', 
+        str(meta.path.pc_cov).split('\\')[-1], f'pccov_{iso3}_CORR.png')
+    caption = f"Timeseries of {ctr}'s national emissions (excl. LULUCF) and the share of " + \
+        f"emissions that is assumed to be covered by {ctr}'s mitigation target. " + \
+        "Timeseries are shown for SSP1 to 5."
+    txt += hpf.include_figure_md(path_to_file, caption)
     
     # Tables with coverage.
-    txt += hpf.include_table_md([''] + list(sec_to_label.values()), 
-        [['Coverage in NDC'] + list(cov_ndcs.loc[iso3, meta.categories.main.inclLU].values),
-         ['Coverage used in the current assessment'] + list(cov_used.loc[iso3, meta.categories.main.inclLU].values)],
-        "Covered sectors as stated in the country's NDC (first row) and as used in the current study (second row). " +
-        "'+' means that the sector is covered, '-' means that it is not covered, and '/' means that no information is available.")
+    tab_first_row = table_combis.columns
+    tab_rest = table_combis.values
+    caption = "Coverage from NDC and 'Adapted' as used to calculated \%cov. " + \
+        "If either the sector or gas is not covered, the emissions from this " + \
+        "sector-gas combination are counted as not-covered ('-'). " + \
+        "Else the emissions are counted as covered ('+'). (/) means that no information was given."
+    txt += hpf.include_table_md(tab_first_row, tab_rest, caption)
     
-    txt += hpf.include_table_md([''] + list([meta.gases.gas_to_label[xx] for xx in meta.gases.kyotoghg]), 
-        [['Coverage in NDC'] + list(cov_ndcs.loc[iso3, :].reindex(index=list(meta.gases.kyotoghg)).values),
-         ['Coverage used in the current assessment'] + list(cov_used.loc[iso3, :].reindex(index=list(meta.gases.kyotoghg)).values)],
-        "Covered gases as stated in the country's NDC (first row) and as used in the current study (second row). " +
-        "'+' means that the gas is covered, '-' means that it is not covered, and '/' means that no information is available.")
-    
-    txt += hpf.include_table_md([meta.gases.gas_to_label[xx] if xx in meta.gases.gas_to_label.keys() else xx for xx in table_combis.columns], 
-        table_combis.values, "Coverage as used in the current assessment. " +
-        "If either the sector or gas is not covered, the emissions from this sector-gas combination are counted as not-covered ('-'). " +
-        "Else the emissions are counted as covered ('+').")
     # TODO: in brackets include the share of total emissions that combi stands for (2017).
     # TODO: Table with emissions per main-sector and per gas, and per combi?
     
     # TODO: Emissions target. Table with assumptions. All target years, etc.
     # TODO: Targets: plots like in UBA.
-    txt += hpf.include_figure_md(
-        'C:/Users/annikag/primap/other_things/UBA/plots/Plot_Emissions_And_Target_NewSSPs_VNM_WithIPPU.png',
-        "Example Viet Nam.")
+    path_to_file = 'C:/Users/annikag/primap/other_things/UBA/plots/Plot_Emissions_And_Target_NewSSPs_VNM_WithIPPU.png'
+    caption = "Example Viet Nam."
+    txt += hpf.include_figure_md(path_to_file, caption)
     
     # %% Data sources and references
     txt += "\n\n## Data sources and references"
     
-    txt += f"\n\nAll emissions are in {units_iso['emi']} following the Global Warming Potential from "
-    txt += "the IPCC 4$^{th}$ Assessment Report (GWP AR4)."
-    txt += f"\n\n{meta.sources.srce_to_label[meta.primap.current_version['emi']]}: country reported data priority scenario."
+    txt += f"\n\nAll emissions are in CO$_2$ equivalents following the Global Warming Potential from " + \
+        "the IPCC 4$^{th}$ Assessment Report (GWP AR4)."
+    
+    txt += f"\n\n{meta.sources.srce_to_label[meta.primap.current_version['emi']]}: HISTCR, country reported data priority scenario."
     
     # TODO: which data are needed in for the quantification of that country, and are they available.
     
