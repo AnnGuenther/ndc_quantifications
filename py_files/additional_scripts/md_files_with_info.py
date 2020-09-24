@@ -361,7 +361,7 @@ def text_to_md_file():
     txt += "\n\n## Overview and key messages {#overview}"
     ##
     txt += f"\n\nIn {yr_his}, the national emissions of {ctr} were {tot_emi_his} {units_iso['emi']} " + \
-        f"(GWP {meta.gwps.default}[^4], excluding LULUCF[^1] and bunkers emissions). "
+        f"(GWP {meta.gwps.default}[^4], excluding LULUCF[^1] and emissions from bunkers fuels). "
     ##
     txt += f"The highest share was emitted in the {highest_sec_his_1st} sector, followed by " + \
         f"{highest_sec_his_2nd} and {highest_sec_his_3rd}" + \

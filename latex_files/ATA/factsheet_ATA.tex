@@ -1,0 +1,154 @@
+\documentclass[12pt]{article}
+
+ %%%
+ \usepackage[utf8]{inputenc}
+ \usepackage{graphicx}
+ \usepackage{xcolor}
+ \usepackage{hyperref}
+ \hypersetup{colorlinks, linkcolor = black, citecolor = black, filecolor = black, urlcolor = [RGB]{227, 114, 34}}
+ \usepackage{float}
+ \usepackage{geometry}\geometry{a4paper, total={170mm,257mm}, left=20mm, top=20mm}
+
+ \definecolor{PIKorange}{RGB}{227, 114, 34}
+ \definecolor{PIKgray}{RGB}{142, 144, 143}
+
+ \title{ \bfseries \color{PIKorange} Antarctica: information on national emissions, population and GDP, and mitigation targets}
+
+ %%%
+
+ \begin{document}
+
+ \maketitle
+
+ %%%
+ \noindent \textbf{Authors:} \newline
+ \indent Annika Guenther$^{1}$ \newline
+ \indent Johannes Guetschow$^{1}$ \newline
+ \noindent \textbf{Affiliations:} \newline
+ \indent 1. Potsdam Institute for Climate Impact Research, Germany \newline
+ \noindent \textbf{DOI:} [to be added] \newline
+
+ \textbf{TODO}
+ \begin{itemize}
+ \item Table with info on target (main and reclass; emissions from NDC; target quantis + plot).
+ \item GWP: NDC emissions coverted from AR2 to AR4 by national conversion factor (2010--2017, PRIMAP-hist v2.1).
+ \item References!
+ \end{itemize}
+
+ %%%
+ \section{Non-LULUCF emissions and socio-economic data}
+ \label{sec:nonLULUCFSocioEco}
+ With national emissions of 4.1~kt CO$_2$eq, Antarctica contributed 0.000008\% to global emissions in 2017, while in 2030 its share is estimated to decrease to 0.000007\% (Table~\ref{tab:overview}).
+ The estimates for 2030 are based on the downscaled SSP2 Middle of the Road marker scenario (dmSSP2), in which Antarctica is estimated to emit 4.5~kt CO$_2$eq in 2030.
+ That change in emissions would constitute an increase of 7.9\% compared to 2017. 
+ The pathways dmSSP1--5 show a range of 4.5--4.5~kt CO$_2$eq in 2030, and 4.5--4.5~kt CO$_2$eq in 2050.
+ In terms of accumulated historical emissions, Antarctica contributed to the global 1850--2017 emissions by 0.00002\%. 
+ When only accounting for the years 1990--2017, its contribution decreases to 0.00001\%.
+ All of the emissions are presented following GWP~AR4, and exclude emissions from LULUCF (exclLU), and bunkers fuels emissions (exclBunkers).
+
+ \begin{table}[H]
+ \centering
+ \caption{National emissions (dmSSP2), GDP and population for Antarctica, together with the emissions per unit of GDP and per capita emissions (all for 2017 and 2030). 
+ Additionally, the global share and its rank are displayed.}
+ \label{tab:overview}
+ \begin{tabular}{l || l r l r r}
+ \bfseries  & \bfseries Year & \bfseries Total & \bfseries Unit & \bfseries Glob. share & \bfseries Rank \tabularnewline \hline \hline
+ \bfseries Emissions & 2017 & 4.1 & kt CO$_2$eq & 0.000008\% & 206 \tabularnewline 
+ \bfseries  & 2030 & 4.5 & kt CO$_2$eq & 0.000007\% & 206 \tabularnewline \hline
+ \bfseries GDP & 2017 & -- &  2011~GK\$ & -- & -- \tabularnewline 
+ \bfseries  & 2030 & -- &  2011~GK\$ & -- & -- \tabularnewline \hline
+ \bfseries Emissions & 2017 & -- & t CO$_2$eq /  2011~GK\$ & -- & -- \tabularnewline 
+ \bfseries per GDP & 2030 & -- & t CO$_2$eq /  2011~GK\$ & -- & -- \tabularnewline \hline
+ \bfseries Population & 2017 & -- &  Pers & -- & -- \tabularnewline 
+ \bfseries  & 2030 & -- &  Pers & -- & -- \tabularnewline \hline
+ \bfseries Emissions & 2017 & -- & t CO$_2$eq /  Pers & -- & -- \tabularnewline 
+ \bfseries per capita & 2030 & -- & t CO$_2$eq /  Pers & -- & -- \tabularnewline 
+ \end{tabular}
+ \end{table}
+
+ For Antarctica, in 2017 the main emissions share on sectoral level (Fig.~\ref{fig:tsEmi}) came from the Energy sector (100.0\%).
+ The Kyoto~GHG with the highest emissions in 2017 was CO$_2$, constituting as much as 100.0\% of the national emissions. 
+ The total of F-gasesonly represented 0.0\%.
+ The total CO$_2$ emissions are expected to be 100.0\% of the national Kyoto~GHG emissions in 2030 (dmSSP2).
+
+ \begin{figure}[H]
+ \centering
+ \includegraphics[width=\textwidth]{C:/Users/annikag/primap/ndc_quantifications/latex_files/ATA/ts_emi_exclLU_ATA.png}
+ \caption{'Stacked' timeseries of national emissions (exclLU) per main-sector (a) and Kyoto~GHG (b). 
+ No information available on the sectoral contributions after 2017.}
+ \label{fig:tsEmi}
+ \end{figure}
+ For Antarctica, no GDP and population data are available from dmSSPs.
+
+ %%%
+ \section{LULUCF emissions}
+ \label{sec:emiLULUCF}
+ No LULUCF data are available for Antarctica from the following sources: CRF (2019), CRF (2018), BUR (3$^{rd}$), BUR (2$^{nd}$), BUR (1$^{st}$), UNFCCC (2019), FAO (2019).
+
+ %%%
+ \section{Mitigation targets (NDC)}
+ \label{sec:mitiTars}
+
+ \textbf{ 
+ Give the \%cov for the base and target year (and 2017).
+ Global share for 2030 for the mitigated pathways and \% reduction relative to 1990 and 2017.
+ Table with the 'input' data and the resulting targets (like ndcs\_targets.csv).}
+ Antarctica does not have an (I)NDC.
+ Therefore the assumed 'mitigated' emissions pathways used for global aggregates equal the baseline emissions (dmSSP1--5).
+
+ %%%
+ \section{Data sources, additional information and references}
+ \label{sec:dataSourcesRefs}
+
+ \noindent \href{https://dataservices.gfz-potsdam.de/pik/showshort.php?id=escidoc:4736895}{PRIMAP-hist v2.1}: emissions from PRIMAP-hist are data from the country reported data priority scenario (HISTCR).
+
+ \noindent \href{https://zenodo.org/record/3638137#.X2syXouxU2w}{dmSSPs}: emissions, population and GDP data are PMSSPBIE data for the five marker scenarios.
+
+ \begin{description}
+ \item [SSPs] Shared Socio-economic Pathways.
+ Narratives and challenges to mitigation and adaptation: 
+ SSP1: Sustainability, Taking the Green Road (low~/ low);
+ SSP2: Middle of the Road (medium~/ medium);
+ SSP3: Regional Rivalry, A Rocky Road (high~/ high);
+ SSP4: Inequality, A Road Divided (low~/ high); and
+ SSP5: Fossil-fuelled Development, Taking the Highway (high~/ low).
+ \item [GDP] Gross Domestic Product. 
+ Throughout this document the GDP is given as GDP~PPP, with PPP being the Purchasing Power Parity.
+ \item [GWP] Global Warming Potential. we use GWP values from the IPCC 4$^{th}$ Assessment Report (AR4). 
+ They reflect the forcing potential of one kilogram of a gas' emissions in comparison to one kilogram of CO$_2$ (GWP$_{CO2}$ = 1). 
+ The GWPs correspond to a 100-yr period and are for CH$_4$:~25, for N$_2$O:~298, for SF$_6$:~22800, and for NF$_3$:~17200. 
+ For the basket of HFC-gases the GWPs from AR4 are in the range 4--14800, and for PFCs 7190--12200. 
+ To assess emissions of several GHGs, their emissions are weighted by their respective GWPs and presented in CO$_2$ equivalents (CO$_2$eq).
+ \item [LULUCF] Land Use, Land-Use Change and Forestry. 
+ Emissions from LULUCF are excluded throughout the document, unless stated otherwise.
+ \item [Bunkers fuels] Emissions from international aviation and shipping.
+ \item [Kyoto~GHG] Kyoto~GHG (Greenhouse Gas) basket: carbon dioxide (CO$_2$), methane (CH$_4$), nitrous oxide (N$_2$O), hydrofluorocarbons (HFCs), perfluorocarbons (PFCs), sulfur hexafluoride (SF$_6$), and nitrogen trifluoride (NF$_3$).
+ \item [F-gases] Fluorinated gases.Basket of HFCs, PFCs, and the gases SF$_6$ and NF$_3$. 
+ Some F-gases have very long atmospheric lifetimes and high Global Warming Potentials.
+ \item [Target reclassification] When a country has, e.g., an RBU target (relative reduction compared to Business-As-Usual), and the BAU emissions are provided, it can be quantified based on the given emissions, and is reclassified from type\_main~RBU to type\_reclass~ABS (absolute emissions target).
+ Additionally, 'NGT' targets can be reclassified as 'ABU' (absolute reduction compared to Business-As-Usual) if absolute mitigation effects due to planned policies and measures are provided.
+ \end{description}
+
+ \vspace{.3cm} \noindent \textbf{Links to additional information:}
+ \begin{itemize}
+ \item \href{https://www.climatewatchdata.org/}{CLIMATEWATCH} 
+ \vspace{-.2cm} \item \href{https://www.carbonbrief.org/}{CarbonBrief: Clear on Climate} 
+ \vspace{-.2cm} \item \href{https://climateactiontracker.org/}{Climate Action Tracker} 
+ \vspace{-.2cm} \item \href{https://zenodo.org/record/3638137#.X2sqPIuxU2w}{Country resolved combined emission and socio-economic pathways based on the RCP and SSP scenarios} (February 2020)
+ \vspace{-.2cm} \item \href{https://www.carbonbrief.org/guest-post-calculating-the-true-climate-impact-of-aviation-emissions?utm_campaign=Carbon%20Brief%20Daily%20Briefing&utm_medium=email&utm_source=Revue%20newsletter}{Guest post: Calculating the true climate impact of aviation emissions} (September 2020)
+ \vspace{-.2cm} \item \href{https://www.iges.or.jp/en/pub/iges-indc-ndc-database/en}{IGES NDC Database} 
+ \vspace{-.2cm} \item \href{https://www.ipcc.ch/}{IPCC (The Intergovernmental Panel on Climate Change)} 
+ \vspace{-.2cm} \item \href{https://www.ipcc.ch/sr15/}{IPCC Special Report: Global Warming of 1.5$^{\circ}$} (2018)
+ \vspace{-.2cm} \item \href{https://www.isimip.org/isipedia/#isipedia-portal}{ISIMIP~/ ISIpedia} 
+ \vspace{-.2cm} \item \href{https://klimalog.die-gdi.de/ndc/#NDCExplorer/worldMap?NDC??income???catIncome}{NDC Explorer} 
+ \vspace{-.2cm} \item \href{https://ndcpartnership.org/}{NDC PARTNERSHIP} 
+ \vspace{-.2cm} \item \href{https://themasites.pbl.nl/o/climate-ndc-policies-tool/}{PBL Climate Pledge NDC tool} 
+ \vspace{-.2cm} \item \href{https://tntcat.iiasa.ac.at/SspDb/dsd?Action=htmlpage&page=about}{SSP Database (Shared Socioeconomic Pathways) - Version 2.0} (December 2018)
+ \vspace{-.2cm} \item \href{https://dataservices.gfz-potsdam.de/pik/showshort.php?id=escidoc:4736895}{The PRIMAP-hist national historical emissions time series (1850-2017)} (2019)
+ \vspace{-.2cm} \item \href{https://unfccc.int/}{UNFCCC (United Nations Framework Convention on Climate Change)} 
+ \vspace{-.2cm} \item \href{https://www.theguardian.com/environment/2020/sep/21/worlds-richest-1-cause-double-co2-emissions-of-poorest-50-says-oxfam?utm_campaign=Carbon%20Brief%20Daily%20Briefing&utm_medium=email&utm_source=Revue%20newsletter}{World's richest 1\% cause double CO$_2$ emissions of poorest 50\%, says Oxfam} 
+ \vspace{-.2cm} \item \href{https://www.showyourbudgets.org/de/?country=whole_world}{\#showyourbudgets} 
+ \end{itemize}
+
+ %%%
+ \end{document}

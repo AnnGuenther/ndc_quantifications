@@ -9,9 +9,7 @@ def setup_metadata():
     """
     Set up the general metadata.
     If you want/need to change the folder for the preprocessed data, do it here.
-
     Returns:
-
     meta : class.
         Meta data needed in the quantifications and plotting routines.
     

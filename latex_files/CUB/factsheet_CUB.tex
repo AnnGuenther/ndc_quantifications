@@ -1,0 +1,228 @@
+\documentclass[12pt]{article}
+
+ %%%
+ \usepackage[utf8]{inputenc}
+ \usepackage{graphicx}
+ \usepackage{xcolor}
+ \usepackage{hyperref}
+ \hypersetup{colorlinks, linkcolor = black, citecolor = black, filecolor = black, urlcolor = [RGB]{227, 114, 34}}
+ \usepackage{float}
+ \usepackage{geometry}\geometry{a4paper, total={170mm,257mm}, left=20mm, top=20mm}
+
+ \definecolor{PIKorange}{RGB}{227, 114, 34}
+ \definecolor{PIKgray}{RGB}{142, 144, 143}
+
+ \title{ \bfseries \color{PIKorange} Cuba: information on national emissions, population and GDP, and mitigation targets}
+
+ %%%
+
+ \begin{document}
+
+ \maketitle
+
+ %%%
+ \noindent \textbf{Authors:} \newline
+ \indent Annika Guenther$^{1}$ \newline
+ \indent Johannes Guetschow$^{1}$ \newline
+ \noindent \textbf{Affiliations:} \newline
+ \indent 1. Potsdam Institute for Climate Impact Research, Germany \newline
+ \noindent \textbf{DOI:} [to be added] \newline
+
+ \textbf{TODO}
+ \begin{itemize}
+ \item Table with info on target (main and reclass; emissions from NDC; target quantis + plot).
+ \item GWP: NDC emissions coverted from AR2 to AR4 by national conversion factor (2010--2017, PRIMAP-hist v2.1).
+ \item References!
+ \end{itemize}
+
+ \newpage %%%
+ \section{Non-LULUCF emissions and socio-economic data}
+ \label{sec:nonLULUCFSocioEco}
+ With national emissions of 49.1~Mt CO$_2$eq, Cuba contributed 0.1\% to global emissions in 2017, while in 2030 its share is estimated to decrease to 0.08\% (Table~\ref{tab:overview}).
+ The estimates for 2030 are based on the downscaled SSP2 Middle of the Road marker scenario (dmSSP2), in which Cuba is estimated to emit 49.0~Mt CO$_2$eq in 2030.
+ That change in emissions would constitute a decrease of -0.2\% compared to 2017. 
+ The pathways dmSSP1--5 show a range of 49.0--65.2~Mt CO$_2$eq in 2030, and 50.0--76.9~Mt CO$_2$eq in 2050.
+ The country's global rank in terms of total emissions per unit of GDP was 76 in 2017, and 107 regarding the per-capita emissions (64 and 112 in 2030).
+ In terms of accumulated historical emissions, Cuba contributed to the global 1850--2017 emissions by 0.1\%. 
+ When only accounting for the years 1990--2017, its contribution stays the same to 0.1\%.
+ All of the emissions are presented following GWP~AR4, and exclude emissions from LULUCF (exclLU), and bunkers fuels emissions (exclBunkers).
+
+ \begin{table}[H]
+ \centering
+ \caption{National emissions (dmSSP2), GDP and population for Cuba, together with the emissions per unit of GDP and per capita emissions (all for 2017 and 2030). 
+ Additionally, the global share and its rank are displayed.}
+ \label{tab:overview}
+ \begin{tabular}{l || l r l r r}
+ \bfseries  & \bfseries Year & \bfseries Total & \bfseries Unit & \bfseries Glob. share & \bfseries Rank \tabularnewline \hline \hline
+ \bfseries Emissions & 2017 & 49.1 & Mt CO$_2$eq & 0.1\% & 85 \tabularnewline 
+ \bfseries  & 2030 & 49.0 & Mt CO$_2$eq & 0.08\% & 100 \tabularnewline \hline
+ \bfseries GDP & 2017 & 93.0 & Billion 2011~GK\$ & 0.08\% & 83 \tabularnewline 
+ \bfseries  & 2030 & 121.1 & Billion 2011~GK\$ & 0.06\% & 96 \tabularnewline \hline
+ \bfseries Emissions & 2017 & 0.5 & t CO$_2$eq / Thousand 2011~GK\$ & 0.4\% & 76 \tabularnewline 
+ \bfseries per GDP & 2030 & 0.4 & t CO$_2$eq / Thousand 2011~GK\$ & 0.5\% & 64 \tabularnewline \hline
+ \bfseries Population & 2017 & 11.3 & Million Pers & 0.1\% & 80 \tabularnewline 
+ \bfseries  & 2030 & 10.9 & Million Pers & 0.1\% & 90 \tabularnewline \hline
+ \bfseries Emissions & 2017 & 4.3 & t CO$_2$eq /  Pers & 0.2\% & 107 \tabularnewline 
+ \bfseries per capita & 2030 & 4.5 & t CO$_2$eq /  Pers & 0.3\% & 112 \tabularnewline 
+ \end{tabular}
+ \end{table}
+
+ For Cuba, in 2017 the main emissions share on sectoral level (Fig.~\ref{fig:tsEmi}) came from the Energy sector (76.1\%), followed by Agriculture (14.6\%)
+ The Kyoto~GHG with the highest emissions in 2017 was CO$_2$, constituting as much as 72.4\% of the national emissions. 
+ Second largest contributor was CH$_4$ (20.7\%)
+ The total of F-gasesonly represented 0.8\%.
+ The total CO$_2$ emissions are expected to be 72.8\% of the national Kyoto~GHG emissions in 2030 (dmSSP2).
+
+ \begin{figure}[H]
+ \centering
+ \includegraphics[width=\textwidth]{C:/Users/annikag/primap/ndc_quantifications/latex_files/CUB/ts_emi_exclLU_CUB.png}
+ \caption{'Stacked' timeseries of national emissions (exclLU) per main-sector (a) and Kyoto~GHG (b). 
+ No information available on the sectoral contributions after 2017.}
+ \label{fig:tsEmi}
+ \end{figure}
+
+ \begin{figure}[H]
+ \centering
+ \includegraphics[width=\textwidth]{C:/Users/annikag/primap/ndc_quantifications/latex_files/CUB/ts_gdp_pop_CUB.png}
+ \caption{Timeseries of national GDP (a) and population (c), and Kyoto~GHG emissions (exclLU, exclBunkers) per unit of GDP (b) or per capita (d).}
+ \label{fig:tsSocioEco}
+ \end{figure}
+
+ The national GDP increased in recent years, and the emissions per unit of GDP had an opposite trend (Fig.~\ref{fig:tsSocioEco}).
+ The population increased, while the per capita emissions dropped. 
+ Following dmSSP2, the GDP is projected to increase towards 2050. 
+ The emissions per GDP are estimated to decrease towars 2050. 
+ Cuba's population is assumed to diminish towars 2050, and the per capita emissions are expected to increase towards 2050. 
+
+ \newpage %%%
+ \section{LULUCF emissions}
+ \label{sec:emiLULUCF}
+ LULUCF emissions data for Cuba are available from the following sources (Fig.~\ref{fig:tsLULUCF}): UNFCCC (2019), FAO (2019).
+
+ \textbf{High fluctuations? Data gaps? Difference between sources?}
+
+ \begin{figure}[H]
+ \centering
+ \includegraphics[width=\textwidth]{C:/Users/annikag/primap/ndc_quantifications/latex_files/CUB/ts_emi_onlyLU_CUB.png}
+ \caption{Timeseries of emissions from LULUCF (CO$_2$ plus CH$_4$ and N$_2$O) as available from different data-sources. 
+ Indicated in pink are the 'chosen' data, as used in our assessment of Cuba's NDC (if needed). 
+ The pink timeseries was inter- and~/ or extrapolated (interpolation: linear, extrapolation: constant).}
+ \label{fig:tsLULUCF}
+ \end{figure}
+
+ \newpage %%%
+ \section{Mitigation targets (NDC)}
+ \label{sec:mitiTars}
+
+ \textbf{ 
+ Give the \%cov for the base and target year (and 2017).
+ Global share for 2030 for the mitigated pathways and \% reduction relative to 1990 and 2017.
+ Table with the 'input' data and the resulting targets (like ndcs\_targets.csv).}
+ Cuba has an NDC, with a GHG mitigation target of the type NGT (non-GHG target; main target type).
+ The reclassified target type is ABU (absolute reduction compared to Business-As-Usual).
+
+ \begin{table}[H]
+ \centering
+ \caption{Information on Cuba's GHG mitigation target(s).}
+ \label{tab:mitiTars}
+ \begin{tabular}{l l l l l l }
+ \bfseries type & \bfseries condi. & \bfseries range & \bfseries value & \bfseries tarYr & \bfseries LU \tabularnewline \hline
+ ABU & condi. & best & -6 Mt~CO$_2$eq & 2030 & exclLU \tabularnewline 
+ \end{tabular}
+ \end{table}
+
+ \begin{figure}[H]
+ \centering
+ \includegraphics[width=\textwidth]{C:/Users/annikag/primap/ndc_quantifications/latex_files/CUB/ts_pc_cov_CUB.png}
+ \caption{Timeseries of Cuba's national emissions (exclLU) and the share of emissions that is assumed to be covered by Cuba's mitigation target.}
+ \label{fig:tsPcCov}
+ \end{figure}
+
+ \begin{table}[H]\small
+ \centering
+ \caption{Information on covered sectors and gases as retrieved from NDC and adapted ('Adap.': used to calculate \%cov), and their shares in Cuba's 2017 emissions (exclLU, exclBunkers; total 49.1~Mt CO$_2$eq).
+ If either the sector or gas is assessed as 'not-covered', the emissions from this sector-gas combination are counted as not-covered (--). 
+ Else the emissions are counted as covered (+; covered shares given in bold).
+ (/) means that no information is available.
+ LULUCF: NDC '/' and adapted '--' (estimated as a net sink of -13.1~Mt CO$_2$eq in 2017; based on the 'chosen' LULUCF emissions).}
+ \label{tab:coveredSectorsGases}
+ \begin{tabular}{l || c c || c c c c c c c | c}
+ \bfseries  & \bfseries NDCs & \bfseries Adap. & \bfseries CO$_2$ & \bfseries CH$_4$ & \bfseries N$_2$O & \bfseries HFCs & \bfseries PFCs & \bfseries SF$_6$ & \bfseries NF$_3$ & \bfseries Total \tabularnewline \hline \hline
+ \bfseries NDCs &  &  & \bfseries + & \bfseries + & \bfseries + & / & / & / & / &  \tabularnewline 
+ \bfseries Adap. &  &  & \bfseries + & \bfseries + & \bfseries + & -- & -- & -- & -- &  \tabularnewline \hline \hline
+ \bfseries Energy & \bfseries + & \bfseries + & \bfseries 69.4\% & \bfseries 6.5\% & \bfseries 0.1\% & / & / & / & / & 76.1\% \tabularnewline 
+ \bfseries IPPU & / & -- & 2.9\% & / & 0.0\% & 0.8\% & / & / & / & 3.7\% \tabularnewline 
+ \bfseries Agri. & \bfseries + & \bfseries + & \bfseries 0.0\% & \bfseries 9.3\% & \bfseries 5.3\% & / & / & / & / & 14.6\% \tabularnewline 
+ \bfseries Waste & / & -- & / & 4.9\% & 0.4\% & / & / & / & / & 5.3\% \tabularnewline 
+ \bfseries Other & / & -- & / & / & 0.2\% & / & / & / & / & 0.2\% \tabularnewline \hline
+ \bfseries Total &  &  & 72.4\% & 20.7\% & 6.1\% & 0.8\% & / & / & / & 100.0\% \tabularnewline 
+ \end{tabular}
+ \end{table}
+
+ \begin{figure}[H]
+ \centering
+ \includegraphics[width=\textwidth]{C:/Users/annikag/primap/ndc_quantifications/latex_files/CUB/ts_ndcs_quantis_CUB.png}
+ \caption{Quantified mitigation targets (based on different input data and calculation options).
+ Vertical lines: conditionality~/ range;
+ colour coded: dmSSP1--5;
+ first~/ second set of six: prio NDCs~/ SSPs;
+ set of six: coverage 100, lulucf unfccc, lulucf fao, bl uncondi, const emi, estimated coverage.}
+ \label{fig:miti}
+ \end{figure}
+
+ \newpage %%%
+ \section{Data sources, additional information and references}
+ \label{sec:dataSourcesRefs}
+
+ \noindent \href{https://dataservices.gfz-potsdam.de/pik/showshort.php?id=escidoc:4736895}{PRIMAP-hist v2.1}: emissions from PRIMAP-hist are data from the country reported data priority scenario (HISTCR).
+
+ \noindent \href{https://zenodo.org/record/3638137#.X2syXouxU2w}{dmSSPs}: emissions, population and GDP data are PMSSPBIE data for the five marker scenarios.
+
+ \begin{description}
+ \item [SSPs] Shared Socio-economic Pathways.
+ Narratives and challenges to mitigation and adaptation: 
+ SSP1: Sustainability, Taking the Green Road (low~/ low);
+ SSP2: Middle of the Road (medium~/ medium);
+ SSP3: Regional Rivalry, A Rocky Road (high~/ high);
+ SSP4: Inequality, A Road Divided (low~/ high); and
+ SSP5: Fossil-fuelled Development, Taking the Highway (high~/ low).
+ \item [GDP] Gross Domestic Product. 
+ Throughout this document the GDP is given as GDP~PPP, with PPP being the Purchasing Power Parity.
+ \item [GWP] Global Warming Potential. we use GWP values from the IPCC 4$^{th}$ Assessment Report (AR4). 
+ They reflect the forcing potential of one kilogram of a gas' emissions in comparison to one kilogram of CO$_2$ (GWP$_{CO2}$ = 1). 
+ The GWPs correspond to a 100-yr period and are for CH$_4$:~25, for N$_2$O:~298, for SF$_6$:~22800, and for NF$_3$:~17200. 
+ For the basket of HFC-gases the GWPs from AR4 are in the range 4--14800, and for PFCs 7190--12200. 
+ To assess emissions of several GHGs, their emissions are weighted by their respective GWPs and presented in CO$_2$ equivalents (CO$_2$eq).
+ \item [LULUCF] Land Use, Land-Use Change and Forestry. 
+ Emissions from LULUCF are excluded throughout the document, unless stated otherwise.
+ \item [Bunkers fuels] Emissions from international aviation and shipping.
+ \item [Kyoto~GHG] Kyoto~GHG (Greenhouse Gas) basket: carbon dioxide (CO$_2$), methane (CH$_4$), nitrous oxide (N$_2$O), hydrofluorocarbons (HFCs), perfluorocarbons (PFCs), sulfur hexafluoride (SF$_6$), and nitrogen trifluoride (NF$_3$).
+ \item [F-gases] Fluorinated gases.Basket of HFCs, PFCs, and the gases SF$_6$ and NF$_3$. 
+ Some F-gases have very long atmospheric lifetimes and high Global Warming Potentials.
+ \item [Target reclassification] When a country has, e.g., an RBU target (relative reduction compared to Business-As-Usual), and the BAU emissions are provided, it can be quantified based on the given emissions, and is reclassified from type\_main~RBU to type\_reclass~ABS (absolute emissions target).
+ Additionally, 'NGT' targets can be reclassified as 'ABU' (absolute reduction compared to Business-As-Usual) if absolute mitigation effects due to planned policies and measures are provided.
+ \end{description}
+
+ \noindent \textbf{Links to additional information:}
+ \begin{itemize}
+ \item \href{https://www.climatewatchdata.org/}{CLIMATEWATCH} 
+ \vspace{-.2cm} \item \href{https://www.carbonbrief.org/}{CarbonBrief: Clear on Climate} 
+ \vspace{-.2cm} \item \href{https://climateactiontracker.org/}{Climate Action Tracker} 
+ \vspace{-.2cm} \item \href{https://zenodo.org/record/3638137#.X2sqPIuxU2w}{Country resolved combined emission and socio-economic pathways based on the RCP and SSP scenarios} (February 2020)
+ \vspace{-.2cm} \item \href{https://www.carbonbrief.org/guest-post-calculating-the-true-climate-impact-of-aviation-emissions?utm_campaign=Carbon%20Brief%20Daily%20Briefing&utm_medium=email&utm_source=Revue%20newsletter}{Guest post: Calculating the true climate impact of aviation emissions} (September 2020)
+ \vspace{-.2cm} \item \href{https://www.iges.or.jp/en/pub/iges-indc-ndc-database/en}{IGES NDC Database} 
+ \vspace{-.2cm} \item \href{https://www.ipcc.ch/}{IPCC (The Intergovernmental Panel on Climate Change)} 
+ \vspace{-.2cm} \item \href{https://www.ipcc.ch/sr15/}{IPCC Special Report: Global Warming of 1.5$^{\circ}$} (2018)
+ \vspace{-.2cm} \item \href{https://www.isimip.org/isipedia/#isipedia-portal}{ISIMIP~/ ISIpedia} 
+ \vspace{-.2cm} \item \href{https://klimalog.die-gdi.de/ndc/#NDCExplorer/worldMap?NDC??income???catIncome}{NDC Explorer} 
+ \vspace{-.2cm} \item \href{https://ndcpartnership.org/}{NDC PARTNERSHIP} 
+ \vspace{-.2cm} \item \href{https://themasites.pbl.nl/o/climate-ndc-policies-tool/}{PBL Climate Pledge NDC tool} 
+ \vspace{-.2cm} \item \href{https://tntcat.iiasa.ac.at/SspDb/dsd?Action=htmlpage&page=about}{SSP Database (Shared Socioeconomic Pathways) - Version 2.0} (December 2018)
+ \vspace{-.2cm} \item \href{https://dataservices.gfz-potsdam.de/pik/showshort.php?id=escidoc:4736895}{The PRIMAP-hist national historical emissions time series (1850-2017)} (2019)
+ \vspace{-.2cm} \item \href{https://unfccc.int/}{UNFCCC (United Nations Framework Convention on Climate Change)} 
+ \vspace{-.2cm} \item \href{https://www.theguardian.com/environment/2020/sep/21/worlds-richest-1-cause-double-co2-emissions-of-poorest-50-says-oxfam?utm_campaign=Carbon%20Brief%20Daily%20Briefing&utm_medium=email&utm_source=Revue%20newsletter}{World's richest 1\% cause double CO$_2$ emissions of poorest 50\%, says Oxfam} 
+ \vspace{-.2cm} \item \href{https://www.showyourbudgets.org/de/?country=whole_world}{\#showyourbudgets} 
+ \end{itemize}
+
+ %%%
+ \end{document}

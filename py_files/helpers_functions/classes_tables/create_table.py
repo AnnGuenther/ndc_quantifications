@@ -185,8 +185,8 @@ class create_table():
         
         from helpers_functions.units.get_baseunit import get_baseunit
         
-        self.unit, _ = get_baseunit(self.unit)
-        self.__convert_unit__(self.unit)
+        new_unit, _ = get_baseunit(self.unit)
+        self.__convert_unit__(new_unit)
         
         return self
     
