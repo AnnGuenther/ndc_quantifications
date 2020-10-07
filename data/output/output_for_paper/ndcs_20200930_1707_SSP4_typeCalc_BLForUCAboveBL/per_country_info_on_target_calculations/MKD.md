@@ -1,0 +1,127 @@
+
+
+## tar_type_used: ABU, refyr: 2030, taryr: 2030, conditional_worst
+- ndc_value_exclLU: -5.476358970074358 (-5.228 MtCO2eq_SAR)
+- ndc_value_inclLU: nan (nan)
+- lulucf_first_try: True
+- Emissions values from NDCs:
+  - ndcs_emi_inclLU for refyr and taryr: [nan nan]
+  - ndcs_emi_exclLU for refyr and taryr: [nan nan]
+  - ndcs_emi_onlyLU for refyr and taryr: [nan nan]
+- LULUCF
+  - is_LU_covered_valinfo: False
+  - is_LU_covered_secinfo: False
+  - Get the LULUCF data for the reference and target year (bl_onlyLU_refyr/taryr).
+    - emi_onlyLU 2030: external_emi_onlyLU used (0.06064500000000006).
+    - bl_onlyLU_refyr = 0.06064500000000006
+    - emi_onlyLU 2030: external_emi_onlyLU used (0.06064500000000006).
+    - bl_onlyLU_taryr = 0.06064500000000006
+### tar_type_used = ABU
+tar_emi is the given baseline minus the absolute reduction.
+- bl_exclLU_taryr = ndcs_emi_exclLU[taryr] = nan
+  - np.isnan(bl_exclLU_taryr), so bl_exclLU_taryr = ict['emi_bl_exclLU_taryr'] = 17.8983
+- tar_emi_exclLU = bl_exclLU_taryr + ndc_value_exclLU = 17.8983 + -5.476358970074358 = 12.421941029925641 # ndc_value is negative for a reduction ...
+- tar_emi_exclLU = ndc_value_exclLU = 12.421941029925641
+- tar_emi_inclLU = ndc_value_inclLU = nan
+### Function calc_targets_inclLU_exclLU()
+If not both, inclLU and exclLU information are given calculate the 'other case' from the given case.
+- tar_emi_inclLU is nan. So calculate tar_emi_inclLU = np.nansum([tar_emi_exclLU, bl_onlyLU_taryr]) = np.nansum([12.421941029925641, 0.06064500000000006]) = 12.482586029925642
+- tar_emi_exclLU = 12.421941029925641
+- tar_emi_inclLU = 12.482586029925642
+
+## tar_type_used: ABU, refyr: 2030, taryr: 2030, conditional_best
+- ndc_value_exclLU: -6.6034749325456685 (-6.304 MtCO2eq_SAR)
+- ndc_value_inclLU: nan (nan)
+- lulucf_first_try: True
+- Emissions values from NDCs:
+  - ndcs_emi_inclLU for refyr and taryr: [nan nan]
+  - ndcs_emi_exclLU for refyr and taryr: [nan nan]
+  - ndcs_emi_onlyLU for refyr and taryr: [nan nan]
+- LULUCF
+  - is_LU_covered_valinfo: False
+  - is_LU_covered_secinfo: False
+  - Get the LULUCF data for the reference and target year (bl_onlyLU_refyr/taryr).
+    - emi_onlyLU 2030: external_emi_onlyLU used (0.06064500000000006).
+    - bl_onlyLU_refyr = 0.06064500000000006
+    - emi_onlyLU 2030: external_emi_onlyLU used (0.06064500000000006).
+    - bl_onlyLU_taryr = 0.06064500000000006
+### tar_type_used = ABU
+tar_emi is the given baseline minus the absolute reduction.
+- bl_exclLU_taryr = ndcs_emi_exclLU[taryr] = nan
+  - np.isnan(bl_exclLU_taryr), so bl_exclLU_taryr = ict['emi_bl_exclLU_taryr'] = 17.8983
+- tar_emi_exclLU = bl_exclLU_taryr + ndc_value_exclLU = 17.8983 + -6.6034749325456685 = 11.29482506745433 # ndc_value is negative for a reduction ...
+- tar_emi_exclLU = ndc_value_exclLU = 11.29482506745433
+- tar_emi_inclLU = ndc_value_inclLU = nan
+### Function calc_targets_inclLU_exclLU()
+If not both, inclLU and exclLU information are given calculate the 'other case' from the given case.
+- tar_emi_inclLU is nan. So calculate tar_emi_inclLU = np.nansum([tar_emi_exclLU, bl_onlyLU_taryr]) = np.nansum([11.29482506745433, 0.06064500000000006]) = 11.35547006745433
+- tar_emi_exclLU = 11.29482506745433
+- tar_emi_inclLU = 11.35547006745433
+
+## tar_type_used: RBU, refyr: 2030, taryr: 2030, conditional_worst
+- ndc_value_exclLU: -30.0 (-30%)
+- ndc_value_inclLU: nan (nan)
+- lulucf_first_try: True
+- Emissions values from NDCs:
+  - ndcs_emi_inclLU for refyr and taryr: [nan nan]
+  - ndcs_emi_exclLU for refyr and taryr: [nan nan]
+  - ndcs_emi_onlyLU for refyr and taryr: [nan nan]
+- ndc_level_exclLU = 1. + ndc_value_exclLU / 100. = 1. + -30.0 / 100. = 0.7
+- ndc_level_inclLU = 1. + ndc_value_inclLU / 100. = 1. + nan / 100. = nan
+- LULUCF
+  - is_LU_covered_valinfo: False
+  - is_LU_covered_secinfo: False
+  - Get the LULUCF data for the reference and target year (bl_onlyLU_refyr/taryr).
+    - emi_onlyLU 2030: external_emi_onlyLU used (0.06064500000000006).
+    - bl_onlyLU_refyr = 0.06064500000000006
+    - emi_onlyLU 2030: external_emi_onlyLU used (0.06064500000000006).
+    - bl_onlyLU_taryr = 0.06064500000000006
+### tar_type_used = RBU
+- emi_cov_exclLU_refyr = ict['emi_bl_exclLU_refyr'] * ict['pc_cov_exclLU_refyr'] = 17.8983 * 0.799321495 = 14.3064959139585
+- emi_notcov_exclLU_taryr = ict['emi_bl_exclLU_taryr'] * (1 - ict['pc_cov_exclLU_taryr']) = 17.8983 * (1 - 0.799321495) = 3.591804086041499
+- intensity_growth = 1.
+- tar_emi_exclLU = intensity_growth * ndc_level_exclLU * emi_cov_exclLU_refyr + emi_notcov_exclLU_taryr = 1.0 * 0.7 * 14.3064959139585 + 3.591804086041499 = 13.606351225812448
+- tar_emi_inclLU
+  - bl_onlyLU_refyr >= 0., so apply the reduction to the emi_bl_onlyLU_refyr part as well.
+  - tar_emi_inclLU = intensity_growth * ndc_level_inclLU * (emi_cov_exclLU_refyr + bl_onlyLU_refyr) + emi_notcov_exclLU_taryr = 1.0 * nan * (14.3064959139585 + 0.06064500000000006) + 3.591804086041499 = nan
+- tar_emi_exclLU = ndc_value_exclLU = 13.606351225812448
+- tar_emi_inclLU = ndc_value_inclLU = nan
+### Function calc_targets_inclLU_exclLU()
+If not both, inclLU and exclLU information are given calculate the 'other case' from the given case.
+- tar_emi_inclLU is nan. So calculate tar_emi_inclLU = np.nansum([tar_emi_exclLU, bl_onlyLU_taryr]) = np.nansum([13.606351225812448, 0.06064500000000006]) = 13.666996225812447
+- tar_emi_exclLU = 13.606351225812448
+- tar_emi_inclLU = 13.666996225812447
+
+## tar_type_used: RBU, refyr: 2030, taryr: 2030, conditional_best
+- ndc_value_exclLU: -36.0 (-36%)
+- ndc_value_inclLU: nan (nan)
+- lulucf_first_try: True
+- Emissions values from NDCs:
+  - ndcs_emi_inclLU for refyr and taryr: [nan nan]
+  - ndcs_emi_exclLU for refyr and taryr: [nan nan]
+  - ndcs_emi_onlyLU for refyr and taryr: [nan nan]
+- ndc_level_exclLU = 1. + ndc_value_exclLU / 100. = 1. + -36.0 / 100. = 0.64
+- ndc_level_inclLU = 1. + ndc_value_inclLU / 100. = 1. + nan / 100. = nan
+- LULUCF
+  - is_LU_covered_valinfo: False
+  - is_LU_covered_secinfo: False
+  - Get the LULUCF data for the reference and target year (bl_onlyLU_refyr/taryr).
+    - emi_onlyLU 2030: external_emi_onlyLU used (0.06064500000000006).
+    - bl_onlyLU_refyr = 0.06064500000000006
+    - emi_onlyLU 2030: external_emi_onlyLU used (0.06064500000000006).
+    - bl_onlyLU_taryr = 0.06064500000000006
+### tar_type_used = RBU
+- emi_cov_exclLU_refyr = ict['emi_bl_exclLU_refyr'] * ict['pc_cov_exclLU_refyr'] = 17.8983 * 0.799321495 = 14.3064959139585
+- emi_notcov_exclLU_taryr = ict['emi_bl_exclLU_taryr'] * (1 - ict['pc_cov_exclLU_taryr']) = 17.8983 * (1 - 0.799321495) = 3.591804086041499
+- intensity_growth = 1.
+- tar_emi_exclLU = intensity_growth * ndc_level_exclLU * emi_cov_exclLU_refyr + emi_notcov_exclLU_taryr = 1.0 * 0.64 * 14.3064959139585 + 3.591804086041499 = 12.74796147097494
+- tar_emi_inclLU
+  - bl_onlyLU_refyr >= 0., so apply the reduction to the emi_bl_onlyLU_refyr part as well.
+  - tar_emi_inclLU = intensity_growth * ndc_level_inclLU * (emi_cov_exclLU_refyr + bl_onlyLU_refyr) + emi_notcov_exclLU_taryr = 1.0 * nan * (14.3064959139585 + 0.06064500000000006) + 3.591804086041499 = nan
+- tar_emi_exclLU = ndc_value_exclLU = 12.74796147097494
+- tar_emi_inclLU = ndc_value_inclLU = nan
+### Function calc_targets_inclLU_exclLU()
+If not both, inclLU and exclLU information are given calculate the 'other case' from the given case.
+- tar_emi_inclLU is nan. So calculate tar_emi_inclLU = np.nansum([tar_emi_exclLU, bl_onlyLU_taryr]) = np.nansum([12.74796147097494, 0.06064500000000006]) = 12.80860647097494
+- tar_emi_exclLU = 12.74796147097494
+- tar_emi_inclLU = 12.80860647097494

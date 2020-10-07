@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7300 64-bit) (preloaded format=pdflatex 2020.3.19)  23 SEP 2020 16:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7300 64-bit) (preloaded format=pdflatex 2020.3.19)  24 SEP 2020 13:19
 entering extended mode
 **C:/Users/annikag/primap/ndc_quantifications/latex_files/LBY/factsheet_LBY.tex
 
@@ -393,15 +393,15 @@ has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.100  \newpage
+l.101  \newpage
                 %%% <C:/Users/annikag/primap/ndc_quantifications/latex_files/LB
-Y/ts_gdp_pop_LBY.png>] [5] [6] [7]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 171.
- [8]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 171.
+Y/ts_gdp_pop_LBY.png>] [5] [6]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 184.
+ [7]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 184.
  (factsheet_LBY.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 171.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 171.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 184.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 184.
 
 
 Package rerunfilecheck Warning: File `factsheet_LBY.out' has changed.
@@ -410,23 +410,23 @@ Package rerunfilecheck Warning: File `factsheet_LBY.out' has changed.
 
 Package rerunfilecheck Info: Checksums for `factsheet_LBY.out':
 (rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  E16E97C21711F0EF4CE364B7EBAA58D3;277.
+(rerunfilecheck)             After:  BF712DBC44C5131F5D0875EB16B74F1C;215.
 
 LaTeX Warning: There were undefined references.
 
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 171.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 184.
  ) 
 Here is how much of TeX's memory you used:
- 6194 strings out of 481556
- 95290 string characters out of 2923014
+ 6193 strings out of 481556
+ 95281 string characters out of 2923014
  367457 words of memory out of 3000000
  21339 multiletter control sequences out of 15000+200000
- 537843 words of font info for 42 fonts, out of 3000000 for 9000
+ 538190 words of font info for 43 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,9n,37p,432b,378s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 34i,9n,37p,523b,373s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\annikag\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi60
 0\tcrm1200.pk><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx1
 2.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:
@@ -434,10 +434,11 @@ Here is how much of TeX's memory you used:
 Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiK
 TeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fo
 nts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
-public/amsfonts/cm/cmsy8.pfb>
-Output written on factsheet_LBY.pdf (8 pages, 775740 bytes).
+public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/am
+sfonts/cm/cmti12.pfb>
+Output written on factsheet_LBY.pdf (7 pages, 793884 bytes).
 PDF statistics:
- 112 PDF objects out of 1000 (max. 8388607)
- 17 named destinations out of 1000 (max. 500000)
+ 121 PDF objects out of 1000 (max. 8388607)
+ 15 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

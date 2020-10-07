@@ -36,7 +36,7 @@
  \end{itemize}
 
  \newpage %%%
- \section{Non-LULUCF emissions and socio-economic data}
+ \section{Emissions and socio-economic data}
  \label{sec:nonLULUCFSocioEco}
  With national emissions of 111.2~Mt CO$_2$eq, Chile contributed 0.2\% to global emissions in 2017, and in 2030 its share is estimated to stay at a similar level (Table~\ref{tab:overview}).
  The estimates for 2030 are based on the downscaled SSP2 Middle of the Road marker scenario (dmSSP2), in which Chile is estimated to emit 153.4~Mt CO$_2$eq in 2030.
@@ -94,12 +94,9 @@
  The emissions per GDP are estimated to decrease towars 2050. 
  Chile's population is assumed to grow after 2017 but to diminish again before 2050, and the per capita emissions are expected to increase towards 2050. 
 
- \newpage %%%
- \section{LULUCF emissions}
- \label{sec:emiLULUCF}
- LULUCF emissions data for Chile are available from the following sources (Fig.~\ref{fig:tsLULUCF}): UNFCCC (2019), FAO (2019).
-
- \textbf{High fluctuations? Data gaps? Difference between sources?}
+ LULUCF emissions data for Chile are available from the following sources (Fig.~\ref{fig:tsLULUCF}): UNFCCC (2019)~/ 7, FAO (2019)~/ 28, with the number of available data points in 1990--2017 displayed additionally.
+ Based on data from UNFCCC (2019), for the year 2017, LULUCF is estimated to be a net sink of -69.6~Mt CO$_2$eq, which in absolute terms is lower than the non-LULUCF emissions of 111.2~Mt CO$_2$eq.
+ The emissions range for UNFCCC (2019) and 1990--2017 is -71.5---19.1~Mt CO$_2$eq.
 
  \begin{figure}[H]
  \centering
@@ -115,9 +112,9 @@
  \label{sec:mitiTars}
 
  \textbf{ 
- Give the \%cov for the base and target year (and 2017).
- Global share for 2030 for the mitigated pathways and \% reduction relative to 1990 and 2017.
- Table with the 'input' data and the resulting targets (like ndcs\_targets.csv).}
+ Give the \%cov for the base and target year (and 2017). \newline
+ Global share for 2030 for the mitigated pathways and \% reduction relative to 1990 and 2017. \newline
+ Table with the 'input' data and the resulting targets (like ndcs\_targets.csv). \newline}
  Chile has an NDC, with a GHG mitigation target of the type ABS (absolute emissions target; main target type).
  The reclassified target type equals the main target type.
 
@@ -126,7 +123,7 @@
  \caption{Information on Chile's GHG mitigation target(s).}
  \label{tab:mitiTars}
  \begin{tabular}{l l l l l l l }
- \bfseries type & \bfseries condi. & \bfseries range & \bfseries value & \bfseries tarYr & \bfseries peakYr & \bfseries LU \tabularnewline \hline
+ \bfseries type & \bfseries condi. & \bfseries range & \bfseries value & \bfseries tarYr & \bfseries peakYr & \bfseries LU \tabularnewline \hline \hline
  ABS & uncondi. & best & 99 Mt~CO$_2$eq & 2025 & 2030 & exclLU \tabularnewline 
  ABS & uncondi. & best & 95 Mt~CO$_2$eq & 2030 & 2030 & exclLU \tabularnewline 
  \end{tabular}
@@ -180,47 +177,64 @@
  \noindent \href{https://zenodo.org/record/3638137#.X2syXouxU2w}{dmSSPs}: emissions, population and GDP data are PMSSPBIE data for the five marker scenarios.
 
  \begin{description}
- \item [SSPs] Shared Socio-economic Pathways.
- Narratives and challenges to mitigation and adaptation: 
- SSP1: Sustainability, Taking the Green Road (low~/ low);
- SSP2: Middle of the Road (medium~/ medium);
- SSP3: Regional Rivalry, A Rocky Road (high~/ high);
- SSP4: Inequality, A Road Divided (low~/ high); and
- SSP5: Fossil-fuelled Development, Taking the Highway (high~/ low).
- \item [GDP] Gross Domestic Product. 
+ \item [SSPs] Shared Socio-economic Pathways. \newline
+ Narratives and challenges to mitigation and adaptation: \newline
+ \textit{SSP1}: Sustainability, Taking the Green Road (low~/ low); \newline
+ \textit{SSP2}: Middle of the Road (medium~/ medium); \newline
+ \textit{SSP3}: Regional Rivalry, A Rocky Road (high~/ high); \newline
+ \textit{SSP4}: Inequality, A Road Divided (low~/ high); and \newline
+ \textit{SSP5}: Fossil-fuelled Development, Taking the Highway (high~/ low).
+ \item [GDP] Gross Domestic Product. \newline
  Throughout this document the GDP is given as GDP~PPP, with PPP being the Purchasing Power Parity.
- \item [GWP] Global Warming Potential. we use GWP values from the IPCC 4$^{th}$ Assessment Report (AR4). 
+ \item [GWP] Global Warming Potential. \newline
+ We use GWP values from the IPCC 4$^{th}$ Assessment Report (AR4). 
  They reflect the forcing potential of one kilogram of a gas' emissions in comparison to one kilogram of CO$_2$ (GWP$_{CO2}$ = 1). 
  The GWPs correspond to a 100-yr period and are for CH$_4$:~25, for N$_2$O:~298, for SF$_6$:~22800, and for NF$_3$:~17200. 
  For the basket of HFC-gases the GWPs from AR4 are in the range 4--14800, and for PFCs 7190--12200. 
  To assess emissions of several GHGs, their emissions are weighted by their respective GWPs and presented in CO$_2$ equivalents (CO$_2$eq).
- \item [LULUCF] Land Use, Land-Use Change and Forestry. 
+ \item [LULUCF] Land Use, Land-Use Change and Forestry. \newline
  Emissions from LULUCF are excluded throughout the document, unless stated otherwise.
  \item [Bunkers fuels] Emissions from international aviation and shipping.
- \item [Kyoto~GHG] Kyoto~GHG (Greenhouse Gas) basket: carbon dioxide (CO$_2$), methane (CH$_4$), nitrous oxide (N$_2$O), hydrofluorocarbons (HFCs), perfluorocarbons (PFCs), sulfur hexafluoride (SF$_6$), and nitrogen trifluoride (NF$_3$).
- \item [F-gases] Fluorinated gases.Basket of HFCs, PFCs, and the gases SF$_6$ and NF$_3$. 
+ \item [Kyoto~GHG] Kyoto~GHG (Greenhouse Gas) basket. \newline
+ Carbon dioxide (CO$_2$), methane (CH$_4$), nitrous oxide (N$_2$O), hydrofluorocarbons (HFCs), perfluorocarbons (PFCs), sulfur hexafluoride (SF$_6$), and nitrogen trifluoride (NF$_3$).
+ \item [F-gases] Fluorinated gases. \newline
+ Basket of HFCs, PFCs, and the gases SF$_6$ and NF$_3$. 
  Some F-gases have very long atmospheric lifetimes and high Global Warming Potentials.
  \item [Target reclassification] When a country has, e.g., an RBU target (relative reduction compared to Business-As-Usual), and the BAU emissions are provided, it can be quantified based on the given emissions, and is reclassified from type\_main~RBU to type\_reclass~ABS (absolute emissions target).
  Additionally, 'NGT' targets can be reclassified as 'ABU' (absolute reduction compared to Business-As-Usual) if absolute mitigation effects due to planned policies and measures are provided.
+ \item [Quantification options] Different quantification options were tested. \newline
+ \textit{dmSSP1--5}: down-scaled SSP marker scenarios; \newline
+ \textit{type\_reclass}: external data prioritised (PRIMAP-hist, dmSSPs); \newline
+ \textit{type\_main}: emissions data from within NDCs were prioritised; \newline
+ \textit{100\% coverage \& estimated coverage}; \newline
+ \textit{constant~emi}: constant emissions after last target year (instead of constant relative difference to baseline); \newline
+ \textit{baseline uncondi}: baseline emissions as uncond. pathways for Parties without uncond. targets, even if baseline is better than cond. targets (instead of cond. pathway as uncond. pathways in these cases).
  \end{description}
 
  \noindent \textbf{Links to additional information:}
  \begin{itemize}
  \item \href{https://www.climatewatchdata.org/}{CLIMATEWATCH} 
  \vspace{-.2cm} \item \href{https://www.carbonbrief.org/}{CarbonBrief: Clear on Climate} 
+ \vspace{-.2cm} \item \href{https://uk.reuters.com/article/us-climate-change-china/chinas-carbon-neutral-pledge-could-curb-global-warming-by-0-3c-researchers-idUKKCN26E325?utm_campaign=Carbon%20Brief%20Daily%20Briefing&utm_medium=email&utm_source=Revue%20newsletter}{China's carbon neutral pledge could curb global warming by 0.3$^{\circ}$C~- researchers} (23 September 2020)
  \vspace{-.2cm} \item \href{https://climateactiontracker.org/}{Climate Action Tracker} 
+ \vspace{-.2cm} \item \href{https://www.bbc.com/news/science-environment-54274644?utm_campaign=Carbon%20Brief%20Daily%20Briefing&utm_medium=email&utm_source=Revue%20newsletter}{Coronavirus: Climate action cannot be another Covid victim~- PM} (23 September 2020)
+ \vspace{-.2cm} \item \href{https://www.wri.org/blog/2019/07/countries-climate-plans-ndcs-are-missing-big-opportunity-reducing-food-loss-and-waste}{Countries' Climate Plans (NDCs) Are Missing a Big Opportunity: Reducing Food Loss and Waste} (3 July 2019)
  \vspace{-.2cm} \item \href{https://zenodo.org/record/3638137#.X2sqPIuxU2w}{Country resolved combined emission and socio-economic pathways based on the RCP and SSP scenarios} (February 2020)
+ \vspace{-.2cm} \item \href{https://www.theguardian.com/environment/2020/sep/23/few-countries-living-up-to-green-recovery-promises-analysis?utm_campaign=Carbon%20Brief%20Daily%20Briefing&utm_medium=email&utm_source=Revue%20newsletter}{Few countries living up to Covid 'green recovery' pledges~- analysis} (23 September 2020)
  \vspace{-.2cm} \item \href{https://www.carbonbrief.org/guest-post-calculating-the-true-climate-impact-of-aviation-emissions?utm_campaign=Carbon%20Brief%20Daily%20Briefing&utm_medium=email&utm_source=Revue%20newsletter}{Guest post: Calculating the true climate impact of aviation emissions} (September 2020)
  \vspace{-.2cm} \item \href{https://www.iges.or.jp/en/pub/iges-indc-ndc-database/en}{IGES NDC Database} 
  \vspace{-.2cm} \item \href{https://www.ipcc.ch/}{IPCC (The Intergovernmental Panel on Climate Change)} 
  \vspace{-.2cm} \item \href{https://www.ipcc.ch/sr15/}{IPCC Special Report: Global Warming of 1.5$^{\circ}$} (2018)
  \vspace{-.2cm} \item \href{https://www.isimip.org/isipedia/#isipedia-portal}{ISIMIP~/ ISIpedia} 
+ \vspace{-.2cm} \item \href{https://www.theguardian.com/environment/2020/sep/23/melting-antarctic-ice-will-raise-sea-level-by-25-metres-even-if-paris-climate-goals-are-met-study-finds?CMP=share_btn_tw&utm_campaign=Carbon%20Brief%20Daily%20Briefing&utm_medium=email&utm_source=Revue%20newsletter}{Melting Antarctic ice will raise sea level by 2.5 metres~- even if Paris climate goals are met, study finds} (23 September 2020)
  \vspace{-.2cm} \item \href{https://klimalog.die-gdi.de/ndc/#NDCExplorer/worldMap?NDC??income???catIncome}{NDC Explorer} 
  \vspace{-.2cm} \item \href{https://ndcpartnership.org/}{NDC PARTNERSHIP} 
  \vspace{-.2cm} \item \href{https://themasites.pbl.nl/o/climate-ndc-policies-tool/}{PBL Climate Pledge NDC tool} 
- \vspace{-.2cm} \item \href{https://tntcat.iiasa.ac.at/SspDb/dsd?Action=htmlpage&page=about}{SSP Database (Shared Socioeconomic Pathways) - Version 2.0} (December 2018)
+ \vspace{-.2cm} \item \href{https://tntcat.iiasa.ac.at/SspDb/dsd?Action=htmlpage&page=about}{SSP Database (Shared Socioeconomic Pathways)~- Version 2.0} (December 2018)
  \vspace{-.2cm} \item \href{https://dataservices.gfz-potsdam.de/pik/showshort.php?id=escidoc:4736895}{The PRIMAP-hist national historical emissions time series (1850-2017)} (2019)
  \vspace{-.2cm} \item \href{https://unfccc.int/}{UNFCCC (United Nations Framework Convention on Climate Change)} 
+ \vspace{-.2cm} \item \href{https://www.wri.org/}{WORLD RESOURCES INSTITUTE} 
+ \vspace{-.2cm} \item \href{https://www.washingtonpost.com/weather/2020/09/23/atlantic-hurricanes-record-2020/?utm_campaign=Carbon%20Brief%20Daily%20Briefing&utm_medium=email&utm_source=Revue%20newsletter}{Why the 2020 Atlantic hurricane season has spun out of control: Extra-warm ocean waters, boosted by climate change, and La Ni{\~n}a are key drivers in historic season.} (September 2020)
  \vspace{-.2cm} \item \href{https://www.theguardian.com/environment/2020/sep/21/worlds-richest-1-cause-double-co2-emissions-of-poorest-50-says-oxfam?utm_campaign=Carbon%20Brief%20Daily%20Briefing&utm_medium=email&utm_source=Revue%20newsletter}{World's richest 1\% cause double CO$_2$ emissions of poorest 50\%, says Oxfam} 
  \vspace{-.2cm} \item \href{https://www.showyourbudgets.org/de/?country=whole_world}{\#showyourbudgets} 
  \end{itemize}

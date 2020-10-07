@@ -77,7 +77,6 @@ def plotting():
         data = ptws['calc_const'][ssps]
         for condi, rge in condi_rge:
             tars_all[f"{condi}_{rge}"].loc['calc_const', ssps] = data.loc[(data.group == 'EARTH') & (data.condi == condi) & (data.rge == rge), '2030'].max()
-
     
     for folder, ssps in zip(folders_orig_constant_path, meta.ssps.scens.short):
         
@@ -395,11 +394,11 @@ def plotting():
         axa.set_ylabel('emissions / Gt CO$_2$eq AR4', fontweight='bold')
     
     ssps_legend = meta.ssps.scens.short
-    ax_emi.legend([handles[xx] for xx in ssps_legend], ssps_legend, loc='center left', bbox_to_anchor=(0, .55))
+    ax_emi.legend([handles[xx] for xx in ssps_legend], [f"dm{xx}" for xx in ssps_legend], loc='center left', bbox_to_anchor=(0, .55))
     
     ax_emi.set_xlabel('year', fontweight='bold')
     ax_tars.xaxis.set_ticks(np.arange(2018.55, 2036, 4))
-    ax_tars.set_xticklabels(ssp1_5)
+    ax_tars.set_xticklabels([f"dm{xx}" for xx in ssp1_5])
     ax_tars.yaxis.set_ticks_position('both')
     
     txt_y = YL[0] + .02*np.diff(YL)
@@ -438,10 +437,10 @@ def plotting():
         colour_act = colours_ssps.loc[ssp, :].to_list()
         
         ax_p.plot(pop_filled[ssp].data.loc[:, years].reindex(index=meta.isos.EARTH).sum(),
-            color=colour_act, linewidth=linewdth, linestyle=linestyle[ssp], label=(ssp if count != 5 else '__nolegend__'))
+            color=colour_act, linewidth=linewdth, linestyle=linestyle[ssp], label=(f"dm{ssp}" if count != 5 else '__nolegend__'))
         
         ax_g.plot(gdp_filled[ssp].data.loc[:, years].reindex(index=meta.isos.EARTH).sum(),
-            color=colour_act, linewidth=linewdth, linestyle=linestyle[ssp], label=(ssp if count != 5 else '__nolegend__'))
+            color=colour_act, linewidth=linewdth, linestyle=linestyle[ssp], label=(f"dm{ssp}" if count != 5 else '__nolegend__'))
     
     if ax_p == ax_pop:
         

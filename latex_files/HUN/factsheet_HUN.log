@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7300 64-bit) (preloaded format=pdflatex 2020.3.19)  23 SEP 2020 16:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7300 64-bit) (preloaded format=pdflatex 2020.3.19)  24 SEP 2020 13:11
 entering extended mode
 **C:/Users/annikag/primap/ndc_quantifications/latex_files/HUN/factsheet_HUN.tex
 
@@ -386,87 +386,86 @@ U_HUN.png>]
 LaTeX Warning: Reference `fig:tsSocioEco' on page 4 undefined on input line 91.
 
 
-[4pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) 
-has been already used, duplicate ignored
 
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.97  \newpage
-               %%% <C:/Users/annikag/primap/ndc_quantifications/latex_files/HUN
-/ts_gdp_pop_HUN.png>]
-
-LaTeX Warning: Reference `fig:tsLULUCF' on page 5 undefined on input line 100.
+LaTeX Warning: Reference `fig:tsLULUCF' on page 4 undefined on input line 97.
 
 <C:/Users/annikag/primap/ndc_quantifications/latex_files/HUN/ts_emi_onlyLU_HUN.
-png, id=33, 867.24pt x 361.35pt>
+png, id=27, 867.24pt x 361.35pt>
 File: C:/Users/annikag/primap/ndc_quantifications/latex_files/HUN/ts_emi_onlyLU
 _HUN.png Graphic file (type png)
 <use C:/Users/annikag/primap/ndc_quantifications/latex_files/HUN/ts_emi_onlyLU_
 HUN.png>
 Package pdftex.def Info: C:/Users/annikag/primap/ndc_quantifications/latex_file
-s/HUN/ts_emi_onlyLU_HUN.png  used on input line 106.
+s/HUN/ts_emi_onlyLU_HUN.png  used on input line 103.
 (pdftex.def)             Requested size: 483.69684pt x 201.5441pt.
-[5pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) 
+[4pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) 
 has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.113  \newpage
+l.109 
+       <C:/Users/annikag/primap/ndc_quantifications/latex_files/HUN/ts_gdp_pop_
+HUN.png>] [5pdfTeX warning (ext4): destination with the same identifier (name{f
+igure.3}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.110  \newpage
                 %%% <C:/Users/annikag/primap/ndc_quantifications/latex_files/HU
 N/ts_emi_onlyLU_HUN.png>]
 <C:/Users/annikag/primap/ndc_quantifications/latex_files/HUN/ts_pc_cov_HUN.png,
- id=41, 867.24pt x 289.08pt>
+ id=40, 867.24pt x 289.08pt>
 File: C:/Users/annikag/primap/ndc_quantifications/latex_files/HUN/ts_pc_cov_HUN
 .png Graphic file (type png)
 <use C:/Users/annikag/primap/ndc_quantifications/latex_files/HUN/ts_pc_cov_HUN.
 png>
 Package pdftex.def Info: C:/Users/annikag/primap/ndc_quantifications/latex_file
-s/HUN/ts_pc_cov_HUN.png  used on input line 138.
+s/HUN/ts_pc_cov_HUN.png  used on input line 135.
 (pdftex.def)             Requested size: 483.69684pt x 161.23528pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 151.
+(Font)              <10.95> on input line 148.
 <C:/Users/annikag/primap/ndc_quantifications/latex_files/HUN/ts_ndcs_quantis_HU
-N.png, id=42, 867.24pt x 289.08pt>
+N.png, id=41, 867.24pt x 289.08pt>
 File: C:/Users/annikag/primap/ndc_quantifications/latex_files/HUN/ts_ndcs_quant
 is_HUN.png Graphic file (type png)
 <use C:/Users/annikag/primap/ndc_quantifications/latex_files/HUN/ts_ndcs_quanti
 s_HUN.png>
 Package pdftex.def Info: C:/Users/annikag/primap/ndc_quantifications/latex_file
-s/HUN/ts_ndcs_quantis_HUN.png  used on input line 166.
+s/HUN/ts_ndcs_quantis_HUN.png  used on input line 163.
 (pdftex.def)             Requested size: 483.69684pt x 161.23528pt.
  [6pdfTeX warning (ext4): destination with the same identifier (name{table.2}) 
 has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.174 
+l.171 
       pdfTeX warning (ext4): destination with the same identifier (name{figure.
 4}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.174 
+l.171 
       pdfTeX warning (ext4): destination with the same identifier (name{table.3
 }) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.174 
+l.171 
        <C:/Users/annikag/primap/ndc_quantifications/latex_files/HUN/ts_pc_cov_H
 UN.png>] [7pdfTeX warning (ext4): destination with the same identifier (name{fi
 gure.5}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.175  \newpage
+l.172  \newpage
                 %%% <C:/Users/annikag/primap/ndc_quantifications/latex_files/HU
 N/ts_ndcs_quantis_HUN.png>] [8]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 231.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 247.
  [9]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 231.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 247.
  (factsheet_HUN.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 231.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 231.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 247.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 247.
 
 
 Package rerunfilecheck Warning: File `factsheet_HUN.out' has changed.
@@ -475,23 +474,23 @@ Package rerunfilecheck Warning: File `factsheet_HUN.out' has changed.
 
 Package rerunfilecheck Info: Checksums for `factsheet_HUN.out':
 (rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  E16E97C21711F0EF4CE364B7EBAA58D3;277.
+(rerunfilecheck)             After:  BF712DBC44C5131F5D0875EB16B74F1C;215.
 
 LaTeX Warning: There were undefined references.
 
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 231.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 247.
  ) 
 Here is how much of TeX's memory you used:
  6227 strings out of 481556
- 96803 string characters out of 2923014
+ 96800 string characters out of 2923014
  369459 words of memory out of 3000000
  21363 multiletter control sequences out of 15000+200000
- 539067 words of font info for 46 fonts, out of 3000000 for 9000
+ 539414 words of font info for 47 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,9n,37p,831b,378s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 34i,9n,37p,831b,373s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\annikag\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi60
 0\tcrm1200.pk><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx1
 0.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C
@@ -499,10 +498,11 @@ Here is how much of TeX's memory you used:
  Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/Mi
 KTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/
 fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmsy8.pfb>
-Output written on factsheet_HUN.pdf (9 pages, 1045113 bytes).
+1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
+amsfonts/cm/cmti12.pfb>
+Output written on factsheet_HUN.pdf (9 pages, 1065583 bytes).
 PDF statistics:
- 127 PDF objects out of 1000 (max. 8388607)
- 22 named destinations out of 1000 (max. 500000)
+ 144 PDF objects out of 1000 (max. 8388607)
+ 21 named destinations out of 1000 (max. 500000)
  26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

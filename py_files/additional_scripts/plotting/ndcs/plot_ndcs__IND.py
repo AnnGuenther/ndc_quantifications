@@ -282,6 +282,8 @@ ax3 = fig.add_subplot(1, 5, 3)
 ax4 = fig.add_subplot(1, 5, 4)
 ax5 = fig.add_subplot(1, 5, 5)
 
+plot_unfccc = True
+
 pc_sec = {}
 for cat, axa in ['IPC1', ax1], ['IPC2', ax2], ['IPCMAG', ax3], ['IPC4', ax4], ['IPC5', ax5]:
     
@@ -292,9 +294,9 @@ for cat, axa in ['IPC1', ax1], ['IPC2', ax2], ['IPCMAG', ax3], ['IPC4', ax4], ['
     emi_sec = 0
     for gas in gases:
         
-        tablename = f'{gas}AR4_{cat}_TOTAL_NET_HISTCR_PRIMAPHIST21'
+        tablename = f'{gas}_{cat}_TOTAL_NET_HISTCR_PRIMAPHIST21'
         table = hpf.import_table_to_class_metadata_country_year_matrix(
-            Path(meta.path.matlab, tablename + '.csv'))
+            Path(meta.path.preprocess, 'tables', tablename + '.csv'))
         
         if 'IND' in table.data.index:
             
@@ -305,27 +307,21 @@ for cat, axa in ['IPC1', ax1], ['IPC2', ax2], ['IPCMAG', ax3], ['IPC4', ax4], ['
                 label=meta.gases.gas_to_label[gas], linewidth=linewdth)
             
             emi_sec += table[2017]
-            
-            # Available UNFCCC data.
-            #ablename = tablename.replace('HISTCR_PRIMAPHIST21', 'HISTORY_UNFCCC2019BI')
-            #if 'FGASES' not in gas:
-            #    tablename = tablename.replace('AR4', '')
-            #
-            #if tablename in available_unfccc.index:
-            #    unfccc = available_unfccc.loc[tablename, :]
-            #    axa.plot([int(xx[1:]) for xx in unfccc.index], unfccc*1e-3, '.', color=colour_act)
+    
+    if plot_unfccc:
+        # There are no values available for IND for HFCS, PFCS, SF6 and NF3 (for IPCM0EL and IPC2).
+        for gas in ['CO2', 'CH4', 'N2O']:
+            tablename = f'{gas}AR4_{cat}_TOTAL_NET_HISTORY_UNFCCC2019BI'
+            try:
+                data_unfccc = hpf.import_table_to_class_metadata_country_year_matrix(
+                    Path(meta.path.matlab, tablename + '.csv')).data.reindex(index=['IND']).reindex(columns=years_his_int)
+                axa.plot(years_his_int, data_unfccc.values[0], 's', markersize=3, color=colours_gases.loc[gas, :].to_list())
+            except:
+                pass
     
     sec = meta.sectors.main.sec_to_label[meta.categories.main.cat_to_sec[cat]]
     axa.set_title(sec, fontweight='bold')
     pc_sec[sec] = f'{emi_sec/emi_tot_2017*100. :.1f}%'
-
-# Set all ylim to the same.
-#YL_max = 0
-#for axa in [ax1, ax2, ax3, ax4, ax5]:
-#    YL_max = max([YL_max, axa.get_ylim()[1]])
-#YL = [0, YL_max]
-#for axa in [ax1, ax2, ax3, ax4, ax5]:
-#    axa.set_ylim(YL)
 
 pc_gas = {}
 for gas in meta.gases.kyotoghg:

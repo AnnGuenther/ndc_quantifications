@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7300 64-bit) (preloaded format=pdflatex 2020.3.19)  23 SEP 2020 16:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7300 64-bit) (preloaded format=pdflatex 2020.3.19)  24 SEP 2020 12:39
 entering extended mode
 **C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/factsheet_AZE.tex
 
@@ -229,7 +229,7 @@ File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count189
 \l__pdf_internal_box=\box47
 )
-(factsheet_AZE.aux)
+No file factsheet_AZE.aux.
 \openout1 = `factsheet_AZE.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
@@ -248,7 +248,6 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
 LaTeX Font Info:    ... okay on input line 19.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 19.
 LaTeX Font Info:    ... okay on input line 19.
-
 ("C:\Program Files\MiKTeX 2.9\tex/context/base/mkii\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count190
@@ -285,7 +284,6 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 19.
 LaTeX Info: Redefining \pageref on input line 19.
 LaTeX Info: Redefining \nameref on input line 19.
- (factsheet_AZE.out) (factsheet_AZE.out)
 \@outlinefile=\write3
 \openout3 = `factsheet_AZE.out'.
 
@@ -345,10 +343,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 24--30
 [1
 
 {C:/Users/annikag/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+
+LaTeX Warning: Reference `tab:overview' on page 2 undefined on input line 41.
+
+
+LaTeX Warning: Reference `fig:tsEmi' on page 2 undefined on input line 70.
+
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 76.
 <C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_emi_exclLU_AZE.
-png, id=32, 867.24pt x 433.62pt>
+png, id=13, 867.24pt x 433.62pt>
 File: C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_emi_exclLU
 _AZE.png Graphic file (type png)
 <use C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_emi_exclLU_
@@ -356,8 +360,15 @@ AZE.png>
 Package pdftex.def Info: C:/Users/annikag/primap/ndc_quantifications/latex_file
 s/AZE/ts_emi_exclLU_AZE.png  used on input line 81.
 (pdftex.def)             Requested size: 483.69684pt x 241.85292pt.
+[2pdfTeX warning (ext4): destination with the same identifier (name{table.1}) h
+as been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.86 
+     ]
 <C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_gdp_pop_AZE.png
-, id=34, 867.24pt x 650.43pt>
+, id=24, 867.24pt x 650.43pt>
 File: C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_gdp_pop_AZ
 E.png Graphic file (type png)
 <use C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_gdp_pop_AZE
@@ -365,111 +376,123 @@ E.png Graphic file (type png)
 Package pdftex.def Info: C:/Users/annikag/primap/ndc_quantifications/latex_file
 s/AZE/ts_gdp_pop_AZE.png  used on input line 89.
 (pdftex.def)             Requested size: 483.69684pt x 362.77937pt.
-
-[2pdfTeX warning (ext4): destination with the same identifier (name{table.1}) h
-as been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.93 
-     pdfTeX warning (ext4): destination with the same identifier (name{figure.1
-}) has been already used, duplicate ignored
+ [3pdfTeX warning (ext4): destination with the same identifier (name{figure.1})
+ has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
 l.93 
       <C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_emi_exclL
 U_AZE.png>]
+
+LaTeX Warning: Reference `fig:tsSocioEco' on page 4 undefined on input line 94.
+
+
+
+LaTeX Warning: Reference `fig:tsLULUCF' on page 4 undefined on input line 100.
+
 <C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_emi_onlyLU_AZE.
-png, id=46, 867.24pt x 361.35pt>
+png, id=31, 867.24pt x 361.35pt>
 File: C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_emi_onlyLU
 _AZE.png Graphic file (type png)
 <use C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_emi_onlyLU_
 AZE.png>
 Package pdftex.def Info: C:/Users/annikag/primap/ndc_quantifications/latex_file
-s/AZE/ts_emi_onlyLU_AZE.png  used on input line 109.
+s/AZE/ts_emi_onlyLU_AZE.png  used on input line 106.
 (pdftex.def)             Requested size: 483.69684pt x 201.5441pt.
- [3pdfTeX warning (ext4): destination with the same identifier (name{figure.2})
- has been already used, duplicate ignored
+[4pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) 
+has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.115 
+l.112 
        <C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_gdp_pop_
-AZE.png>]
+AZE.png>] [5pdfTeX warning (ext4): destination with the same identifier (name{f
+igure.3}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.113  \newpage
+                %%% <C:/Users/annikag/primap/ndc_quantifications/latex_files/AZ
+E/ts_emi_onlyLU_AZE.png>]
 <C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_pc_cov_AZE.png,
- id=54, 867.24pt x 289.08pt>
+ id=44, 867.24pt x 289.08pt>
 File: C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_pc_cov_AZE
 .png Graphic file (type png)
 <use C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_pc_cov_AZE.
 png>
 Package pdftex.def Info: C:/Users/annikag/primap/ndc_quantifications/latex_file
-s/AZE/ts_pc_cov_AZE.png  used on input line 142.
+s/AZE/ts_pc_cov_AZE.png  used on input line 139.
 (pdftex.def)             Requested size: 483.69684pt x 161.23528pt.
- [4pdfTeX warning (ext4): destination with the same identifier (name{figure.3})
- has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.146 
-      pdfTeX warning (ext4): destination with the same identifier (name{table.2
-}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.146 
-       <C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_emi_only
-LU_AZE.png>]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 155.
+(Font)              <10.95> on input line 152.
 <C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_ndcs_quantis_AZ
-E.png, id=61, 867.24pt x 289.08pt>
+E.png, id=45, 867.24pt x 289.08pt>
 File: C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_ndcs_quant
 is_AZE.png Graphic file (type png)
 <use C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_ndcs_quanti
 s_AZE.png>
 Package pdftex.def Info: C:/Users/annikag/primap/ndc_quantifications/latex_file
-s/AZE/ts_ndcs_quantis_AZE.png  used on input line 170.
+s/AZE/ts_ndcs_quantis_AZE.png  used on input line 167.
 (pdftex.def)             Requested size: 483.69684pt x 161.23528pt.
- [5pdfTeX warning (ext4): destination with the same identifier (name{figure.4})
- has been already used, duplicate ignored
+ [6pdfTeX warning (ext4): destination with the same identifier (name{table.2}) 
+has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.178 
+l.175 
+      pdfTeX warning (ext4): destination with the same identifier (name{figure.
+4}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.175 
       pdfTeX warning (ext4): destination with the same identifier (name{table.3
 }) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.178 
+l.175 
        <C:/Users/annikag/primap/ndc_quantifications/latex_files/AZE/ts_pc_cov_A
-ZE.png>] [6pdfTeX warning (ext4): destination with the same identifier (name{fi
+ZE.png>] [7pdfTeX warning (ext4): destination with the same identifier (name{fi
 gure.5}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.210  \end{description}
-                         <C:/Users/annikag/primap/ndc_quantifications/latex_fil
-es/AZE/ts_ndcs_quantis_AZE.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 234.
- [7]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 234.
+l.176  \newpage
+                %%% <C:/Users/annikag/primap/ndc_quantifications/latex_files/AZ
+E/ts_ndcs_quantis_AZE.png>] [8]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 248.
+ [9]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 248.
  (factsheet_AZE.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 234.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 234.
-Package rerunfilecheck Info: File `factsheet_AZE.out' has not changed.
-(rerunfilecheck)             Checksum: E16E97C21711F0EF4CE364B7EBAA58D3;277.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 234.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 248.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 248.
+
+
+Package rerunfilecheck Warning: File `factsheet_AZE.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `factsheet_AZE.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  BF712DBC44C5131F5D0875EB16B74F1C;215.
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 248.
  ) 
 Here is how much of TeX's memory you used:
- 6238 strings out of 481556
- 97144 string characters out of 2923014
- 369847 words of memory out of 3000000
- 21369 multiletter control sequences out of 15000+200000
- 539067 words of font info for 46 fonts, out of 3000000 for 9000
+ 6229 strings out of 481556
+ 96825 string characters out of 2923014
+ 370462 words of memory out of 3000000
+ 21364 multiletter control sequences out of 15000+200000
+ 539414 words of font info for 47 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,9n,37p,834b,369s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 34i,9n,37p,834b,373s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\annikag\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi60
 0\tcrm1200.pk><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx1
 0.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C
@@ -478,10 +501,11 @@ Here is how much of TeX's memory you used:
 KTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/
 fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
 1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
-msfonts/cm/cmsy8.pfb>
-Output written on factsheet_AZE.pdf (7 pages, 1079344 bytes).
+msfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmti12.pfb>
+Output written on factsheet_AZE.pdf (9 pages, 1097442 bytes).
 PDF statistics:
- 141 PDF objects out of 1000 (max. 8388607)
- 21 named destinations out of 1000 (max. 500000)
- 58 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 145 PDF objects out of 1000 (max. 8388607)
+ 22 named destinations out of 1000 (max. 500000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

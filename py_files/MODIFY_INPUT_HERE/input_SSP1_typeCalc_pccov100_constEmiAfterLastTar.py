@@ -39,7 +39,7 @@ meta.ssps.chosen = 'SSP1BLIMAGE'
 
 # %%
 # Output-folder (add something if you want)
-meta.output_folder = ('ndc_quantifications_' + 
+meta.output_folder = ('ndcs_' + 
     strftime("%Y%m%d_%H%M", gmtime()) + '_' + meta.ssps.chosen[:4] +
     '_typeCalc_pccov100_constEmiAfterLastTar')
 
