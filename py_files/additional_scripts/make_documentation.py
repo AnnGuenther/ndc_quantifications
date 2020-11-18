@@ -88,17 +88,18 @@ def get_text(txt, path_to_file):
 txt = '\n*Comments: in the code, use (3 times " newline text newline 3 times ") for comments.* '
 txt += '*Do not forget the new lines, else it will not appear in this documentation.*'
 txt += """
-\n\nThis documentation of the main functions to preprocess data and quantify mitigation 
-targets from within the NDCs (tool NDCmitiQ), includes information retrieved from the
-different py-files of the tool.
-It does not include information from all py-files in this repository.
+\n\nThis documentation of the main functions to preprocess data and quantify the NDC mitigation 
+targets (tool NDCmitiQ), includes information retrieved from the different py-files of the tool.
+It does not include information from all py-files in this repository 
+(e.g., helpers functions, plotting routines, etc.).
 
 This documentation shall be seen as an add-on to the information given in the 
-manuscript describing the methodology behind NDCmitiQ.
-As soon as the paper is published, its DOI will be added here.
+manuscript describing the methodology behind NDCmitiQ 
+(to be submitted to Geoscientific Model Development).
+As soon as the paper is available, its DOI will be added here.
 
 The required pandas packages can be found in requirements.txt, 
-and information on how to run the code can be found in the README in the main folder.
+and information on how to run the code is provided in the README in the main folder.
 
 """
 

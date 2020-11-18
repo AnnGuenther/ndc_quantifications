@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Author: Annika Günther, annika.guenther@pik-potsdam.de
-Last updated in 09/2020.
+Last updated in 11/2020.
 """
 
 # %%
@@ -135,6 +135,13 @@ for cat in ['IPCM0EL'] + meta.categories.main.inclLU:
     setattr(tables, f"KYOTOGHG_{cat}", hpf.import_table_to_class_metadata_country_year_matrix(Path(meta.path.preprocess, 'tables', 
         'KYOTOGHG_' + cat + '_TOTAL_NET_HISTCR_' + meta.primap.current_version['emi'] + '.csv')). \
                 __convert_to_baseunit__().__change_gwp__(meta.gwps.default).__reindex__(index=meta.isos.EARTH))
+
+for cat in ['IPC1A', 'IPC1B', 'IPCMAGELV', 'IPC3A']:
+    table = hpf.import_table_to_class_metadata_country_year_matrix(Path(meta.path.matlab, 
+        f'KYOTOGHGAR4_{cat}_TOTAL_NET_HISTCR_' + meta.primap.current_version['emi'] + '.csv'))
+    table.__attrs_primap_to_ndcs__()
+    setattr(tables, f"KYOTOGHG_{cat}", table. \
+        __convert_to_baseunit__().__change_gwp__(meta.gwps.default).__reindex__(index=meta.isos.EARTH))    
 
 for ssp in meta.ssps.scens.long:
     setattr(tables, f"{ssp[:4]}_emi", hpf.import_table_to_class_metadata_country_year_matrix(Path(meta.path.preprocess, 'tables', 
@@ -447,6 +454,88 @@ def text_to_latex_file():
         plt.close(fig)
     
     # %%
+    def plot_ts_normalised_nonLULUCF():
+        """
+        Plot stacked time series of PRIMAP-hist data per main + subsector, and per gas, normalised to 100%.
+        """
+        
+        ipcm0el = [f'IPC{xx}' for xx in ['1', '2', 'MAG', '4', '5']]
+        ipc1 = ['IPC1A', 'IPC1B']
+        ipcmag = ['IPCMAGELV', 'IPC3A']
+        cats_all = ipc1 + ['IPC2'] + ipcmag + ['IPC4', 'IPC5']
+        cats_labels = {
+            'IPC1': 'Energy', 'IPC2': 'IPPU', 'IPCMAG': 'Agri', 'IPC4': 'Waste', 'IPC5': 'Other',
+            'IPC1A': 'FuelComb', 'IPC1B': 'FugEmiFromFuels',
+            'IPCMAGELV': 'AgriExclLivestock', 'IPC3A': 'Livestock'}
+        
+        yrs = range(1990, 2018)
+        
+        fig = plt.figure(figsize=(12, 6))
+        
+        ax_cat = fig.add_subplot(1, 2, 1)
+        ax_gas = fig.add_subplot(1, 2, 2)
+        
+        data_earth = tables_iso.KYOTOGHG_IPCM0EL.data.loc[iso3, yrs]
+        
+        # Outer bars (main sectors).
+        bottom = [0]*len(yrs)
+        for cat in ipcm0el:
+            try:
+                data_plot = getattr(tables_iso, f"KYOTOGHG_{cat}").data.loc[iso3, yrs]/data_earth*100
+                if data_plot.isnull().all():
+                    data_plot = pd.Series(0, index=yrs)
+            except:
+                data_plot = pd.Series(0, index=yrs)
+            ax_cat.bar(yrs, data_plot, bottom=bottom, width=.9, color=colours['cats'].loc[cat, :], 
+                label=cats_labels[cat])
+            bottom = data_plot.add(bottom)
+        
+        # Inner bars.
+        bottom = [0]*len(yrs)
+        for cat in cats_all:
+            try:
+                data_plot = getattr(tables_iso, f"KYOTOGHG_{cat}").data.loc[iso3, yrs]/data_earth*100
+                if data_plot.isnull().all():
+                    data_plot = pd.Series(0, index=yrs)
+            except:
+                data_plot = pd.Series(0, index=yrs)
+            ax_cat.bar(yrs, data_plot, bottom=bottom, width=.3, color=colours['cats'].loc[cat, :], 
+                label=(cats_labels[cat] if cat in ipc1 + ipcmag else '__nolegend__'))
+            bottom = data_plot.add(bottom)
+        
+        # Gases.
+        bottom = [0]*len(yrs)
+        for gas in meta.gases.kyotoghg:
+            try:
+                data_plot = getattr(tables_iso, f"{gas}_IPCM0EL").data.loc[iso3, yrs]/data_earth*100
+                if data_plot.isnull().all():
+                    data_plot = pd.Series(0, index=yrs)
+            except:
+                data_plot = pd.Series(0, index=yrs)
+            ax_gas.bar(yrs, data_plot, bottom=bottom, width=.9, color=colours['gases'].loc[gas, :], 
+                label=meta.gases.gas_to_label[gas])
+            bottom = data_plot.add(bottom)
+        
+        ax_cat.set_ylim([0, 100])
+        ax_cat.set_ylabel('national emissions share per sector / %', fontweight='bold')
+        ax_cat.set_xlabel('year', fontweight='bold')
+        ax_cat.legend(ncol=4, loc='center', bbox_to_anchor=(.5, -.25))
+        
+        ax_gas.set_ylim([0, 100])
+        ax_gas.set_ylabel('national emissions share per Kyoto GHG / %', fontweight='bold')
+        ax_gas.set_xlabel('year', fontweight='bold')
+        ax_gas.legend(ncol=4, loc='center', bbox_to_anchor=(.5, -.25))
+        
+        hpf.put_labels_to_subplots(ax_cat, ax_gas)
+        fig.subplots_adjust(left=.1, bottom=.25, right=.95, top=.95)
+        path_to_plot = Path(path_to_tex_files, 
+            f'emi_ts_normalised_per_sec_and_subsec_and_per_gas_{iso3}.png')
+        plt.savefig(path_to_plot, dpi=300)
+        
+        fig.clf()
+        plt.close(fig)
+    
+    # %%
     def plot_ts_gdp_pop():
         
         fig = plt.figure(figsize=(12, 9))
@@ -583,6 +672,16 @@ def text_to_latex_file():
         
         yrs_to_plot = range(1990, 2031)
         yrs_to_plot_str = [str(xx) for xx in yrs_to_plot]
+        
+        XL_emi = [2010, 2030.5]
+        XL_tars = [2016, 2037.5]
+        
+        yr_add = .2
+        
+        colour_100pc = (0, .4, .4)
+        colour_estpc = (.1, .8, .4)
+        colour_prioNDCs = (.1, .7, .7)
+        colour_prioSSPs = (.4, .5, .1)
         
         fig = plt.figure(figsize=(12, 4))
         
@@ -738,10 +837,10 @@ def text_to_latex_file():
     if not tables_iso_df.loc['KYOTOGHG_IPCM0EL_TOTAL_NET_HISTCR_PRIMAPHIST21', range(1990, 2018)].isnull().all():
         
         # %%
-        sum_start1850_iso = sum_start1850.loc[iso3] * units_iso['emi']['multiplier']
         sum_start1850_share_iso = 100. * sum_start1850.loc[iso3] / sum_start1850.reindex(index=meta.isos.EARTH).sum()
-        sum_start1990_iso = sum_start1990.loc[iso3] * units_iso['emi']['multiplier']
         sum_start1990_share_iso = 100. * sum_start1990.loc[iso3] / sum_start1990.reindex(index=meta.isos.EARTH).sum()
+        #sum_start1850_iso = sum_start1850.loc[iso3] * units_iso['emi']['multiplier']
+        #sum_start1990_iso = sum_start1990.loc[iso3] * units_iso['emi']['multiplier']
         
         # %%
         # Which gas / sector was the driver in the recent emissions trend.
@@ -868,7 +967,7 @@ def text_to_latex_file():
         
         # %% For Overview
         
-        # Table with total emissions, share of global emissions and ranking (2017 & 2030).
+        # Table with total emissions, share of global emissions and ranking (1990 & 2017 & 2030).
         # Also for GDP, population and emi/GDP, emi/capita.
         # SSP2.
         
@@ -878,7 +977,7 @@ def text_to_latex_file():
         yr_fut = 2030
         
         for tpe in overview_table.index:
-            for when, yr in ['his', yr_his], ['fut', yr_fut]:
+            for when, yr in ['1990', 1990], ['his', yr_his], ['fut', yr_fut]:
                 overview_table.loc[tpe, 'tot_' + when] = \
                     getattr(tables_iso, 'SSP2_' + tpe).data.loc[iso3, yr]
                 overview_table.loc[tpe, 'share_' + when] = \
@@ -900,25 +999,33 @@ def text_to_latex_file():
         overview_table_str = pd.DataFrame()
         row = 0
         for tpe in mapping.keys():
-            overview_table_str.loc[row, 'Year'] = str(yr_his)
-            overview_table_str.loc[row+1, 'Year'] = str(yr_fut)
+            overview_table_str.loc[row, 'Year'] = '1990'
+            overview_table_str.loc[row+1, 'Year'] = str(yr_his)
+            overview_table_str.loc[row+2, 'Year'] = str(yr_fut)
             overview_table_str.loc[row, 'Total'] = hpf.num_to_str_one_non_zero_decimal(
-                overview_table.loc[tpe, 'tot_his'])
+                overview_table.loc[tpe, 'tot_1990'])
             overview_table_str.loc[row+1, 'Total'] = hpf.num_to_str_one_non_zero_decimal(
+                overview_table.loc[tpe, 'tot_his'])
+            overview_table_str.loc[row+2, 'Total'] = hpf.num_to_str_one_non_zero_decimal(
                 overview_table.loc[tpe, 'tot_fut'])
-            overview_table_str.loc[[row, row+1], 'Unit'] = overview_table.loc[tpe, 'unit']
+            overview_table_str.loc[[row, row+1, row+2], 'Unit'] = overview_table.loc[tpe, 'unit']
             overview_table_str.loc[row, 'Glob. share'] = hpf.num_to_str_one_non_zero_decimal(
-                overview_table.loc[tpe, 'share_his']) + "\%"
+                overview_table.loc[tpe, 'share_1990']) + "\%"
             overview_table_str.loc[row+1, 'Glob. share'] = hpf.num_to_str_one_non_zero_decimal(
+                overview_table.loc[tpe, 'share_his']) + "\%"
+            overview_table_str.loc[row+2, 'Glob. share'] = hpf.num_to_str_one_non_zero_decimal(
                 overview_table.loc[tpe, 'share_fut']) + "\%"
             overview_table_str.loc[row, 'Rank'] = \
-                '{:}'.format(overview_table.loc[tpe, 'rank_his'])
+                '{:}'.format(overview_table.loc[tpe, 'rank_1990'])
             overview_table_str.loc[row+1, 'Rank'] = \
+                '{:}'.format(overview_table.loc[tpe, 'rank_his'])
+            overview_table_str.loc[row+2, 'Rank'] = \
                 '{:}'.format(overview_table.loc[tpe, 'rank_fut'])
-            row += 2
+            row += 3
         
         overview_table_str.insert(0, '', 
-            ['Emissions', '', 'GDP', '', 'Emissions', 'per GDP', 'Population', '', 'Emissions', 'per capita'])
+            ['Emissions', '', '', 'GDP', '', '', 'Emissions', 'per GDP', '',
+             'Population', '', '', 'Emissions', 'per capita', ''])
         
         # %%
         gases_table = pd.DataFrame(index=['KYOTOGHG'] + meta.gases.kyotoghg, columns=['emi', 'share'])
@@ -1024,7 +1131,7 @@ def text_to_latex_file():
         
         table_combis_shares = 100. * table_combis_emis / table_combis_emis.loc['Total', 'Total']
         
-        # Put data together (1 decimal).
+        # Put data together.
         table_combis_str = table_combis.loc[['NDCs', 'Adap.'], :]
         for row in table_combis_emis.index:
             
@@ -1040,10 +1147,10 @@ def text_to_latex_file():
                         fontweight = '\\bfseries '
                 
                 share = hpf.num_to_str_one_non_zero_decimal(table_combis_shares.loc[row, col], maximal=2)
-                table_combis_str.loc[row, col] = f"{fontweight}{share}\%"
+                table_combis_str.loc[row, col] = f"{fontweight}{share}"
         
-        table_combis_str[table_combis_str == '\\bfseries nan\%'] = '\\bfseries /'
-        table_combis_str[table_combis_str == 'nan\%'] = '/'
+        table_combis_str[table_combis_str == '\\bfseries nan'] = '\\bfseries /'
+        table_combis_str[table_combis_str == 'nan'] = '/'
         
         table_combis_str[table_combis_str == '+'] = '\\bfseries +'
         
@@ -1066,6 +1173,7 @@ def text_to_latex_file():
         markersze = 10
         
         plot_ts_nonLULUCF()
+        plot_ts_normalised_nonLULUCF()
         plot_ts_LULUCF()
         plot_ts_gdp_pop()
         
@@ -1137,7 +1245,7 @@ def text_to_latex_file():
             f"{number1}\% to global emissions in {yr_his}, " + \
             f"{txt_act1} in {yr_fut} its share is estimated to {txt_act2} " "(Table~\\ref{tab:overview})." + \
             f"\n The estimates for {yr_fut} are based on the downscaled {ssp2_short}" + \
-            f" Middle of the Road marker scenario (dm{ssp2_short}), in which {ctr} is estimated to emit " + \
+            f" 'Middle of the Road' marker scenario (dm{ssp2_short}), in which {ctr} is estimated to emit " + \
             f"{ssp2_2030}~{units_iso['emi']['label']} in {yr_fut}." + \
             f"\n That change in emissions would constitute "
         if float(ssp2_2030_pc) > 0.:
@@ -1193,7 +1301,7 @@ def text_to_latex_file():
         # Historical share.
         number = hpf.num_to_str_one_non_zero_decimal(sum_start1850_share_iso)
         txt += \
-            f"\n In terms of accumulated historical emissions, {ctr}" + \
+            f"\n As for the accumulated historical emissions, {ctr}" + \
             f" contributed to the global {yr_sum_start1850}--{yr_his} emissions by {number}\%. "
         number1 = hpf.num_to_str_one_non_zero_decimal(sum_start1990_share_iso)
         #number2 = hpf.num_to_str_one_non_zero_decimal(sum_start1850_iso)
@@ -1201,9 +1309,9 @@ def text_to_latex_file():
         txt += \
             ("\n However, when " if abs(sum_start1990_share_iso - sum_start1850_share_iso) > 5 else "\n When ") + \
             f"only accounting for the years {yr_sum_start1990}--{yr_his}, its contribution " + \
-            ("stays the same " if number1 == number 
-             else ("increases " if float(number1) > float(number) else "decreases ")) + \
-            f"to {number1}\%."
+            ("stays the same" if number1 == number 
+             else ("is higher" if float(number1) > float(number) else "is lower")) + \
+            f", with {number1}\%."
             # " ({yr_sum_start1850} to {yr_his}: " + \
             # f"{number2}~{units_iso['emi']['label']}, and {yr_sum_start1990} to {yr_his}: " + \
             # f"{number3}~{units_iso['emi']['label']})."
@@ -1216,10 +1324,11 @@ def text_to_latex_file():
         # Table {tab:overview}.
         label = "tab:overview"
         columns = "l || l r l r r"
-        hlines = [2, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0]
+        hlines = [2, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0]
         caption = \
-            f"National emissions (dm{ssp2_short}), GDP and population for {ctr}, together with the emissions per unit of GDP " + \
-            f"and per capita emissions (all for {yr_his} and {yr_fut}). " + \
+            f"National emissions (dm{ssp2_short}), GDP and population for {ctr}, " + \
+            "together with the emissions per unit of GDP " + \
+            f"and per capita emissions (for 1990, {yr_his} and {yr_fut}). " + \
             "\n Additionally, the global share and its rank are displayed."
         table_body = pd.DataFrame(index=range(len(hlines)), columns=range(6))
         table_body.loc[0, :] = [f"\\bfseries {xx}" for xx in overview_table_str.columns.to_list()]
@@ -1230,7 +1339,7 @@ def text_to_latex_file():
         ##
         txt += \
             f"\n\n For {ctr}, in {yr_his} the main emissions share on sectoral level " + \
-            "(Fig.~\\ref{fig:tsEmi}) came from " + \
+            "(Fig.~\\ref{fig:tsEmi} and~\\ref{fig:tsEmiNorm}) came from " + \
             f"the {highest_sec_his_1st} sector ({highest_sec_his_share_1st}\%)" + \
             (f", followed by {highest_sec_his_2nd} ({highest_sec_his_share_2nd}\%)"
              if f"{highest_sec_his_share_2nd}" != "nan" else 
@@ -1273,26 +1382,24 @@ def text_to_latex_file():
                 f"of the national Kyoto~GHG emissions in {yr_fut} (dmSSP2)."
         except:
             pass
-            
-        # TODO: Check the correlations and the slope of regressions between emi_tot and emi_gas_sec.
         
         # Check if the ratios per gas are constant in the future and if they are the same for the different SSPs:
         # They are not constant and are not the same for the SSPs.
-            
+        
         # Historical emissions.
         path_to_figure = Path(path_to_tex_files, f'ts_emi_exclLU_{iso3}.png')
         caption = \
             "'Stacked' timeseries of national emissions (exclLU) per main-sector (a) and Kyoto~GHG (b). " + \
-            f"\n No information available on the sectoral contributions after {yr_his}."
+            f"\n No information available on the sectoral contributions after {yr_his}. " + \
+            "Based on PRIMAP-hist and dmSSPs."
         txt += include_graphics(path_to_figure, caption, "fig:tsEmi", "\\textwidth")
-            
-        # TODO: Maybe get the linear regressions of the different emissions time series (and share)
-        # and check which ones increase/decrease most strongly.
         
-        # TODO: The total emissions are most notably influenced by the emissions from sector + gas (see correlation emitot & emisec or emigas).
-        # TODO: Johannes includes the following in his plots (1850 to now):
-        #sectors = {'IPC1A', 'IPC1B', 'IPC2', 'IPC3A', 'IPCMAGELV', 'IPC4', 'IPC5'};
-        #gases = {'CO2', 'CH4', 'N2O', 'FGASESAR4'};
+        path_to_figure = Path(path_to_tex_files, 
+            f'emi_ts_normalised_per_sec_and_subsec_and_per_gas_{iso3}.png')
+        caption = \
+            "'Stacked' timeseries of national emissions (exclLU) per main- and subsector (a) and Kyoto~GHG (b). " +\
+            "Based on PRIMAP-hist."
+        txt += include_graphics(path_to_figure, caption, "fig:tsEmiNorm", "\\textwidth")
         
         gdp_linreg_nan = np.isnan(gdp_linreg.slope)
         pop_linreg_nan = np.isnan(pop_linreg.slope)
@@ -1412,10 +1519,10 @@ def text_to_latex_file():
                 ("in the range of" if 85 < ratio_lu < 115 else 
                 ("higher than" if ratio_lu > 115 else "lower than")) + \
                 f" the non-LULUCF emissions of {emi_exclLU_yrHis_str}~{units_iso['emi']['label']}." + \
-                f"\n The " + ("large "
+                f"\n The " + ("relatively large "
                  if ((not np.isnan(emi_onlyLU_mean) and emi_onlyLU_mean != 0.) 
                      and (emi_onlyLU_min/emi_onlyLU_mean < .5 or emi_onlyLU_max/emi_onlyLU_mean > 1.5))
-                 else "") + f"emissions range for {lu_chosen_srce} and 1990--{yr_his} is " + \
+                 else "") + f"emissions range for {lu_chosen_srce} data and the period 1990--{yr_his} is " + \
                 f"{emi_onlyLU_min_str}--{emi_onlyLU_max_str}~{units_iso['emi']['label']}."
                 
                 # High fluctuations?
@@ -1569,9 +1676,9 @@ def text_to_latex_file():
             emi_iso3_onlyLU = hpf.num_to_str_one_non_zero_decimal(
                 tables_iso.LULUCF_CHOSEN.data.loc[iso3, yr_his])
             caption = \
-                f"Information on covered sectors and gases as retrieved from {has_ndc} and adapted " + \
+                f"Information on covered sectors and gases as retrieved from the {has_ndc} and adapted " + \
                 f"('Adap.': used to calculate \%cov), and their shares in {ctr}'s {yr_his} emissions " + \
-                f"(exclLU, exclBunkers; total {emi_iso3_exclLU}~{units_iso['emi']['label']})." + \
+                f"(all shares in \%; exclLU, exclBunkers; total {emi_iso3_exclLU}~{units_iso['emi']['label']})." + \
                 "\n If either the sector or gas is assessed as 'not-covered', the emissions from this " + \
                 "sector-gas combination are counted as not-covered (--). " + \
                 "\n Else the emissions are counted as covered (+; covered shares given in bold)." + \
@@ -1724,14 +1831,10 @@ def text_to_latex_file():
         
         # %%
         # TODO: Include information from info_per_country where needed.
-        # TODO: Come up with rules to be able to use expressions such as "differs strongly", 
-        # "increase/decrease substantially",
-        # "major share/contributions", etc.
-        # TODO: Do not include empty plots.
         # TODO: Global page: include the graphics I had done on the data needed.
 
 # %%
-for iso3 in meta.isos.EARTH[203:]:#['IDN']: 
+for iso3 in ['BRA']: #meta.isos.EARTH:# 
     print(iso3)
     text_to_latex_file()
 

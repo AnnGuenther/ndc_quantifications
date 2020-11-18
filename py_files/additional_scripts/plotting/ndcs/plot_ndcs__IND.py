@@ -315,7 +315,7 @@ for cat, axa in ['IPC1', ax1], ['IPC2', ax2], ['IPCMAG', ax3], ['IPC4', ax4], ['
             try:
                 data_unfccc = hpf.import_table_to_class_metadata_country_year_matrix(
                     Path(meta.path.matlab, tablename + '.csv')).data.reindex(index=['IND']).reindex(columns=years_his_int)
-                axa.plot(years_his_int, data_unfccc.values[0], 's', markersize=3, color=colours_gases.loc[gas, :].to_list())
+                axa.plot(years_his_int, data_unfccc.values[0], 's', markersize=4, color=colours_gases.loc[gas, :].to_list())
             except:
                 pass
     
@@ -338,7 +338,7 @@ ax1.text(XL[0], YL[0] - .25*np.diff(YL),
     ', '.join([f'{meta.gases.gas_to_label[xx]} {pc_gas[xx]}' for xx in pc_gas.keys()]) + 
     '. Data source: PRIMAP-hist v2.1 HISTCR.', va='top', ha='left')
 
-ax2.legend(loc='upper center', bbox_to_anchor=(.35, 1))
+ax2.legend(loc='upper center', frameon=False, bbox_to_anchor=(.35, 1.04))
 ax1.set_ylabel('emissions / Mt CO$_2$eq AR4', fontweight='bold')
 for axa in [ax1, ax2, ax3, ax4, ax5]:
     axa.set_xlabel('year', fontweight='bold')

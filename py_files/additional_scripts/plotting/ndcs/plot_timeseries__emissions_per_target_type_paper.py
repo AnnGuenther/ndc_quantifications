@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 """
 Author: Annika Günther, annika.guenther@pik-potsdam.de
-Last updated in 08/2020.
+Last updated in 11/2020.
 """
 
 # %%
 """
 Plot time series of emissions per target type, plot SSP2 as line, and give the 
 range over the other SSPs.
+
+Update 2020/11/11: only SSP2, but the others can be added if wanted.
 """
 
 # %%
@@ -64,14 +66,14 @@ def plotting_both():
                 
                 #lbl = tpe
                 
-                axa.plot(years_int, vals_orig, '--', color=colours.loc[tpe, :].to_list(), linewidth=lnwdth,
+                axa.plot(years_int, vals_orig, '--', color=colours.loc[tpe, :].to_list(), linewidth=lnwdth*1.5,
                     label=('type_main' if tpe == 'REI' else ''))
                 first_vals_orig.loc[tpe] = vals_orig[vals_orig.index[0]]
                 last_vals_orig.loc[tpe] = vals_orig[vals_orig.index[-1]]
                 
                 if count == 0:
                     
-                    axa.plot(years_int, vals_nan_orig, '--', color=colours.loc['No NDC', :].to_list(), linewidth=lnwdth)
+                    axa.plot(years_int, vals_nan_orig, '--', color=colours.loc['No NDC', :].to_list(), linewidth=lnwdth*1.5)
                     first_vals_orig.loc['No NDC'] = vals_nan_orig[vals_nan_orig.index[0]]
                     last_vals_orig.loc['No NDC'] = vals_nan_orig[vals_nan_orig.index[-1]]
                     
@@ -99,35 +101,40 @@ def plotting_both():
                 
                 #lbl = tpe
                 
-                axa.plot(years_int, vals_calc, '-.', color=colours.loc[tpe, :].to_list(), linewidth=lnwdth,
+                axa.plot(years_int, vals_calc, '-', color=colours.loc[tpe, :].to_list(), linewidth=lnwdth,
                     label=('type_reclass' if tpe == 'REI' else ''))
                 first_vals_calc.loc[tpe] = vals_calc[vals_calc.index[0]]
                 last_vals_calc.loc[tpe] = vals_calc[vals_calc.index[-1]]
                 
                 if count == 0:
                     
-                    axa.plot(years_int, vals_nan_calc, '-.', color=colours.loc['No NDC', :].to_list(), linewidth=lnwdth)
+                    axa.plot(years_int, vals_nan_calc, '-', color=colours.loc['No NDC', :].to_list(), linewidth=lnwdth)
                     first_vals_calc.loc['No NDC'] = vals_nan_calc[vals_nan_calc.index[0]]
                     last_vals_calc.loc['No NDC'] = vals_nan_calc[vals_nan_calc.index[-1]]
                     
                     first_vals_calc.loc['All countries'] = vals_all_calc[vals_all_calc.index[0]]
                     last_vals_calc.loc['All countries'] = vals_all_calc[vals_all_calc.index[-1]]
             
-            marker = markers[meta.ssps.scens.long_to_short[ssp]]
-            axa.plot(years_int[-1] + 3 * count / len(colours.index), vals_calc[vals_calc.index[-1]], 
-                marker, color=colours.loc[tpe, :].to_list(), label=(meta.ssps.scens.long_to_short[ssp] if tpe == 'NGT' else ''))
-            
-            if count == 0:
+            if plot_ssps_range:
+                marker = markers[meta.ssps.scens.long_to_short[ssp]]
+                axa.plot(years_int[-1] + 3 * count / len(colours.index), vals_calc[vals_calc.index[-1]], 
+                    marker, color=colours.loc[tpe, :].to_list(), label=(meta.ssps.scens.long_to_short[ssp] if tpe == 'NGT' else ''))
                 
-                axa.plot(years_int[-1], vals_nan_calc[vals_nan_calc.index[-1]],
-                    marker, color=colours.loc['No NDC', :].to_list())
+                if count == 0:
+                    
+                    axa.plot(years_int[-1], vals_nan_calc[vals_nan_calc.index[-1]],
+                        marker, color=colours.loc['No NDC', :].to_list())
     
     axa = ax2
     YL = axa.get_ylim()
     axa.set_ylim()
     
-    ax1.legend(title='Scenarios', loc='upper center', bbox_to_anchor=(2.45, .6))
-    ax2.legend(loc='upper center', bbox_to_anchor=(1.25, .85))
+    if plot_ssps_range:
+        ax1.legend(title='Scenarios', loc='upper center', bbox_to_anchor=(2.45, .6))
+        ax2.legend(loc='upper center', bbox_to_anchor=(1.25, .85))
+    else:
+        ax2.legend(loc='upper center')
+    
     YL = ax1.get_ylim()
     ax1.set_ylim()
     
@@ -188,6 +195,9 @@ isos_per_type_calc = hpf.get_isos_per_target_type(ndcs.loc[:, 'TYPE_CALC'], ndcs
 ctrs_none_calc = isos_per_type_calc['NAN']
 
 types_ax1 = ['ABU', 'AEI', 'NGT']
+
+plot_ssps_range = False
+
 path_to_file = Path(path_to_folder, "time_series_emissions_per_target_type_orig_and_calc_range_of_ssps_paper.png")
 plotting_both()
 

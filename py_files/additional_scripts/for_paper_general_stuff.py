@@ -850,3 +850,281 @@ print(f"% amongst not-covered emissions: {100*emi_tot['USA']/emi_tot.sum() :.0f}
 print(f"% and from remaining non-(I)NDC countries: {100*emi_tot.reindex(isos_no_indc).sum()/emi_tot.sum() :.0f}%")
 
 # %%
+"""
+Share per sector / gas for 2017 (global).
+"""
+
+emi = {}
+
+for cat in ['IPC1', 'IPC2', 'IPCMAG', 'IPC4', 'IPC5']:
+    act = hpf.import_table_to_class_metadata_country_year_matrix(
+        Path(meta.path.matlab, f'KYOTOGHGAR4_{cat}_TOTAL_NET_HISTCR_PRIMAPHIST21.csv')).data.loc['EARTH', 2017]
+    emi[cat] = f"{act/1000 :.1f}"
+
+for gas in meta.gases.kyotoghg:
+    act = hpf.import_table_to_class_metadata_country_year_matrix(
+        Path(meta.path.matlab, f'{gas}AR4_IPCM0EL_TOTAL_NET_HISTCR_PRIMAPHIST21.csv')).data.loc['EARTH', 2017]
+    emi[gas] = f"{act/1000 :.1f}"
+
+# %%
+"""
+95th percentile of the national shares per sector / gas (2017).
+"""
+
+emi = {}
+national = hpf.import_table_to_class_metadata_country_year_matrix(
+    Path(meta.path.matlab, 'KYOTOGHGAR4_IPCM0EL_TOTAL_NET_HISTCR_PRIMAPHIST21.csv')).data.\
+    reindex(index=meta.isos.EARTH).loc[:, 2017]
+
+for cat in ['IPC1', 'IPC2', 'IPCMAG', 'IPC4', 'IPC5']:
+    act = 100 * hpf.import_table_to_class_metadata_country_year_matrix(
+        Path(meta.path.matlab, f'KYOTOGHGAR4_{cat}_TOTAL_NET_HISTCR_PRIMAPHIST21.csv')).data.\
+        reindex(index=meta.isos.EARTH).loc[:, 2017].div(national)
+    act = np.nanpercentile(act, 95)
+    emi[cat] = f"{act :.1f}"
+    for gas in meta.gases.kyotoghg:
+        try:
+            act = 100 * hpf.import_table_to_class_metadata_country_year_matrix(
+                Path(meta.path.matlab, f'{gas}AR4_{cat}_TOTAL_NET_HISTCR_PRIMAPHIST21.csv')).data.\
+                reindex(index=meta.isos.EARTH).loc[:, 2017].div(national)
+            act = np.nanpercentile(act, 95)
+            emi[f"{gas}_{cat}"] = f"{act :.1f}"
+        except:
+            pass
+
+for gas in meta.gases.kyotoghg:
+    act = 100 * hpf.import_table_to_class_metadata_country_year_matrix(
+        Path(meta.path.matlab, f'{gas}AR4_IPCM0EL_TOTAL_NET_HISTCR_PRIMAPHIST21.csv')).data.\
+        reindex(index=meta.isos.EARTH).loc[:, 2017].div(national)
+    act = np.nanpercentile(act, 95)
+    emi[gas] = f"{act :.1f}"
+
+# %%
+"""
+Covered share of emissions per sector / gas (global, excl. USA).
+"""
+
+emi = {}
+
+cat = 'IPCM0EL'
+gas = 'KYOTOGHG'
+act = hpf.import_table_to_class_metadata_country_year_matrix(
+    Path(meta.path.pc_cov, f'KYOTOGHG_{cat}_COV_EMI_HISTORY_PRIMAPHIST21.csv')).data.\
+    reindex(index=meta.isos.EARTH).loc[:, 2017]
+act['USA'] = 0.
+tot = hpf.import_table_to_class_metadata_country_year_matrix(
+    Path(meta.path.preprocess, 'tables', f'KYOTOGHG_{cat}_TOTAL_NET_HISTCR_PRIMAPHIST21.csv')).data.\
+    reindex(index=meta.isos.EARTH).loc[:, 2017].sum()
+emi[f"{gas}_{cat}"] = f"{100*act.sum()/tot :.1f}"
+
+for cat in ['IPC1', 'IPC2', 'IPCMAG', 'IPC4', 'IPC5']:
+    act = hpf.import_table_to_class_metadata_country_year_matrix(
+        Path(meta.path.pc_cov, f'KYOTOGHG_{cat}_COV_EMI_HISTORY_PRIMAPHIST21.csv')).data.\
+        reindex(index=meta.isos.EARTH).loc[:, 2017]
+    act['USA'] = 0.
+    tot = hpf.import_table_to_class_metadata_country_year_matrix(
+        Path(meta.path.preprocess, 'tables', f'KYOTOGHG_{cat}_TOTAL_NET_HISTCR_PRIMAPHIST21.csv')).data.\
+        reindex(index=meta.isos.EARTH).loc[:, 2017].sum()
+    emi[cat] = f"{100*act.sum()/tot :.1f}"
+    for gas in meta.gases.kyotoghg:
+        try:
+            act = hpf.import_table_to_class_metadata_country_year_matrix(
+                Path(meta.path.pc_cov, f'{gas}_{cat}_COV_EMI_HISTORY_PRIMAPHIST21.csv')).data.\
+                reindex(index=meta.isos.EARTH).loc[:, 2017]
+            act['USA'] = 0.
+            tot = hpf.import_table_to_class_metadata_country_year_matrix(
+                Path(meta.path.preprocess, 'tables', f'{gas}_{cat}_TOTAL_NET_HISTCR_PRIMAPHIST21.csv')).data.\
+                reindex(index=meta.isos.EARTH).loc[:, 2017].sum()
+            emi[f"{gas}_{cat}"] = f"{100*act.sum()/tot :.1f}"
+        except:
+            pass
+
+for gas in meta.gases.kyotoghg:
+    act = hpf.import_table_to_class_metadata_country_year_matrix(
+        Path(meta.path.pc_cov, f'{gas}_IPCM0EL_COV_EMI_HISTORY_PRIMAPHIST21.csv')).data.\
+        reindex(index=meta.isos.EARTH).loc[:, 2017]
+    act['USA'] = 0.
+    tot = hpf.import_table_to_class_metadata_country_year_matrix(
+        Path(meta.path.preprocess, 'tables', f'{gas}_IPCM0EL_TOTAL_NET_HISTCR_PRIMAPHIST21.csv')).data.\
+        reindex(index=meta.isos.EARTH).loc[:, 2017].sum()
+    emi[gas] = f"{100*act.sum()/tot :.1f}"
+
+# %%
+"""
+REI targets, global share in 1990, 2017, 2030.
+"""
+
+national_emi = hpf.import_table_to_class_metadata_country_year_matrix(
+    Path(meta.path.preprocess, 'tables', 'KYOTOGHG_IPCM0EL_TOTAL_NET_SSP2BLMESGBFILLED_PMSSPBIE.csv')).\
+    data.reindex(index=meta.isos.EARTH).loc[:, [1990, 2017, 2030]]
+REI = pd.read_csv(Path(meta.path.preprocess, 'infos_from_ndcs.csv'), index_col=0).loc[:, 'TYPE_ORIG']
+REI = REI.loc[REI == 'REI'].index
+share = 100 * national_emi.loc[REI, :].sum().div(national_emi.sum())
+
+# %%
+"""
+NGT targets, global share in 1990, 2017, 2030.
+"""
+
+national_emi = hpf.import_table_to_class_metadata_country_year_matrix(
+    Path(meta.path.preprocess, 'tables', 'KYOTOGHG_IPCM0EL_TOTAL_NET_SSP2BLMESGBFILLED_PMSSPBIE.csv')).\
+    data.reindex(index=meta.isos.EARTH).loc[:, [1990, 2017, 2030]]
+
+NGT_main = pd.read_csv(Path(meta.path.preprocess, 'infos_from_ndcs.csv'), index_col=0).loc[:, 'TYPE_ORIG']
+NGT_main = NGT_main.loc[NGT_main == 'NGT'].index
+share_main = 100 * national_emi.loc[NGT_main, :].sum().div(national_emi.sum())
+
+NGT_reclass = pd.read_csv(Path(meta.path.preprocess, 'infos_from_ndcs.csv'), index_col=0).loc[:, 'TYPE_CALC']
+NGT_reclass = NGT_reclass.loc[NGT_reclass == 'NGT'].index
+share_reclass = 100 * national_emi.loc[NGT_reclass, :].sum().div(national_emi.sum())
+
+# %%
+"""
+No (I)NDCs, global share in 1990, 2017, 2030.
+"""
+
+national_emi = hpf.import_table_to_class_metadata_country_year_matrix(
+    Path(meta.path.preprocess, 'tables', 'KYOTOGHG_IPCM0EL_TOTAL_NET_SSP2BLMESGBFILLED_PMSSPBIE.csv')).\
+    data.reindex(index=meta.isos.EARTH).loc[:, [1990, 2017, 2030]]
+
+NoNDC = pd.read_csv(Path(meta.path.preprocess, 'infos_from_ndcs.csv'), index_col=0).loc[:, 'NDC_INDC']
+NoNDC = [xx for xx in NoNDC.index if NoNDC[xx] not in ['NDC', 'INDC']] + ['USA']
+share_main = 100 * national_emi.loc[NoNDC, :].sum().div(national_emi.sum())
+
+# %%
+"""
+Countries and target types (chosen for pathways, type_calc) for which estimated coverage and 100% coverage differ.
+"""
+
+cov_ests = {
+    'SSP1': 'ndcs_20200628_2218_SSP1_typeCalc',
+    'SSP2': 'ndcs_20200628_2120_SSP2_typeCalc',
+    'SSP3': 'ndcs_20200628_2229_SSP3_typeCalc',
+    'SSP4': 'ndcs_20200628_2243_SSP4_typeCalc',
+    'SSP5': 'ndcs_20200628_2258_SSP5_typeCalc'}
+cov_100s = {
+    'SSP1': 'ndcs_20200628_2221_SSP1_typeCalc_pccov100',
+    'SSP2': 'ndcs_20200628_2122_SSP2_typeCalc_pccov100',
+    'SSP3': 'ndcs_20200628_2234_SSP3_typeCalc_pccov100',
+    'SSP4': 'ndcs_20200628_2248_SSP4_typeCalc_pccov100',
+    'SSP5': 'ndcs_20200628_2301_SSP5_typeCalc_pccov100'}
+
+cov_est_gt_100 = {}
+cov_100_gt_est = {}
+
+for ssp in cov_ests.keys():
+    
+    print(f"% {ssp} (type_reclass)")
+    
+    cov_est_gt_100[ssp] = []
+    cov_100_gt_est[ssp] = []
+    
+    cov_est = pd.read_csv(
+        Path(meta.path.main, 'data', 'output', 'output_for_paper', cov_ests[ssp],
+            'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
+    cov_100 = pd.read_csv(
+        Path(meta.path.main, 'data', 'output', 'output_for_paper', cov_100s[ssp],
+            'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
+    
+    for ind in cov_est.loc[cov_est.rge.isin(['best', 'worst']), :].index:
+        
+        cov_est_act = cov_est.loc[ind, :]
+        cov_100_act = cov_100.loc[
+            (cov_100.condi == cov_est_act.condi) & (cov_100.rge == cov_est_act.rge) &
+            (cov_100.iso3 == cov_est_act.iso3)]
+        
+        if ((not np.isnan(cov_est_act['2030'])) and (cov_est_act['2030'] != cov_100_act['2030'].values[0])):
+            
+            if cov_est_act['2030'] > cov_100_act['2030'].values[0]:
+                how = ', est > 100'
+                cov_est_gt_100[ssp] += [f"{cov_est_act.iso3} ({cov_est_act.tar_type_used})"]
+            if cov_est_act['2030'] < cov_100_act['2030'].values[0]:
+                how = ', 100 > est'
+                cov_100_gt_est[ssp] += [f"{cov_100_act.iso3.values[0]} ({cov_100_act.tar_type_used.values[0]})"]
+            
+            # print(cov_est_act['iso3'], ', est:', cov_est_act['tar_type_used'], ', 100:', cov_100_act['tar_type_used'].values[0], 
+            #     how, ', emi_cov_2030:', f"{cov_est.loc[(cov_est.iso3 == cov_est_act.iso3) & (cov_est.rge == 'emi_cov'), '2030'].values[0] :.1f}", 
+            #     ',', cov_est_act['condi'], cov_est_act['rge'])
+
+    print("% cov_100_gt_est", sorted(set(cov_100_gt_est[ssp])))
+    #print("% cov_est_gt_100", sorted(set(cov_est_gt_100[ssp])))
+
+# %%
+"""
+Countries and target types (chosen for pathways, type_orig) for which estimated coverage and 100% coverage differ.
+"""
+
+cov_ests = {
+    'SSP1': 'ndcs_20200702_0834_SSP1_typeOrig',
+    'SSP2': 'ndcs_20200702_0829_SSP2_typeOrig',
+    'SSP3': 'ndcs_20200702_0839_SSP3_typeOrig',
+    'SSP4': 'ndcs_20200702_0844_SSP4_typeOrig',
+    'SSP5': 'ndcs_20200702_0848_SSP5_typeOrig'}
+cov_100s = {
+    'SSP1': 'ndcs_20200702_0836_SSP1_typeOrig_pccov100',
+    'SSP2': 'ndcs_20200702_0830_SSP2_typeOrig_pccov100',
+    'SSP3': 'ndcs_20200702_0840_SSP3_typeOrig_pccov100',
+    'SSP4': 'ndcs_20200702_0845_SSP4_typeOrig_pccov100',
+    'SSP5': 'ndcs_20200702_0849_SSP5_typeOrig_pccov100'}
+
+cov_est_gt_100 = {}
+cov_100_gt_est = {}
+
+for ssp in cov_ests.keys():
+    
+    print(f"% {ssp} (type_main)")
+    
+    cov_est_gt_100[ssp] = []
+    cov_100_gt_est[ssp] = []
+    
+    cov_est = pd.read_csv(
+        Path(meta.path.main, 'data', 'output', 'output_for_paper', cov_ests[ssp],
+            'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
+    cov_100 = pd.read_csv(
+        Path(meta.path.main, 'data', 'output', 'output_for_paper', cov_100s[ssp],
+            'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
+    
+    for ind in cov_est.loc[cov_est.rge.isin(['best', 'worst']), :].index:
+        
+        cov_est_act = cov_est.loc[ind, :]
+        cov_100_act = cov_100.loc[
+            (cov_100.condi == cov_est_act.condi) & (cov_100.rge == cov_est_act.rge) &
+            (cov_100.iso3 == cov_est_act.iso3)]
+        
+        if ((not np.isnan(cov_est_act['2030'])) and (cov_est_act['2030'] != cov_100_act['2030'].values[0])):
+            
+            if cov_est_act['2030'] > cov_100_act['2030'].values[0]:
+                how = ', est > 100'
+                cov_est_gt_100[ssp] += [f"{cov_est_act.iso3} ({cov_est_act.tar_type_used})"]
+            if cov_est_act['2030'] < cov_100_act['2030'].values[0]:
+                how = ', 100 > est'
+                cov_100_gt_est[ssp] += [f"{cov_100_act.iso3.values[0]} ({cov_100_act.tar_type_used.values[0]})"]
+            
+            # print(cov_est_act['iso3'], ', est:', cov_est_act['tar_type_used'], ', 100:', cov_100_act['tar_type_used'].values[0], 
+            #     how, ', emi_cov_2030:', f"{cov_est.loc[(cov_est.iso3 == cov_est_act.iso3) & (cov_est.rge == 'emi_cov'), '2030'].values[0] :.1f}", 
+            #     ',', cov_est_act['condi'], cov_est_act['rge'])
+
+    print("% cov_100_gt_est", sorted(set(cov_100_gt_est[ssp])))
+    #print("% cov_est_gt_100", sorted(set(cov_est_gt_100[ssp])))
+
+# %%
+iso3 = 'BWA'
+cov_est = pd.read_csv(
+    Path(meta.path.main, 'data', 'output', 'output_for_paper', 'ndcs_20200702_0829_SSP2_typeOrig',
+        'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
+cov_100 = pd.read_csv(
+    Path(meta.path.main, 'data', 'output', 'output_for_paper', 'ndcs_20200702_0830_SSP2_typeOrig_pccov100',
+        'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
+print(cov_est.loc[(cov_est.iso3 == iso3) & (cov_est.rge.isin(['best', 'worst'])), ['tar_type_used', 'condi', 'rge', '2030']])
+print(cov_100.loc[(cov_100.iso3 == iso3) & (cov_100.rge.isin(['best', 'worst'])), ['tar_type_used', 'condi', 'rge', '2030']])
+# %%
+iso3 = 'BWA'
+cov_est = pd.read_csv(
+    Path(meta.path.main, 'data', 'output', 'output_for_paper', 'ndcs_20200628_2120_SSP2_typeCalc',
+        'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
+cov_100 = pd.read_csv(
+    Path(meta.path.main, 'data', 'output', 'output_for_paper', 'ndcs_20200628_2122_SSP2_typeCalc_pccov100',
+        'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
+print(cov_est.loc[(cov_est.iso3 == iso3) & (cov_est.rge.isin(['best', 'worst'])), ['tar_type_used', 'condi', 'rge', '2030']])
+print(cov_100.loc[(cov_100.iso3 == iso3) & (cov_100.rge.isin(['best', 'worst'])), ['tar_type_used', 'condi', 'rge', '2030']])
+# %%
