@@ -29,7 +29,11 @@ If you do not have access to the MATLAB tools, you can do the following (**runni
 
 - Open a python console and go to the folder ``py_files`` (all of the following is run using python3):
   - Go to ``/MODIFY_INPUT_HERE`` and copy the file ``input_default.py`` and adjust it as you wish.
-  - Go to ``_to_be_run.py`` and put in the input-file(s) that you wish to work with (``main_ndc_quantifications('input_default', '')``) and run ``_to_be_run.py``.
+  
+  - Go to ``_to_be_run.py`` and put in the input-file(s) that you wish to work with (``main_ndc_quantifications('input_default', '')``) and run ``python3 _to_be_run.py``.
+  
+    Or using Spyder with a Python 3 console, with the work-path ``\ndc_quantifications\py_files`` run ``from main_ndc_quantifications import main_ndc_quantifications`` and then ``main_ndc_quantifications('input_default', '')``.
+  
   - The output (emissions targets per country, per-country pathways, global pathways) is stored in ``/data/output/``.
 
 ---------------

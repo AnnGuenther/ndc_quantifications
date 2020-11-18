@@ -18,6 +18,7 @@ def ndcs_get_pathways_for_matlab(pathways_countries_in, pathways_groups_in, meta
     import pandas as pd
     from pathlib import Path
     from copy import deepcopy
+    import helpers_functions as hpf
     
     # %%
     ptws_groups_in = deepcopy(pathways_groups_in) # Else the orignal DF is modified.
@@ -52,7 +53,9 @@ def ndcs_get_pathways_for_matlab(pathways_countries_in, pathways_groups_in, meta
     
     category, name_category = ['CATM0EL', 'NationalTotalExclLULUCF']
     
-    path_output_matlab = Path(meta.path.output_ndcs)
+    folder_matlab = 'matlab'
+    hpf.write_text_to_file(f'/{folder_matlab}/*', Path(meta.path.output_ndcs, '.gitignore'))
+    path_output_matlab = Path(meta.path.output_ndcs, folder_matlab)
     Path(path_output_matlab).mkdir(parents=True, exist_ok=True)
     path_main = Path(path_output_matlab, 'ndc_output_for_matlab.m')
     
