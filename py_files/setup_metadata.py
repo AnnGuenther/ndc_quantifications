@@ -45,7 +45,7 @@ def setup_metadata():
     #####################################
     ##### TO BE UPDATED WHEN NEEDED #####
     #####################################
-    meta.path.pc_cov = Path(meta.path.preprocess, 'pc_cov_20200702_0825')
+    meta.path.pc_cov = Path(meta.path.preprocess, 'pc_cov_20201122_0952')
     
     # %%
     """

@@ -234,89 +234,89 @@ ndc_quantis = {
     'prio_SSPs': {
         'coverage_100': {
             'folders': {
-                'SSP1': 'ndcs_20200702_0836_SSP1_typeOrig_pccov100',
-                'SSP2': 'ndcs_20200702_0830_SSP2_typeOrig_pccov100',
-                'SSP3': 'ndcs_20200702_0840_SSP3_typeOrig_pccov100',
-                'SSP4': 'ndcs_20200702_0845_SSP4_typeOrig_pccov100',
-                'SSP5': 'ndcs_20200702_0849_SSP5_typeOrig_pccov100'}},
+                'SSP1': 'ndcs_20200702_0836_SSP1_typeMain_pccov100',
+                'SSP2': 'ndcs_20200702_0830_SSP2_typeMain_pccov100',
+                'SSP3': 'ndcs_20200702_0840_SSP3_typeMain_pccov100',
+                'SSP4': 'ndcs_20200702_0845_SSP4_typeMain_pccov100',
+                'SSP5': 'ndcs_20200702_0849_SSP5_typeMain_pccov100'}},
         'lulucf_unfccc': {
             'folders': {
-                'SSP1': 'ndcs_20200706_1236_SSP1_typeOrig_pccov100_UNFCCC',
-                'SSP2': 'ndcs_20200706_1228_SSP2_typeOrig_pccov100_UNFCCC',
-                'SSP3': 'ndcs_20200706_1243_SSP3_typeOrig_pccov100_UNFCCC',
-                'SSP4': 'ndcs_20200706_1251_SSP4_typeOrig_pccov100_UNFCCC',
-                'SSP5': 'ndcs_20200706_1259_SSP5_typeOrig_pccov100_UNFCCC'}},
+                'SSP1': 'ndcs_20200706_1236_SSP1_typeMain_pccov100_UNFCCC',
+                'SSP2': 'ndcs_20200706_1228_SSP2_typeMain_pccov100_UNFCCC',
+                'SSP3': 'ndcs_20200706_1243_SSP3_typeMain_pccov100_UNFCCC',
+                'SSP4': 'ndcs_20200706_1251_SSP4_typeMain_pccov100_UNFCCC',
+                'SSP5': 'ndcs_20200706_1259_SSP5_typeMain_pccov100_UNFCCC'}},
         'lulucf_fao': {
             'folders': {
-                'SSP1': 'ndcs_20200706_1236_SSP1_typeOrig_pccov100_FAO',
-                'SSP2': 'ndcs_20200706_1228_SSP2_typeOrig_pccov100_FAO',
-                'SSP3': 'ndcs_20200706_1243_SSP3_typeOrig_pccov100_FAO',
-                'SSP4': 'ndcs_20200706_1251_SSP4_typeOrig_pccov100_FAO',
-                'SSP5': 'ndcs_20200706_1259_SSP5_typeOrig_pccov100_FAO'}},
+                'SSP1': 'ndcs_20200706_1236_SSP1_typeMain_pccov100_FAO',
+                'SSP2': 'ndcs_20200706_1228_SSP2_typeMain_pccov100_FAO',
+                'SSP3': 'ndcs_20200706_1243_SSP3_typeMain_pccov100_FAO',
+                'SSP4': 'ndcs_20200706_1251_SSP4_typeMain_pccov100_FAO',
+                'SSP5': 'ndcs_20200706_1259_SSP5_typeMain_pccov100_FAO'}},
         'bl_uncondi': {
             'folders': {
-                'SSP1': 'ndcs_20200702_0838_SSP1_typeOrig_pccov100_BLForUCAboveBL',
-                'SSP2': 'ndcs_20200702_0832_SSP2_typeOrig_pccov100_BLForUCAboveBL',
-                'SSP3': 'ndcs_20200702_0843_SSP3_typeOrig_pccov100_BLForUCAboveBL',
-                'SSP4': 'ndcs_20200702_0847_SSP4_typeOrig_pccov100_BLForUCAboveBL',
-                'SSP5': 'ndcs_20200702_0852_SSP5_typeOrig_pccov100_BLForUCAboveBL'}},
+                'SSP1': 'ndcs_20200702_0838_SSP1_typeMain_pccov100_BLForUCAboveBL',
+                'SSP2': 'ndcs_20200702_0832_SSP2_typeMain_pccov100_BLForUCAboveBL',
+                'SSP3': 'ndcs_20200702_0843_SSP3_typeMain_pccov100_BLForUCAboveBL',
+                'SSP4': 'ndcs_20200702_0847_SSP4_typeMain_pccov100_BLForUCAboveBL',
+                'SSP5': 'ndcs_20200702_0852_SSP5_typeMain_pccov100_BLForUCAboveBL'}},
         'const_emi': {
             'folders': {
-                'SSP1': 'ndcs_20200702_0837_SSP1_typeOrig_pccov100_constEmiAfterLastTar',
-                'SSP2': 'ndcs_20200702_0831_SSP2_typeOrig_pccov100_constEmiAfterLastTar',
-                'SSP3': 'ndcs_20200702_0841_SSP3_typeOrig_pccov100_constEmiAfterLastTar',
-                'SSP4': 'ndcs_20200702_0846_SSP4_typeOrig_pccov100_constEmiAfterLastTar',
-                'SSP5': 'ndcs_20200702_0850_SSP5_typeOrig_pccov100_constEmiAfterLastTar'}},
+                'SSP1': 'ndcs_20200702_0837_SSP1_typeMain_pccov100_constEmiAfterLastTar',
+                'SSP2': 'ndcs_20200702_0831_SSP2_typeMain_pccov100_constEmiAfterLastTar',
+                'SSP3': 'ndcs_20200702_0841_SSP3_typeMain_pccov100_constEmiAfterLastTar',
+                'SSP4': 'ndcs_20200702_0846_SSP4_typeMain_pccov100_constEmiAfterLastTar',
+                'SSP5': 'ndcs_20200702_0850_SSP5_typeMain_pccov100_constEmiAfterLastTar'}},
         'estimated_coverage': {
             'folders': {
-                'SSP1': 'ndcs_20200702_0834_SSP1_typeOrig',
-                'SSP2': 'ndcs_20200702_0829_SSP2_typeOrig',
-                'SSP3': 'ndcs_20200702_0839_SSP3_typeOrig',
-                'SSP4': 'ndcs_20200702_0844_SSP4_typeOrig',
-                'SSP5': 'ndcs_20200702_0848_SSP5_typeOrig'}}},
+                'SSP1': 'ndcs_20200702_0834_SSP1_typeMain',
+                'SSP2': 'ndcs_20200702_0829_SSP2_typeMain',
+                'SSP3': 'ndcs_20200702_0839_SSP3_typeMain',
+                'SSP4': 'ndcs_20200702_0844_SSP4_typeMain',
+                'SSP5': 'ndcs_20200702_0848_SSP5_typeMain'}}},
     'prio_NDCs': {
         'coverage_100': {
             'folders': {
-                'SSP1': 'ndcs_20200628_2221_SSP1_typeCalc_pccov100',
-                'SSP2': 'ndcs_20200628_2122_SSP2_typeCalc_pccov100',
-                'SSP3': 'ndcs_20200628_2234_SSP3_typeCalc_pccov100',
-                'SSP4': 'ndcs_20200628_2248_SSP4_typeCalc_pccov100',
-                'SSP5': 'ndcs_20200628_2301_SSP5_typeCalc_pccov100'}},
+                'SSP1': 'ndcs_20200628_2221_SSP1_typeReclass_pccov100',
+                'SSP2': 'ndcs_20200628_2122_SSP2_typeReclass_pccov100',
+                'SSP3': 'ndcs_20200628_2234_SSP3_typeReclass_pccov100',
+                'SSP4': 'ndcs_20200628_2248_SSP4_typeReclass_pccov100',
+                'SSP5': 'ndcs_20200628_2301_SSP5_typeReclass_pccov100'}},
         'lulucf_unfccc': {
             'folders': {
-                'SSP1': 'ndcs_20200706_1234_SSP1_typeCalc_pccov100_UNFCCC',
-                'SSP2': 'ndcs_20200706_1226_SSP2_typeCalc_pccov100_UNFCCC',
-                'SSP3': 'ndcs_20200706_1241_SSP3_typeCalc_pccov100_UNFCCC',
-                'SSP4': 'ndcs_20200706_1249_SSP4_typeCalc_pccov100_UNFCCC',
-                'SSP5': 'ndcs_20200706_1257_SSP5_typeCalc_pccov100_UNFCCC'}},
+                'SSP1': 'ndcs_20200706_1234_SSP1_typeReclass_pccov100_UNFCCC',
+                'SSP2': 'ndcs_20200706_1226_SSP2_typeReclass_pccov100_UNFCCC',
+                'SSP3': 'ndcs_20200706_1241_SSP3_typeReclass_pccov100_UNFCCC',
+                'SSP4': 'ndcs_20200706_1249_SSP4_typeReclass_pccov100_UNFCCC',
+                'SSP5': 'ndcs_20200706_1257_SSP5_typeReclass_pccov100_UNFCCC'}},
         'lulucf_fao': {
             'folders': {
-                'SSP1': 'ndcs_20200706_1234_SSP1_typeCalc_pccov100_FAO',
-                'SSP2': 'ndcs_20200706_1226_SSP2_typeCalc_pccov100_FAO',
-                'SSP3': 'ndcs_20200706_1241_SSP3_typeCalc_pccov100_FAO',
-                'SSP4': 'ndcs_20200706_1249_SSP4_typeCalc_pccov100_FAO',
-                'SSP5': 'ndcs_20200706_1257_SSP5_typeCalc_pccov100_FAO'}},
+                'SSP1': 'ndcs_20200706_1234_SSP1_typeReclass_pccov100_FAO',
+                'SSP2': 'ndcs_20200706_1226_SSP2_typeReclass_pccov100_FAO',
+                'SSP3': 'ndcs_20200706_1241_SSP3_typeReclass_pccov100_FAO',
+                'SSP4': 'ndcs_20200706_1249_SSP4_typeReclass_pccov100_FAO',
+                'SSP5': 'ndcs_20200706_1257_SSP5_typeReclass_pccov100_FAO'}},
         'bl_uncondi': {
             'folders': {
-                'SSP1': 'ndcs_20200628_2227_SSP1_typeCalc_pccov100_BLForUCAboveBL',
-                'SSP2': 'ndcs_20200628_2126_SSP2_typeCalc_pccov100_BLForUCAboveBL',
-                'SSP3': 'ndcs_20200628_2241_SSP3_typeCalc_pccov100_BLForUCAboveBL',
-                'SSP4': 'ndcs_20200628_2255_SSP4_typeCalc_pccov100_BLForUCAboveBL',
-                'SSP5': 'ndcs_20200628_2306_SSP5_typeCalc_pccov100_BLForUCAboveBL'}},
+                'SSP1': 'ndcs_20200628_2227_SSP1_typeReclass_pccov100_BLForUCAboveBL',
+                'SSP2': 'ndcs_20200628_2126_SSP2_typeReclass_pccov100_BLForUCAboveBL',
+                'SSP3': 'ndcs_20200628_2241_SSP3_typeReclass_pccov100_BLForUCAboveBL',
+                'SSP4': 'ndcs_20200628_2255_SSP4_typeReclass_pccov100_BLForUCAboveBL',
+                'SSP5': 'ndcs_20200628_2306_SSP5_typeReclass_pccov100_BLForUCAboveBL'}},
         'const_emi': {
             'folders': {
-                'SSP1': 'ndcs_20200628_2225_SSP1_typeCalc_pccov100_constEmiAfterLastTar',
-                'SSP2': 'ndcs_20200628_2125_SSP2_typeCalc_pccov100_constEmiAfterLastTar',
-                'SSP3': 'ndcs_20200628_2238_SSP3_typeCalc_pccov100_constEmiAfterLastTar',
-                'SSP4': 'ndcs_20200628_2253_SSP4_typeCalc_pccov100_constEmiAfterLastTar',
-                'SSP5': 'ndcs_20200628_2304_SSP5_typeCalc_pccov100_constEmiAfterLastTar'}},
+                'SSP1': 'ndcs_20200628_2225_SSP1_typeReclass_pccov100_constEmiAfterLastTar',
+                'SSP2': 'ndcs_20200628_2125_SSP2_typeReclass_pccov100_constEmiAfterLastTar',
+                'SSP3': 'ndcs_20200628_2238_SSP3_typeReclass_pccov100_constEmiAfterLastTar',
+                'SSP4': 'ndcs_20200628_2253_SSP4_typeReclass_pccov100_constEmiAfterLastTar',
+                'SSP5': 'ndcs_20200628_2304_SSP5_typeReclass_pccov100_constEmiAfterLastTar'}},
         'estimated_coverage': {
             'folders': {
-                'SSP1': 'ndcs_20200628_2218_SSP1_typeCalc',
-                'SSP2': 'ndcs_20200628_2120_SSP2_typeCalc',
-                'SSP3': 'ndcs_20200628_2229_SSP3_typeCalc',
-                'SSP4': 'ndcs_20200628_2243_SSP4_typeCalc',
-                'SSP5': 'ndcs_20200628_2258_SSP5_typeCalc'}}}}
+                'SSP1': 'ndcs_20200628_2218_SSP1_typeReclass',
+                'SSP2': 'ndcs_20200628_2120_SSP2_typeReclass',
+                'SSP3': 'ndcs_20200628_2229_SSP3_typeReclass',
+                'SSP4': 'ndcs_20200628_2243_SSP4_typeReclass',
+                'SSP5': 'ndcs_20200628_2258_SSP5_typeReclass'}}}}
 
 ndc_quantis_tars = {}
 ndc_quantis_ptws = {}
@@ -1165,8 +1165,8 @@ def text_to_latex_file():
         # %%
         ndc_iso3 = infos_from_ndcs.loc[iso3, :]
         has_ndc = ndc_iso3['NDC_INDC']
-        type_main = ndc_iso3['TYPE_ORIG']
-        type_reclass = ndc_iso3['TYPE_CALC']
+        type_main = ndc_iso3['TYPE_MAIN']
+        type_reclass = ndc_iso3['TYPE_RECLASS']
         
         # %%
         linewdth = 2

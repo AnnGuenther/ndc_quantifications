@@ -17,7 +17,7 @@ def ndcs_some_initial_testing(database, meta):
     
     # %%
     # How many countries have no data. How many countries have missing data.
-    for tablename in ['emi_bl_exclLU', 'emi_bl_LU', 'pc_cov_exclLU', 
+    for tablename in ['emi_bl_exclLU', 'emi_bl_onlyLU', 'pc_cov_exclLU', 
                       'pop',  'gdp']:
         
         data = deepcopy(getattr(database, tablename).data)

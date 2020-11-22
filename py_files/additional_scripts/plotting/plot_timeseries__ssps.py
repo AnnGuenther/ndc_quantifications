@@ -25,11 +25,8 @@ colours_ssps = pd.read_csv(Path(meta.path.py_files, 'additional_scripts', 'plott
     'colours', 'colours_ssps.csv'), index_col=0)
 
 emi_filled = {}
-emi_orig = {}
 pop_filled = {}
-pop_orig = {}
 gdp_filled = {}
-gdp_orig = {}
 
 for ssp in ssps:
     

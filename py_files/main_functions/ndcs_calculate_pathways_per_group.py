@@ -63,20 +63,20 @@ def ndcs_calculate_pathways_per_group(
             
             else: # Check which target type to use.
                 
-                # Use TYPE_CALC or baseline_emissions if ndcs_type_prioritisations is not to be used.
+                # Use TYPE_RECLASS or baseline_emissions if ndcs_type_prioritisations is not to be used.
                 if not meta.ndcs_type_prioritisations['use_it']:
                     
                     if iso_ndc in list(meta.ndcs_info.index):
-                        tar_used = meta.ndcs_info.loc[iso_ndc, 'TYPE_CALC']
+                        tar_used = meta.ndcs_info.loc[iso_ndc, 'TYPE_RECLASS']
                 
                 else:
-                    # Choose the prioritised target types if available, else use TYPE_CALC or baseline_emissions.
+                    # Choose the prioritised target types if available, else use TYPE_RECLASS or baseline_emissions.
                     if iso_act in meta.ndcs_type_prioritisations['countries']:
                         
                         tar_chosen = []
                         for type_prio in meta.ndcs_type_prioritisations['ndcs_type_prioritisations']:
                             
-                            if type_prio.upper() in ['TYPE_CALC', 'TYPE_ORIG']:
+                            if type_prio.upper() in ['TYPE_RECLASS', 'TYPE_MAIN']:
                                 tar_chosen = tar_chosen + [meta.ndcs_info.loc[iso_ndc, type_prio.upper()]]
                                 
                             else:
@@ -87,16 +87,16 @@ def ndcs_calculate_pathways_per_group(
                                 if len(tars_available_now) > 0:
                                     tar_chosen += [type_prio]
                         
-                        # Choose the prioritised target types if available, else use TYPE_CALC or baseline_emissions.
-                        tar_used = (tar_chosen[0] if len(tar_chosen) > 0 else meta.ndcs_info.loc[iso_ndc, 'TYPE_CALC'])
+                        # Choose the prioritised target types if available, else use TYPE_RECLASS or baseline_emissions.
+                        tar_used = (tar_chosen[0] if len(tar_chosen) > 0 else meta.ndcs_info.loc[iso_ndc, 'TYPE_RECLASS'])
                     
-                    else: # TYPE_CALC or baseline_emissions.
-                        tar_used = meta.ndcs_info.loc[iso_ndc, 'TYPE_CALC']
+                    else: # TYPE_RECLASS or baseline_emissions.
+                        tar_used = meta.ndcs_info.loc[iso_ndc, 'TYPE_RECLASS']
                     
                     # If the target type is NGT, try to choose another type.
                     # Preferably ABS, RBY or RBU.
-                    # TODO: check that. If the type_orig is NGT, we use ABS, RBY, or RBU nevertheless?
-                    # Better use type_calc in that case?
+                    # TODO: check that. If the type_main is NGT, we use ABS, RBY, or RBU nevertheless?
+                    # Better use type_reclass in that case?
                     if tar_used == 'NGT':
                         tars_available = [xx 
                             for xx in pathways_per_country.loc[pathways_per_country.iso3 == iso_act, 'tar_type_used'].unique()

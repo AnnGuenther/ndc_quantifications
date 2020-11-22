@@ -152,7 +152,7 @@ plt.close(fig)
 
 # %%
 """
-Compare single countries (CAT and our calculations with 100% coverage and type_calc).
+Compare single countries (CAT and our calculations with 100% coverage and type_reclass).
 """
 
 cat_tars = pd.read_csv(Path(folder_ext, 'CAT_website_data_1219_COP25.csv'))
@@ -232,7 +232,7 @@ for ct in range(len(cat_isos)):
 #        ax1.plot(years_int, my_calc_emi_lu.loc[:, years_str].values[0], 'g:')
         my_calc_yrs_act = my_calc_act.taryr
         
-        which_targets = ndcs_info.loc[iso_act, 'TYPE_CALC'] # set(['ABS'] + ndcs_info.loc[iso_act, ['TYPE_CALC', 'TYPE_ORIG']].to_list())
+        which_targets = ndcs_info.loc[iso_act, 'TYPE_RECLASS'] # set(['ABS'] + ndcs_info.loc[iso_act, ['TYPE_RECLASS', 'TYPE_MAIN']].to_list())
         for tar_yr in sorted(my_calc_yrs_act.unique()):
             if tar_yr <= 2030:
                 add_x = 0
@@ -335,7 +335,7 @@ for iso_act in ndc_partner.iso3.unique():
         ax3.scatter(ndcs_bau['exclLU'].columns, ndcs_bau['exclLU'].loc[iso_act, :], color='k')
         #
         try:
-            tar_type_calc = my_calc_act.loc[:, 'tar_type_calc'].unique()[0]
+            tar_type_calc = my_calc_act.loc[:, 'tar_type_reclass'].unique()[0]
             for tar_yr in sorted(my_calc_yrs_act.unique()):
                 if tar_yr <= 2030:
                     add_x = 0
@@ -368,7 +368,7 @@ for iso_act in ndc_partner.iso3.unique():
                             except:
                                 pass
         except:
-            tar_type_calc = 'NAN'
+            tar_type_reclass = 'NAN'
         #
         # BAU exclLU
         ax3.plot(years_int, my_calc_emi.loc[:, years_str].values[0], ':r')
@@ -382,7 +382,7 @@ for iso_act in ndc_partner.iso3.unique():
             axa.set_ylim(YL)
         
         ax1.set_ylabel('emissions / MtCO2eq (AR4)', fontweight='bold')
-        fig.suptitle("Comparison NDC partnership and PIK (SSP2)\n" + iso_act + ', ' + tar_type_calc, 
+        fig.suptitle("Comparison NDC partnership and PIK (SSP2)\n" + iso_act + ', ' + tar_type_reclass, 
                      fontweight='bold')
         fig.subplots_adjust(top=.8, right=.87, hspace=.3)
         plt.savefig(Path(meta.path.main, 'plots', 'comparisons_with_other_data', 'comparisons_ndcpartnership', 

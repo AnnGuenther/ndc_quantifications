@@ -15,13 +15,13 @@ import helpers_functions as hpf
 # %%
 meta = setup_metadata()
 
-path_to_folder_100pc_calc = 'ndcs_20200628_2122_typeCalc_SSP2_pccov100'
-path_to_folder_calc = 'ndcs_20200628_2120_SSP2_typeCalc'
+path_to_folder_100pc_reclass = 'ndcs_20200628_2122_typeReclass_SSP2_pccov100'
+path_to_folder_reclass = 'ndcs_20200628_2120_SSP2_typeReclass'
 
 tars_100_all = pd.read_csv(Path(meta.path.output, 'output_for_paper',
-    path_to_folder_100pc_calc, 'ndc_targets.csv'))
+    path_to_folder_100pc_reclass, 'ndc_targets.csv'))
 tars_not100_all = pd.read_csv(Path(meta.path.output, 'output_for_paper',
-    path_to_folder_calc, 'ndc_targets.csv'))
+    path_to_folder_reclass, 'ndc_targets.csv'))
 cols = ['tar_emi_exclLU', 'tar_emi_inclLU', 
         'emi_bl_exclLU_refyr', 'emi_bl_exclLU_taryr',
         'emi_bl_LU_refyr', 'emi_bl_LU_taryr', 
@@ -32,7 +32,7 @@ cols = ['tar_emi_exclLU', 'tar_emi_inclLU',
 fig = plt.figure(figsize=(14, 4))
 for iso3 in meta.isos.EARTH:
     
-    if 'REI' in tars_100_all.loc[tars_100_all.iso3 == iso3, 'tar_type_orig'].to_list():
+    if 'REI' in tars_100_all.loc[tars_100_all.iso3 == iso3, 'tar_type_main'].to_list():
         int_ref = tars_100_all.loc[tars_100_all.iso3 == iso3, 'int_ref'].to_list()
         if 'GDP' in int_ref:
             int_ref = 'gdp'
@@ -50,11 +50,11 @@ for iso3 in meta.isos.EARTH:
         """
         # ndc_targets_pathways_per_country.csv
         ptws_100_ssp2 = pd.read_csv(Path(meta.path.output, 
-            path_to_folder_100pc_calc, 'ndc_targets_pathways_per_country.csv'))
+            path_to_folder_100pc_reclass, 'ndc_targets_pathways_per_country.csv'))
         ptws_100_ssp2 = ptws_100_ssp2.loc[ptws_100_ssp2.iso3 == iso3, :]
         # ndc_targets.csv
         tars_100_ssp2 = pd.read_csv(Path(meta.path.output, 
-            path_to_folder_100pc_calc, 'ndc_targets.csv'))
+            path_to_folder_100pc_reclass, 'ndc_targets.csv'))
         tars_100_ssp2 = tars_100_ssp2.loc[tars_100_ssp2.iso3 == iso3, :]
         
         ipcmlulucf = hpf.import_table_to_class_metadata_country_year_matrix(
@@ -63,11 +63,11 @@ for iso3 in meta.isos.EARTH:
         ptws_not100 = {}
         tars_not100 = {}
         for ssp, file in \
-            ['ssp1', 'ndcs_20200628_2218_SSP1_typeCalc'], \
-            ['ssp2', path_to_folder_calc], \
-            ['ssp3', 'ndcs_20200628_2229_SSP3_typeCalc'], \
-            ['ssp4', 'ndcs_20200628_2243_SSP4_typeCalc'], \
-            ['ssp5', 'ndcs_20200628_2258_SSP5_typeCalc']:
+            ['ssp1', 'ndcs_20200628_2218_SSP1_typeReclass'], \
+            ['ssp2', path_to_folder_reclass], \
+            ['ssp3', 'ndcs_20200628_2229_SSP3_typeReclass'], \
+            ['ssp4', 'ndcs_20200628_2243_SSP4_typeReclass'], \
+            ['ssp5', 'ndcs_20200628_2258_SSP5_typeReclass']:
             data = pd.read_csv(Path(meta.path.output, 
                 file, 'ndc_targets_pathways_per_country.csv'))
             ptws_not100[ssp] = data.loc[data.iso3 == iso3, :]

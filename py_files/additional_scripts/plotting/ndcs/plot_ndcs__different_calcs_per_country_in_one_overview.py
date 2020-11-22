@@ -38,7 +38,7 @@ def plotting():
     for what, count in zip(quantis.keys(), np.arange(.2, .8, .6/(len(quantis.keys())-1))):
         
         data = quantis[what]
-        case = ('calc' if 'calc' in what else 'orig')
+        case = ('reclass' if 'reclass' in what else 'main')
         
         for axa in isos_plots.keys():
             
@@ -74,40 +74,40 @@ def plotting():
     plt.close(fig)
 
 # %%
-ssp_calc100 = 'ndcs_20200628_2122_SSP2_typeCalc_pccov100'
-ssp_orig100 = 'ndcs_20200702_0830_SSP2_typeOrig_pccov100'
-ssp_calc = 'ndc_quantifications_20200610_1720_SSP2_typeCalc'
-ssp_orig = 'ndc_quantifications_20200610_1721_SSP2_typeOrig'
+ssp_reclass100 = 'ndcs_20200628_2122_SSP2_typeCalc_pccov100'
+ssp_main100 = 'ndcs_20200702_0830_SSP2_typeOrig_pccov100'
+ssp_reclass = 'ndc_quantifications_20200610_1720_SSP2_typeCalc'
+ssp_main = 'ndc_quantifications_20200610_1721_SSP2_typeOrig'
 ssp = 'SSP2'
 
 # %%
 quantis = {}
 for what, folder in \
-    ['ssp2_calc', ssp_calc100], \
-    ['ssp2_orig', ssp_orig100]:
+    ['ssp2_reclass', ssp_reclass100], \
+    ['ssp2_main', ssp_main100]:
     quantis[what] = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', folder, 'ndc_targets.csv'))
 
-path_to_file = Path(meta.path.main, 'plots', 'ndc_quantifications', 'ssp2_calc100pc_vs_orig100pc.png')
+path_to_file = Path(meta.path.main, 'plots', 'ndc_quantifications', 'ssp2_reclass100pc_vs_main100pc.png')
 plotting()
 
 # %%
 quantis = {}
 for what, folder in \
-    ['ssp2_calc', ssp_calc], \
-    ['ssp2_calc_100%', ssp_calc100]:
+    ['ssp2_reclass', ssp_reclass], \
+    ['ssp2_reclass_100%', ssp_reclass100]:
     quantis[what] = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', folder, 'ndc_targets.csv'))
 
-path_to_file = Path(meta.path.main, 'plots', 'ndc_quantifications', 'ssp2_calcRealCov_vs_calc100pc.png')
+path_to_file = Path(meta.path.main, 'plots', 'ndc_quantifications', 'ssp2_reclassRealCov_vs_reclass100pc.png')
 plotting()
 
 # %%
 quantis = {}
 for what, folder in \
-    ['ssp2_orig', ssp_orig], \
-    ['ssp2_orig_100%', ssp_orig100]:
+    ['ssp2_main', ssp_main], \
+    ['ssp2_main_100%', ssp_main100]:
     quantis[what] = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', folder, 'ndc_targets.csv'))
 
-path_to_file = Path(meta.path.main, 'plots', 'ndc_quantifications', 'ssp2_origRealCov_vs_orig100pc.png')
+path_to_file = Path(meta.path.main, 'plots', 'ndc_quantifications', 'ssp2_mainRealCov_vs_main100pc.png')
 plotting()
 
 # %%
@@ -119,14 +119,14 @@ def plotting2():
     year = '2030'
     
     for what, folder in \
-        [f'calc', folder_calc], \
-        [f'orig', folder_orig]:
+        [f'reclass', folder_reclass], \
+        [f'main', folder_main]:
         
         quantis = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', folder, 
             'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
         
         # BL emissions.
-        if what == f'calc':
+        if what == f'reclass':
             emi_bau = quantis.loc[(quantis.condi == 'emi_bau') & (quantis.category == cat), :]
             emi_bau.index = emi_bau.iso3
             data_exclLU.loc[:, 'bl'] = emi_bau.loc[:, year].reindex(index=data_exclLU.index)
@@ -143,11 +143,11 @@ def plotting2():
         # Target types.
         tar_types.loc[:, what] = emi_tar.loc[:, 'tar_type_used'].reindex(index=data_exclLU.index)
     
-    # Check if calc differs from orig.
-    data_exclLU.loc[:, 'calc_vs_orig'] = data_exclLU.loc[:, 'calc'].add(-data_exclLU.loc[:, 'orig'], fill_value=0)
+    # Check if reclass differs from main.
+    data_exclLU.loc[:, 'reclass_vs_main'] = data_exclLU.loc[:, 'reclass'].add(-data_exclLU.loc[:, 'main'], fill_value=0)
     # Drop the ones where it does not differ.
-    data_exclLU.drop(index=data_exclLU.index[data_exclLU.loc[:, 'calc_vs_orig'] == 0.], inplace=True)
-    data_exclLU.drop(index=data_exclLU.index[data_exclLU.loc[:, 'calc_vs_orig'].isnull()], inplace=True)
+    data_exclLU.drop(index=data_exclLU.index[data_exclLU.loc[:, 'reclass_vs_main'] == 0.], inplace=True)
+    data_exclLU.drop(index=data_exclLU.index[data_exclLU.loc[:, 'reclass_vs_main'].isnull()], inplace=True)
     data_exclLU.sort_values(by='bl', ascending=False, inplace=True)
     
     data_exclLU.to_csv(
@@ -159,15 +159,15 @@ def plotting2():
     ax1 = fig.add_subplot(1, 1, 1)
     
     ax1.scatter(data_exclLU.index, data_exclLU.bl, marker='s', color='k', label=f'baseline ({ssp})')
-    ax1.scatter(data_exclLU.index, data_exclLU.tars_calc, marker='o', color='b', label=label_calc)
-    ax1.scatter(data_exclLU.index, data_exclLU.tars_orig, marker='*', color='c', label=label_orig)
+    ax1.scatter(data_exclLU.index, data_exclLU.tars_reclass, marker='o', color='b', label=label_reclass)
+    ax1.scatter(data_exclLU.index, data_exclLU.tars_main, marker='*', color='c', label=label_main)
     ax1.set_ylabel('emissions / Mt CO$_2$eq (AR4)', fontweight='bold')
     ax1.legend(loc='upper right')
-    if xtick_orig:
-        xticklabels = [f"{xx}, {tar_types.loc[xx, 'calc']}, {tar_types.loc[xx, 'orig']}" for xx in data_exclLU.index]
+    if xtick_main:
+        xticklabels = [f"{xx}, {tar_types.loc[xx, 'reclass']}, {tar_types.loc[xx, 'main']}" for xx in data_exclLU.index]
         xticklabels = [xx.replace('baseline_emissions', 'BL') if 'baseline' in xx else xx for xx in xticklabels]
     else:
-        xticklabels = [f"{xx}, {tar_types.loc[xx, 'calc']}" for xx in data_exclLU.index]
+        xticklabels = [f"{xx}, {tar_types.loc[xx, 'reclass']}" for xx in data_exclLU.index]
         xticklabels = [xx.replace('baseline_emissions', 'BL') if 'baseline' in xx else xx for xx in xticklabels]
     
     ax1.set_xticklabels(xticklabels, rotation=90, fontweight='bold')
@@ -183,7 +183,7 @@ def plotting2():
     ax1.set_title(title + f'\n{year} {ssp} {cat} {condi} {rge}', fontweight='bold')
     
     fig.subplots_adjust(hspace=.3, bottom=.3)
-    path_to_file = Path(meta.path.main, 'plots', 'ndc_quantifications', 'ssp2_difference_calc_orig_pc100', file)
+    path_to_file = Path(meta.path.main, 'plots', 'ndc_quantifications', 'ssp2_difference_reclass_main_pc100', file)
     plt.savefig(path_to_file, dpi=300)
     #path_to_pdf = str(path_to_file).replace('.png', '.pdf')
     #plt.savefig(path_to_pdf, dpi=300)
@@ -196,36 +196,36 @@ for cat in ['IPCM0EL', 'IPC0']:
     
     for condi, rge in ['unconditional', 'worst'], ['conditional', 'best']:
         
-        folder_calc = ssp_calc100
-        folder_orig = ssp_orig100
-        label_calc = 'type_calc'
-        label_orig = 'type_orig'
-        xtick_orig = True
-        title = 'Countries for which the target emissions for type_calc and type_orig differ'
-        file = f'check_where_differences_between_type_calc_and_orig_come_from_ssp2_{cat}_{condi}_{rge}.png'
+        folder_reclass = ssp_reclass100
+        folder_main = ssp_main100
+        label_reclass = 'type_reclass'
+        label_main = 'type_main'
+        xtick_main = True
+        title = 'Countries for which the target emissions for type_reclass and type_main differ'
+        file = f'check_where_differences_between_type_reclass_and_main_come_from_ssp2_{cat}_{condi}_{rge}.png'
         plotting2()
         
-        folder_calc = ssp_calc100
-        folder_orig = ssp_calc
-        label_calc = 'calc'
-        label_orig = 'calc100%'
-        xtick_orig = False
-        title = 'Countries for which the target emissions for type_calc and type_calc100% differ'
-        file = f'check_where_differences_between_type_calc_and_calc100pc_come_from_ssp2_{cat}_{condi}_{rge}.png'
+        folder_reclass = ssp_reclass100
+        folder_main = ssp_reclass
+        label_reclass = 'reclass'
+        label_main = 'reclass100%'
+        xtick_main = False
+        title = 'Countries for which the target emissions for type_reclass and type_reclass100% differ'
+        file = f'check_where_differences_between_type_reclass_and_reclass100pc_come_from_ssp2_{cat}_{condi}_{rge}.png'
         plotting2()
         
-        folder_calc = ssp_orig100
-        folder_orig = ssp_orig
-        label_calc = 'orig'
-        label_orig = 'orig100%'
-        xtick_orig = False
-        title = 'Countries for which the target emissions for type_orig and type_orig100% differ'
-        file = f'check_where_differences_between_type_orig_and_orig100pc_come_from_ssp2_{cat}_{condi}_{rge}.png'
+        folder_reclass = ssp_main100
+        folder_main = ssp_main
+        label_reclass = 'main'
+        label_main = 'main100%'
+        xtick_main = False
+        title = 'Countries for which the target emissions for type_main and type_main100% differ'
+        file = f'check_where_differences_between_type_main_and_main100pc_come_from_ssp2_{cat}_{condi}_{rge}.png'
         plotting2()
 
 # %%
 """
-Check countries which have values for type_calc but not for type_orig (NGT should be the only ones).
+Check countries which have values for type_reclass but not for type_main (NGT should be the only ones).
 And get the mitigation pathway and baseline emissions for 2030.
 """
 
@@ -246,23 +246,23 @@ for cat, cat_LU in ['IPCM0EL', 'exclLU'], ['IPC0', 'inclLU']:
     ndcs_emi = pd.read_csv(
         Path(meta.path.preprocess, f'infos_from_ndcs_emi_{cat_LU}.csv'), index_col=0)
     
-    quantis_calc = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', ssp_calc, 
+    quantis_reclass = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', ssp_reclass, 
         'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
-    quantis_orig = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', ssp_orig, 
+    quantis_main = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', ssp_main, 
         'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
     
     year = '2030'
-    txt_all = 'iso3,type_calc,type_orig,bl,bl_global_share,diff,tar_calc,tar_calc_ndc,tar_orig,tar_orig_ndc'
+    txt_all = 'iso3,type_reclass,type_main,bl,bl_global_share,diff,tar_reclass,tar_reclass_ndc,tar_main,tar_main_ndc'
     txt_all += ',refyr_emi_ssp,refyr_emi_ndc,diff_emi_refyr'
     
-    bau = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', ssp_calc100, 
+    bau = pd.read_csv(Path(meta.path.main, 'data', 'output', 'output_for_paper', ssp_reclass100, 
         'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
     bau = bau.loc[(bau.condi == 'emi_bau') & (bau.category == cat), :]
     bau.index = bau.iso3
     bau = bau.sort_values(by=year, ascending=False)
     bau_tot_2017 = bau.loc[:, year].reindex(index=meta.isos.EARTH).sum()
     
-    folders = [ssp_calc100, ssp_orig100]
+    folders = [ssp_reclass100, ssp_main100]
     
     for iso3 in bau.index:
         
@@ -314,14 +314,14 @@ for cat, cat_LU in ['IPCM0EL', 'exclLU'], ['IPC0', 'inclLU']:
             # Plot baseline emissions and target emissions.
             for folder in folders:
                 
-                if 'typeCalc' in folder:
+                if 'typeReclass' in folder:
                     colour_target = (1, 0, 0)
                     linestyle = '--'
-                    which_type = 'calc'
-                elif 'typeOrig' in folder:
+                    which_type = 'reclass'
+                elif 'typeMain' in folder:
                     colour_target = (1, .5, .5)
                     linestyle = '-.'
-                    which_type = 'orig'
+                    which_type = 'main'
                 
                 colour_bau = (0, 0, 1)
                 colour_emi_ndc = (0, .5, 0)
@@ -335,18 +335,18 @@ for cat, cat_LU in ['IPCM0EL', 'exclLU'], ['IPC0', 'inclLU']:
                 bau_ptw_LU = quantis_LU.loc[(quantis_LU.condi == 'emi_bau'), years_ptw_str]
                 target_ptw = quantis.loc[(quantis.condi == condi) & (quantis.rge == rge), years_ptw_str]
                 
-                ax1.plot(years_ptw_int, bau_ptw.loc[bau_ptw.index[0], :], color=colour_bau, label=('Emi. SSP2' if which_type == 'calc' else '__nolegend__'))
-                ax1.plot(years_ptw_int, bau_ptw_LU.loc[bau_ptw_LU.index[0], :], color=(0, 1, 0), label=('Emi. LU' if which_type == 'calc' else '__nolegend__'))
+                ax1.plot(years_ptw_int, bau_ptw.loc[bau_ptw.index[0], :], color=colour_bau, label=('Emi. SSP2' if which_type == 'reclass' else '__nolegend__'))
+                ax1.plot(years_ptw_int, bau_ptw_LU.loc[bau_ptw_LU.index[0], :], color=(0, 1, 0), label=('Emi. LU' if which_type == 'reclass' else '__nolegend__'))
                 
-                if 'typeCalc' in folder:
-                    tar_type = ndcs_info.loc[iso3, 'TYPE_CALC']
-                elif 'typeOrig' in folder:
-                    tar_type = ndcs_info.loc[iso3, 'TYPE_ORIG']
+                if 'typeReclass' in folder:
+                    tar_type = ndcs_info.loc[iso3, 'TYPE_RECLASS']
+                elif 'typeMain' in folder:
+                    tar_type = ndcs_info.loc[iso3, 'TYPE_MAIN']
                 
                 ax1.plot(years_ptw_int, target_ptw.loc[target_ptw.index[0], :], linestyle=linestyle, color=colour_target, label=f'{which_type} ({tar_type})')
                 
                 # Emissions data from NDC.
-                ax1.scatter(years_ptw_int, ndcs_emi.loc[iso3, years_ptw_str], color=colour_emi_ndc, label=('Emi. NDC' if which_type == 'calc' else '__nolegend__'))
+                ax1.scatter(years_ptw_int, ndcs_emi.loc[iso3, years_ptw_str], color=colour_emi_ndc, label=('Emi. NDC' if which_type == 'reclass' else '__nolegend__'))
                 
                 # Vertical lines to show differences.
                 baseyear = ndcs_info.loc[iso3, 'BASEYEAR']
@@ -366,24 +366,24 @@ for cat, cat_LU in ['IPCM0EL', 'exclLU'], ['IPC0', 'inclLU']:
                           f"{(', negative emissions' if neg_emi else '')}")
             fig.subplots_adjust(right=.75)
             path_to_png = Path(meta.path.main, 'plots', 'ndc_quantifications', 
-                'comparison_type_calc_orig', f'comparison_type_calc_orig_{iso3}_{cat_LU}_{condi}_{rge}.png')
+                'comparison_type_reclass_main', f'comparison_type_reclass_main_{iso3}_{cat_LU}_{condi}_{rge}.png')
             plt.savefig(path_to_png, dpi=300)
             plt.clf()
         
         # Target types.
-        calc_act = quantis_calc.loc[(quantis_calc.iso3 == iso3) & (quantis_calc.category == cat), :]
-        orig_act = quantis_orig.loc[(quantis_orig.iso3 == iso3) & (quantis_orig.category == cat), :]
+        reclass_act = quantis_reclass.loc[(quantis_reclass.iso3 == iso3) & (quantis_reclass.category == cat), :]
+        main_act = quantis_main.loc[(quantis_main.iso3 == iso3) & (quantis_main.category == cat), :]
         try:
-            tar_calc = calc_act.loc[(calc_act.condi == condi) & (calc_act.rge == rge), 'tar_type_used'].values[0]
+            tar_reclass = reclass_act.loc[(reclass_act.condi == condi) & (reclass_act.rge == rge), 'tar_type_used'].values[0]
         except:
-            tar_calc = ''
+            tar_reclass = ''
         try:
-            tar_orig = orig_act.loc[(orig_act.condi == condi) & (orig_act.rge == rge), 'tar_type_used'].values[0]
+            tar_main = main_act.loc[(main_act.condi == condi) & (main_act.rge == rge), 'tar_type_used'].values[0]
         except:
-            tar_orig = ''
-        tar_calc_ndc = ndcs_info.loc[iso3, 'TYPE_CALC']
-        tar_orig_ndc = ndcs_info.loc[iso3, 'TYPE_ORIG']
-        txt += f",{tar_calc},{tar_calc_ndc},{tar_orig},{tar_orig_ndc}"
+            tar_main = ''
+        tar_reclass_ndc = ndcs_info.loc[iso3, 'TYPE_RECLASS']
+        tar_main_ndc = ndcs_info.loc[iso3, 'TYPE_MAIN']
+        txt += f",{tar_reclass},{tar_reclass_ndc},{tar_main},{tar_main_ndc}"
         
         txt += f",{emi_refyr_ssp}"
         try:
@@ -396,7 +396,7 @@ for cat, cat_LU in ['IPCM0EL', 'exclLU'], ['IPC0', 'inclLU']:
         txt_all += txt
     
     hpf.write_text_to_file(txt_all, 
-        Path(meta.path.main, 'data', 'other', f'comparison_type_calc_orig_100pc_{cat_LU}_{year}_{ssp}_{condi}_{rge}.csv'))
+        Path(meta.path.main, 'data', 'other', f'comparison_type_reclass_main_100pc_{cat_LU}_{year}_{ssp}_{condi}_{rge}.csv'))
 
 if plot_diff:
     plt.close(fig)

@@ -35,7 +35,7 @@ for xx in np.arange(-.5, 7, 1):
 count = 0
 for ssp in meta.ssps.scens.short:
     colour_ssp = tuple(colours.loc[meta.ssps.scens.short_to_long[ssp], :])
-    for tpe, x_add_all, x_add in ['type_calc', -.3, -.1], ['type_orig', .1, .3]:
+    for tpe, x_add_all, x_add in ['type_reclass', -.3, -.1], ['type_main', .1, .3]:
         
         pccov = 'pccov_100'
         yvals = temps.loc[(temps.SSP == ssp) & (temps.type == tpe) & (temps.pccov == pccov), 
@@ -95,7 +95,7 @@ for xx in np.arange(-.5, XL[1]+1, 1):
 count = 0
 for ssp in meta.ssps.scens.short[:-1]:
     colour_ssp = tuple(colours.loc[meta.ssps.scens.short_to_long[ssp], :])
-    for tpe, x_add_all, x_add in ['type_calc', -.3, -.1], ['type_orig', .1, .3]:
+    for tpe, x_add_all, x_add in ['type_reclass', -.3, -.1], ['type_main', .1, .3]:
         
         pccov = 'pccov_100'
         
@@ -128,7 +128,7 @@ for ssp in meta.ssps.scens.short[:-1]:
         pccov = 'pccov_real'
         
         # Add a 'legend'.
-        if (ssp == 'SSP4' and tpe == 'type_orig'):
+        if (ssp == 'SSP4' and tpe == 'type_main'):
             plt_leg = True
             x_txt = count + .7
             x_txt2 = count + 1.1

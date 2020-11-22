@@ -7,7 +7,7 @@ GHG: Greenhouse Gas.
 
 - Quantification of the NDC GHG mitigation target emissions per country, and the national emissions pathways and aggregated global emissions pathways.
 - Per country the un-/conditional best/worst target emissions are calculated.
-- Target emissions are calculated using the NDC emissions data when available (type_calc = type_reclass) or one can perform comparison runs with other input data (type_orig = type_main).
+- Target emissions are calculated using the NDC emissions data when available (type_reclass) or one can perform comparison runs with other input data (type_main).
 - Emissions are calculated in- or excluding LULUCF, depending on a Party's NDC, and the opposite case is derived from this quantified target.
 - The information that we retrieved from within the NDCs is stored in ``/data/input/infos_from_ndcs_default.xlsx``.
 - The preprocessing is based on output from the MATLAB-based PRIMAP Emissions Module. The output and preprocessed data are available in the repository. If one has access to the MATLAB PRIMAP Emissions and Climate Modules, after running NDCmitiQ, one can estimate the end-of-century warming from the constructed emissions pathways.

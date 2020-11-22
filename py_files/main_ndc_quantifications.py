@@ -15,7 +15,7 @@ def main_ndc_quantifications(input_file, lulucf_prio):
     
     Input examples:
 
-        input_file = 'input_SSP2_typeCalc' (name of input-file, stored in /MODIFY_INPUT_HERE).
+        input_file = 'input_SSP2_typeReclass' (name of input-file, stored in /MODIFY_INPUT_HERE).
         
         lulucf_prio = '' or 'UNFCCC' or 'FAO'. 
             
@@ -58,12 +58,12 @@ def main_ndc_quantifications(input_file, lulucf_prio):
     # -------------------------
     
     Per country one target type is chosen for the aggregation to a global pathway.
-    This is generally the type_orig or type_calc.
+    This is generally the type_main or type_reclass.
 
-    type_orig: what is said (+/-) in the NDC, e.g., 20\% reduction compared to BAU (RBU).
+    type_main: what is said (+/-) in the NDC, e.g., 20\% reduction compared to BAU (RBU).
         In this case the comparison emissions are prioritised (comparison runs with 'external' input data).
     
-    type_calc: what seems more suitable for the pathway calculations, e.g., if for the BAU target a quantification is given in the NDC (ABS).
+    type_reclass: what seems more suitable for the pathway calculations, e.g., if for the BAU target a quantification is given in the NDC (ABS).
         In this case the emissions given in the NDCs are prioritised.
 
     # -------------------------
@@ -134,7 +134,7 @@ def main_ndc_quantifications(input_file, lulucf_prio):
     """
     
     tablenames = {
-        'emi_bl_LU':
+        'emi_bl_onlyLU':
             {'table': f'KYOTOGHG_IPCMLULUCF_TOTAL_NET_INTERLIN_VARIOUS{lulucf_prio}.csv', 
             'unit': meta.units.default['emi']},
         'pc_cov_exclLU':
@@ -148,8 +148,8 @@ def main_ndc_quantifications(input_file, lulucf_prio):
              'unit': meta.units.default['gdp']}}
 
     """
-    If it is type_calc: use the ndc-emissions if available.
-    For type_orig: use the comparison data.
+    If it is type_reclass: use the ndc-emissions if available.
+    For type_main: use the comparison data.
     """
     if meta.use_ndc_emissions_if_available:
         tablenames['emi_bl_exclLU'] = \
@@ -226,7 +226,7 @@ def main_ndc_quantifications(input_file, lulucf_prio):
     # 'KYOTOGHG_IPC0_TOTAL_NET_' + meta.ssps.chosen + '_VARIOUS'
     
     table = hpf.copy_table(getattr(database, 'emi_bl_exclLU'))
-    table.data = table.data.add(getattr(database, 'emi_bl_LU').data, fill_value=0)
+    table.data = table.data.add(getattr(database, 'emi_bl_onlyLU').data, fill_value=0)
     table.note = "Sum over KYOTOGHG_IPCM0EL_TOTAL_NET_" + meta.ssps.chosen + "FILLED_PMSSPBIE and " + \
         "KYOTOGHG_IPCMLULUCF_COV_EMI_HISFUT_COVERAGE."
     table.cat = 'IPC0'
@@ -248,6 +248,14 @@ def main_ndc_quantifications(input_file, lulucf_prio):
         table.columns = [int(xx) for xx in table.columns]
         setattr(database, f"emi_bl_{case}_ndcs", table)
         
+    # %%
+    """
+    Correct or modify the calculation options given in input_file if necessary.
+    ndcs_check_options_for_target_calculations(meta).
+    """
+    
+    meta = mnf.ndcs_check_options_for_target_calculations(meta)
+    
     # %%
     """
     Write relevant input-info to log_file.md in the output-folder.
@@ -281,14 +289,7 @@ def main_ndc_quantifications(input_file, lulucf_prio):
         for xx in meta.strengthen_targets]
     fid.close()
             
-    # %%
-    """
-    Correct or modify the calculation options given in input_file if necessary.
-    ndcs_check_options_for_target_calculations(meta).
-    """
-    
-    meta = mnf.ndcs_check_options_for_target_calculations(meta)
-    
+    # %%    
     """
     TARGETS
     Calculate the target emissions per country and un/conditional & best/worst & year.

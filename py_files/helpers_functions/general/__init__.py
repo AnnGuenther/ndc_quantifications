@@ -1,2 +1,3 @@
 from .get_value_from_node import get_value_from_node
 from .num_to_str_one_non_zero_decimal import num_to_str_one_non_zero_decimal
+from .rnd import rnd

@@ -133,7 +133,7 @@ def ndcs_calculate_targets(database, meta):
         ndc_act.index = [xx.upper() for xx in ndc_act.index]
         
         # Get time series for 'to_add'.
-        to_add = ['emi_bl_exclLU', 'emi_bl_LU', 'pc_cov_exclLU', 'pop', 'gdp']
+        to_add = ['emi_bl_exclLU', 'emi_bl_onlyLU', 'pc_cov_exclLU', 'pop', 'gdp']
         ts_act = pd.DataFrame(index=to_add, columns=meta.years.all)
         for add in to_add:
             ts_to_add = deepcopy(getattr(database, add).data)
@@ -143,8 +143,8 @@ def ndcs_calculate_targets(database, meta):
         # Get info that is the same for that country, no matter which target year & un/conditional target it is,
         # and put it into 'info_general'.
         info_general = pd.Series(index=calculated_targets.columns, dtype='object')
-        info_general[['iso3', 'tar_type_calc', 'tar_type_orig', 'int_ref']] = \
-            [iso_act] + list(ndc_act.loc[['TYPE_CALC', 'TYPE_ORIG', 'INTENSITY_PERCAP_GDP']].values)
+        info_general[['iso3', 'tar_type_reclass', 'tar_type_main', 'int_ref']] = \
+            [iso_act] + list(ndc_act.loc[['TYPE_RECLASS', 'TYPE_MAIN', 'INTENSITY_PERCAP_GDP']].values)
         
         # Values from coverage_used (does not need to be the originally given info from the NDCs...).
         coverage_iso3 = meta.coverage.loc[iso_act, :]
@@ -154,7 +154,7 @@ def ndcs_calculate_targets(database, meta):
         
         # Table with coverage at beginning of txt_targets md-file
         txt_targets += \
-            f"\n| Covered gases | {' | '.join(column_names['cov_gases'])} |" + \
+            f"\n\n\n\n| Covered gases | {' | '.join(column_names['cov_gases'])} |" + \
             f"\n{'| ---- ' * (1 + len(column_names['cov_gases']))} |" + \
             f"\n| NDC | {' | '.join([ndc_act.loc[xx + '_NDCS'].lower() for xx in column_names['cov_gases']])} |" + \
             f"\n| Used | {' | '.join([ndc_act.loc[xx + '_CALC'].lower() for xx in column_names['cov_gases']])} |" + \
@@ -211,16 +211,16 @@ def ndcs_calculate_targets(database, meta):
                         refyr = taryr
                     ict['refyr'] = refyr
                     
-                    ict[['emi_bl_exclLU_refyr', 'emi_bl_LU_refyr', 'pc_cov_exclLU_refyr']] = \
-                        list(ts_act.loc[['emi_bl_exclLU', 'emi_bl_LU', 'pc_cov_exclLU',], refyr].values)
+                    ict[['emi_bl_exclLU_refyr', 'emi_bl_onlyLU_refyr', 'pc_cov_exclLU_refyr']] = \
+                        list(ts_act.loc[['emi_bl_exclLU', 'emi_bl_onlyLU', 'pc_cov_exclLU',], refyr].values)
                     ict[['pop_refyr', 'gdp_refyr']] = list(ts_act.loc[['pop', 'gdp'], refyr].values)
                     
                     ict['ndc_value_exclLU', 'ndc_value_inclLU'] = \
                         ndc_values_all.loc[curr_tar, ['exclLU', 'inclLU']].values
-                    ict[['gwp', 'scenario', 'emi_bl_exclLU_taryr', 'emi_bl_LU_taryr', 
+                    ict[['gwp', 'scenario', 'emi_bl_exclLU_taryr', 'emi_bl_onlyLU_taryr', 
                         'pc_cov_exclLU_taryr']] = \
                         [meta.gwps.default, meta.ssps.chosen] + \
-                        list(ts_act.loc[['emi_bl_exclLU', 'emi_bl_LU', 'pc_cov_exclLU'], taryr].values)
+                        list(ts_act.loc[['emi_bl_exclLU', 'emi_bl_onlyLU', 'pc_cov_exclLU'], taryr].values)
                     ict[['pop_taryr', 'gdp_taryr']] = list(ts_act.loc[['pop', 'gdp'], taryr].values)
                     
                     """
@@ -295,7 +295,7 @@ def ndcs_calculate_targets(database, meta):
         ict, iso_act, refyr, taryr, ndc_value_exclLU, ndc_value_inclLU, meta, lulucf_first_try, txt_targets):
         
         # txt_targets stores the information on how exactly the target was calculated.
-        txt_targets += f"\n\n## Target type used: {ict['tar_type_used']}, refyr: {refyr}, taryr: {taryr}, {ict['condi']}_{ict['rge']}"
+        txt_targets += f"\n\n\n\n## Target type used: {ict['tar_type_used']}, refyr: {refyr}, taryr: {taryr}, {ict['condi']}_{ict['rge']}"
         txt_targets += f"\n- ndc_value_exclLU: {ndc_value_exclLU} ({ict['ndc_value_exclLU']}, from NDC)"
         txt_targets += f"\n- ndc_value_inclLU: {ndc_value_inclLU} ({ict['ndc_value_inclLU']}, from NDC)"
         txt_targets += \
@@ -393,7 +393,7 @@ def ndcs_calculate_targets(database, meta):
                     
             if np.isnan(bl_onlyLU_act):
                 
-                bl_onlyLU_act = ict[f'emi_bl_LU_{yr_str}']
+                bl_onlyLU_act = ict[f'emi_bl_onlyLU_{yr_str}']
                 txt_targets += f"\n    - emi_onlyLU {yr_int}: external_emi_onlyLU used ({bl_onlyLU_act} {meta.units.default['emi']})."
             
             if yr_str == 'refyr':
@@ -489,7 +489,7 @@ def ndcs_calculate_targets(database, meta):
                     # ratio_exclLU_inclLU = \
                     #     database.emi_bl_exclLU.data.loc[iso_act, yrs_ratio].mean() / \
                     #     database.emi_bl_exclLU.data.loc[iso_act, yrs_ratio].add(
-                    #     database.emi_bl_LU.data.loc[iso_act, yrs_ratio]).mean()
+                    #     database.emi_bl_onlyLU.data.loc[iso_act, yrs_ratio]).mean()
                     # ABU_exclLU = ABU_inclLU * ratio_exclLU_inclLU
                     # print(f"\n- {iso_act}: ratio exclLU/inclLU used (hist: {ratio_exclLU_inclLU :.3f}, taryr: {bl_exclLU_taryr/bl_inclLU_taryr :.3f})!")
                     
@@ -725,12 +725,12 @@ def ndcs_calculate_targets(database, meta):
     # column_names will be the columns, and column_units will be put to first row.
     column_names = {
         'add_info': ['add_info'],
-        'ndc': ['iso3', 'tar_type_used', 'tar_type_calc', 'tar_type_orig', 'condi', 'rge',
+        'ndc': ['iso3', 'tar_type_used', 'tar_type_reclass', 'tar_type_main', 'condi', 'rge',
                 'ndc_value_exclLU', 'ndc_value_inclLU', 
                 'ndc_strengthen_tar', 'int_ref', 'refyr', 'taryr'],
         'tar': ['tar_emi_exclLU' , 'tar_emi_inclLU'],
         'emi': ['gwp', 'scenario', 'emi_bl_exclLU_refyr', 'emi_bl_exclLU_taryr', 
-                'emi_bl_LU_refyr', 'emi_bl_LU_taryr'],
+                'emi_bl_onlyLU_refyr', 'emi_bl_onlyLU_taryr'],
         'cov': ['pc_cov_set_to_100', 'pc_cov_exclLU_refyr', 'pc_cov_exclLU_taryr'],
         'int_ref': ['pop_refyr', 'pop_taryr', 'gdp_refyr', 'gdp_taryr'],
         'cov_gases': ['CO2', 'CH4', 'N2O', 'HFCS', 'PFCS', 'SF6', 'NF3'],
@@ -772,7 +772,7 @@ def ndcs_calculate_targets(database, meta):
     
     for iso_act in sorted(list(set(set(meta.ndcs_info.index) - set(['EU28'])))):
         
-        txt_targets = ""
+        txt_targets = f"## {hpf.convert_isos_and_country_names(iso_act, 'ISO3', 'ShortName')}"
         
         # TODO: say what the different methods are!
         """
@@ -793,7 +793,7 @@ def ndcs_calculate_targets(database, meta):
                 '\n    second try: splitting the absolute reduction into onlyLU and exclLU parts, ' + \
                 'based on contributions of onlyLU and exclLU in the target year). ' + \
                 f'\n    Negative tar_exclLU for {quantis_iso.tar_type_used[quantis_iso.tar_emi_exclLU < 0.].unique()}, ' + \
-                f'with type_orig = {quantis_iso.tar_type_orig.unique()} and type_calc = {quantis_iso.tar_type_calc.unique()}.'
+                f'with type_main = {quantis_iso.tar_type_main.unique()} and type_reclass = {quantis_iso.tar_type_reclass.unique()}.'
             print(print_txt)
             txt_targets += print_txt
             quantis_iso, txt_targets = quantification_per_country(iso_act, meta, lulucf_first_try, calculated_targets, txt_targets)

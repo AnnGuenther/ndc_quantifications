@@ -157,7 +157,7 @@ plt.close(fig)
 # %%
 """
 'Plot' a table with the emissions / population / GDP data needed for the quantification of (I)NDCs on a per-country basis.
-For the original NDC types.
+For the main NDC types.
 """
 
 # BIH, BRB, CRI, GEO and ISR have been checked, they give various target types and need the base year as well.
@@ -177,7 +177,7 @@ for iso3 in ndcs.index:
     ctr =  hpf.convert_isos_and_country_names(iso3, 'ISO3', 'ShortName')[0]
     base_yr = ndcs_iso['BASEYEAR']
     intensity_ref = ndcs_iso['INTENSITY_PERCAP_GDP']
-    tpe = ndcs_iso['TYPE_ORIG']
+    tpe = ndcs_iso['TYPE_MAIN']
     
     data_needed_iso = {}
     emi_needed = []
@@ -187,7 +187,7 @@ for iso3 in ndcs.index:
     if (type(tpe) == str and tpe.upper() not in ['NAN', 'NGT']):
         
         if type(ndcs_iso[tpe]) != str:
-            print(f"{iso3}: even though the type_orig is {tpe}, there is no entry in the ndcs_info_table!!!")
+            print(f"{iso3}: even though the type_main is {tpe}, there is no entry in the ndcs_info_table!!!")
         
         else:
             if tpe in ['ABS', 'ABU', 'AEI', 'NAN', 'NGT', 'RBU']:
@@ -373,9 +373,9 @@ for irange, panel in zip(ctrs_3.keys(), ['(a)', '(b)', '(c)']):
     axa.legend(loc='center', bbox_to_anchor=(.5, 1.07), ncol=len(tpes_all))
     
     fig.subplots_adjust(bottom=.37, left=.07, right=.95, top=.93)
-    fig.savefig(Path(path_to_folder, f"table_data_needed_ndcs_type_orig_vert_{irange}.png"), dpi=300)
-    fig.savefig(Path(path_to_folder, f"table_data_needed_ndcs_type_orig_vert_{irange}.pdf"), dpi=300)
-    hpf.crop_pdf(Path(path_to_folder, f"table_data_needed_ndcs_type_orig_vert_{irange}.pdf"))
+    fig.savefig(Path(path_to_folder, f"table_data_needed_ndcs_type_main_vert_{irange}.png"), dpi=300)
+    fig.savefig(Path(path_to_folder, f"table_data_needed_ndcs_type_main_vert_{irange}.pdf"), dpi=300)
+    hpf.crop_pdf(Path(path_to_folder, f"table_data_needed_ndcs_type_main_vert_{irange}.pdf"))
     fig.clf()
 
 plt.close(fig)

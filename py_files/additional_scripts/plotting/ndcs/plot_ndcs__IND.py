@@ -20,13 +20,27 @@ iso3 = 'IND'
 """
 Latex table with information regarding India's target with pc_cov != 100% and pc_cov == 100%.'
 """
-path_to_folder_100pc_calc = 'ndcs_20200628_2122_SSP2_typeCalc_pccov100'
-path_to_folder_calc = 'ndcs_20200628_2120_SSP2_typeCalc'
+path_to_folder_100pc_reclass = 'ndcs_20201122_1122_SSP2_typeReclass_pccov100'
+path_to_folder_reclass = 'ndcs_20201122_1114_SSP2_typeReclass'
+
+folders_not100 = {
+    'ssp1': 'ndcs_20201122_1037_SSP1_typeReclass',
+    'ssp2': 'ndcs_20201122_1114_SSP2_typeReclass',
+    'ssp3': 'ndcs_20201122_1154_SSP3_typeReclass',
+    'ssp4': 'ndcs_20201122_1221_SSP4_typeReclass',
+    'ssp5': 'ndcs_20201122_1312_SSP5_typeReclass'}
+
+folders_100 = {
+    'ssp1': 'ndcs_20201122_1044_SSP1_typeReclass_pccov100',
+    'ssp2': 'ndcs_20201122_1122_SSP2_typeReclass_pccov100',
+    'ssp3': 'ndcs_20201122_1208_SSP3_typeReclass_pccov100',
+    'ssp4': 'ndcs_20201122_1230_SSP4_typeReclass_pccov100',
+    'ssp5': 'ndcs_20201122_1322_SSP5_typeReclass_pccov100'}
 
 tars_100 = pd.read_csv(Path(meta.path.output, 'output_for_paper',
-    path_to_folder_100pc_calc, 'ndc_targets.csv'))
+    path_to_folder_100pc_reclass, 'ndc_targets.csv'))
 tars_not100 = pd.read_csv(Path(meta.path.output, 'output_for_paper',
-    path_to_folder_calc, 'ndc_targets.csv'))
+    path_to_folder_reclass, 'ndc_targets.csv'))
 
 print("Based on quantifications under SSP2 and an assumed 100\% coverage, India's emissions target ranges between " +
       f"{int(float(tars_100.loc[(tars_100.iso3 == iso3) & (tars_100.rge == 'best'), 'tar_emi_exclLU'].values[0]))} Mt~CO$_2$~eq " +
@@ -46,7 +60,7 @@ print("With the estimated coverage following information in Section~\\ref{sec:co
  #%%
 cols = ['tar_emi_exclLU', 'tar_emi_inclLU', 
         'emi_bl_exclLU_refyr', 'emi_bl_exclLU_taryr',
-        'emi_bl_LU_refyr', 'emi_bl_LU_taryr', 
+        'emi_bl_onlyLU_refyr', 'emi_bl_onlyLU_taryr', 
         'pc_cov_exclLU_refyr', 'pc_cov_exclLU_taryr',
         'gdp_refyr', 'gdp_taryr']
 tars_100 = tars_100.loc[(tars_100.iso3 == iso3) & (tars_100.rge == 'best'), cols].astype(float)
@@ -62,8 +76,8 @@ txt += f"{tars_100['emi_bl_exclLU_taryr'].values[0] :.1f} & "
 txt += f"{tars_not100['tar_emi_exclLU'].values[0] :.1f} & "
 txt += f"{tars_100['tar_emi_exclLU'].values[0] :.1f} \\tabularnewline"
 
-txt += f"\nEmissions (LULUCF) in MtCO$_2$eq AR4 & {tars_100['emi_bl_LU_refyr'].values[0] :.1f} & "
-txt += f"{tars_100['emi_bl_LU_taryr'].values[0] :.1f} & "
+txt += f"\nEmissions (LULUCF) in MtCO$_2$eq AR4 & {tars_100['emi_bl_onlyLU_refyr'].values[0] :.1f} & "
+txt += f"{tars_100['emi_bl_onlyLU_taryr'].values[0] :.1f} & "
 txt += f"{tars_not100['tar_emi_inclLU'].values[0] - tars_not100['tar_emi_exclLU'].values[0] :.1f} & "
 txt += f"{tars_100['tar_emi_inclLU'].values[0] - tars_100['tar_emi_exclLU'].values[0] :.1f} \\tabularnewline"
 
@@ -83,11 +97,11 @@ GDP for SSP1 to SSP5.
 """
 # ndc_targets_pathways_per_country.csv
 ptws_100_ssp2 = pd.read_csv(Path(meta.path.output, 'output_for_paper',
-    path_to_folder_100pc_calc, 'ndc_targets_pathways_per_country.csv'))
+    path_to_folder_100pc_reclass, 'ndc_targets_pathways_per_country.csv'))
 ptws_100_ssp2 = ptws_100_ssp2.loc[ptws_100_ssp2.iso3 == iso3, :]
 # ndc_targets.csv
 tars_100_ssp2 = pd.read_csv(Path(meta.path.output, 'output_for_paper', 
-    path_to_folder_100pc_calc, 'ndc_targets.csv'))
+    path_to_folder_100pc_reclass, 'ndc_targets.csv'))
 tars_100_ssp2 = tars_100_ssp2.loc[tars_100_ssp2.iso3 == iso3, :]
 
 ipcmlulucf = hpf.import_table_to_class_metadata_country_year_matrix(
@@ -95,12 +109,7 @@ ipcmlulucf = hpf.import_table_to_class_metadata_country_year_matrix(
 
 ptws_not100 = {}
 tars_not100 = {}
-for ssp, file in \
-    ['ssp1', 'ndcs_20200628_2218_SSP1_typeCalc'], \
-    ['ssp2', path_to_folder_calc], \
-    ['ssp3', 'ndcs_20200628_2229_SSP3_typeCalc'], \
-    ['ssp4', 'ndcs_20200628_2243_SSP4_typeCalc'], \
-    ['ssp5', 'ndcs_20200628_2258_SSP5_typeCalc']:
+for ssp, file in zip(folders_not100.keys(), folders_not100.values()):
     data = pd.read_csv(Path(meta.path.output, 'output_for_paper', 
         file, 'ndc_targets_pathways_per_country.csv'))
     ptws_not100[ssp] = data.loc[data.iso3 == iso3, :]
@@ -110,12 +119,7 @@ for ssp, file in \
 
 ptws_100 = {}
 tars_100 = {}
-for ssp, file in \
-    ['ssp1', 'ndcs_20200628_2221_SSP1_typeCalc_pccov100'], \
-    ['ssp2', path_to_folder_100pc_calc], \
-    ['ssp3', 'ndcs_20200628_2234_SSP3_typeCalc_pccov100'], \
-    ['ssp4', 'ndcs_20200628_2248_SSP4_typeCalc_pccov100'], \
-    ['ssp5', 'ndcs_20200628_2301_SSP5_typeCalc_pccov100']:
+for ssp, file in zip(folders_100.keys(), folders_100.values()):
     data = pd.read_csv(Path(meta.path.output, 'output_for_paper', 
         file, 'ndc_targets_pathways_per_country.csv'))
     ptws_100[ssp] = data.loc[data.iso3 == iso3, :]
@@ -361,7 +365,7 @@ Latex table.
 """
 
 data = pd.read_csv(Path(meta.path.output, 'output_for_paper', 
-    path_to_folder_calc, 'ndc_targets.csv'))
+    path_to_folder_reclass, 'ndc_targets.csv'))
 data = data.loc[(data.iso3 == iso3) & (data.rge == 'best')]
 
 gdp_2005 = float(data['gdp_refyr'])

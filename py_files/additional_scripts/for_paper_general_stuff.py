@@ -40,31 +40,31 @@ kyotoghg_ipcm0el = get_table(Path(meta.path.matlab, 'KYOTOGHGAR4_IPCM0EL_TOTAL_N
     meta.primap.current_version['emi'] + '.csv')).__reindex__(years=year)
 global_share_2017 = 100. * kyotoghg_ipcm0el.__global_share__(years=year)
 
-folders_calc = [
-    'ndcs_20200628_2218_SSP1_typeCalc',
-    'ndcs_20200628_2120_SSP2_typeCalc',
-    'ndcs_20200628_2229_SSP3_typeCalc',
-    'ndcs_20200628_2243_SSP4_typeCalc',
-    'ndcs_20200628_2258_SSP5_typeCalc']
-folders_calc100 = [
-    'ndcs_20200628_2221_SSP1_typeCalc_pccov100',
-    'ndcs_20200628_2122_SSP2_typeCalc_pccov100',
-    'ndcs_20200628_2234_SSP3_typeCalc_pccov100',
-    'ndcs_20200628_2248_SSP4_typeCalc_pccov100',
-    'ndcs_20200628_2301_SSP5_typeCalc_pccov100']
+folders_reclass = [
+    'ndcs_20200628_2218_SSP1_typeReclass',
+    'ndcs_20200628_2120_SSP2_typeReclass',
+    'ndcs_20200628_2229_SSP3_typeReclass',
+    'ndcs_20200628_2243_SSP4_typeReclass',
+    'ndcs_20200628_2258_SSP5_typeReclass']
+folders_reclass100 = [
+    'ndcs_20200628_2221_SSP1_typeReclass_pccov100',
+    'ndcs_20200628_2122_SSP2_typeReclass_pccov100',
+    'ndcs_20200628_2234_SSP3_typeReclass_pccov100',
+    'ndcs_20200628_2248_SSP4_typeReclass_pccov100',
+    'ndcs_20200628_2301_SSP5_typeReclass_pccov100']
 
-folders_orig = [
-    'ndcs_20200702_0834_SSP1_typeOrig',
-    'ndcs_20200702_0829_SSP2_typeOrig',
-    'ndcs_20200702_0839_SSP3_typeOrig',
-    'ndcs_20200702_0844_SSP4_typeOrig',
-    'ndcs_20200702_0848_SSP5_typeOrig']
-folders_orig100 = [
-    'ndcs_20200702_0836_SSP1_typeOrig_pccov100',
-    'ndcs_20200702_0830_SSP2_typeOrig_pccov100',
-    'ndcs_20200702_0840_SSP3_typeOrig_pccov100',
-    'ndcs_20200702_0845_SSP4_typeOrig_pccov100',
-    'ndcs_20200702_0849_SSP5_typeOrig_pccov100']
+folders_main = [
+    'ndcs_20200702_0834_SSP1_typeMain',
+    'ndcs_20200702_0829_SSP2_typeMain',
+    'ndcs_20200702_0839_SSP3_typeMain',
+    'ndcs_20200702_0844_SSP4_typeMain',
+    'ndcs_20200702_0848_SSP5_typeMain']
+folders_main100 = [
+    'ndcs_20200702_0836_SSP1_typeMain_pccov100',
+    'ndcs_20200702_0830_SSP2_typeMain_pccov100',
+    'ndcs_20200702_0840_SSP3_typeMain_pccov100',
+    'ndcs_20200702_0845_SSP4_typeMain_pccov100',
+    'ndcs_20200702_0849_SSP5_typeMain_pccov100']
 
 # %%
 """
@@ -83,7 +83,7 @@ for gwp in ['AR2', 'AR4', 'AR5']:
 
 # %%
 """
-Countries with ABS and AEI targets (type_calc): which part of emissions are not covered?
+Countries with ABS and AEI targets (type_reclass): which part of emissions are not covered?
 """
 
 emi_notcov = hpf.import_table_to_class_metadata_country_year_matrix(
@@ -94,20 +94,20 @@ ndcs_info = pd.read_csv(
     Path(meta.path.preprocess, 'infos_from_ndcs.csv'), index_col=0)
 ndcs_info.loc['USA', :] = np.nan
 
-isos_ABS_AEI = [xx for xx in ndcs_info.index if ndcs_info.loc[xx, 'TYPE_CALC'] in ['ABS', 'AEI']]
+isos_ABS_AEI = [xx for xx in ndcs_info.index if ndcs_info.loc[xx, 'TYPE_RECLASS'] in ['ABS', 'AEI']]
 
 for yr in [2017, 2030]:
-    print(f"% {yr}: the not-covered part of emissions for countries with ABS or AEI targets (type_calc; compared to global SSP2 emissions) is " +
+    print(f"% {yr}: the not-covered part of emissions for countries with ABS or AEI targets (type_reclass; compared to global SSP2 emissions) is " +
           f"{100.*emi_notcov.loc[isos_ABS_AEI, yr].sum()/emi_tot.loc[:, yr].sum() :.1f}%. " +
           f"They represent {100.*emi_tot.loc[isos_ABS_AEI, yr].sum()/emi_tot.loc[:, yr].sum() :.1f}% of the global emissions.")
 
 # %%
-# Which countries have different TYPE_CALC than TYPE_ORIG?
-countries_with_different_type_calc_type_orig = pd.DataFrame([[xx, infos_from_ndcs.loc[xx, 'TYPE_CALC'], infos_from_ndcs.loc[xx, 'TYPE_ORIG']]
-    for xx in infos_from_ndcs.index if (infos_from_ndcs.loc[xx, 'TYPE_CALC'] != infos_from_ndcs.loc[xx, 'TYPE_ORIG'] 
-    and type(infos_from_ndcs.loc[xx, 'TYPE_CALC']) == str)], columns=['iso3', 'TYPE_CALC', 'TYPE_ORIG'])
-print(f'\nHow many countries have different TYPE_CALC than TYPE_ORIG: {len(countries_with_different_type_calc_type_orig):.1f}')
-print(f'They represented {global_share_2017.loc[countries_with_different_type_calc_type_orig.iso3].sum().values[0]:.1f}% of global emissions in 2017.')
+# Which countries have different TYPE_RECLASS than TYPE_MAIN?
+countries_with_different_type_reclass_type_main = pd.DataFrame([[xx, infos_from_ndcs.loc[xx, 'TYPE_RECLASS'], infos_from_ndcs.loc[xx, 'TYPE_MAIN']]
+    for xx in infos_from_ndcs.index if (infos_from_ndcs.loc[xx, 'TYPE_RECLASS'] != infos_from_ndcs.loc[xx, 'TYPE_MAIN'] 
+    and type(infos_from_ndcs.loc[xx, 'TYPE_RECLASS']) == str)], columns=['iso3', 'TYPE_RECLASS', 'TYPE_MAIN'])
+print(f'\nHow many countries have different TYPE_RECLASS than TYPE_MAIN: {len(countries_with_different_type_reclass_type_main):.1f}')
+print(f'They represented {global_share_2017.loc[countries_with_different_type_reclass_type_main.iso3].sum().values[0]:.1f}% of global emissions in 2017.')
 
 # %%
 # EARTH 2017 values for IPCM0EL.
@@ -612,7 +612,7 @@ print("\nShare of PFCS + SF6 + NF3 in VCT.", nat_share[['PFCS_IPCM0EL', 'SF6_IPC
 
 # %%
 """
-Plot the baseline emissions and the mitigated pathways (EARTH) for type_calc and type_orig, and for 100% coverage and real coverage.
+Plot the baseline emissions and the mitigated pathways (EARTH) for type_reclass and type_main, and for 100% coverage and real coverage.
 Per SSP.
 """
 
@@ -621,15 +621,15 @@ years_str = [str(xx) for xx in years_int]
 
 fig = plt.figure(figsize=(10, 10))
 
-for ssp, count in zip(meta.ssps.scens.short, range(len(folders_calc))):
+for ssp, count in zip(meta.ssps.scens.short, range(len(folders_reclass))):
     
-    ax_calc = fig.add_subplot(2, 2, 1)
-    ax_orig = fig.add_subplot(2, 2, 2)
-    ax_calc_100 = fig.add_subplot(2, 2, 3)
-    ax_orig_100 = fig.add_subplot(2, 2, 4)
+    ax_reclass = fig.add_subplot(2, 2, 1)
+    ax_main = fig.add_subplot(2, 2, 2)
+    ax_reclass_100 = fig.add_subplot(2, 2, 3)
+    ax_main_100 = fig.add_subplot(2, 2, 4)
     
-    for folder, axa, title in [folders_calc, ax_calc, 'calc'], [folders_orig, ax_orig, 'orig'], \
-        [folders_calc100, ax_calc_100, 'calc 100%'], [folders_orig100, ax_orig_100, 'orig 100%']:
+    for folder, axa, title in [folders_reclass, ax_reclass, 'reclass'], [folders_main, ax_main, 'main'], \
+        [folders_reclass100, ax_reclass_100, 'reclass 100%'], [folders_main100, ax_main_100, 'main 100%']:
         
         data = pd.read_csv(
             Path(meta.path.output, 'output_for_paper', folder[count], 'ndc_targets_pathways_per_group.csv'))
@@ -649,10 +649,10 @@ plt.close(fig)
 How many countries have uncondi_worst above baseline, and for which targets?
 """
 
-for ssp, count in zip(meta.ssps.scens.short, range(len(folders_calc))):
+for ssp, count in zip(meta.ssps.scens.short, range(len(folders_reclass))):
     
-    for folder, title in [folders_calc, 'calc'], [folders_orig, 'orig'], \
-        [folders_calc100, 'calc 100%'], [folders_orig100, 'orig 100%']:
+    for folder, title in [folders_reclass, 'reclass'], [folders_main, 'main'], \
+        [folders_reclass100, 'reclass 100%'], [folders_main100, 'main 100%']:
             
         tars_above_bl = []
         
@@ -674,7 +674,7 @@ for ssp, count in zip(meta.ssps.scens.short, range(len(folders_calc))):
 Countries for which the second attempt for tar_exclLU from tar_inclLU was needed.
 And countries for which ABU_exclLU lead to negative tar_exclLU.
 What were their contributions to 2017 emissions.
-For input_SSP2_pccov100ForAllCountries_typeCalcForAllCountries.
+For input_SSP2_pccov100ForAllCountries_typeReclassForAllCountries.
 """
 
 iso3_2ndTry = ['BDI', 'ISL', 'KNA', 'NAM', 'PRK', 'PRY', 'SLB']
@@ -685,13 +685,13 @@ emitot = emi.data.reindex(index=meta.isos.EARTH).loc[:, 2017].sum()
 print(f"tar_exclLU from tar_inclLU second try: {emi.data.loc[iso3_2ndTry, 2017].sum()/emitot*100 :.1f}% of global 2017 emissions (ipcm0el).")
 print(f"tar_exclLU negative from ABU_exclLU: {emi.data.loc[iso3_ABU, 2017].sum()/emitot*100 :.1f}% of global 2017 emissions (ipcm0el).")
 
-# URY: type_calc and type_orig are not ABU.
+# URY: type_reclass and type_main are not ABU.
 print(f"tar_exclLU negative from ABU_exclLU: {emi.data.loc['TON', 2017]/emitot*100 :.3f}% of global 2017 emissions (ipcm0el).")
 
 # %%
 """
 How many countries for which 100% coverage targets (exclLU) are worse than estimated coverage targets?
-SSP2 type_calc and type_orig.
+SSP2 type_reclass and type_main.
 """
 print("Countries with higher 2030 targets (exclLU) for 100% coverage than for estimated coverage.")
 
@@ -699,13 +699,13 @@ for condi, rge in ['unconditional', 'worst'], ['conditional', 'best']:
     
     txt = f"{condi}, {rge}"
     
-    for ssp, count in zip(meta.ssps.scens.short, range(len(folders_calc))):
+    for ssp, count in zip(meta.ssps.scens.short, range(len(folders_reclass))):
         
         txt += f"\n  {ssp}"
         
         for folder, folder100, what in \
-            [folders_calc[count], folders_calc100[count], 'type_calc'], \
-            [folders_orig[count], folders_orig100[count], 'type_orig']:
+            [folders_reclass[count], folders_reclass100[count], 'type_reclass'], \
+            [folders_main[count], folders_main100[count], 'type_main']:
             
             txt += f"\n    {what}"
             
@@ -957,7 +957,7 @@ REI targets, global share in 1990, 2017, 2030.
 national_emi = hpf.import_table_to_class_metadata_country_year_matrix(
     Path(meta.path.preprocess, 'tables', 'KYOTOGHG_IPCM0EL_TOTAL_NET_SSP2BLMESGBFILLED_PMSSPBIE.csv')).\
     data.reindex(index=meta.isos.EARTH).loc[:, [1990, 2017, 2030]]
-REI = pd.read_csv(Path(meta.path.preprocess, 'infos_from_ndcs.csv'), index_col=0).loc[:, 'TYPE_ORIG']
+REI = pd.read_csv(Path(meta.path.preprocess, 'infos_from_ndcs.csv'), index_col=0).loc[:, 'TYPE_MAIN']
 REI = REI.loc[REI == 'REI'].index
 share = 100 * national_emi.loc[REI, :].sum().div(national_emi.sum())
 
@@ -970,11 +970,11 @@ national_emi = hpf.import_table_to_class_metadata_country_year_matrix(
     Path(meta.path.preprocess, 'tables', 'KYOTOGHG_IPCM0EL_TOTAL_NET_SSP2BLMESGBFILLED_PMSSPBIE.csv')).\
     data.reindex(index=meta.isos.EARTH).loc[:, [1990, 2017, 2030]]
 
-NGT_main = pd.read_csv(Path(meta.path.preprocess, 'infos_from_ndcs.csv'), index_col=0).loc[:, 'TYPE_ORIG']
+NGT_main = pd.read_csv(Path(meta.path.preprocess, 'infos_from_ndcs.csv'), index_col=0).loc[:, 'TYPE_MAIN']
 NGT_main = NGT_main.loc[NGT_main == 'NGT'].index
 share_main = 100 * national_emi.loc[NGT_main, :].sum().div(national_emi.sum())
 
-NGT_reclass = pd.read_csv(Path(meta.path.preprocess, 'infos_from_ndcs.csv'), index_col=0).loc[:, 'TYPE_CALC']
+NGT_reclass = pd.read_csv(Path(meta.path.preprocess, 'infos_from_ndcs.csv'), index_col=0).loc[:, 'TYPE_RECLASS']
 NGT_reclass = NGT_reclass.loc[NGT_reclass == 'NGT'].index
 share_reclass = 100 * national_emi.loc[NGT_reclass, :].sum().div(national_emi.sum())
 
@@ -993,21 +993,21 @@ share_main = 100 * national_emi.loc[NoNDC, :].sum().div(national_emi.sum())
 
 # %%
 """
-Countries and target types (chosen for pathways, type_calc) for which estimated coverage and 100% coverage differ.
+Countries and target types (chosen for pathways, type_reclass) for which estimated coverage and 100% coverage differ.
 """
 
 cov_ests = {
-    'SSP1': 'ndcs_20200628_2218_SSP1_typeCalc',
-    'SSP2': 'ndcs_20200628_2120_SSP2_typeCalc',
-    'SSP3': 'ndcs_20200628_2229_SSP3_typeCalc',
-    'SSP4': 'ndcs_20200628_2243_SSP4_typeCalc',
-    'SSP5': 'ndcs_20200628_2258_SSP5_typeCalc'}
+    'SSP1': 'ndcs_20200628_2218_SSP1_typeReclass',
+    'SSP2': 'ndcs_20200628_2120_SSP2_typeReclass',
+    'SSP3': 'ndcs_20200628_2229_SSP3_typeReclass',
+    'SSP4': 'ndcs_20200628_2243_SSP4_typeReclass',
+    'SSP5': 'ndcs_20200628_2258_SSP5_typeReclass'}
 cov_100s = {
-    'SSP1': 'ndcs_20200628_2221_SSP1_typeCalc_pccov100',
-    'SSP2': 'ndcs_20200628_2122_SSP2_typeCalc_pccov100',
-    'SSP3': 'ndcs_20200628_2234_SSP3_typeCalc_pccov100',
-    'SSP4': 'ndcs_20200628_2248_SSP4_typeCalc_pccov100',
-    'SSP5': 'ndcs_20200628_2301_SSP5_typeCalc_pccov100'}
+    'SSP1': 'ndcs_20200628_2221_SSP1_typeReclass_pccov100',
+    'SSP2': 'ndcs_20200628_2122_SSP2_typeReclass_pccov100',
+    'SSP3': 'ndcs_20200628_2234_SSP3_typeReclass_pccov100',
+    'SSP4': 'ndcs_20200628_2248_SSP4_typeReclass_pccov100',
+    'SSP5': 'ndcs_20200628_2301_SSP5_typeReclass_pccov100'}
 
 cov_est_gt_100 = {}
 cov_100_gt_est = {}
@@ -1051,21 +1051,21 @@ for ssp in cov_ests.keys():
 
 # %%
 """
-Countries and target types (chosen for pathways, type_orig) for which estimated coverage and 100% coverage differ.
+Countries and target types (chosen for pathways, type_main) for which estimated coverage and 100% coverage differ.
 """
 
 cov_ests = {
-    'SSP1': 'ndcs_20200702_0834_SSP1_typeOrig',
-    'SSP2': 'ndcs_20200702_0829_SSP2_typeOrig',
-    'SSP3': 'ndcs_20200702_0839_SSP3_typeOrig',
-    'SSP4': 'ndcs_20200702_0844_SSP4_typeOrig',
-    'SSP5': 'ndcs_20200702_0848_SSP5_typeOrig'}
+    'SSP1': 'ndcs_20200702_0834_SSP1_typeMain',
+    'SSP2': 'ndcs_20200702_0829_SSP2_typeMain',
+    'SSP3': 'ndcs_20200702_0839_SSP3_typeMain',
+    'SSP4': 'ndcs_20200702_0844_SSP4_typeMain',
+    'SSP5': 'ndcs_20200702_0848_SSP5_typeMain'}
 cov_100s = {
-    'SSP1': 'ndcs_20200702_0836_SSP1_typeOrig_pccov100',
-    'SSP2': 'ndcs_20200702_0830_SSP2_typeOrig_pccov100',
-    'SSP3': 'ndcs_20200702_0840_SSP3_typeOrig_pccov100',
-    'SSP4': 'ndcs_20200702_0845_SSP4_typeOrig_pccov100',
-    'SSP5': 'ndcs_20200702_0849_SSP5_typeOrig_pccov100'}
+    'SSP1': 'ndcs_20200702_0836_SSP1_typeMain_pccov100',
+    'SSP2': 'ndcs_20200702_0830_SSP2_typeMain_pccov100',
+    'SSP3': 'ndcs_20200702_0840_SSP3_typeMain_pccov100',
+    'SSP4': 'ndcs_20200702_0845_SSP4_typeMain_pccov100',
+    'SSP5': 'ndcs_20200702_0849_SSP5_typeMain_pccov100'}
 
 cov_est_gt_100 = {}
 cov_100_gt_est = {}
@@ -1110,20 +1110,20 @@ for ssp in cov_ests.keys():
 # %%
 iso3 = 'BWA'
 cov_est = pd.read_csv(
-    Path(meta.path.main, 'data', 'output', 'output_for_paper', 'ndcs_20200702_0829_SSP2_typeOrig',
+    Path(meta.path.main, 'data', 'output', 'output_for_paper', 'ndcs_20200702_0829_SSP2_typeMain',
         'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
 cov_100 = pd.read_csv(
-    Path(meta.path.main, 'data', 'output', 'output_for_paper', 'ndcs_20200702_0830_SSP2_typeOrig_pccov100',
+    Path(meta.path.main, 'data', 'output', 'output_for_paper', 'ndcs_20200702_0830_SSP2_typeMain_pccov100',
         'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
 print(cov_est.loc[(cov_est.iso3 == iso3) & (cov_est.rge.isin(['best', 'worst'])), ['tar_type_used', 'condi', 'rge', '2030']])
 print(cov_100.loc[(cov_100.iso3 == iso3) & (cov_100.rge.isin(['best', 'worst'])), ['tar_type_used', 'condi', 'rge', '2030']])
 # %%
 iso3 = 'BWA'
 cov_est = pd.read_csv(
-    Path(meta.path.main, 'data', 'output', 'output_for_paper', 'ndcs_20200628_2120_SSP2_typeCalc',
+    Path(meta.path.main, 'data', 'output', 'output_for_paper', 'ndcs_20200628_2120_SSP2_typeReclass',
         'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
 cov_100 = pd.read_csv(
-    Path(meta.path.main, 'data', 'output', 'output_for_paper', 'ndcs_20200628_2122_SSP2_typeCalc_pccov100',
+    Path(meta.path.main, 'data', 'output', 'output_for_paper', 'ndcs_20200628_2122_SSP2_typeReclass_pccov100',
         'ndc_targets_pathways_per_country_used_for_group_pathways.csv'))
 print(cov_est.loc[(cov_est.iso3 == iso3) & (cov_est.rge.isin(['best', 'worst'])), ['tar_type_used', 'condi', 'rge', '2030']])
 print(cov_100.loc[(cov_100.iso3 == iso3) & (cov_100.rge.isin(['best', 'worst'])), ['tar_type_used', 'condi', 'rge', '2030']])

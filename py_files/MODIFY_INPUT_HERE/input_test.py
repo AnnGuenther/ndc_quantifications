@@ -17,8 +17,6 @@ meta.ssps.chosen = 'SSP2BLMESGB'
 meta.output_folder = ('ndcs_' + 
     strftime("%Y%m%d_%H%M", gmtime()) + '_' + meta.ssps.chosen[:4] + '_test')
 
-meta.method_pathways = 'constant_emissions'
-
 cat_countries = ['ARG', 'AUS', 'BTN', 'BRA', 'CAN', 'CHL', 'CHN', 'CRI', 'EU28',
     'ETH', 'GMB', 'IND', 'IDN', 'JPN', 'KAZ', 'KEN', 'MEX', 'MAR',
     'NPL', 'NZL','NOR', 'PER', 'PHL', 'RUS', 'SAU', 'SGP', 'ZAF',
@@ -32,11 +30,13 @@ meta.ndcs_type_prioritisations = {
 
 meta.use_ndc_emissions_if_available = True
 
+meta.set_pccov_to_100 = {'use_it': True, 'countries': 'all'}
+
+meta.method_pathways = 'constant_emissions'
+
 meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi = False
 
 meta.strengthen_targets = {'use_it': True, 'pc': 50, 'how_to': 'multiply', 'countries': cat_countries}
-
-meta.set_pccov_to_100 = {'use_it': True, 'countries': 'all'}
 
 meta.groups_for_which_to_calculate_pathways = ['ANNEXI']
 

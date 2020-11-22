@@ -30,11 +30,11 @@ def plotting_both():
     
     years_int = range(1990, 2031)
     
-    first_vals_orig = pd.Series(dtype='float64')
-    last_vals_orig = pd.Series(dtype='float64')
+    first_vals_main = pd.Series(dtype='float64')
+    last_vals_main = pd.Series(dtype='float64')
     
-    first_vals_calc = pd.Series(dtype='float64')
-    last_vals_calc = pd.Series(dtype='float64')
+    first_vals_reclass = pd.Series(dtype='float64')
+    last_vals_reclass = pd.Series(dtype='float64')
     
     lnwdth = 2
     
@@ -49,7 +49,7 @@ def plotting_both():
     
     for count, tpe in zip(range(len(tpes)), tpes):
         
-        isos_orig = isos_per_type_orig[tpe]
+        isos_main = isos_per_type_main[tpe]
         
         if tpe in types_ax1:
             axa = ax1
@@ -58,33 +58,33 @@ def plotting_both():
         
         for ssp in emi.keys():
             
-            vals_orig = 1e-3 * emi[ssp].data.loc[isos_orig, years_int].sum(axis=0)
-            vals_nan_orig = 1e-3 * emi[ssp].data.loc[ctrs_none_orig, years_int].sum(axis=0)
-            vals_all_orig = 1e-3 * emi[ssp].data.loc[meta.isos.EARTH, years_int].sum(axis=0)
+            vals_main = 1e-3 * emi[ssp].data.loc[isos_main, years_int].sum(axis=0)
+            vals_nan_main = 1e-3 * emi[ssp].data.loc[ctrs_none_main, years_int].sum(axis=0)
+            vals_all_main = 1e-3 * emi[ssp].data.loc[meta.isos.EARTH, years_int].sum(axis=0)
             
             if 'SSP2' in ssp:
                 
                 #lbl = tpe
                 
-                axa.plot(years_int, vals_orig, '--', color=colours.loc[tpe, :].to_list(), linewidth=lnwdth*1.5,
+                axa.plot(years_int, vals_main, '--', color=colours.loc[tpe, :].to_list(), linewidth=lnwdth*1.5,
                     label=('type_main' if tpe == 'REI' else ''))
-                first_vals_orig.loc[tpe] = vals_orig[vals_orig.index[0]]
-                last_vals_orig.loc[tpe] = vals_orig[vals_orig.index[-1]]
+                first_vals_main.loc[tpe] = vals_main[vals_main.index[0]]
+                last_vals_main.loc[tpe] = vals_main[vals_main.index[-1]]
                 
                 if count == 0:
                     
-                    axa.plot(years_int, vals_nan_orig, '--', color=colours.loc['No NDC', :].to_list(), linewidth=lnwdth*1.5)
-                    first_vals_orig.loc['No NDC'] = vals_nan_orig[vals_nan_orig.index[0]]
-                    last_vals_orig.loc['No NDC'] = vals_nan_orig[vals_nan_orig.index[-1]]
+                    axa.plot(years_int, vals_nan_main, '--', color=colours.loc['No NDC', :].to_list(), linewidth=lnwdth*1.5)
+                    first_vals_main.loc['No NDC'] = vals_nan_main[vals_nan_main.index[0]]
+                    last_vals_main.loc['No NDC'] = vals_nan_main[vals_nan_main.index[-1]]
                     
-                    first_vals_orig.loc['All countries'] = vals_all_orig[vals_all_orig.index[0]]
-                    last_vals_orig.loc['All countries'] = vals_all_orig[vals_all_orig.index[-1]]
+                    first_vals_main.loc['All countries'] = vals_all_main[vals_all_main.index[0]]
+                    last_vals_main.loc['All countries'] = vals_all_main[vals_all_main.index[-1]]
         
     markers = {'SSP1': '>', 'SSP2': 'o', 'SSP3': '^', 'SSP4': 'p', 'SSP5': '*'}
     
     for count, tpe in zip(range(len(tpes)), tpes):
         
-        isos_calc = isos_per_type_calc[tpe]
+        isos_reclass = isos_per_type_reclass[tpe]
         
         if tpe in types_ax1:
             axa = ax1
@@ -93,36 +93,36 @@ def plotting_both():
         
         for ssp in emi.keys():
             
-            vals_calc = 1e-3 * emi[ssp].data.loc[isos_calc, years_int].sum(axis=0)
-            vals_nan_calc = 1e-3 * emi[ssp].data.loc[ctrs_none_calc, years_int].sum(axis=0)
-            vals_all_calc = 1e-3 * emi[ssp].data.loc[meta.isos.EARTH, years_int].sum(axis=0)
+            vals_reclass = 1e-3 * emi[ssp].data.loc[isos_reclass, years_int].sum(axis=0)
+            vals_nan_reclass = 1e-3 * emi[ssp].data.loc[ctrs_none_reclass, years_int].sum(axis=0)
+            vals_all_reclass = 1e-3 * emi[ssp].data.loc[meta.isos.EARTH, years_int].sum(axis=0)
             
             if 'SSP2' in ssp:
                 
                 #lbl = tpe
                 
-                axa.plot(years_int, vals_calc, '-', color=colours.loc[tpe, :].to_list(), linewidth=lnwdth,
+                axa.plot(years_int, vals_reclass, '-', color=colours.loc[tpe, :].to_list(), linewidth=lnwdth,
                     label=('type_reclass' if tpe == 'REI' else ''))
-                first_vals_calc.loc[tpe] = vals_calc[vals_calc.index[0]]
-                last_vals_calc.loc[tpe] = vals_calc[vals_calc.index[-1]]
+                first_vals_reclass.loc[tpe] = vals_reclass[vals_reclass.index[0]]
+                last_vals_reclass.loc[tpe] = vals_reclass[vals_reclass.index[-1]]
                 
                 if count == 0:
                     
-                    axa.plot(years_int, vals_nan_calc, '-', color=colours.loc['No NDC', :].to_list(), linewidth=lnwdth)
-                    first_vals_calc.loc['No NDC'] = vals_nan_calc[vals_nan_calc.index[0]]
-                    last_vals_calc.loc['No NDC'] = vals_nan_calc[vals_nan_calc.index[-1]]
+                    axa.plot(years_int, vals_nan_reclass, '-', color=colours.loc['No NDC', :].to_list(), linewidth=lnwdth)
+                    first_vals_reclass.loc['No NDC'] = vals_nan_reclass[vals_nan_reclass.index[0]]
+                    last_vals_reclass.loc['No NDC'] = vals_nan_reclass[vals_nan_reclass.index[-1]]
                     
-                    first_vals_calc.loc['All countries'] = vals_all_calc[vals_all_calc.index[0]]
-                    last_vals_calc.loc['All countries'] = vals_all_calc[vals_all_calc.index[-1]]
+                    first_vals_reclass.loc['All countries'] = vals_all_reclass[vals_all_reclass.index[0]]
+                    last_vals_reclass.loc['All countries'] = vals_all_reclass[vals_all_reclass.index[-1]]
             
             if plot_ssps_range:
                 marker = markers[meta.ssps.scens.long_to_short[ssp]]
-                axa.plot(years_int[-1] + 3 * count / len(colours.index), vals_calc[vals_calc.index[-1]], 
+                axa.plot(years_int[-1] + 3 * count / len(colours.index), vals_reclass[vals_reclass.index[-1]], 
                     marker, color=colours.loc[tpe, :].to_list(), label=(meta.ssps.scens.long_to_short[ssp] if tpe == 'NGT' else ''))
                 
                 if count == 0:
                     
-                    axa.plot(years_int[-1], vals_nan_calc[vals_nan_calc.index[-1]],
+                    axa.plot(years_int[-1], vals_nan_reclass[vals_nan_reclass.index[-1]],
                         marker, color=colours.loc['No NDC', :].to_list())
     
     axa = ax2
@@ -188,17 +188,17 @@ ndcs.loc['USA', :] = np.nan
 
 path_to_folder = Path(meta.path.main, 'plots', 'time_series', 'per_type')
 
-isos_per_type_orig = hpf.get_isos_per_target_type(ndcs.loc[:, 'TYPE_ORIG'], ndcs.loc[:, 'BASEYEAR'])
-ctrs_none_orig = isos_per_type_orig['NAN']
+isos_per_type_main = hpf.get_isos_per_target_type(ndcs.loc[:, 'TYPE_MAIN'], ndcs.loc[:, 'BASEYEAR'])
+ctrs_none_main = isos_per_type_main['NAN']
 
-isos_per_type_calc = hpf.get_isos_per_target_type(ndcs.loc[:, 'TYPE_CALC'], ndcs.loc[:, 'BASEYEAR'])
-ctrs_none_calc = isos_per_type_calc['NAN']
+isos_per_type_reclass = hpf.get_isos_per_target_type(ndcs.loc[:, 'TYPE_RECLASS'], ndcs.loc[:, 'BASEYEAR'])
+ctrs_none_reclass = isos_per_type_reclass['NAN']
 
 types_ax1 = ['ABU', 'AEI', 'NGT']
 
 plot_ssps_range = False
 
-path_to_file = Path(path_to_folder, "time_series_emissions_per_target_type_orig_and_calc_range_of_ssps_paper.png")
+path_to_file = Path(path_to_folder, "time_series_emissions_per_target_type_main_and_reclass_range_of_ssps_paper.png")
 plotting_both()
 
 # %%

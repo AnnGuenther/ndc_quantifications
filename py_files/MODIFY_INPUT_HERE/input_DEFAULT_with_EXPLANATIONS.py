@@ -42,22 +42,6 @@ meta.ssps.chosen = 'SSP2BLMESGB'
 meta.output_folder = ('ndcs_' + 
     strftime("%Y%m%d_%H%M", gmtime()) + '_' + meta.ssps.chosen[:4] + '_default')
 
-#%%
-"""
-Chose the method for the pathway calculations (per country pathways).
-
-'constant_percentages':
-    The percentage difference to the baseline emissions of the last available target year
-    is kept constant.
-'constant_emissions':
-    The emissions of the last available target year are kept constant.
-
-Default:
-meta.method_pathways = 'constant_percentages'
-"""
-
-meta.method_pathways = 'constant_percentages'
-
 # %%
 """
 For which countries should targets be used for the calculation of emission pathways for group of countries?
@@ -123,6 +107,35 @@ meta.use_ndc_emissions_if_available = True
 
 # %%
 """
+Predefine that the coverage used for the pathways is 100% for certain countries.
+Only possible for relative targets / reductions.
+
+Default:
+meta.set_pccov_to_100 = {'use_it': False}
+"""
+
+meta.set_pccov_to_100 = {'use_it': False}
+#meta.set_pccov_to_100 = {'use_it': True, 'countries': 'all'}
+#meta.set_pccov_to_100 = {'use_it': True, 'countries': ['EU28', 'CHN', 'IND', 'USA', 'AUS']}
+
+#%%
+"""
+Chose the method for the pathway calculations (per country pathways).
+
+'constant_percentages':
+    The percentage difference to the baseline emissions of the last available target year
+    is kept constant.
+'constant_emissions':
+    The emissions of the last available target year are kept constant.
+
+Default:
+meta.method_pathways = 'constant_percentages'
+"""
+
+meta.method_pathways = 'constant_percentages'
+
+# %%
+"""
 For countries without unconditional target but with conditional target: 
 use the baseline emissions for the unconditional pathway 
 even if the conditional target is worse than the baseline (in 2030)?
@@ -164,19 +177,6 @@ meta.strengthen_targets = {'use_it': False}
 #   'pc': 10,
 #   'how_to': 'multiply',
 #   'countries': ['EU28', 'CHN', 'IND', 'USA', 'AUS']}
-
-# %%
-"""
-Predefine that the coverage used for the pathways is 100% for certain countries.
-Only possible for relative targets / reductions.
-
-Default:
-meta.set_pccov_to_100 = {'use_it': False}
-"""
-
-meta.set_pccov_to_100 = {'use_it': False}
-#meta.set_pccov_to_100 = {'use_it': True, 'countries': 'all'}
-#meta.set_pccov_to_100 = {'use_it': True, 'countries': ['EU28', 'CHN', 'IND', 'USA', 'AUS']}
 
 # %%
 """

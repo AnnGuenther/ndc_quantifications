@@ -34,18 +34,18 @@ isos_without_indc = [xx for xx in ndcs_info.index if (type(ndcs_info.loc[xx, 'ND
 # %%
 # Plot the NDC types on a worldmap.
 
-pd_series = hpf.get_isos_per_target_type(infos.loc[:, 'TYPE_ORIG'], infos.loc[:, 'BASEYEAR'],
+pd_series = hpf.get_isos_per_target_type(infos.loc[:, 'TYPE_MAIN'], infos.loc[:, 'BASEYEAR'],
     split_REI=True, dtype='series')
-path_to_file = Path(path_to_folder, 'ndc_types_orig.png')
+path_to_file = Path(path_to_folder, 'ndc_types_main.png')
 annotation = 'NDC types (type_main)'
 
 hpf.plot_maps(pd_series, colour_dict_ndc_types, path_to_file, annotation=annotation, 
     nr_instances=True, plot_pdf=True)
 
 # Plot the NDC types on a worldmap.
-pd_series = hpf.get_isos_per_target_type(infos.loc[:, 'TYPE_CALC'], infos.loc[:, 'BASEYEAR'],
+pd_series = hpf.get_isos_per_target_type(infos.loc[:, 'TYPE_RECLASS'], infos.loc[:, 'BASEYEAR'],
     split_REI=True, dtype='series')
-path_to_file = Path(path_to_folder, 'ndc_types_calc.png')
+path_to_file = Path(path_to_folder, 'ndc_types_reclass.png')
 annotation = 'NDC types (type_reclass)'
 
 hpf.plot_maps(pd_series, colour_dict_ndc_types, path_to_file, annotation=annotation, nr_instances=True, plot_pdf=True)

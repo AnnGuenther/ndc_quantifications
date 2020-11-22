@@ -17,24 +17,24 @@ meta.ssps.chosen = 'SSP2BLMESGB'
 meta.output_folder = ('ndcs_' + 
     strftime("%Y%m%d_%H%M", gmtime()) + '_' + meta.ssps.chosen[:4] + '_default')
 
-meta.method_pathways = 'constant_percentages'
-
 meta.calculate_targets_for = {
     'use_it': True, 
     'countries': sorted(set(set(meta.isos.EARTH) - set(['USA'])))}
 
 meta.ndcs_type_prioritisations = {
     'use_it': True, 
-    'ndcs_type_prioritisations': ['TYPE_CALC'], 
+    'ndcs_type_prioritisations': ['TYPE_RECLASS'], 
     'countries': 'all'}
 
 meta.use_ndc_emissions_if_available = True
 
+meta.set_pccov_to_100 = {'use_it': False}
+
+meta.method_pathways = 'constant_percentages'
+
 meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi = False
 
 meta.strengthen_targets = {'use_it': False}
-
-meta.set_pccov_to_100 = {'use_it': False}
 
 meta.groups_for_which_to_calculate_pathways = []
 

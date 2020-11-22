@@ -25,7 +25,7 @@ meta = setup_metadata()
 
 # %%
 # Get the NDC emissions data.
-# Only for years which are needed for the type_orig.
+# Only for years which are needed for the type_main.
 ndcs_all = hpf.get_infos_from_ndcs(meta, write_out_data=False)
 
 years = range(1990, 2031)
@@ -43,7 +43,7 @@ emi_ndcs_plot['exclLU'] = pd.DataFrame(index=meta.isos.EARTH, columns=years)
 for iso3 in meta.isos.EARTH:
     
     ndc_tar_info = ndcs_all.loc[iso3, :]
-    tar_type = ndc_tar_info['TYPE_ORIG']
+    tar_type = ndc_tar_info['TYPE_MAIN']
     
     if (type(tar_type) == str and tar_type != 'NGT'):
         
