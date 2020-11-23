@@ -15,28 +15,37 @@ GHG: Greenhouse Gas.
 
 -------
 
-If you have access to the MATLAB-based PRIMAP Emissions Module you can do the following:
+### How-to for different steps of the modeling chain from baseline data over mitigated emissions pathways to temperature estimates
 
-- In the PRIMAP Emissions Module run ``ndcs_get_all_data_agu.m`` to write out all the tables needed for the quantifications from the PRIMAPDB to ``/data/preprocess/matlab_tables`` as csv-files. These tables are available in the repository, so one can skip this step.
+If you have access to the MATLAB-based PRIMAP Emissions Module you can do the following (get the baseline data from the PRIMAP Emissions Module Database):
+
+- In the PRIMAP Emissions Module run ``ndcs_get_all_data_agu.m`` to write out all the tables needed for the quantifications from the PRIMAPDB to ``/data/preprocess/matlab_tables`` as csv-files. *These tables are available in the repository, so one can skip this step.*
 - Open a python console and go to the folder ``py_files`` (all of the following is run using python3):
   - Run ``preprocessing_general.py`` to create the input needed for the quantifications. It is saved in ``/data/preprocess/preprocess``. The preprocessed data are available in the repository.
   - Run ``preprocessing_current_pc_cov.py``, which will store the tables with the covered part of emissions per country in ``/data/preprocess/pc_cov_yyyymmdd_hhmm``. The preprocessed data are available in the repository.
   - Put the new folder-name ``preprocess_yyyymmdd_hhmm`` into ``setup_metadata.py`` (```folder_preprocess = 'preprocess_yyyymmdd_hhmm'```).
 
---------------------
-
-If you do not have access to the MATLAB tools, you can do the following (**running NDCmitiQ**).
+If you do not have access to the MATLAB tools, you can do the following (**running NDCmitiQ**, code can be run without catching the input data from the MATLAB-based PRIMAP Emissions Module, as the input tables are stored in the repository).
 
 - Open a python console and go to the folder ``py_files`` (all of the following is run using python3):
   - Go to ``/MODIFY_INPUT_HERE`` and copy the file ``input_default.py`` and adjust it as you wish.
-  
-  - Go to ``_to_be_run.py`` and put in the input-file(s) that you wish to work with (``main_ndc_quantifications('input_default', '')``) and run ``python3 _to_be_run.py``.
-  
-    Or using Spyder with a Python 3 console, with the work-path ``\ndc_quantifications\py_files`` run ``from main_ndc_quantifications import main_ndc_quantifications`` and then ``main_ndc_quantifications('input_default', '')``.
-  
-  - The output (emissions targets per country, per-country pathways, global pathways) is stored in ``/data/output/``.
+    What can be modified are the following input parameters (for more detail please check ``input_DEFAULT_with_EXPLANATIONS.py``):
 
----------------
+    - Chose SSP marker scenario (for additional down-scaled SSP scenarios one would need to do further implementations)
+    - Chose for which countries to calculate the targets (else: baseline emissions used)
+    - Which target type(s) to prioritise
+    - Prioritisaton of emissions baselines from NDCs or from the SSPs
+    - Set coverage to 100% (for certain / all countries)
+    - How to extend the emissions pathways after last target year (constant\_percentages or constant\_emissions)
+    - Whether to use the baseline as unconditional pathway even if the baseline lies below the conditional pathway (for countries without unconditional target)
+    - Strengthen targets by a certain percentage
+    - Define groups for which the aggregated pathways should be calculated
+
+  - Go to ``_to_be_run.py`` and put in the input-file(s) that you wish to work with (``main_ndc_quantifications('input_default', '')``) and run ``python3 _to_be_run.py``.
+
+    Or using Spyder with a Python 3 console, with the work-path ``\ndc_quantifications\py_files`` run ``from main_ndc_quantifications import main_ndc_quantifications`` and then ``main_ndc_quantifications('input_default', '')``.
+
+  - The output (emissions targets per country, per-country pathways, global pathways) is stored in ``/data/output/``.
 
 If you have access to the MATLAB-based PRIMAP Emissions and Climate Module you can do the following:
 
