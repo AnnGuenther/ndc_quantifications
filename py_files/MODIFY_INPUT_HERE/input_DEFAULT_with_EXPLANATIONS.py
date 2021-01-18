@@ -5,7 +5,7 @@
 
 # %%
 """
-Provide input for main_ndc_quantifications.py
+**Provide input for NDCmitiQ: main_ndc_quantifications.py**
 
 UNITS:
 Units for time series: emissions in Mt CO2eq, population in Pers, GDP in 2011GKD.
@@ -24,13 +24,19 @@ from setup_metadata import setup_metadata
 # %%
 ##### NOTHING TO BE MODIFIED #####
 # Set up the class 'meta', where metadata are stored (see setup_metadata.py).
+
 meta = setup_metadata()
 
 # %%
 ##### ALL THE FOLLOWING CAN BE MODIFIED #####
 
 # %%
-# Chose current ssp-scenario:
+"""
+**meta.ssps.chosen**
+
+Chose current ssp-scenario.
+"""
+
 #meta.ssps.chosen = 'SSP1BLIMAGE'
 meta.ssps.chosen = 'SSP2BLMESGB'
 #meta.ssps.chosen = 'SSP3BLAIMCGE'
@@ -38,12 +44,18 @@ meta.ssps.chosen = 'SSP2BLMESGB'
 #meta.ssps.chosen = 'SSP5BLREMMP'
 
 # %%
-# Output-folder (add something if you want)
+"""
+**meta.output_folder**
+
+Output-folder (add something if you want).
+"""
 meta.output_folder = ('ndcs_' + 
     strftime("%Y%m%d_%H%M", gmtime()) + '_' + meta.ssps.chosen[:4] + '_default')
 
 # %%
 """
+**meta.calculate_targets_for**
+
 For which countries should targets be used for the calculation of emission pathways for group of countries?
 For the others, the baseline emissions will be used.
 
@@ -67,46 +79,52 @@ meta.calculate_targets_for = {
 
 # %%
 """
+**meta.ndcs_type_prioritisations**
+
 Which target-types should be prioritised in the calculation of group-pathways?
 
-ndcs_type_prioritisations can be a certain target tpye (e.g., 'ABS'), or 'TYPE_ORIG' or 'TYPE_CALC'. 
-Or several ordered options (only makes sense for != TYPE_ORIG and != TYPE_CALC).
+ndcs_type_prioritisations can be a certain target tpye (e.g., 'ABS'), or 'TYPE_MAIN' or 'TYPE_RECLASS'. 
+Or several ordered options (only makes sense for != TYPE_MAIN and != TYPE_RECLASS).
 
-One can chose from ['TYPE_ORIG', 'TYPE_CALC', 'ABS', 'RBY', 'RBU', 'ABU', 'REI', 'AEI'].
+One can chose from ['TYPE_MAIN', 'TYPE_RECLASS', 'ABS', 'RBY', 'RBU', 'ABU', 'REI', 'AEI'].
 
-If TYPE_ORIG: use the 'original target type' (what has been stated (+/-) 
+If TYPE_MAIN: use the 'main target type' (what has been stated (+/-) 
 in the NDC as target type).
-If TYPE_CALC: use the target type that has been assessed to be the 'best 
-suitable' (based on the NDC).
+If TYPE_RECLASS: use the target type that has been assessed to be the 'best 
+suitable' for the quantification (based on the NDC).
 Explanation: e.g., when it is an RBU target, but the absolute target emissions are available 
 (e.g., given value, or based on their BAU and %-reduction),
-TYPE_ORIG can be RBU, and TYPE_CALC can be ABS. It can also have TYPE_ORIG is 
-NGT and TYPE_CALC is ABU, as they quantified some reductions.
-Iterating through ndc_type_prioritisations, and using TYPE_CALC if none of the iterations 
+TYPE_MAIN can be RBU, and TYPE_RECLASS can be ABS. It can also have TYPE_MAIN is 
+NGT and TYPE_RECLASS is ABU, as they quantified some reductions.
+Iterating through ndc_type_prioritisations, and using TYPE_RECLASS if none of the iterations 
 found target values for the current target type in the NDC input file.
 If 'countries' is 'all', apply it to all countries. Else, give ISO3s, and it 
 is only applied to those countries.
-Else, the pathway is calculated based on TYPE_CALC.
+Else, the pathway is calculated based on TYPE_RECLASS.
 
 Default:
-meta.ndcs_type_prioritisations = {'use_it': True, 'ndcs_type_prioritisations': ['TYPE_CALC'], 'countries': 'all'}
+meta.ndcs_type_prioritisations = {'use_it': True, 'ndcs_type_prioritisations': ['TYPE_RECLASS'], 'countries': 'all'}
 """
 
 meta.ndcs_type_prioritisations = {
     'use_it': True, 
-    'ndcs_type_prioritisations': ['TYPE_CALC'], 
+    'ndcs_type_prioritisations': ['TYPE_RECLASS'], 
     'countries': 'all'}
 
 # %%
 """
+**meta.use_ndc_emissions_if_available**
+
 Use NDC emissions data if available.
-If TYPE_CALC is used set it to True, for TYPE_ORIG set it to False.
+If TYPE_RECLASS is used set it to True, for TYPE_MAIN set it to False.
 """
 
 meta.use_ndc_emissions_if_available = True
 
 # %%
 """
+**meta.set_pccov_to_100**
+
 Predefine that the coverage used for the pathways is 100% for certain countries.
 Only possible for relative targets / reductions.
 
@@ -120,6 +138,8 @@ meta.set_pccov_to_100 = {'use_it': False}
 
 #%%
 """
+**meta.method_pathways**
+
 Chose the method for the pathway calculations (per country pathways).
 
 'constant_percentages':
@@ -136,6 +156,8 @@ meta.method_pathways = 'constant_percentages'
 
 # %%
 """
+**meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi**
+
 For countries without unconditional target but with conditional target: 
 use the baseline emissions for the unconditional pathway 
 even if the conditional target is worse than the baseline (in 2030)?
@@ -151,6 +173,8 @@ meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi = False
 
 # %%
 """
+**meta.strengthen_targets**
+
 The targets are strengthened by ndc_strengthen.
 
 Chose between 'how_to': 'add' or 'multiply'.
@@ -180,6 +204,8 @@ meta.strengthen_targets = {'use_it': False}
 
 # %%
 """
+**meta.groups_for_which_to_calculate_pathways**
+
 Groups for which to get the pathways.
 'EU28', 'EARTH', 'R5ASIA', 'R5LAM', 'R5MAF', 'R5OECD', 'R5REF' will be calculated per default.
 The R5 regions are needed for the temperature pathways (PRIMAP Emissions Module / Climate Module).

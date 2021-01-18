@@ -7,12 +7,12 @@ Last updated in 03/2020
 # %%
 def setup_metadata():
     """
-    Set up the general metadata.
-    If you want/need to change the folder for the preprocessed data, do it here.
-    Returns:
-    meta : class.
-        Meta data needed in the quantifications and plotting routines.
+    **Set up the general metadata.**
     
+    If you want/need to *change the folder for the preprocessed data*, do it here.
+    
+    Returns:
+        *meta : class with meta data needed in the quantifications and plotting routines.*
     """
     # %%
     from pathlib import Path
@@ -23,7 +23,7 @@ def setup_metadata():
     
     # %%
     """
-    meta.path: paths to different folders.
+    *meta.path*: paths to different folders.
     """
     
     # Store general information in class meta.
@@ -49,7 +49,7 @@ def setup_metadata():
     
     # %%
     """
-    meta.isos: iso3 codes of EARTH, EU, conversion from iso3 to short country names.
+    *meta.isos*: iso3 codes of EARTH, EU, and conversion from iso3 to short country names.
     """
     
     # ISO3s of EARTH and EU28.
@@ -63,7 +63,7 @@ def setup_metadata():
     
     # %%
     """
-    SSPs: Shared Socioeconomic Pathways; info on available marker scenarios.
+    *meta.ssps*: Shared Socioeconomic Pathways; info on available marker scenarios.
     """
     
     # Available SSP scenarios.
@@ -89,7 +89,7 @@ def setup_metadata():
         
     # %%
     """
-    Nomenclature: table meta-data nomenclature.
+    *meta.nomenclature*: table meta-data nomenclature.
     """
     
     # Nomenclature of PRIMAPDB tables & of the classes in database.
@@ -107,7 +107,7 @@ def setup_metadata():
     # %%
     # ###
     """
-    PRIMAP-hist: info on sources and scenarios (emi, pop, gdp).
+    *meta.primap*: PRIMAP-hist: info on sources and scenarios (emi, pop, gdp).
     """
     
     # Info on sources / scenarios.
@@ -127,7 +127,7 @@ def setup_metadata():
     
     # %%
     """
-    Default-units
+    *meta.units*: default-units
     """
 
     # Preferred units.
@@ -136,7 +136,7 @@ def setup_metadata():
     
     # %%
     """
-    GWPs
+    *meta.gwps*: GWPs
     """
     
     meta.gwps = hpf.create_class(name='gwps')
@@ -145,7 +145,7 @@ def setup_metadata():
     
     # %%
     """
-    LULUCF source-priorisation
+    *meta.lulucf*: LULUCF source-priorisation
     """
     
     meta.lulucf = hpf.create_class(name='lulucf',
@@ -155,7 +155,7 @@ def setup_metadata():
     
     # %%
     """
-    Gases: basket-members, labels.
+    *meta.gases*: basket-members, labels.
     """
     
     meta.gases = hpf.create_class(name='gases', main=['CO2', 'CH4', 'N2O'])
@@ -170,7 +170,7 @@ def setup_metadata():
     
     # %%
     """
-    Sectors: main sectors, labels.
+    *meta.sectors*: main sectors, labels.
     """
     
     meta.sectors = hpf.create_class(name='sectors')
@@ -186,7 +186,7 @@ def setup_metadata():
     
     # %%
     """
-    Categories: main categories, labels.
+    *meta.categories*: main categories, labels.
     """
     
     meta.categories = hpf.create_class(name='categories')
@@ -203,7 +203,7 @@ def setup_metadata():
     
     # %%
     """
-    Nice labels for sources
+    *meta.sources*: nice labels for sources
     """
     
     meta.sources = hpf.create_class(name='sources')
@@ -215,14 +215,12 @@ def setup_metadata():
     
     # %%
     """
-    NDC types.
+    *meta.ndcs*: NDC types.
     """
     
     meta.ndcs = hpf.create_class(name = 'ndcs')
     meta.ndcs.types = ['ABS', 'RBY', 'RBU', 'ABU', 'REI', 'AEI', 'NGT']
     # %%
     return meta
-
-#enddef
 
 # %%

@@ -14,12 +14,14 @@ import helpers_functions as hpf
 def prep_covered_emissions_his(database, coverage, meta, primap):
     
     """
-    The covered part of emissions (in 'emissions') is calculated here for historical years, 
-    for which data per sector and gas combination are available.
+    **Covered emissions (historical values based on per gas/sector emissions)**
+    
+    The *covered part of emissions (in 'emissions') is calculated here for historical years, 
+    for which data per sector and gas combination are available.*
     The assessment is based on the information in coverage.used_per_combi (all entries are 'YES' or 'NO').
     All combinations with 'YES' are summed up to emicov_his, and all combinations with 'NO' are summed up to eminotcov_his.
     
-    For KYOTOGHG_IPCM0EL, excluding LULUCF.
+    *For KYOTOGHG_IPCM0EL, excluding LULUCF.*
     """
     
     # %%

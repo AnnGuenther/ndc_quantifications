@@ -7,19 +7,20 @@ Last updated in 04/2020.
 # %%
 def prep_lulucf(database, meta, prios, srce_name, info_per_country, nrvalues, interpolation_method):
     """
-    Prepare LULUCF data.
+    **Prepare LULUCF data (source prioritisation and gap filling)**
     
-    Make one LULUCF table, with the chosen KYOTOGHG_IPCMLULUCF time series.
-    Prioritisation of data-sources as given in prios.
-    When a source has data, use them, and fill data gaps with 'constant filling' 
+    Make *one LULUCF table, with the chosen KYOTOGHG_IPCMLULUCF time series*.
+    *Prioritisation of data-sources as given in prios.*
+    When a source has data, use them, and *fill data gaps* with 'constant filling' 
     (interpolation & forward extrapolation: mean over last values kept constant, 
     backward extrapolation: mean over first available values kept constant).
-    If KYOTOGHG is calculated here from CO2 + CH4 + N2O: sum up the already inter- & extrapolated time series.
+    If KYOTOGHG is calculated here from CO2 + CH4 + N2O: sum up the already 
+    inter- & extrapolated time series.
     
     Problems with LULUCF data: high inter-annual variability, negative / positive emissions, 
     and the data we use are not consistent with the time series used in the pathway extension.
     
-    interpolation_method: 'constant' or 'linear'.
+    *interpolation_method: 'constant' or 'linear'.*
     """
     
     # %%
@@ -102,8 +103,8 @@ def prep_lulucf(database, meta, prios, srce_name, info_per_country, nrvalues, in
     # %%
     def store_data():
         """
-        Only use a source if at least 6 values are available for 1990 - 2017.
-        If no other source has data, then use a source with less than 6 values available nevertheless.
+        *Only use a source if at least xx values are available for 1990 - 2017.*
+        *If no other source has data, then use a source with less than xx values available nevertheless.*
         Store the DataFrames with various sources combined to one datatable in lulucf_table.
         """
         
@@ -172,8 +173,8 @@ def prep_lulucf(database, meta, prios, srce_name, info_per_country, nrvalues, in
         nr_available_years_lulucf, emi_lulucf, database = calc_data()
     
     """
-    Only use a source if at least 6 values are available for 1990 - 2017.
-    If no other source has data, then use a source with less than 6 values available nevertheless.
+    Only use a source if at least xx values are available for 1990 - 2017.
+    If no other source has data, then use a source with less than xx values available nevertheless.
     Store the DataFrames with various sources combined to one datatable in lulucf_table.
     """
     database, info_per_country = store_data()

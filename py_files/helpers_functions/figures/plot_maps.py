@@ -88,8 +88,8 @@ def plot_maps(pd_series, colour_dict, path_to_file, **kwargs):
     if 'title' in kwargs.keys():
         plt.title(kwargs['title'], fontsize=6)
     
-    fig.subplots_adjust(left=.05, right=.95, bottom=.05, top=.95)
-    plt.savefig(path_to_file, bbox_inches='tight', pad_inches=.2, dpi=300)
+    fig.subplots_adjust(left=.01, right=.99, bottom=.01, top=.99)
+    plt.savefig(path_to_file, bbox_inches='tight', pad_inches=.01, dpi=300)
     if ('plot_pdf' in kwargs.keys() and kwargs['plot_pdf']):
         path_to_pdf = str(path_to_file).replace('.png', '.pdf')
         plt.savefig(path_to_pdf, bbox_inches='tight', pad_inches=.2, dpi=300)

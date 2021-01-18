@@ -16,12 +16,23 @@ def create_colormap(df_colours):
     
     # %%
     import numpy as np
-    import pandas as pd
+    #import pandas as pd
         
     # %%
-    df_colours = pd.DataFrame([[1, 0, 0], [0, 0, 1], [0, 1, 0]], index=[-1, .1, 2], columns=['r', 'g', 'b'])
+    #df_colours = pd.DataFrame([[1, 0, 0], [0, 0, 1], [0, 1, 0]], index=[-1, .1, 2], columns=['r', 'g', 'b'])
     ids = df_colours.index
-    ids_new = list(np.arange(min(ids), max(ids), abs(max(ids) - min(ids))/254)) + [ids[-1]]
+    
+    if len(ids) == 2:
+        ids_new = list(np.arange(min(ids), max(ids), abs(max(ids) - min(ids))/254)) + [ids[-1]]
+    
+    # Problem if a given 'middle value' is not in the index anymore after the interpolation, therefore use the second approach for len(ids) > 2:
+    else:
+        ids_new = []
+        for ct in range(len(ids)-1):
+            ids_act = [ids[ct], ids[ct+1]]
+            ids_new += list(np.arange(ids_act[0], ids_act[-1], abs(ids_act[-1] - ids_act[0])/(abs(ids_act[-1] - ids_act[0])/(ids[-1] - ids[0])*254)))
+        ids_new += [ids_act[-1]]
+    
     df_colours = df_colours.reindex(index=ids_new)
     df_colours = df_colours.interpolate()
     

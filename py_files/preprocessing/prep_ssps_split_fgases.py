@@ -14,9 +14,11 @@ import helpers_functions as hpf
 def prep_ssps_split_fgases(meta, database, nrvalues):
     
     """
-    The SSPs only have data for FGASES, not separated into HFCS, PFCS, SF6 and NF3.
-    For the calculation of the future pc_cov, a split into the four subgroups is performed.
-    The historical share per gas/basket is kept constant and applied to the future FGASES-basket.
+    **Split up the SSP FGASES basket based on historical ratios**
+    
+    The *SSPs* only have data for FGASES, not separated into HFCS, PFCS, SF6 and NF3.
+    For the calculation of the future pc_cov, a *split into the four subgroups is performed*.
+    The *historical share* per gas/basket is *kept constant* and applied to the future FGASES-basket.
     The mean over the last 6 available years is used.
     """
     

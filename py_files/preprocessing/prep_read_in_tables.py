@@ -8,14 +8,14 @@ Last updated in 04/2020.
 def prep_read_in_tables(file, path_to_folder, database, meta):
     
     """
-    Read in all datatables in folder.
+    **Read in all datatables in folder.**
     
     All read into class 'database', with the tablenames as attributes.
-    Replace AR4 strings by ''
-    (e.g., KYOTOGHGAR4_IPCM0EL_TOTAL_NET_HISTORY_CRF2019.csv is read in 
+    *Replace AR4 strings by ''*
+    (e.g., ``KYOTOGHGAR4_IPCM0EL_TOTAL_NET_HISTORY_CRF2019.csv`` is read in 
     with tablename 'KYOTOGHG_IPCM0EL_TOTAL_NET_HISTORY_CRF2019').
-    The attributes are classes again, with attributes entity, category, 
-    data, family, etc. (see meta.nomenclature.attrs).
+    The *attributes are classes* again, with *attributes entity, category, 
+    data, family, etc. (see meta.nomenclature.attrs)*.
     """
     
     # %%

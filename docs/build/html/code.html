@@ -31,79 +31,89 @@
 
           <div class="body" role="main">
             
-  <p><em>Comments: in the code, use (3 times ” newline text newline 3 times “) for comments.</em> <em>Do not forget the new lines, else it will not appear in this documentation.</em></p>
-<p>This documentation of the main functions to preprocess data and quantify mitigation
-targets from within the NDCs (tool NDCmitiQ), includes information retrieved from the
-different py-files of the tool.
-It does not include information from all py-files in this repository.</p>
-<p>This documentation shall be seen as an add-on to the information given in the
-manuscript describing the methodology behind NDCmitiQ.
-As soon as the paper is published, its DOI will be added here.</p>
-<p>The required pandas packages can be found in requirements.txt,
-and information on how to run the code can be found in the README in the main folder.</p>
+  <p>This documentation of the <strong>main functions to preprocess data and quantify the NDC mitigation
+targets (tool NDCmitiQ)</strong>, includes <strong>information</strong> retrieved <strong>from</strong> the different <strong>py-files</strong> of the tool.
+It does <strong>not</strong> include information from <strong>all py-files</strong> in this repository
+(e.g., helpers functions, plotting routines, etc.).</p>
+<p>This documentation shall be seen as an <strong>add-on to the information given in the
+manuscript</strong> describing the methodology behind NDCmitiQ
+(to be submitted to Geoscientific Model Development).
+As soon as the paper is available, its DOI will be added here.</p>
+<p>The <strong>required pandas packages</strong> can be found in <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>,
+and information on <strong>how to run the code</strong> is provided in the <code class="docutils literal notranslate"><span class="pre">README.md</span></code> in the main folder.</p>
+<p><em>Comment: in the code, use (3 times ” newline text newline 3 times “) for comments.</em> <em>Do not forget the new lines, else it will not appear in this documentation.</em></p>
 <div class="section" id="setup-metadata">
 <h1>setup_metadata<a class="headerlink" href="#setup-metadata" title="Permalink to this headline">¶</a></h1>
 <p><strong>setup_metadata()</strong></p>
 <blockquote>
-<div><p>Set up the general metadata.
-If you want/need to change the folder for the preprocessed data, do it here.</p>
-<p>Returns:</p>
+<div><p><strong>Set up the general metadata.</strong></p>
+<p>If you want/need to <em>change the folder for the preprocessed data</em>, do it here.</p>
 <dl class="simple">
-<dt>meta<span class="classifier">class.</span></dt><dd><p>Meta data needed in the quantifications and plotting routines.</p>
+<dt>Returns:</dt><dd><p><em>meta : class with meta data needed in the quantifications and plotting routines.</em></p>
 </dd>
 </dl>
-<p>meta.path: paths to different folders.</p>
-<p>meta.isos: iso3 codes of EARTH, EU, conversion from iso3 to short country names.</p>
-<p>SSPs: Shared Socioeconomic Pathways; info on available marker scenarios.</p>
-<p>Nomenclature: table meta-data nomenclature.</p>
-<p>PRIMAP-hist: info on sources and scenarios (emi, pop, gdp).</p>
-<p>Default-units</p>
-<p>GWPs</p>
-<p>LULUCF source-priorisation</p>
-<p>Gases: basket-members, labels.</p>
-<p>Sectors: main sectors, labels.</p>
-<p>Categories: main categories, labels.</p>
-<p>Nice labels for sources</p>
-<p>NDC types.</p>
+<p><em>meta.path</em>: paths to different folders.</p>
+<p><em>meta.isos</em>: iso3 codes of EARTH, EU, and conversion from iso3 to short country names.</p>
+<p><em>meta.ssps</em>: Shared Socioeconomic Pathways; info on available marker scenarios.</p>
+<p><em>meta.nomenclature</em>: table meta-data nomenclature.</p>
+<p><em>meta.primap</em>: PRIMAP-hist: info on sources and scenarios (emi, pop, gdp).</p>
+<p><em>meta.units</em>: default-units</p>
+<p><em>meta.gwps</em>: GWPs</p>
+<p><em>meta.lulucf</em>: LULUCF source-priorisation</p>
+<p><em>meta.gases</em>: basket-members, labels.</p>
+<p><em>meta.sectors</em>: main sectors, labels.</p>
+<p><em>meta.categories</em>: main categories, labels.</p>
+<p><em>meta.sources</em>: nice labels for sources</p>
+<p><em>meta.ndcs</em>: NDC types.</p>
 </div></blockquote>
 </div>
 <div class="section" id="preprocessing-general">
 <h1>preprocessing_general<a class="headerlink" href="#preprocessing-general" title="Permalink to this headline">¶</a></h1>
-<p>General preprocessing (covered part of emissions in preprocessing_current_pccov.py).</p>
-<p>Fill missing data, SSPs (emi, pop, gdp), LULUCF emissions.</p>
-<p>Load and write out information retrieved from NDCs to ‘ndcs_info.csv’ into folder meta.path.preprocess.
+<p><strong>General preprocessing (covered part of emissions in preprocessing_current_pccov.py).</strong></p>
+<p><strong>Fill missing data, SSPs (emi, pop, gdp), LULUCF emissions.</strong></p>
+<p>Load and write out <em>information retrieved from NDCs</em> to <code class="docutils literal notranslate"><span class="pre">ndcs_info.csv</span></code> into folder
+meta.path.preprocess.
 Includes information on Parties’ target types, years, conditionality, range, coverage.</p>
-<p>Read in all datatables in folder matlab_tables.</p>
+<p>Read in <em>all datatables from folder matlab_tables.</em></p>
 <p>All tables are read into the class ‘database’, with the tablenames as main-attributes.
 The table meta-data are classes again, with attributes ‘entity’, ‘category’,
 ‘data’, ‘unit’, etc. (see meta.nomenclature.attrs).</p>
 <p>As we only use one GWP, replace the AR4 strings by ‘’
-(e.g., KYOTOGHGAR4_IPCM0EL_TOTAL_NET_HISTORY_CRF2019.csv is read in
+(e.g., <code class="docutils literal notranslate"><span class="pre">KYOTOGHGAR4_IPCM0EL_TOTAL_NET_HISTORY_CRF2019.csv</span></code> is read in
 with tablename ‘KYOTOGHG_IPCM0EL_TOTAL_NET_HISTORY_CRF2019’).</p>
-<p>SSPs: check if there are countries that do have data in some SSPs but not in others and use the average over the available SSPs for the non-available SSPs.
-For countries that have PRIMAP-hist data but no SSP data at all (for marker scenarios of SSP1 to SSP5), use the PRIMAP-hist data and use the linear regression over the last 6 available years as future estimates.
+<p><em>SSPs: check if there are countries that do have data in some SSPs but not in others
+and use the average over the available SSPs for the non-available SSPs.</em>
+<em>For countries that have PRIMAP-hist data but no SSP data at all
+(for marker scenarios of SSP1 to SSP5), use the PRIMAP-hist data and
+use the linear regression over the last 6 available years as future estimates.</em>
 Only happens for countries with very low emissions.</p>
-<p>The SSPs only have data for FGASES, not separated into HFCS, PFCS, SF6 and NF3.
-For the calculation of the future pc_cov, a split into the four subgroups is performed.
+<p><em>The SSPs only have data for FGASES</em>, not separated into HFCS, PFCS, SF6 and NF3.
+For the calculation of the future pc_cov, a <em>split into the four subgroups is performed</em>.
 The historical share per gas/basket is kept constant and applied to the future FGASES-basket.
 The mean over the last 6 available years is used.</p>
 <p>Check if the SSPs (KYOTOGHG_IPCM0EL per SSP scenario) are consistent with the given PRIMAP-hist data.</p>
-<p>Prepare LULUCF data.
-Problems with LULUCF data: high inter-annual variability, negative / positive emissions,
+<p><em>Prepare LULUCF data.</em></p>
+<p>Problems with LULUCF data: high inter-annual variability, negative / positive emissions,
 and the data we use are not consistent with the time series used in the pathway extension.</p>
-<p>Make one LULUCF table, with the chosen KYOTOGHG_IPCMLULUCF time series.
+<p><em>Make one LULUCF table, with the chosen KYOTOGHG_IPCMLULUCF time series.
 Prioritisation of data-sources as given in meta.lulucf.source_prioritisation.
-When a source has data, use them, and fill data gaps with ‘constant filling’.</p>
+When a source has data, use them, and fill data gaps with ‘constant filling’.</em></p>
 <p>Interpolation &amp; forward extrapolation: last value kept constant.
-Backward extrapolation: first available value after 1990 used for 1990 to year of first available value).</p>
-<p>Other option: linear interpolation, but constant extrapolation (with mean over several years).</p>
-<p>If KYOTOGHG is calculated here as sum over CO2 + CH4 + N2O: sum up the already inter- &amp; extrapolated time series.</p>
-<p>Additionally to prioritising CRF, BRU, UNFCCC, FAO in that order, put FAO or UNFCCC to the first place in the LULUCF prioritisation, for comparison runs.</p>
-<p>Create NDC exclLU pathways.
-Use PRIMAP-hist v2.1 HISTCR up to 2017 and then use given ndcs_emi_exclLU when available, with linear interpolation between values.</p>
-<p>For the countries without exclLU values check if they have inclLU values.
-If so use the onlyLU data from the NDC (or other options, as used in the NDC quantifications) to derive onlyLU emissions.
-Use the given inclLU values and the corresponding onlyLU values to derive exclLU, and then interpolate linearly between them (again, with PRIMAP-hist for KYOTOGHG_IPCM0EL up to 2017).</p>
+Backward extrapolation: first available value after 1990 used for 1990 to year of
+first available value).</p>
+<p>Other option: <em>linear interpolation, but constant extrapolation</em> (with mean over several years).</p>
+<p>If KYOTOGHG is calculated here as sum over CO2 + CH4 + N2O: sum up the already
+inter- &amp; extrapolated time series.</p>
+<p>Additionally to prioritising CRF, BRU, UNFCCC, FAO in that order, put FAO or UNFCCC
+to the first place in the LULUCF prioritisation, for comparison runs.</p>
+<p><em>Create NDC exclLU pathways.</em></p>
+<p><em>Use PRIMAP-hist v2.1 HISTCR up to 2017 and then use given ndcs_emi_exclLU when available,
+with linear interpolation between values.</em></p>
+<p><em>For the countries without exclLU values check if they have inclLU values.</em>
+<em>If so use the onlyLU data from the NDC (or other options, as used in the NDC quantifications)
+to derive onlyLU emissions.</em>
+<em>Use the given inclLU values and the corresponding onlyLU values to derive exclLU,
+and then interpolate linearly between them (again, with PRIMAP-hist for KYOTOGHG_IPCM0EL up to 2017).</em></p>
 <blockquote>
 <div><p>EMI onlyLU.</p>
 <blockquote>
@@ -127,24 +137,25 @@ Extrapolate with the SSP growth rates.</p>
 <h1>preprocessing.prep_read_in_tables<a class="headerlink" href="#preprocessing-prep-read-in-tables" title="Permalink to this headline">¶</a></h1>
 <p><strong>prep_read_in_tables(file, path_to_folder, database, meta)</strong></p>
 <blockquote>
-<div><p>Read in all datatables in folder.</p>
+<div><p><strong>Read in all datatables in folder.</strong></p>
 <p>All read into class ‘database’, with the tablenames as attributes.
-Replace AR4 strings by ‘’
-(e.g., KYOTOGHGAR4_IPCM0EL_TOTAL_NET_HISTORY_CRF2019.csv is read in
+<em>Replace AR4 strings by ‘’</em>
+(e.g., <code class="docutils literal notranslate"><span class="pre">KYOTOGHGAR4_IPCM0EL_TOTAL_NET_HISTORY_CRF2019.csv</span></code> is read in
 with tablename ‘KYOTOGHG_IPCM0EL_TOTAL_NET_HISTORY_CRF2019’).
-The attributes are classes again, with attributes entity, category,
-data, family, etc. (see meta.nomenclature.attrs).</p>
+The <em>attributes are classes</em> again, with <em>attributes entity, category,
+data, family, etc. (see meta.nomenclature.attrs)</em>.</p>
 </div></blockquote>
 </div>
 <div class="section" id="preprocessing-prep-ssps-fill-gaps">
 <h1>preprocessing.prep_ssps_fill_gaps<a class="headerlink" href="#preprocessing-prep-ssps-fill-gaps" title="Permalink to this headline">¶</a></h1>
 <p><strong>prep_ssps_fill_gaps(database, info_per_country, meta, nrvalues)</strong></p>
 <blockquote>
-<div><p>SSPs: check if there are countries that do have data in some SSPs but not in others and
+<div><p><strong>Fill gaps in down-scaled SSP data</strong></p>
+<p><em>SSPs: check if there are countries that do have data in some SSPs but not in others and
 use the average over the available SSPs for the non-available SSPs.
 For countries that have PRIMAP-hist data but no SSP data at all (for SSP1 to SSP5),
 use the PRIMAP-hist data and use the linear regression over the last 6 available years
-as future estimates.
+as future estimates.</em>
 Only happens for countries with very low emissions.</p>
 </div></blockquote>
 <p><strong>fill_values(database, info_per_country, info_act,         primap_extrapol, nrvalues, ent, ssp, ssps_test, ssps_mean)</strong></p>
@@ -159,9 +170,10 @@ data and use the linear regression over the last 6 available years as future est
 <h1>preprocessing.prep_ssps_split_fgases<a class="headerlink" href="#preprocessing-prep-ssps-split-fgases" title="Permalink to this headline">¶</a></h1>
 <p><strong>prep_ssps_split_fgases(meta, database, nrvalues)</strong></p>
 <blockquote>
-<div><p>The SSPs only have data for FGASES, not separated into HFCS, PFCS, SF6 and NF3.
-For the calculation of the future pc_cov, a split into the four subgroups is performed.
-The historical share per gas/basket is kept constant and applied to the future FGASES-basket.
+<div><p><strong>Split up the SSP FGASES basket based on historical ratios</strong></p>
+<p>The <em>SSPs</em> only have data for FGASES, not separated into HFCS, PFCS, SF6 and NF3.
+For the calculation of the future pc_cov, a <em>split into the four subgroups is performed</em>.
+The <em>historical share</em> per gas/basket is <em>kept constant</em> and applied to the future FGASES-basket.
 The mean over the last 6 available years is used.</p>
 </div></blockquote>
 <p><strong>calc_and_store_data(database, meta, fgases_share, nrvalues)</strong></p>
@@ -170,16 +182,17 @@ The mean over the last 6 available years is used.</p>
 <h1>preprocessing.prep_lulucf<a class="headerlink" href="#preprocessing-prep-lulucf" title="Permalink to this headline">¶</a></h1>
 <p><strong>prep_lulucf(database, meta, prios, srce_name, info_per_country, nrvalues, interpolation_method)</strong></p>
 <blockquote>
-<div><p>Prepare LULUCF data.</p>
-<p>Make one LULUCF table, with the chosen KYOTOGHG_IPCMLULUCF time series.
-Prioritisation of data-sources as given in prios.
-When a source has data, use them, and fill data gaps with ‘constant filling’
+<div><p><strong>Prepare LULUCF data (source prioritisation and gap filling)</strong></p>
+<p>Make <em>one LULUCF table, with the chosen KYOTOGHG_IPCMLULUCF time series</em>.
+<em>Prioritisation of data-sources as given in prios.</em>
+When a source has data, use them, and <em>fill data gaps</em> with ‘constant filling’
 (interpolation &amp; forward extrapolation: mean over last values kept constant,
 backward extrapolation: mean over first available values kept constant).
-If KYOTOGHG is calculated here from CO2 + CH4 + N2O: sum up the already inter- &amp; extrapolated time series.</p>
+If KYOTOGHG is calculated here from CO2 + CH4 + N2O: sum up the already
+inter- &amp; extrapolated time series.</p>
 <p>Problems with LULUCF data: high inter-annual variability, negative / positive emissions,
 and the data we use are not consistent with the time series used in the pathway extension.</p>
-<p>interpolation_method: ‘constant’ or ‘linear’.</p>
+<p><em>interpolation_method: ‘constant’ or ‘linear’.</em></p>
 </div></blockquote>
 <p><strong>calc_data()</strong></p>
 <blockquote>
@@ -190,37 +203,38 @@ For the backward extrapolation use the mean over 1990 to 1997, or the first avai
 <p><strong>store_data()</strong></p>
 <blockquote>
 <div><blockquote>
-<div><p>Only use a source if at least 6 values are available for 1990 - 2017.
-If no other source has data, then use a source with less than 6 values available nevertheless.
+<div><p><em>Only use a source if at least xx values are available for 1990 - 2017.</em>
+<em>If no other source has data, then use a source with less than xx values available nevertheless.</em>
 Store the DataFrames with various sources combined to one datatable in lulucf_table.</p>
 </div></blockquote>
-<p>Only use a source if at least 6 values are available for 1990 - 2017.
-If no other source has data, then use a source with less than 6 values available nevertheless.
+<p>Only use a source if at least xx values are available for 1990 - 2017.
+If no other source has data, then use a source with less than xx values available nevertheless.
 Store the DataFrames with various sources combined to one datatable in lulucf_table.</p>
 </div></blockquote>
 </div>
 <div class="section" id="preprocessing-current-pc-cov">
 <h1>preprocessing_current_pc_cov<a class="headerlink" href="#preprocessing-current-pc-cov" title="Permalink to this headline">¶</a></h1>
-<p>Preprocessing to calculate the part of emissions covered by national mitigation targets.</p>
+<p><strong>Preprocessing to calculate the part of emissions covered by national mitigation targets.</strong></p>
 <p>Read in all datatables in folder meta.path.preprocess/tables.</p>
 <p>All read into class ‘database’, with the tablenames as attributes.
-The meta-data are classes again, with attributes entity, category, data, unit, etc. (see meta.nomenclature.attrs).</p>
-<p>Calculate the part of historical emissions that is covered by an NDC.</p>
-<p>If the country does not have an (I)NDC: nothing is covered.</p>
+The meta-data are classes again, with attributes entity, category, data, unit, etc.
+(see meta.nomenclature.attrs).</p>
+<p><em>Calculate the part of historical emissions that is covered by an NDC.</em></p>
+<p><em>If the country does not have an (I)NDC: nothing is covered.</em></p>
 <p>Else:</p>
 <ul class="simple">
-<li><p>Assessment based on PRIMAP-hist HISTCR emissions time series.</p></li>
+<li><p>Assessment based on <em>PRIMAP-hist HISTCR</em> emissions time series.</p></li>
 <li><p>Categories and gases assessed (per country):</p>
 <ul>
-<li><p>Main categories (IPC1, IPC2, IPCMAG, IPC4 and IPC5; namely Energy, IPPU, Agriculture, Waste and Other; excludes LULUCF).</p></li>
-<li><p>Kyoto GHGs: CO2, CH4, N2O, HFCS, PFCS, SF6, NF3.</p></li>
+<li><p><em>Main categories</em> (IPC1, IPC2, IPCMAG, IPC4 and IPC5; namely Energy, IPPU, Agriculture, Waste and Other; excludes LULUCF).</p></li>
+<li><p><em>Kyoto GHGs</em>: CO2, CH4, N2O, HFCS, PFCS, SF6, NF3.</p></li>
 </ul>
 </li>
 <li><p>For each of these categories / gases, the information on whether they are covered by the country’s NDC is provided (csv-input, assessed by A. Günther).</p></li>
-<li><p>If no information is available for all gases: CO2, CH4, and N2O are assumed to be covered (in the csv-file already).</p></li>
-<li><p>If any of HFCS, PFCS, SF6 or NF3 is covered, put IPPU to covered (F-gases only relevant in IPC2).</p></li>
-<li><p>If all sectors (IPC1, 2, MAG, 4) are covered, the category “Other” (IPC5) is set to “YES” (in the csv-file already).</p></li>
-<li><p>For all category + gas combinations, the emissions are counted as covered, if neither the category nor the gas are assumed not to be covered (neither category nor gas can contain a “NO”).</p></li>
+<li><p>If <em>no information is available for all gases: CO2, CH4, and N2O are assumed to be covered</em> (in the csv-file already).</p></li>
+<li><p>If <em>any of HFCS, PFCS, SF6 or NF3 is covered, put IPPU to covered</em> (F-gases only relevant in IPC2).</p></li>
+<li><p>If <em>all sectors (IPC1, 2, MAG, 4) are covered, the category “Other” (IPC5) is set to “YES”</em> (in the csv-file already).</p></li>
+<li><p>For <em>all category + gas combinations</em>, the <em>emissions are counted as covered, if neither the category nor the gas are assumed not to be covered</em> (neither category nor gas can contain a “NO”).</p></li>
 </ul>
 <p>Here, matrices on the coverage (Yes: covered, No: not-covered) are created.</p>
 <p>We do not include the information on the EU28, but put the information into each of the member-states.</p>
@@ -228,23 +242,23 @@ The meta-data are classes again, with attributes entity, category, data, unit, e
 If you do so, write out a file to say what you have chosen!!!</p>
 <p>E.g. put all Energy and CO2 to covered (‘YES’), and the rest to ‘NO’.
 Or: all ANNEX-I parties cover everything, and the rest only Energy and CO2.</p>
-<p>The covered part of emissions (in ‘emissions’) is calculated here for historical years, for which data per sector and gas combination are available.
+<p>The covered part of emissions (in ‘emissions’) is calculated here for <em>historical years, for which data per sector and gas combination are available</em>.
 The assessment is based on the information in coverage.used_per_combi (all entries are already ‘YES’ or ‘NO’, no ‘NAN’ entries).
 All combinations with ‘YES’ are summed up to emicov_his, and all combinations with ‘NO’ are summed up to eminotcov_his.</p>
 <p>For KYOTOGHG_IPCM0EL, excluding LULUCF.</p>
 <p>Additionally calculate the historical emissions not-/covered for perGas_IPCM0EL and KYOTOGHG_perCategory.
 These values are not needed in further calculations, but nice to have.</p>
-<p>Calculate the part of future emissions covered by an NDC (KYOTOGHG_IPCM0EL)</p>
+<p>Calculate the part of <em>future emissions covered by an NDC (KYOTOGHG_IPCM0EL)</em></p>
 <ul>
-<li><p>For countries that cover everything: set pccov_fut to 1 (100%).</p></li>
-<li><p>For countries that cover nothing: set pccov_fut to 0 (0%).</p></li>
+<li><p>For countries that <em>cover everything: set pccov_fut to 1 (100%)</em>.</p></li>
+<li><p>For countries that <em>cover nothing: set pccov_fut to 0 (0%)</em>.</p></li>
 <li><dl>
-<dt>For countries that cover all sectors (excl. LULUCF), but not all gases:</dt><dd><p>the SSP entity_IPCM0EL emissions per gas are used to calculate pc_cov_fut.</p>
+<dt>For countries that <em>cover all sectors (excl. LULUCF), but not all gases:</em></dt><dd><p>the <em>SSP entity_IPCM0EL emissions per gas are used to calculate pc_cov_fut.</em></p>
 <ul>
 <li><p>SSP data are available for KYOTOGHG, CO2, CH4, N2O and FGASES:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>For countries that cover only some FGASES, the % share between HFCS, PFCS, SF6 and NF3 is kept constant (at mean over last 6 available PRIMAP-hist values).</p></li>
+<li><p>For <em>countries that cover only some FGASES, the % share between HFCS, PFCS, SF6 and NF3 is kept constant</em> (at mean over last 6 available PRIMAP-hist values).</p></li>
 <li><p>The share per gas is applied to the future KYOTOGHG_IPCM0EL emissions data.</p></li>
 </ul>
 </div></blockquote>
@@ -253,14 +267,14 @@ These values are not needed in further calculations, but nice to have.</p>
 </dd>
 </dl>
 </li>
-<li><p>For countries that do not cover all sectors:</p>
+<li><p>For countries that do <em>not cover all sectors</em>:</p>
 <blockquote>
 <div><ul>
-<li><p>Calculate the slope of pc_cov_his (2010 to most recent year with available data (“mry”)).</p>
+<li><p>Calculate the <em>slope of pc_cov_his</em> (2010 to most recent year with available data (“mry”)).</p>
 <blockquote>
 <div><ul>
-<li><p>If abs(slope) &lt; lim_slope: use the mean over 2010 to mry.</p></li>
-<li><p>If abs(slope) &gt; lim_slope: calculate pc_cov_fut from the correlation between emi_tot_his and emi_cov_his. For 2010 to mry.</p>
+<li><p>If <em>abs(slope) &lt; lim_slope: use the mean over 2010 to mry</em>.</p></li>
+<li><p>If <em>abs(slope) &gt; lim_slope: calculate pc_cov_fut from the correlation between emi_tot_his and emi_cov_his. For 2010 to mry.</em></p>
 <blockquote>
 <div><ul class="simple">
 <li><p>If any(pc_cov_fut) &gt; 90%, but not all(pc_cov_fut) &gt; 90% –&gt; set the pc_cov_fut &gt; 90% to 90%.</p></li>
@@ -278,8 +292,8 @@ These values are not needed in further calculations, but nice to have.</p>
 <li><p>If no future emissions data are available: use the mean over 2010 to mry.</p></li>
 </ul>
 <p>The future emicov / pccov values depend on the chosen SSP scenario.</p>
-<p>One can give a preference for the calculation method of pccov_fut.
-preference_pccov_fut can be ‘mean’ or ‘corr’.</p>
+<p>One can give a <em>preference for the calculation method of pccov_fut.
+preference_pccov_fut can be ‘mean’ or ‘corr’.</em></p>
 <dl class="simple">
 <dt>‘mean’:</dt><dd><p>Check for the countries for which the slope of a regression to the last available years of pccov_his is less than slope_lim.
 Use the mean over the years as pccov_fut.
@@ -289,28 +303,28 @@ For the others check the correlation between emitot and emicov and decide whethe
 </dd>
 </dl>
 <p>Default: ‘corr’.</p>
-<p>Update the current pc_cov-folder in setup_metadata after running preprocessing_current_pc_cov.py.</p>
+<p><strong>Update the current pc_cov-folder in setup_metadata after running preprocessing_current_pc_cov.py.</strong></p>
 </div>
 <div class="section" id="preprocessing-prep-coverage">
 <h1>preprocessing.prep_coverage<a class="headerlink" href="#preprocessing-prep-coverage" title="Permalink to this headline">¶</a></h1>
 <p><strong>prep_coverage(meta, infos_from_ndcs, info_per_country)</strong></p>
 <blockquote>
-<div><p>Calculate the part of historical emissions that is covered by an NDC.</p>
-<p>If the country does not have an (I)NDC: nothing is covered.</p>
+<div><p>Calculate the <strong>part of historical emissions that is covered by an NDC.</strong></p>
+<p>If the country does <em>not have an (I)NDC: nothing is covered.</em></p>
 <p>Else:</p>
 <ul class="simple">
-<li><p>Assessment based on PRIMAP-hist HISTCR emissions time series.</p></li>
+<li><p>Assessment based on <em>PRIMAP-hist HISTCR emissions time series.</em></p></li>
 <li><p>Categories and gases assessed (per country):</p>
 <ul>
-<li><p>Main categories (IPC1, IPC2, IPCMAG, IPC4 and IPC5; namely Energy, IPPU, Agriculture, Waste and Other; excludes LULUCF).</p></li>
-<li><p>Kyoto GHGs: CO2, CH4, N2O, HFCS, PFCS, SF6, NF3.</p></li>
+<li><p><em>Main categories</em> (IPC1, IPC2, IPCMAG, IPC4 and IPC5; namely Energy, IPPU, Agriculture, Waste and Other; excludes LULUCF).</p></li>
+<li><p><em>Kyoto GHGs</em>: CO2, CH4, N2O, HFCS, PFCS, SF6, NF3.</p></li>
 </ul>
 </li>
 <li><p>For each of these categories / gases, the information on whether they are covered by the country’s NDC is provided (csv-input, assessed by A. Günther).</p></li>
-<li><p>If no information is available for all gases: CO2, CH4, and N2O are assumed to be covered (in the csv-file already).</p></li>
-<li><p>If any of HFCS, PFCS, SF6 or NF3 is covered, put IPPU to covered (F-gases only relevant in IPC2).</p></li>
-<li><p>If all sectors (IPC1, 2, MAG, 4) are covered, the category “Other” (IPC5) is set to “YES” (in the csv-file already).</p></li>
-<li><p>For all category + gas combinations, the emissions are counted as covered, if neither the category nor the gas are assumed not to be covered (neither category nor gas can contain a “NO”).</p></li>
+<li><p>If <em>no information is available for all gases: CO2, CH4, and N2O are assumed to be covered</em> (in the csv-file already).</p></li>
+<li><p>If <em>any of HFCS, PFCS, SF6 or NF3 is covered, put IPPU to covered</em> (F-gases only relevant in IPC2).</p></li>
+<li><p>If <em>all sectors (IPC1, 2, MAG, 4) are covered, the category “Other” (IPC5) is set to “YES”</em> (in the csv-file already).</p></li>
+<li><p>For <em>all category + gas combinations, the emissions are counted as covered, if neither the category nor the gas are assumed not to be covered</em> (neither category nor gas can contain a “NO”).</p></li>
 </ul>
 <p>Here, matrices on the coverage (Yes: covered, No: not-covered) are created.</p>
 <p>We do not include the information on the EU28, but put the information into each of the member-states.</p>
@@ -321,11 +335,12 @@ For the others check the correlation between emitot and emicov and decide whethe
 <h1>preprocessing.prep_covered_emissions_his<a class="headerlink" href="#preprocessing-prep-covered-emissions-his" title="Permalink to this headline">¶</a></h1>
 <p><strong>prep_covered_emissions_his(database, coverage, meta, primap)</strong></p>
 <blockquote>
-<div><p>The covered part of emissions (in ‘emissions’) is calculated here for historical years,
-for which data per sector and gas combination are available.
+<div><p><strong>Covered emissions (historical values based on per gas/sector emissions)</strong></p>
+<p>The <em>covered part of emissions (in ‘emissions’) is calculated here for historical years,
+for which data per sector and gas combination are available.</em>
 The assessment is based on the information in coverage.used_per_combi (all entries are ‘YES’ or ‘NO’).
 All combinations with ‘YES’ are summed up to emicov_his, and all combinations with ‘NO’ are summed up to eminotcov_his.</p>
-<p>For KYOTOGHG_IPCM0EL, excluding LULUCF.</p>
+<p><em>For KYOTOGHG_IPCM0EL, excluding LULUCF.</em></p>
 </div></blockquote>
 <p><strong>testing(new_kyoto_ipcm0el, database, meta)</strong></p>
 <blockquote>
@@ -337,12 +352,12 @@ sum up to the original KYOTOGHG_IPCM0EL in ‘database’.</p>
 <h1>preprocessing.prep_covered_emissions_fut<a class="headerlink" href="#preprocessing-prep-covered-emissions-fut" title="Permalink to this headline">¶</a></h1>
 <p><strong>prep_covered_emissions_fut(database, meta, coverage, info_per_country, preference_pccov_fut, primap,     first_year_for_slope, slope_lim, rvalue_lim)</strong></p>
 <blockquote>
-<div><p>Calculate the part of future emissions covered by an NDC (KYOTOGHG_IPCM0EL)</p>
+<div><p>Calculate the <em>part of future emissions covered by an NDC (KYOTOGHG_IPCM0EL)</em></p>
 <ul>
-<li><p>For countries that cover everything: set pccov_fut to 1 (100%).</p></li>
-<li><p>For countries that cover nothing: set pccov_fut to 0 (0%).</p></li>
+<li><p>For countries that <em>cover everything: set pccov_fut to 1 (100%).</em></p></li>
+<li><p>For countries that <em>cover nothing: set pccov_fut to 0 (0%).</em></p></li>
 <li><dl>
-<dt>For countries that cover all sectors (excl. LULUCF), but not all gases:</dt><dd><p>the SSP entity_IPCM0EL emissions per gas are used to calculate pc_cov_fut.</p>
+<dt>For countries that <em>cover all sectors (excl. LULUCF), but not all gases:</em></dt><dd><p>the <em>SSP entity_IPCM0EL emissions per gas are used to calculate pc_cov_fut.</em></p>
 <ul>
 <li><p>SSP data are available for KYOTOGHG, CO2, CH4, N2O and FGASES:</p>
 <blockquote>
@@ -356,14 +371,14 @@ sum up to the original KYOTOGHG_IPCM0EL in ‘database’.</p>
 </dd>
 </dl>
 </li>
-<li><p>For countries that do not cover all sectors:</p>
+<li><p>For countries that do <em>not cover all sectors:</em></p>
 <blockquote>
 <div><ul>
-<li><p>Calculate the slope of pc_cov_his (2010 to most recent year with available data (“mry”)).</p>
+<li><p>Calculate the <em>slope of pc_cov_his (2010 to most recent year with available data (“mry”)).</em></p>
 <blockquote>
 <div><ul>
-<li><p>If abs(slope) &lt; lim_slope: use the mean over 2010 to mry.</p></li>
-<li><p>If abs(slope) &gt; lim_slope: calculate pc_cov_fut from the correlation between emi_tot_his and emi_cov_his. For 2010 to mry.</p>
+<li><p>If <em>abs(slope) &lt; lim_slope: use the mean over 2010 to mry</em>.</p></li>
+<li><p>If <em>abs(slope) &gt; lim_slope: calculate pc_cov_fut from the correlation between emi_tot_his and emi_cov_his. For 2010 to mry.</em></p>
 <blockquote>
 <div><ul class="simple">
 <li><p>If any(pc_cov_fut) &gt; 90%, but not all(pc_cov_fut) &gt; 90% –&gt; set the pc_cov_fut &gt; 90% to 90%.</p></li>
@@ -381,8 +396,8 @@ sum up to the original KYOTOGHG_IPCM0EL in ‘database’.</p>
 <li><p>If no future emissions data are available: use the mean over 2010 to mry.</p></li>
 </ul>
 <p>The future emicov / pccov values depend on the chosen SSP scenario.</p>
-<p>One can give a preference for the calculation method of pccov_fut.
-preference_pccov_fut can be ‘mean’ or ‘corr’.</p>
+<p>One can give a <em>preference for the calculation method of pccov_fut.
+preference_pccov_fut can be ‘mean’ or ‘corr’.</em></p>
 <dl class="simple">
 <dt>‘mean’:</dt><dd><p>Check for the countries for which the slope of a regression to the last available years of pccov_his is less than slope_lim.
 Use the mean over the years as pccov_fut.
@@ -419,25 +434,20 @@ else use the correlation between emitot and emicov.</p>
 pccov, pcnotcov, emicov, and eminotcov.</p>
 </div></blockquote>
 </div>
-<div class="section" id="modify-input-here-input-default">
-<h1>MODIFY_INPUT_HERE.input_default<a class="headerlink" href="#modify-input-here-input-default" title="Permalink to this headline">¶</a></h1>
-<p>Provide input for main_ndc_quantifications.py</p>
+<div class="section" id="modify-input-here-input-default-with-explanations">
+<h1>MODIFY_INPUT_HERE.input_DEFAULT_with_EXPLANATIONS<a class="headerlink" href="#modify-input-here-input-default-with-explanations" title="Permalink to this headline">¶</a></h1>
+<p><strong>Provide input for NDCmitiQ: main_ndc_quantifications.py</strong></p>
 <p>UNITS:
 Units for time series: emissions in Mt CO2eq, population in Pers, GDP in 2011GKD.
 Units of NDC input data (infos_from_ndcs_default.xlsx): Mt CO2eq or tCO2eq / cap (all AEI targets are in emissions per capita).</p>
 <p>PREPROCESSING:
 If you want to do the preprocessing of data, run preprocessing.py, and update the ‘folder_preprocess’ in setup_metadata.py.
 Else, the folder stored in setup_metadata.py will be used.</p>
-<p>Chose the method for the pathway calculations (per country pathways).</p>
-<dl class="simple">
-<dt>‘constant_percentages’:</dt><dd><p>The percentage difference to the baseline emissions of the last available target year
-is kept constant.</p>
-</dd>
-<dt>‘constant_emissions’:</dt><dd><p>The emissions of the last available target year are kept constant.</p>
-</dd>
-</dl>
-<p>Default:
-meta.method_pathways = ‘constant_percentages’</p>
+<p><strong>meta.ssps.chosen</strong></p>
+<p>Chose current ssp-scenario.</p>
+<p><strong>meta.output_folder</strong></p>
+<p>Output-folder (add something if you want).</p>
+<p><strong>meta.calculate_targets_for</strong></p>
 <p>For which countries should targets be used for the calculation of emission pathways for group of countries?
 For the others, the baseline emissions will be used.</p>
 <p>countries: ‘all’, or e.g., [‘EU28’, ‘AUS’, ‘CHN’], or e.g., get_isos_groups([‘ANNEXI’]).</p>
@@ -451,31 +461,57 @@ cat_countries = [‘ARG’, ‘AUS’, ‘BTN’, ‘BRA’, ‘CAN’, ‘CHL�
 ‘KOR’, ‘CHE’, ‘TUR’, ‘ARE’, ‘USA’, ‘UKR’, ‘VNM’]</p>
 </div></blockquote>
 <p>meta.calculate_targets_for = {‘use_it’: True, ‘countries’: cat_countries}</p>
+<p><strong>meta.ndcs_type_prioritisations</strong></p>
 <p>Which target-types should be prioritised in the calculation of group-pathways?</p>
-<p>ndcs_type_prioritisations can be a certain target tpye (e.g., ‘ABS’), or ‘TYPE_ORIG’ or ‘TYPE_CALC’.
-Or several ordered options (only makes sense for != TYPE_ORIG and != TYPE_CALC).</p>
-<p>One can chose from [‘TYPE_ORIG’, ‘TYPE_CALC’, ‘ABS’, ‘RBY’, ‘RBU’, ‘ABU’, ‘REI’, ‘AEI’].</p>
-<p>If TYPE_ORIG: use the ‘original target type’ (what has been stated (+/-)
+<p>ndcs_type_prioritisations can be a certain target tpye (e.g., ‘ABS’), or ‘TYPE_MAIN’ or ‘TYPE_RECLASS’.
+Or several ordered options (only makes sense for != TYPE_MAIN and != TYPE_RECLASS).</p>
+<p>One can chose from [‘TYPE_MAIN’, ‘TYPE_RECLASS’, ‘ABS’, ‘RBY’, ‘RBU’, ‘ABU’, ‘REI’, ‘AEI’].</p>
+<p>If TYPE_MAIN: use the ‘main target type’ (what has been stated (+/-)
 in the NDC as target type).
-If TYPE_CALC: use the target type that has been assessed to be the ‘best
-suitable’ (based on the NDC).
+If TYPE_RECLASS: use the target type that has been assessed to be the ‘best
+suitable’ for the quantification (based on the NDC).
 Explanation: e.g., when it is an RBU target, but the absolute target emissions are available
 (e.g., given value, or based on their BAU and %-reduction),
-TYPE_ORIG can be RBU, and TYPE_CALC can be ABS. It can also have TYPE_ORIG is
-NGT and TYPE_CALC is ABU, as they quantified some reductions.
-Iterating through ndc_type_prioritisations, and using TYPE_CALC if none of the iterations
+TYPE_MAIN can be RBU, and TYPE_RECLASS can be ABS. It can also have TYPE_MAIN is
+NGT and TYPE_RECLASS is ABU, as they quantified some reductions.
+Iterating through ndc_type_prioritisations, and using TYPE_RECLASS if none of the iterations
 found target values for the current target type in the NDC input file.
 If ‘countries’ is ‘all’, apply it to all countries. Else, give ISO3s, and it
 is only applied to those countries.
-Else, the pathway is calculated based on TYPE_CALC.</p>
+Else, the pathway is calculated based on TYPE_RECLASS.</p>
 <p>Default:
-meta.ndcs_type_prioritisations = {‘use_it’: True, ‘ndcs_type_prioritisations’: [‘TYPE_CALC’], ‘countries’: ‘all’}</p>
+meta.ndcs_type_prioritisations = {‘use_it’: True, ‘ndcs_type_prioritisations’: [‘TYPE_RECLASS’], ‘countries’: ‘all’}</p>
+<p><strong>meta.use_ndc_emissions_if_available</strong></p>
 <p>Use NDC emissions data if available.
-If TYPE_CALC is used set it to True, for TYPE_ORIG set it to False.</p>
-<p>For countries without unconditional target: use the baseline emissions for the unconditional
-pathway even if the conditional target is worse than the baseline (in 2030)?</p>
+If TYPE_RECLASS is used set it to True, for TYPE_MAIN set it to False.</p>
+<p><strong>meta.set_pccov_to_100</strong></p>
+<p>Predefine that the coverage used for the pathways is 100% for certain countries.
+Only possible for relative targets / reductions.</p>
+<p>Default:
+meta.set_pccov_to_100 = {‘use_it’: False}</p>
+<p><strong>meta.method_pathways</strong></p>
+<p>Chose the method for the pathway calculations (per country pathways).</p>
+<dl class="simple">
+<dt>‘constant_percentages’:</dt><dd><p>The percentage difference to the baseline emissions of the last available target year
+is kept constant.</p>
+</dd>
+<dt>‘constant_emissions’:</dt><dd><p>The emissions of the last available target year are kept constant.</p>
+</dd>
+</dl>
+<p>Default:
+meta.method_pathways = ‘constant_percentages’</p>
+<p><strong>meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi</strong></p>
+<p>For countries without unconditional target but with conditional target:
+use the baseline emissions for the unconditional pathway
+even if the conditional target is worse than the baseline (in 2030)?
+Default:</p>
+<blockquote>
+<div><p>if the cond ptw is above bl, the uncond ptw = cond ptw &amp;
+if the cond ptw is below bl, the uncond ptw = bl.</p>
+</div></blockquote>
 <p>Default:
 meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi = False</p>
+<p><strong>meta.strengthen_targets</strong></p>
 <p>The targets are strengthened by ndc_strengthen.</p>
 <p>Chose between ‘how_to’: ‘add’ or ‘multiply’.
 ‘add’: the reduction is increased by adding the value in ‘pc’.
@@ -485,10 +521,7 @@ reduction of the covered part of emissions).</p>
 <p>For absolute targets (ABS, ABU, AEI), it is not distinguished between ‘add’ and ‘multiply’.</p>
 <p>Default:
 meta.strengthen_targets = {‘use_it’: False}</p>
-<p>Predefine that the coverage used for the pathways is 100% for certain countries.
-Only possible for relative targets / reductions.</p>
-<p>Default:
-meta.set_pccov_to_100 = {‘use_it’: False}</p>
+<p><strong>meta.groups_for_which_to_calculate_pathways</strong></p>
 <p>Groups for which to get the pathways.
 ‘EU28’, ‘EARTH’, ‘R5ASIA’, ‘R5LAM’, ‘R5MAF’, ‘R5OECD’, ‘R5REF’ will be calculated per default.
 The R5 regions are needed for the temperature pathways (PRIMAP Emissions Module / Climate Module).</p>
@@ -509,7 +542,7 @@ meta.groups_for_which_to_calculate_pathways = []</p>
 This includes per-country target emissions, pathways, and globally aggregated pathways.</p>
 <p>Put in the name(s) of the wanted input-file(s) here. You can run several input-files in a row.</p>
 <p>Default:
-main_ndc_quantifications(‘input_SSP2_typeCalc_pccov100’, ‘’)</p>
+main_ndc_quantifications(‘input_SSP2_typeReclass_pccov100’, ‘’)</p>
 </div>
 <div class="section" id="main-ndc-quantifications">
 <h1>main_ndc_quantifications<a class="headerlink" href="#main-ndc-quantifications" title="Permalink to this headline">¶</a></h1>
@@ -519,7 +552,7 @@ main_ndc_quantifications(‘input_SSP2_typeCalc_pccov100’, ‘’)</p>
 <p># ————————-</p>
 <p>Input examples:</p>
 <blockquote>
-<div><p>input_file = ‘input_SSP2_typeCalcForAllCountries’ (name of input-file, stored in /MODIFY_INPUT_HERE).</p>
+<div><p>input_file = ‘input_SSP2_typeReclass’ (name of input-file, stored in /MODIFY_INPUT_HERE).</p>
 <p>lulucf_prio = ‘’ or ‘UNFCCC’ or ‘FAO’.</p>
 <blockquote>
 <div><ul class="simple">
@@ -560,11 +593,11 @@ Nothing is calculated, baseline emissions are assumed.</p>
 </dl>
 <p># ————————-</p>
 <p>Per country one target type is chosen for the aggregation to a global pathway.
-This is generally the type_orig or type_calc.</p>
+This is generally the type_main or type_reclass.</p>
 <dl class="simple">
-<dt>type_orig: what is said (+/-) in the NDC, e.g., 20% reduction compared to BAU (RBU).</dt><dd><p>In this case the comparison emissions are prioritised (comparison runs with ‘external’ input data).</p>
+<dt>type_main: what is said (+/-) in the NDC, e.g., 20% reduction compared to BAU (RBU).</dt><dd><p>In this case the comparison emissions are prioritised (comparison runs with ‘external’ input data).</p>
 </dd>
-<dt>type_calc: what seems more suitable for the pathway calculations, e.g., if for the BAU target a quantification is given in the NDC (ABS).</dt><dd><p>In this case the emissions given in the NDCs are prioritised.</p>
+<dt>type_reclass: what seems more suitable for the pathway calculations, e.g., if for the BAU target a quantification is given in the NDC (ABS).</dt><dd><p>In this case the emissions given in the NDCs are prioritised.</p>
 </dd>
 </dl>
 <p># ————————-</p>
@@ -584,8 +617,8 @@ In the end, a pathway is calculated for EU28.</p>
 </dl>
 <p>In principle one can also provide other tables (same type of data, but from other sources / with other values),
 as long as they have the same structure and names.</p>
-<p>If it is type_calc: use the ndc-emissions if available.
-For type_orig: use the comparison data.</p>
+<p>If it is type_reclass: use the ndc-emissions if available.
+For type_main: use the comparison data.</p>
 <dl class="simple">
 <dt>Additionally calculate and add the following tables to the database:</dt><dd><p>‘<a href="#id9"><span class="problematic" id="id10">KYOTOGHG_IPCM0EL_NOTCOV_PC_</span></a>’ + meta.ssps.chosen + ‘FILLED_COVERAGE’
 ‘<a href="#id11"><span class="problematic" id="id12">KYOTOGHG_IPCM0EL_COV_EMI_</span></a>’ + meta.ssps.chosen + ‘FILLED_COVERAGE’
@@ -593,10 +626,10 @@ For type_orig: use the comparison data.</p>
 ‘<a href="#id15"><span class="problematic" id="id16">KYOTOGHG_IPC0_TOTAL_NET_</span></a>’ + meta.ssps.chosen + ‘_VARIOUS{lulucf_prio}’</p>
 </dd>
 </dl>
-<p>Write relevant input-info to log_file.md in the output-folder.
-In this file one will find the necessary information to re-run the calculations with the same setup.</p>
 <p>Correct or modify the calculation options given in input_file if necessary.
 ndcs_check_options_for_target_calculations(meta).</p>
+<p>Write relevant input-info to log_file.md in the output-folder.
+In this file one will find the necessary information to re-run the calculations with the same setup.</p>
 <p>TARGETS
 Calculate the target emissions per country and un/conditional &amp; best/worst &amp; year.
 ndcs_calculate_targets(database, meta).</p>
@@ -624,7 +657,22 @@ Does not check whether the emissions / pop / gdp data seem realistic.</p>
 <p><strong>ndcs_check_options_for_target_calculations(meta)</strong></p>
 <blockquote>
 <div><p>Check whether the values for attributes of classes meta.calculate_targets_for, meta.ndcs_type_prioritisations,
-meta.set_pccov_to_100, and meta.strengthen_targets – given in input_file – are ok.</p>
+meta.set_pccov_to_100, meta.strengthen_targets, etc. – given in input_file – are ok.
+If nothing is given, or the given values are not ok, set them to default values or exit.</p>
+<p>calculate_targets_for
+If it is not to be used, use the default for all countries (excl. USA).
+Make new entry meta.calculate_targets_for_ctr with the final ISO3s for which targets should be calculated.</p>
+<blockquote>
+<div><p>If it is not to be used, use it for all countries (excl. USA).</p>
+</div></blockquote>
+<p>ndcs_type_prioritisations
+If it is not to be used, use the default for all countries.</p>
+<p>use_ndc_emissions_if_available</p>
+<p>set_pccov_to_100</p>
+<p>For countries without unconditional target: use the baseline emissions for the unconditional
+pathway even if the conditional target is worse than the baseline (in 2030)?</p>
+<p>strengthen_targets</p>
+<p>groups_for_which_to_calculate_pathways (not checking for correct input here…)</p>
 </div></blockquote>
 <p><strong>check_countries(countries, meta)</strong></p>
 <blockquote>
@@ -658,7 +706,7 @@ If this results in a % reduction that exceeds 100%, it is set to 100% (meaning a
 reduction …).</p>
 <p>For absolute targets (ABS, ABU, AEI), it is not distinguished between ‘add’ and ‘multiply’.</p>
 </div></blockquote>
-<p><strong>quantification_per_country(iso_act, meta, lulucf_first_try, calculated_targets, txt)</strong></p>
+<p><strong>quantification_per_country(iso_act, meta, lulucf_first_try, calculated_targets, txt_targets)</strong></p>
 <blockquote>
 <div><p>Per country get the information on the different available target types, and get the calculation data for
 emi, pop, gdp for the reference and target years.
@@ -698,7 +746,7 @@ Based on national conversion factors from AR2 to AR4 from PRIMAPHIST21 KYOTOGHG_
 </div></blockquote>
 </div></blockquote>
 </div></blockquote>
-<p><strong>calculate_targets_depending_on_type(        ict, iso_act, refyr, taryr, ndc_value_exclLU, ndc_value_inclLU, meta, lulucf_first_try, txt)</strong></p>
+<p><strong>calculate_targets_depending_on_type(        ict, iso_act, refyr, taryr, ndc_value_exclLU, ndc_value_inclLU, meta, lulucf_first_try, txt_targets)</strong></p>
 <blockquote>
 <div><p>Calculation of targets: excluding LULUCF and including LULUCF.
 For one country, target type, target year, conditionality, range.</p>
@@ -707,7 +755,7 @@ For one country, target type, target year, conditionality, range.</p>
 <p>Get the information on whether LULUCF is included in the target or not.</p>
 <p>Get the LULUCF data for the reference and target year.</p>
 </div></blockquote>
-<p><strong>calc_targets_inclLU_exclLU(tar_emi_exclLU, tar_emi_inclLU, bl_onlyLU_taryr, tar_type_used, txt)</strong></p>
+<p><strong>calc_targets_inclLU_exclLU(tar_emi_exclLU, tar_emi_inclLU, bl_onlyLU_taryr, tar_type_used, txt_targets)</strong></p>
 <blockquote>
 <div><blockquote>
 <div><blockquote>
@@ -747,6 +795,7 @@ And add the bl_onlyLU_refyr as is.</p>
 <p>Iterate through the iso3s in meta.ndcs_info (EU28 as single countries, using the EU28 target info).
 Calculate ‘all available targets’ per country (targets as in meta.ndcs_info, in columns
 [‘ABS’, ‘RBY’, ‘RBU’, ‘ABU’, ‘REI’, ‘AEI’]).</p>
+<p>Write per country information to single txt-files (information on how the target was calculated, with equations)</p>
 <blockquote>
 <div><p>First run of quantifications.</p>
 <p>If any of the tar_exclLU are negative re-run the quantifications with different method.</p>
@@ -912,7 +961,7 @@ Countries for which something (some emissions based on data provided within the 
 <li class="toctree-l1"><a class="reference internal" href="#preprocessing-prep-coverage">preprocessing.prep_coverage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#preprocessing-prep-covered-emissions-his">preprocessing.prep_covered_emissions_his</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#preprocessing-prep-covered-emissions-fut">preprocessing.prep_covered_emissions_fut</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#modify-input-here-input-default">MODIFY_INPUT_HERE.input_default</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#modify-input-here-input-default-with-explanations">MODIFY_INPUT_HERE.input_DEFAULT_with_EXPLANATIONS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#to-be-run">_to_be_run</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#main-ndc-quantifications">main_ndc_quantifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#main-functions-ndcs-some-initial-testing">main_functions.ndcs_some_initial_testing</a></li>

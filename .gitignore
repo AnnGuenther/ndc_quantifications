@@ -2,9 +2,12 @@
 /single_targets__needs_update/*
 /paper/*
 /paper_20200818/*
+/paper_submitted/*
 /md_files/*
 /matlab_scripts/*
 /plots/*
 __pycache__/
 /documentation/*
 /latex_files/*
+/document_for_zenodo*
+/todo_202101.md

@@ -13,11 +13,13 @@ import helpers_functions as hpf
 def prep_ssps_fill_gaps(database, info_per_country, meta, nrvalues):
     
     """
-    SSPs: check if there are countries that do have data in some SSPs but not in others and
+    **Fill gaps in down-scaled SSP data**
+    
+    *SSPs: check if there are countries that do have data in some SSPs but not in others and
     use the average over the available SSPs for the non-available SSPs.
     For countries that have PRIMAP-hist data but no SSP data at all (for SSP1 to SSP5), 
     use the PRIMAP-hist data and use the linear regression over the last 6 available years 
-    as future estimates.
+    as future estimates.*
     Only happens for countries with very low emissions.
     """
     

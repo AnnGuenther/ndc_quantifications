@@ -14,109 +14,110 @@ from setup_metadata import setup_metadata
 # %%
 meta = setup_metadata()
 
+
 folders_reclass = [
-    'ndcs_20200628_2218_SSP1_typeCalc',
-    'ndcs_20200628_2120_SSP2_typeCalc',
-    'ndcs_20200628_2229_SSP3_typeCalc',
-    'ndcs_20200628_2243_SSP4_typeCalc',
-    'ndcs_20200628_2258_SSP5_typeCalc']
+ 'ndcs_20201122_1037_SSP1_typeReclass',
+ 'ndcs_20201122_1114_SSP2_typeReclass',
+ 'ndcs_20201122_1154_SSP3_typeReclass',
+ 'ndcs_20201122_1221_SSP4_typeReclass',
+ 'ndcs_20201122_1312_SSP5_typeReclass']
 folders_reclass100 = [
-    'ndcs_20200628_2221_SSP1_typeCalc_pccov100',
-    'ndcs_20200628_2122_SSP2_typeCalc_pccov100',
-    'ndcs_20200628_2234_SSP3_typeCalc_pccov100',
-    'ndcs_20200628_2248_SSP4_typeCalc_pccov100',
-    'ndcs_20200628_2301_SSP5_typeCalc_pccov100']
+ 'ndcs_20201122_1044_SSP1_typeReclass_pccov100',
+ 'ndcs_20201122_1122_SSP2_typeReclass_pccov100',
+ 'ndcs_20201122_1208_SSP3_typeReclass_pccov100',
+ 'ndcs_20201122_1230_SSP4_typeReclass_pccov100',
+ 'ndcs_20201122_1322_SSP5_typeReclass_pccov100']
 
 folders_main = [
-    'ndcs_20200702_0834_SSP1_typeOrig',
-    'ndcs_20200702_0829_SSP2_typeOrig',
-    'ndcs_20200702_0839_SSP3_typeOrig',
-    'ndcs_20200702_0844_SSP4_typeOrig',
-    'ndcs_20200702_0848_SSP5_typeOrig']
+ 'ndcs_20201122_1013_SSP1_typeMain',
+ 'ndcs_20201122_1054_SSP2_typeMain',
+ 'ndcs_20201122_1131_SSP3_typeMain',
+ 'ndcs_20201122_1237_SSP4_typeMain',
+ 'ndcs_20201122_1254_SSP5_typeMain']
 folders_main100 = [
-    'ndcs_20200702_0836_SSP1_typeOrig_pccov100',
-    'ndcs_20200702_0830_SSP2_typeOrig_pccov100',
-    'ndcs_20200702_0840_SSP3_typeOrig_pccov100',
-    'ndcs_20200702_0845_SSP4_typeOrig_pccov100',
-    'ndcs_20200702_0849_SSP5_typeOrig_pccov100']
+ 'ndcs_20201122_1029_SSP1_typeMain_pccov100',
+ 'ndcs_20201122_1103_SSP2_typeMain_pccov100',
+ 'ndcs_20201122_1141_SSP3_typeMain_pccov100',
+ 'ndcs_20201122_1245_SSP4_typeMain_pccov100',
+ 'ndcs_20201122_1303_SSP5_typeMain_pccov100']
 
 folders_reclass_constant_path = [
-    'ndcs_20200930_1636_SSP1_typeCalc_constEmiAfterLastTar',
-    'ndcs_20200930_1625_SSP2_typeCalc_constEmiAfterLastTar',
-    'ndcs_20200930_1649_SSP3_typeCalc_constEmiAfterLastTar',
-    'ndcs_20200930_1705_SSP4_typeCalc_constEmiAfterLastTar',
-    'ndcs_20200930_1720_SSP5_typeCalc_constEmiAfterLastTar']
+ 'ndcs_20201122_1043_SSP1_typeReclass_constEmiAfterLastTar',
+ 'ndcs_20201122_1120_SSP2_typeReclass_constEmiAfterLastTar',
+ 'ndcs_20201122_1206_SSP3_typeReclass_constEmiAfterLastTar',
+ 'ndcs_20201122_1228_SSP4_typeReclass_constEmiAfterLastTar',
+ 'ndcs_20201122_1320_SSP5_typeReclass_constEmiAfterLastTar']
 folders_reclass100_constant_path = [
-    'ndcs_20200628_2225_SSP1_typeCalc_pccov100_constEmiAfterLastTar',
-    'ndcs_20200628_2125_SSP2_typeCalc_pccov100_constEmiAfterLastTar',
-    'ndcs_20200628_2238_SSP3_typeCalc_pccov100_constEmiAfterLastTar',
-    'ndcs_20200628_2253_SSP4_typeCalc_pccov100_constEmiAfterLastTar',
-    'ndcs_20200628_2304_SSP5_typeCalc_pccov100_constEmiAfterLastTar']
+ 'ndcs_20201122_1052_SSP1_typeReclass_pccov100_constEmiAfterLastTar',
+ 'ndcs_20201122_1130_SSP2_typeReclass_pccov100_constEmiAfterLastTar',
+ 'ndcs_20201122_1220_SSP3_typeReclass_pccov100_constEmiAfterLastTar',
+ 'ndcs_20201122_1236_SSP4_typeReclass_pccov100_constEmiAfterLastTar',
+ 'ndcs_20201122_1331_SSP5_typeReclass_pccov100_constEmiAfterLastTar']
 
 folders_main_constant_path = [
-    'ndcs_20200930_1639_SSP1_typeOrig_constEmiAfterLastTar',
-    'ndcs_20200930_1628_SSP2_typeOrig_constEmiAfterLastTar',
-    'ndcs_20200930_1654_SSP3_typeOrig_constEmiAfterLastTar',
-    'ndcs_20200930_1709_SSP4_typeOrig_constEmiAfterLastTar',
-    'ndcs_20200930_1723_SSP5_typeOrig_constEmiAfterLastTar']
+ 'ndcs_20201122_1028_SSP1_typeMain_constEmiAfterLastTar',
+ 'ndcs_20201122_1102_SSP2_typeMain_constEmiAfterLastTar',
+ 'ndcs_20201122_1139_SSP3_typeMain_constEmiAfterLastTar',
+ 'ndcs_20201122_1244_SSP4_typeMain_constEmiAfterLastTar',
+ 'ndcs_20201122_1301_SSP5_typeMain_constEmiAfterLastTar']
 folders_main100_constant_path = [
-    'ndcs_20200702_0837_SSP1_typeOrig_pccov100_constEmiAfterLastTar',
-    'ndcs_20200702_0831_SSP2_typeOrig_pccov100_constEmiAfterLastTar',
-    'ndcs_20200702_0841_SSP3_typeOrig_pccov100_constEmiAfterLastTar',
-    'ndcs_20200702_0846_SSP4_typeOrig_pccov100_constEmiAfterLastTar',
-    'ndcs_20200702_0850_SSP5_typeOrig_pccov100_constEmiAfterLastTar']
+ 'ndcs_20201122_1035_SSP1_typeMain_pccov100_constEmiAfterLastTar',
+ 'ndcs_20201122_1112_SSP2_typeMain_pccov100_constEmiAfterLastTar',
+ 'ndcs_20201122_1151_SSP3_typeMain_pccov100_constEmiAfterLastTar',
+ 'ndcs_20201122_1252_SSP4_typeMain_pccov100_constEmiAfterLastTar',
+ 'ndcs_20201122_1310_SSP5_typeMain_pccov100_constEmiAfterLastTar']
 
 folders_reclass_baselineUncondi = [
-    'ndcs_20200930_1638_SSP1_typeCalc_BLForUCAboveBL',
-    'ndcs_20200930_1626_SSP2_typeCalc_BLForUCAboveBL',
-    'ndcs_20200930_1651_SSP3_typeCalc_BLForUCAboveBL',
-    'ndcs_20200930_1707_SSP4_typeCalc_BLForUCAboveBL',
-    'ndcs_20200930_1722_SSP5_typeCalc_BLForUCAboveBL']
+ 'ndcs_20201122_1041_SSP1_typeReclass_BLForUCAboveBL',
+ 'ndcs_20201122_1119_SSP2_typeReclass_BLForUCAboveBL',
+ 'ndcs_20201122_1203_SSP3_typeReclass_BLForUCAboveBL',
+ 'ndcs_20201122_1227_SSP4_typeReclass_BLForUCAboveBL',
+ 'ndcs_20201122_1318_SSP5_typeReclass_BLForUCAboveBL']
 folders_reclass100_baselineUncondi = [
-    'ndcs_20200628_2227_SSP1_typeCalc_pccov100_BLForUCAboveBL',
-    'ndcs_20200628_2126_SSP2_typeCalc_pccov100_BLForUCAboveBL',
-    'ndcs_20200628_2241_SSP3_typeCalc_pccov100_BLForUCAboveBL',
-    'ndcs_20200628_2255_SSP4_typeCalc_pccov100_BLForUCAboveBL',
-    'ndcs_20200628_2306_SSP5_typeCalc_pccov100_BLForUCAboveBL']
+ 'ndcs_20201122_1050_SSP1_typeReclass_pccov100_BLForUCAboveBL',
+ 'ndcs_20201122_1128_SSP2_typeReclass_pccov100_BLForUCAboveBL',
+ 'ndcs_20201122_1217_SSP3_typeReclass_pccov100_BLForUCAboveBL',
+ 'ndcs_20201122_1234_SSP4_typeReclass_pccov100_BLForUCAboveBL',
+ 'ndcs_20201122_1329_SSP5_typeReclass_pccov100_BLForUCAboveBL']
 
 folders_main_baselineUncondi = [
-    'ndcs_20200930_1641_SSP1_typeOrig_BLForUCAboveBL',
-    'ndcs_20200930_1629_SSP2_typeOrig_BLForUCAboveBL',
-    'ndcs_20200930_1655_SSP3_typeOrig_BLForUCAboveBL',
-    'ndcs_20200930_1711_SSP4_typeOrig_BLForUCAboveBL',
-    'ndcs_20200930_1725_SSP5_typeOrig_BLForUCAboveBL']
+ 'ndcs_20201122_1026_SSP1_typeMain_BLForUCAboveBL',
+ 'ndcs_20201122_1100_SSP2_typeMain_BLForUCAboveBL',
+ 'ndcs_20201122_1137_SSP3_typeMain_BLForUCAboveBL',
+ 'ndcs_20201122_1242_SSP4_typeMain_BLForUCAboveBL',
+ 'ndcs_20201122_1259_SSP5_typeMain_BLForUCAboveBL']
 folders_main100_baselineUncondi = [
-    'ndcs_20200702_0838_SSP1_typeOrig_pccov100_BLForUCAboveBL',
-    'ndcs_20200702_0832_SSP2_typeOrig_pccov100_BLForUCAboveBL',
-    'ndcs_20200702_0843_SSP3_typeOrig_pccov100_BLForUCAboveBL',
-    'ndcs_20200702_0847_SSP4_typeOrig_pccov100_BLForUCAboveBL',
-    'ndcs_20200702_0852_SSP5_typeOrig_pccov100_BLForUCAboveBL']
+ 'ndcs_20201122_1033_SSP1_typeMain_pccov100_BLForUCAboveBL',
+ 'ndcs_20201122_1110_SSP2_typeMain_pccov100_BLForUCAboveBL',
+ 'ndcs_20201122_1148_SSP3_typeMain_pccov100_BLForUCAboveBL',
+ 'ndcs_20201122_1251_SSP4_typeMain_pccov100_BLForUCAboveBL',
+ 'ndcs_20201122_1308_SSP5_typeMain_pccov100_BLForUCAboveBL']
 
 folders_reclass_fao = [
-    'ndcs_20200930_1642_SSP1_typeCalc_FAO',
-    'ndcs_20200930_1630_SSP2_typeCalc_FAO',
-    'ndcs_20200930_1657_SSP3_typeCalc_FAO',
-    'ndcs_20200930_1713_SSP4_typeCalc_FAO',
-    'ndcs_20200930_1726_SSP5_typeCalc_FAO']
+ 'ndcs_20201122_1037_SSP1_typeReclass_FAO',
+ 'ndcs_20201122_1114_SSP2_typeReclass_FAO',
+ 'ndcs_20201122_1154_SSP3_typeReclass_FAO',
+ 'ndcs_20201122_1221_SSP4_typeReclass_FAO',
+ 'ndcs_20201122_1312_SSP5_typeReclass_FAO']
 folders_reclass100_fao = [
-    'ndcs_20200706_1234_SSP1_typeCalc_pccov100_FAO',
-    'ndcs_20200706_1226_SSP2_typeCalc_pccov100_FAO',
-    'ndcs_20200706_1241_SSP3_typeCalc_pccov100_FAO',
-    'ndcs_20200706_1249_SSP4_typeCalc_pccov100_FAO',
-    'ndcs_20200706_1257_SSP5_typeCalc_pccov100_FAO']
+ 'ndcs_20201122_1044_SSP1_typeReclass_pccov100_FAO',
+ 'ndcs_20201122_1122_SSP2_typeReclass_pccov100_FAO',
+ 'ndcs_20201122_1208_SSP3_typeReclass_pccov100_FAO',
+ 'ndcs_20201122_1230_SSP4_typeReclass_pccov100_FAO',
+ 'ndcs_20201122_1322_SSP5_typeReclass_pccov100_FAO']
 
 folders_main_fao = [
-    'ndcs_20200930_1644_SSP1_typeOrig_FAO',
-    'ndcs_20200930_1632_SSP2_typeOrig_FAO',
-    'ndcs_20200930_1658_SSP3_typeOrig_FAO',
-    'ndcs_20200930_1715_SSP4_typeOrig_FAO',
-    'ndcs_20200930_1727_SSP5_typeOrig_FAO']
+ 'ndcs_20201122_1013_SSP1_typeMain_FAO',
+ 'ndcs_20201122_1054_SSP2_typeMain_FAO',
+ 'ndcs_20201122_1131_SSP3_typeMain_FAO',
+ 'ndcs_20201122_1237_SSP4_typeMain_FAO',
+ 'ndcs_20201122_1254_SSP5_typeMain_FAO']
 folders_main100_fao = [
-    'ndcs_20200706_1236_SSP1_typeOrig_pccov100_FAO',
-    'ndcs_20200706_1228_SSP2_typeOrig_pccov100_FAO',
-    'ndcs_20200706_1243_SSP3_typeOrig_pccov100_FAO',
-    'ndcs_20200706_1251_SSP4_typeOrig_pccov100_FAO',
-    'ndcs_20200706_1259_SSP5_typemain_pccov100_FAO']
+ 'ndcs_20201122_1029_SSP1_typeMain_pccov100_FAO',
+ 'ndcs_20201122_1103_SSP2_typeMain_pccov100_FAO',
+ 'ndcs_20201122_1141_SSP3_typeMain_pccov100_FAO',
+ 'ndcs_20201122_1245_SSP4_typeMain_pccov100_FAO',
+ 'ndcs_20201122_1303_SSP5_typeMain_pccov100_FAO']
 
 cat = 'IPCM0EL'
 
@@ -161,15 +162,15 @@ linestyle = {'SSP1': '--', 'SSP2': '-', 'SSP3': '--', 'SSP4': ':', 'SSP5': ':'}
 
 yr_add = .2
 
-colour_100pc = (0, .4, .4)
-colour_estpc = (.1, .8, .4)
-colour_prioNDCs = (.1, .7, .7)
-colour_prioSSPs = (.4, .5, .1)
+colour_100pc = (0, .7, .5)
+colour_estpc = (.3, .3, .3)
+colour_prioNDCs = (.5, .7, 0)
+colour_prioSSPs = (.7, .7, .7)
 
 # %%
 fig = plt.figure(figsize=(12, 4))
 
-for iso3 in ['BRA']: # meta.isos.EARTH:
+for iso3 in ['AFG']: #meta.isos.EARTH[:10]:
     
     ax_emi = fig.add_subplot(1, 2, 1)
     #inax = inset_axes(ax_emi, width="25%", height="30%", loc='upper right')
@@ -201,16 +202,16 @@ for iso3 in ['BRA']: # meta.isos.EARTH:
             
             # Vertical lines
             axa = ax_tars
-            yr_plt = 2017
-                        
+            yr_plt = 2017 - .05
+                       
             for opt, data_opt in \
                 ['default', tpe_data100], \
-                ['baseline uncondi', tpe_blUncondi100], \
-                ['constant emi', tpe_const100], \
+                ['bl uncondi', tpe_blUncondi100], \
+                ['const. emi', tpe_const100], \
                 ['LU FAO', tpe_fao100], \
                 ['default (*)', tpe_data], \
-                ['baseline uncondi (*)', tpe_blUncondi], \
-                ['constant emi (*)', tpe_const], \
+                ['bl uncondi (*)', tpe_blUncondi], \
+                ['const. emi (*)', tpe_const], \
                 ['LU FAO (*)', tpe_fao]:
                 
                 txt_options += [opt]
@@ -228,10 +229,10 @@ for iso3 in ['BRA']: # meta.isos.EARTH:
                 
                 axa.plot(
                     [yr_plt + add_xx, yr_plt + add_xx], 
-                    [data_upper2030, data_lower2030], 
+                    [data_lower2030, data_upper2030], 
                     color=colour_act, linewidth=linewdth_all)
                 
-                yr_plt += yr_add
+#                yr_plt += yr_add
                 
                 data_act = data_opt[ssp]
                 data_act = 1e-3 * data_act.loc[
@@ -240,6 +241,8 @@ for iso3 in ['BRA']: # meta.isos.EARTH:
                     (data_act.category == cat), '2030']
                 
                 axa.scatter([yr_plt + add_xx]*4, data_act.values, 1.7, marker='s', color=colour_act)
+                
+                yr_plt += yr_add
                 
                 if 'default' in opt:
                     
@@ -267,48 +270,66 @@ for iso3 in ['BRA']: # meta.isos.EARTH:
             data = 1e-3 * data.loc[
                 (data.iso3 == iso3) & (data.condi == 'emi_bau') & (data.category == cat), :]. \
                 reindex(columns=years_str).values[0]
-            handles[ssp], = ax_emi.plot(years_int, data, color=colour_act, linewidth=linewdth, linestyle=linestyle[ssp])
+            handles[ssp], = ax_emi.plot(years_int, data, color=colour_act, 
+                linewidth=(linewdth if 'main' in tpe else .5*linewdth), linestyle=linestyle[ssp])
+    
+    tpe_act = 'main'
+    tar_type_main = ptws[tpe_act]['SSP1'].loc[ptws[tpe_act]['SSP1'].iso3 == iso3, 'tar_type_used'].unique()
+    tar_type_main = [xx for xx in tar_type_main if type(xx) == str][0]
+    tpe_act = 'reclass'
+    tar_type_reclass = ptws[tpe_act]['SSP1'].loc[ptws[tpe_act]['SSP1'].iso3 == iso3, 'tar_type_used'].unique()
+    tar_type_reclass = [xx for xx in tar_type_reclass if type(xx) == str][0]
     
     YL_emi = [min([ax_emi.get_ylim()[0], ax_tars.get_ylim()[0]]),
               max([ax_emi.get_ylim()[1], ax_tars.get_ylim()[1]])*1.05]
     for axa, txt, XL in \
         [ax_emi, '(a) Baseline emissions', XL_emi], \
-        [ax_tars, '(b) Target emissions (2030)', XL_tars]:
+        [ax_tars, '(b) NDC pathway for 2030', XL_tars]:
         axa.set_ylim(YL_emi)
-        axa.text(XL[0] + .05*np.diff(XL), YL_emi[1] + .14*np.diff(YL_emi), 
+        axa.text(XL[0], YL_emi[1] + .2*np.diff(YL_emi), 
             txt, fontweight='bold', ha='left', va='bottom')
         if axa == ax_emi:
-            txt1 = '\nupper lines: prio NDCs (for type_reclass)'
-            txt2 = 'lower lines: prio SSPs (for type_main)'
+            txt1 = f'\nthinner lines per dmSSP: prio NDC (type_reclass = {tar_type_reclass})'
+            txt2 = f'thicker lines per dmSSP: prio SSPs (type_main = {tar_type_main})'
+            txt3 = 'shaded area for conditionality range (default; prio NDC vs. SSPs)'
         else:
             txt1 = '\n'
             txt2 = '\n'
-        axa.text(XL[0] + .05*np.diff(XL), YL_emi[1] + .08*np.diff(YL_emi), 
+            txt3 = '\n'
+        axa.text(XL[0], YL_emi[1] + .14*np.diff(YL_emi), 
                  txt1, ha='left', va='bottom')
-        axa.text(XL[0] + .05*np.diff(XL), YL_emi[1] + .02*np.diff(YL_emi), 
+        axa.text(XL[0], YL_emi[1] + .08*np.diff(YL_emi), 
                  txt2, ha='left', va='bottom')
+        axa.text(XL[0], YL_emi[1] + .02*np.diff(YL_emi), 
+                 txt3, ha='left', va='bottom')
         
         if axa == ax_tars:
             yval = 2*[YL_emi[1] - .02*np.diff(YL_emi)]
-            # 100% cov
-            axa.plot([2016.85, 2017.65], yval, color=colour_100pc, linewidth=3)
-            axa.plot([2018.85, 2019.65], yval, color=colour_100pc, linewidth=3)
-            # estimated cov
-            axa.plot([2017.85, 2018.65], yval, color=colour_estpc, linewidth=3)
-            axa.plot([2019.85, 2020.65], yval, color=colour_estpc, linewidth=3)
-            yval = 2*[YL_emi[1] - .04*np.diff(YL_emi)]
             # prio NDCs, type_reclass
-            axa.plot([2016.85, 2018.65], yval, color=colour_prioNDCs, linewidth=3)
+            for xx in np.arange(2016.85, 2035, 4):
+                axa.plot([xx, xx + 1.8], yval, color=colour_prioNDCs, linewidth=3)
             # prio SSPs, type_main
-            axa.plot([2018.85, 2020.65], yval, color=colour_prioSSPs, linewidth=3)
+            for xx in np.arange(2018.85, 2035, 4):
+                axa.plot([xx, xx + 1.8], yval, color=colour_prioSSPs, linewidth=3)
+            yval = 2*[YL_emi[1] - .04*np.diff(YL_emi)]
+            # 100% cov
+            for xx in np.arange(2016.85, 2036, 2):
+                axa.plot([xx, xx + .8], yval, color=colour_100pc, linewidth=3)
+            # estimated cov
+            for xx in np.arange(2017.85, 2036, 2):
+                axa.plot([xx, xx + .8], yval, color=colour_estpc, linewidth=3)
             # text
-            axa.text(XL[0] + .05*np.diff(XL), YL_emi[1] + .08*np.diff(YL_emi), 
-                     'prio NDCs, type_reclass', color=colour_prioNDCs, ha='left', va='bottom')
-            axa.text(XL[0] + .05*np.diff(XL), YL_emi[1] + .02*np.diff(YL_emi), 
-                     'prio SSPs, type_main', color=colour_prioSSPs, ha='left', va='bottom')
-            axa.text(XL[0] + .55*np.diff(XL), YL_emi[1] + .08*np.diff(YL_emi), 
+            axa.text(XL[0] + .0*np.diff(XL), YL_emi[1] + .14*np.diff(YL_emi), 
+                     'prio NDC', color=colour_prioNDCs, ha='left', va='bottom')
+            axa.text(XL[0] + .15*np.diff(XL), YL_emi[1] + .14*np.diff(YL_emi), 
+                     'vs.', color='k', ha='left', va='bottom')
+            axa.text(XL[0] + .2*np.diff(XL), YL_emi[1] + .14*np.diff(YL_emi), 
+                     'prio SSPs', color=colour_prioSSPs, ha='left', va='bottom')
+            axa.text(XL[0] + .0*np.diff(XL), YL_emi[1] + .08*np.diff(YL_emi), 
                      '100% coverage', color=colour_100pc, ha='left', va='bottom')
-            axa.text(XL[0] + .55*np.diff(XL), YL_emi[1] + .02*np.diff(YL_emi), 
+            axa.text(XL[0] + .26*np.diff(XL), YL_emi[1] + .08*np.diff(YL_emi), 
+                     'vs.', color='k', ha='left', va='bottom')
+            axa.text(XL[0] + .31*np.diff(XL), YL_emi[1] + .08*np.diff(YL_emi), 
                      'estimated coverage', color=colour_estpc, ha='left', va='bottom')
             
             xstart = 2016.75
@@ -330,13 +351,13 @@ for iso3 in ['BRA']: # meta.isos.EARTH:
     ax_tars.yaxis.set_ticks_position('both')
     
     # Different options:
-    ax_tars.text(XL[1] + .08*np.diff(XL), YL_emi[0] + .5*np.diff(YL_emi), 
-        f"Quadruples:\n(1) {txt_options[0]} (2) {txt_options[1]}\n(3) {txt_options[2]} (4) {txt_options[3]}",
-        ha='center', va='center', rotation=90)
+    ax_tars.text(XL[0], YL_emi[1] + .02*np.diff(YL_emi), 
+        f'Quadruples: options "{txt_options[0]}", "{txt_options[1]}", "{txt_options[2]}", "{txt_options[3]}"',
+        ha='left', va='bottom')
     
     ax_emi.xaxis.set_ticks(range(2010, 2032, 5))
         
-    fig.subplots_adjust(left=.1, right=.9, top=.8)
+    fig.subplots_adjust(left=.1, right=.99, top=.8)
     path_to_plot = Path(meta.path.main, 'latex_files', #iso3, 
         f'ndc_tars_{cat}_{iso3}.png')
     plt.savefig(path_to_plot, dpi=300)

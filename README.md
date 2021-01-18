@@ -71,3 +71,7 @@ When modifying and adding folders and files in the repository, please consider t
 - When adding a new file or folder that should only be available locally on your machine and not in the online repository, add a ``.gitingore`` file including the files / folders that should be ignored. If you add a new folder with .py-files, please add a ``.gitingore`` file containing ``/__pycache__/*`` to ignore the folder ``__pycache__`` that will be produced when running your code.
 - In .py-files stored in ``/py_files/``, and the sub-folders ``/preprocessing/``, ``/main_functions/``, and ``/MODIFY_INPUT_HERE/``, please use the following code for comments that should be included in the documentation: ``"""\ncomment\n"""`` (\n denotes a new line). To check which functions are considered in the documentation go to ``/py_files/additional_scripts/make_documentation.py`` (``files = [...]``).
 
+-----------
+
+When changing code, data, etc., please consider whether information on the changes should be included in the changelog for an updated release on zenodo [zenodo](https://zenodo.org/record/4286369#.X9x4I7Mo9hE). Check and update the content of ``/zenodo/document_for_zenodo_updates.md`` and use the content of this file as field "description" on zenodo for a new zenodo-release. Then save a copy of the file with the version number of the release.
+

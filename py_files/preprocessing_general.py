@@ -6,9 +6,9 @@ Last updated in 03/2020
 
 # %%
 """
-General preprocessing (covered part of emissions in preprocessing_current_pccov.py).
+**General preprocessing (covered part of emissions in preprocessing_current_pccov.py).**
 
-Fill missing data, SSPs (emi, pop, gdp), LULUCF emissions.
+**Fill missing data, SSPs (emi, pop, gdp), LULUCF emissions.**
 """
 
 # %%
@@ -31,7 +31,8 @@ Path(meta.path.preprocess).mkdir(parents=True, exist_ok=True)
 Path(meta.path.preprocess, 'tables').mkdir(parents=True, exist_ok=True)
 
 """
-Load and write out information retrieved from NDCs to 'ndcs_info.csv' into folder meta.path.preprocess.
+Load and write out *information retrieved from NDCs* to ``ndcs_info.csv`` into folder 
+meta.path.preprocess.
 Includes information on Parties' target types, years, conditionality, range, coverage.
 """
 infos_from_ndcs = hpf.get_infos_from_ndcs(meta)
@@ -47,14 +48,14 @@ info_per_country = pd.DataFrame(index=meta.isos.EARTH)
 # %% Read in tables from meta.path.matlab.
 
 """
-Read in all datatables in folder matlab_tables.
+Read in *all datatables from folder matlab_tables.*
 
 All tables are read into the class 'database', with the tablenames as main-attributes.
 The table meta-data are classes again, with attributes 'entity', 'category', 
 'data', 'unit', etc. (see meta.nomenclature.attrs).
 
 As we only use one GWP, replace the AR4 strings by ''
-(e.g., KYOTOGHGAR4_IPCM0EL_TOTAL_NET_HISTORY_CRF2019.csv is read in 
+(e.g., ``KYOTOGHGAR4_IPCM0EL_TOTAL_NET_HISTORY_CRF2019.csv`` is read in 
 with tablename 'KYOTOGHG_IPCM0EL_TOTAL_NET_HISTORY_CRF2019').
 """
 
@@ -79,8 +80,11 @@ for tpe in ['emi', 'pop', 'gdp']:
 
 # %% SSPs.
 """
-SSPs: check if there are countries that do have data in some SSPs but not in others and use the average over the available SSPs for the non-available SSPs.
-For countries that have PRIMAP-hist data but no SSP data at all (for marker scenarios of SSP1 to SSP5), use the PRIMAP-hist data and use the linear regression over the last 6 available years as future estimates.
+*SSPs: check if there are countries that do have data in some SSPs but not in others 
+and use the average over the available SSPs for the non-available SSPs.*
+*For countries that have PRIMAP-hist data but no SSP data at all 
+(for marker scenarios of SSP1 to SSP5), use the PRIMAP-hist data and 
+use the linear regression over the last 6 available years as future estimates.*
 Only happens for countries with very low emissions.
 """
 
@@ -89,8 +93,8 @@ print("Preprocessing of SSPs.")
 database, info_per_country = prep.prep_ssps_fill_gaps(database, info_per_country, meta, nrvalues)
     
 """
-The SSPs only have data for FGASES, not separated into HFCS, PFCS, SF6 and NF3.
-For the calculation of the future pc_cov, a split into the four subgroups is performed.
+*The SSPs only have data for FGASES*, not separated into HFCS, PFCS, SF6 and NF3.
+For the calculation of the future pc_cov, a *split into the four subgroups is performed*.
 The historical share per gas/basket is kept constant and applied to the future FGASES-basket.
 The mean over the last 6 available years is used.
 """
@@ -132,20 +136,23 @@ prep.prep_ssps_test(database, meta, primap)
 # %% LULUCF data.
 
 """
-Prepare LULUCF data.
+*Prepare LULUCF data.*
+
 Problems with LULUCF data: high inter-annual variability, negative / positive emissions, 
 and the data we use are not consistent with the time series used in the pathway extension.
 
-Make one LULUCF table, with the chosen KYOTOGHG_IPCMLULUCF time series.
+*Make one LULUCF table, with the chosen KYOTOGHG_IPCMLULUCF time series.
 Prioritisation of data-sources as given in meta.lulucf.source_prioritisation.
-When a source has data, use them, and fill data gaps with 'constant filling'.
+When a source has data, use them, and fill data gaps with 'constant filling'.*
 
 Interpolation & forward extrapolation: last value kept constant.
-Backward extrapolation: first available value after 1990 used for 1990 to year of first available value).
+Backward extrapolation: first available value after 1990 used for 1990 to year of 
+first available value).
 
-Other option: linear interpolation, but constant extrapolation (with mean over several years).
+Other option: *linear interpolation, but constant extrapolation* (with mean over several years).
 
-If KYOTOGHG is calculated here as sum over CO2 + CH4 + N2O: sum up the already inter- & extrapolated time series.
+If KYOTOGHG is calculated here as sum over CO2 + CH4 + N2O: sum up the already 
+inter- & extrapolated time series.
 """
 
 print("LULUCF data.")
@@ -162,7 +169,8 @@ database, info_per_country = prep.prep_lulucf(database, meta, meta.lulucf.source
     'VARIOUS', info_per_country, nr_available_values_lulucf, 'linear')
 
 """
-Additionally to prioritising CRF, BRU, UNFCCC, FAO in that order, put FAO or UNFCCC to the first place in the LULUCF prioritisation, for comparison runs.
+Additionally to prioritising CRF, BRU, UNFCCC, FAO in that order, put FAO or UNFCCC 
+to the first place in the LULUCF prioritisation, for comparison runs.
 """
 for srce_lu in ['FAO', 'UNFCCC']:
     srce_act = [xx for xx in meta.lulucf.source_prioritisation if srce_lu in xx]
@@ -185,12 +193,16 @@ info_per_country.to_csv(Path(meta.path.preprocess, 'info_per_country.csv'))
 
 # %%
 """
-Create NDC exclLU pathways.
-Use PRIMAP-hist v2.1 HISTCR up to 2017 and then use given ndcs_emi_exclLU when available, with linear interpolation between values.
+*Create NDC exclLU pathways.*
 
-For the countries without exclLU values check if they have inclLU values.
-If so use the onlyLU data from the NDC (or other options, as used in the NDC quantifications) to derive onlyLU emissions.
-Use the given inclLU values and the corresponding onlyLU values to derive exclLU, and then interpolate linearly between them (again, with PRIMAP-hist for KYOTOGHG_IPCM0EL up to 2017).
+*Use PRIMAP-hist v2.1 HISTCR up to 2017 and then use given ndcs_emi_exclLU when available, 
+with linear interpolation between values.*
+
+*For the countries without exclLU values check if they have inclLU values.*
+*If so use the onlyLU data from the NDC (or other options, as used in the NDC quantifications) 
+to derive onlyLU emissions.*
+*Use the given inclLU values and the corresponding onlyLU values to derive exclLU, 
+and then interpolate linearly between them (again, with PRIMAP-hist for KYOTOGHG_IPCM0EL up to 2017).*
 """
 ndcs_emi_exclLU = pd.read_csv(
     Path(meta.path.preprocess, 'infos_from_ndcs_emi_exclLU.csv'), index_col=0)
