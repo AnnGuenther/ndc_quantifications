@@ -93,7 +93,7 @@ Else:
 
 Here, matrices on the coverage (Yes: covered, No: not-covered) are created.
 
-We do not include the information on the EU28, but put the information into each of the member-states.
+We do not include the information on the EU, but put the information into each of the member-states.
 """
 
 print("Covered part of emissions.")

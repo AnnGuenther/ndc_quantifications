@@ -13,10 +13,10 @@ AND onlyLU: external_onlyLU used.
 AND exclLU: data from NDC.
 ANT onlyLU: external_onlyLU used.
 ANT exclLU: external data.
-ARE onlyLU: external_onlyLU used.
-ARE exclLU: external data.
-ARG onlyLU: ndc_inclLU - external_exclLU used.
-ARG exclLU: inclLU data from NDC minus onlyLU.
+ARE onlyLU: ndc_inclLU - external_exclLU used.
+ARE exclLU: inclLU data from NDC minus onlyLU.
+ARG onlyLU: ndc_onlyLU used.
+ARG exclLU: external data.
 ARM onlyLU: external_onlyLU used.
 ARM exclLU: external data.
 ATA onlyLU: external_onlyLU used.
@@ -55,12 +55,12 @@ BLZ onlyLU: ndc_onlyLU used.
 BLZ exclLU: external data.
 BOL onlyLU: external_onlyLU used.
 BOL exclLU: external data.
-BRA onlyLU: ndc_inclLU - external_exclLU used.
+BRA onlyLU: ndc_onlyLU used.
 BRA exclLU: external data.
 BRB onlyLU: ndc_inclLU - external_exclLU used.
 BRB exclLU: inclLU data from NDC minus onlyLU.
-BRN onlyLU: ndc_onlyLU used.
-BRN exclLU: external data.
+BRN onlyLU: external_onlyLU used.
+BRN exclLU: data from NDC.
 BTN onlyLU: ndc_inclLU - external_exclLU used.
 BTN exclLU: external data.
 BVT onlyLU: external_onlyLU used.
@@ -72,7 +72,7 @@ CAF exclLU: data from NDC.
 CAN onlyLU: ndc_inclLU - external_exclLU used.
 CAN exclLU: inclLU data from NDC minus onlyLU.
 CHE onlyLU: external_onlyLU used.
-CHE exclLU: external data.
+CHE exclLU: data from NDC.
 CHL onlyLU: external_onlyLU used.
 CHL exclLU: external data.
 CHN onlyLU: external_onlyLU used.
@@ -87,15 +87,15 @@ COG onlyLU: external_onlyLU used.
 COG exclLU: data from NDC.
 COK onlyLU: external_onlyLU used.
 COK exclLU: external data.
-COL onlyLU: ndc_inclLU - external_exclLU used.
-COL exclLU: inclLU data from NDC minus onlyLU.
+COL onlyLU: ndc_onlyLU used.
+COL exclLU: data from NDC.
 COM onlyLU: ndc_onlyLU used.
 COM exclLU: data from NDC.
 CPV onlyLU: external_onlyLU used.
 CPV exclLU: external data.
-CRI onlyLU: ndc_inclLU - external_exclLU used.
-CRI exclLU: inclLU data from NDC minus onlyLU.
-CUB onlyLU: external_onlyLU used.
+CRI onlyLU: external_onlyLU used.
+CRI exclLU: external data.
+CUB onlyLU: ndc_inclLU - external_exclLU used.
 CUB exclLU: external data.
 CUW onlyLU: external_onlyLU used.
 CUW exclLU: external data.
@@ -111,8 +111,8 @@ DMA onlyLU: external_onlyLU used.
 DMA exclLU: external data.
 DNK onlyLU: external_onlyLU used.
 DNK exclLU: external data.
-DOM onlyLU: external_onlyLU used.
-DOM exclLU: external data.
+DOM onlyLU: ndc_inclLU - external_exclLU used.
+DOM exclLU: inclLU data from NDC minus onlyLU.
 DZA onlyLU: external_onlyLU used.
 DZA exclLU: external data.
 ECU onlyLU: ndc_onlyLU used.
@@ -157,7 +157,7 @@ GRD onlyLU: ndc_inclLU - external_exclLU used.
 GRD exclLU: external data.
 GTM onlyLU: ndc_inclLU - external_exclLU used.
 GTM exclLU: inclLU data from NDC minus onlyLU.
-GUY onlyLU: ndc_inclLU - external_exclLU used.
+GUY onlyLU: external_onlyLU used.
 GUY exclLU: external data.
 HKG onlyLU: external_onlyLU used.
 HKG exclLU: external data.
@@ -187,7 +187,7 @@ ISR onlyLU: ndc_inclLU - external_exclLU used.
 ISR exclLU: inclLU data from NDC minus onlyLU.
 ITA onlyLU: external_onlyLU used.
 ITA exclLU: external data.
-JAM onlyLU: external_onlyLU used.
+JAM onlyLU: ndc_onlyLU used.
 JAM exclLU: external data.
 JOR onlyLU: ndc_inclLU - external_exclLU used.
 JOR exclLU: inclLU data from NDC minus onlyLU.
@@ -206,7 +206,7 @@ KIR exclLU: data from NDC.
 KNA onlyLU: ndc_inclLU - external_exclLU used.
 KNA exclLU: inclLU data from NDC minus onlyLU.
 KOR onlyLU: external_onlyLU used.
-KOR exclLU: data from NDC.
+KOR exclLU: external data.
 KWT onlyLU: external_onlyLU used.
 KWT exclLU: external data.
 LAO onlyLU: ndc_inclLU - external_exclLU used.
@@ -235,16 +235,16 @@ MAC onlyLU: external_onlyLU used.
 MAC exclLU: external data.
 MAR onlyLU: ndc_inclLU - external_exclLU used.
 MAR exclLU: inclLU data from NDC minus onlyLU.
-MCO onlyLU: ndc_inclLU - external_exclLU used.
-MCO exclLU: external data.
+MCO onlyLU: ndc_onlyLU used.
+MCO exclLU: data from NDC.
 MDA onlyLU: ndc_onlyLU used.
 MDA exclLU: external data.
 MDG onlyLU: ndc_inclLU - external_exclLU used.
 MDG exclLU: inclLU data from NDC minus onlyLU.
-MDV onlyLU: external_onlyLU used.
-MDV exclLU: data from NDC.
-MEX onlyLU: ndc_inclLU - external_exclLU used.
-MEX exclLU: inclLU data from NDC minus onlyLU.
+MDV onlyLU: ndc_inclLU - external_exclLU used.
+MDV exclLU: inclLU data from NDC minus onlyLU.
+MEX onlyLU: ndc_onlyLU used.
+MEX exclLU: data from NDC.
 MHL onlyLU: external_onlyLU used.
 MHL exclLU: external data.
 MKD onlyLU: external_onlyLU used.
@@ -257,7 +257,7 @@ MMR onlyLU: external_onlyLU used.
 MMR exclLU: external data.
 MNE onlyLU: external_onlyLU used.
 MNE exclLU: external data.
-MNG onlyLU: external_onlyLU used.
+MNG onlyLU: ndc_onlyLU used.
 MNG exclLU: data from NDC.
 MOZ onlyLU: external_onlyLU used.
 MOZ exclLU: external data.
@@ -277,15 +277,15 @@ NER onlyLU: ndc_inclLU - external_exclLU used.
 NER exclLU: inclLU data from NDC minus onlyLU.
 NGA onlyLU: ndc_inclLU - external_exclLU used.
 NGA exclLU: inclLU data from NDC minus onlyLU.
-NIC onlyLU: external_onlyLU used.
-NIC exclLU: external data.
+NIC onlyLU: ndc_inclLU - external_exclLU used.
+NIC exclLU: inclLU data from NDC minus onlyLU.
 NIU onlyLU: ndc_inclLU - external_exclLU used.
 NIU exclLU: external data.
 NLD onlyLU: external_onlyLU used.
 NLD exclLU: external data.
 NOR onlyLU: external_onlyLU used.
 NOR exclLU: external data.
-NPL onlyLU: external_onlyLU used.
+NPL onlyLU: ndc_inclLU - external_exclLU used.
 NPL exclLU: external data.
 NRU onlyLU: external_onlyLU used.
 NRU exclLU: external data.
@@ -299,13 +299,13 @@ PAN onlyLU: external_onlyLU used.
 PAN exclLU: external data.
 PCN onlyLU: external_onlyLU used.
 PCN exclLU: external data.
-PER onlyLU: ndc_onlyLU used.
-PER exclLU: data from NDC.
+PER onlyLU: ndc_inclLU - external_exclLU used.
+PER exclLU: inclLU data from NDC minus onlyLU.
 PHL onlyLU: external_onlyLU used.
 PHL exclLU: external data.
 PLW onlyLU: external_onlyLU used.
 PLW exclLU: external data.
-PNG onlyLU: external_onlyLU used.
+PNG onlyLU: ndc_onlyLU used.
 PNG exclLU: external data.
 POL onlyLU: external_onlyLU used.
 POL exclLU: external data.
@@ -319,16 +319,16 @@ QAT onlyLU: external_onlyLU used.
 QAT exclLU: external data.
 ROU onlyLU: external_onlyLU used.
 ROU exclLU: external data.
-RUS onlyLU: external_onlyLU used.
+RUS onlyLU: ndc_inclLU - external_exclLU used.
 RUS exclLU: external data.
-RWA onlyLU: ndc_inclLU - external_exclLU used.
-RWA exclLU: external data.
+RWA onlyLU: external_onlyLU used.
+RWA exclLU: data from NDC.
 SAU onlyLU: external_onlyLU used.
 SAU exclLU: external data.
 SDN onlyLU: ndc_inclLU - external_exclLU used.
 SDN exclLU: external data.
-SEN onlyLU: ndc_inclLU - external_exclLU used.
-SEN exclLU: inclLU data from NDC minus onlyLU.
+SEN onlyLU: ndc_onlyLU used.
+SEN exclLU: data from NDC.
 SGP onlyLU: external_onlyLU used.
 SGP exclLU: external data.
 SGS onlyLU: external_onlyLU used.
@@ -383,7 +383,7 @@ TKM onlyLU: external_onlyLU used.
 TKM exclLU: data from NDC.
 TLS onlyLU: ndc_inclLU - external_exclLU used.
 TLS exclLU: external data.
-TON onlyLU: external_onlyLU used.
+TON onlyLU: ndc_onlyLU used.
 TON exclLU: external data.
 TTO onlyLU: external_onlyLU used.
 TTO exclLU: external data.
@@ -417,8 +417,8 @@ VEN onlyLU: external_onlyLU used.
 VEN exclLU: external data.
 VGB onlyLU: external_onlyLU used.
 VGB exclLU: external data.
-VNM onlyLU: ndc_inclLU - external_exclLU used.
-VNM exclLU: inclLU data from NDC minus onlyLU.
+VNM onlyLU: ndc_onlyLU used.
+VNM exclLU: data from NDC.
 VUT onlyLU: external_onlyLU used.
 VUT exclLU: external data.
 WSM onlyLU: external_onlyLU used.
@@ -445,10 +445,10 @@ AND onlyLU: external_onlyLU used.
 AND exclLU: data from NDC.
 ANT onlyLU: external_onlyLU used.
 ANT exclLU: external data.
-ARE onlyLU: external_onlyLU used.
-ARE exclLU: external data.
-ARG onlyLU: ndc_inclLU - external_exclLU used.
-ARG exclLU: inclLU data from NDC minus onlyLU.
+ARE onlyLU: ndc_inclLU - external_exclLU used.
+ARE exclLU: inclLU data from NDC minus onlyLU.
+ARG onlyLU: ndc_onlyLU used.
+ARG exclLU: external data.
 ARM onlyLU: external_onlyLU used.
 ARM exclLU: external data.
 ATA onlyLU: external_onlyLU used.
@@ -487,12 +487,12 @@ BLZ onlyLU: ndc_onlyLU used.
 BLZ exclLU: external data.
 BOL onlyLU: external_onlyLU used.
 BOL exclLU: external data.
-BRA onlyLU: ndc_inclLU - external_exclLU used.
+BRA onlyLU: ndc_onlyLU used.
 BRA exclLU: external data.
 BRB onlyLU: ndc_inclLU - external_exclLU used.
 BRB exclLU: inclLU data from NDC minus onlyLU.
-BRN onlyLU: ndc_onlyLU used.
-BRN exclLU: external data.
+BRN onlyLU: external_onlyLU used.
+BRN exclLU: data from NDC.
 BTN onlyLU: ndc_inclLU - external_exclLU used.
 BTN exclLU: external data.
 BVT onlyLU: external_onlyLU used.
@@ -504,7 +504,7 @@ CAF exclLU: data from NDC.
 CAN onlyLU: ndc_inclLU - external_exclLU used.
 CAN exclLU: inclLU data from NDC minus onlyLU.
 CHE onlyLU: external_onlyLU used.
-CHE exclLU: external data.
+CHE exclLU: data from NDC.
 CHL onlyLU: external_onlyLU used.
 CHL exclLU: external data.
 CHN onlyLU: external_onlyLU used.
@@ -519,15 +519,15 @@ COG onlyLU: external_onlyLU used.
 COG exclLU: data from NDC.
 COK onlyLU: external_onlyLU used.
 COK exclLU: external data.
-COL onlyLU: ndc_inclLU - external_exclLU used.
-COL exclLU: inclLU data from NDC minus onlyLU.
+COL onlyLU: ndc_onlyLU used.
+COL exclLU: data from NDC.
 COM onlyLU: ndc_onlyLU used.
 COM exclLU: data from NDC.
 CPV onlyLU: external_onlyLU used.
 CPV exclLU: external data.
-CRI onlyLU: ndc_inclLU - external_exclLU used.
-CRI exclLU: inclLU data from NDC minus onlyLU.
-CUB onlyLU: external_onlyLU used.
+CRI onlyLU: external_onlyLU used.
+CRI exclLU: external data.
+CUB onlyLU: ndc_inclLU - external_exclLU used.
 CUB exclLU: external data.
 CUW onlyLU: external_onlyLU used.
 CUW exclLU: external data.
@@ -543,8 +543,8 @@ DMA onlyLU: external_onlyLU used.
 DMA exclLU: external data.
 DNK onlyLU: external_onlyLU used.
 DNK exclLU: external data.
-DOM onlyLU: external_onlyLU used.
-DOM exclLU: external data.
+DOM onlyLU: ndc_inclLU - external_exclLU used.
+DOM exclLU: inclLU data from NDC minus onlyLU.
 DZA onlyLU: external_onlyLU used.
 DZA exclLU: external data.
 ECU onlyLU: ndc_onlyLU used.
@@ -589,7 +589,7 @@ GRD onlyLU: ndc_inclLU - external_exclLU used.
 GRD exclLU: external data.
 GTM onlyLU: ndc_inclLU - external_exclLU used.
 GTM exclLU: inclLU data from NDC minus onlyLU.
-GUY onlyLU: ndc_inclLU - external_exclLU used.
+GUY onlyLU: external_onlyLU used.
 GUY exclLU: external data.
 HKG onlyLU: external_onlyLU used.
 HKG exclLU: external data.
@@ -619,7 +619,7 @@ ISR onlyLU: ndc_inclLU - external_exclLU used.
 ISR exclLU: inclLU data from NDC minus onlyLU.
 ITA onlyLU: external_onlyLU used.
 ITA exclLU: external data.
-JAM onlyLU: external_onlyLU used.
+JAM onlyLU: ndc_onlyLU used.
 JAM exclLU: external data.
 JOR onlyLU: ndc_inclLU - external_exclLU used.
 JOR exclLU: inclLU data from NDC minus onlyLU.
@@ -638,7 +638,7 @@ KIR exclLU: data from NDC.
 KNA onlyLU: ndc_inclLU - external_exclLU used.
 KNA exclLU: inclLU data from NDC minus onlyLU.
 KOR onlyLU: external_onlyLU used.
-KOR exclLU: data from NDC.
+KOR exclLU: external data.
 KWT onlyLU: external_onlyLU used.
 KWT exclLU: external data.
 LAO onlyLU: ndc_inclLU - external_exclLU used.
@@ -667,16 +667,16 @@ MAC onlyLU: external_onlyLU used.
 MAC exclLU: external data.
 MAR onlyLU: ndc_inclLU - external_exclLU used.
 MAR exclLU: inclLU data from NDC minus onlyLU.
-MCO onlyLU: ndc_inclLU - external_exclLU used.
-MCO exclLU: external data.
+MCO onlyLU: ndc_onlyLU used.
+MCO exclLU: data from NDC.
 MDA onlyLU: ndc_onlyLU used.
 MDA exclLU: external data.
 MDG onlyLU: ndc_inclLU - external_exclLU used.
 MDG exclLU: inclLU data from NDC minus onlyLU.
-MDV onlyLU: external_onlyLU used.
-MDV exclLU: data from NDC.
-MEX onlyLU: ndc_inclLU - external_exclLU used.
-MEX exclLU: inclLU data from NDC minus onlyLU.
+MDV onlyLU: ndc_inclLU - external_exclLU used.
+MDV exclLU: inclLU data from NDC minus onlyLU.
+MEX onlyLU: ndc_onlyLU used.
+MEX exclLU: data from NDC.
 MHL onlyLU: external_onlyLU used.
 MHL exclLU: external data.
 MKD onlyLU: external_onlyLU used.
@@ -689,7 +689,7 @@ MMR onlyLU: external_onlyLU used.
 MMR exclLU: external data.
 MNE onlyLU: external_onlyLU used.
 MNE exclLU: external data.
-MNG onlyLU: external_onlyLU used.
+MNG onlyLU: ndc_onlyLU used.
 MNG exclLU: data from NDC.
 MOZ onlyLU: external_onlyLU used.
 MOZ exclLU: external data.
@@ -709,15 +709,15 @@ NER onlyLU: ndc_inclLU - external_exclLU used.
 NER exclLU: inclLU data from NDC minus onlyLU.
 NGA onlyLU: ndc_inclLU - external_exclLU used.
 NGA exclLU: inclLU data from NDC minus onlyLU.
-NIC onlyLU: external_onlyLU used.
-NIC exclLU: external data.
+NIC onlyLU: ndc_inclLU - external_exclLU used.
+NIC exclLU: inclLU data from NDC minus onlyLU.
 NIU onlyLU: ndc_inclLU - external_exclLU used.
 NIU exclLU: external data.
 NLD onlyLU: external_onlyLU used.
 NLD exclLU: external data.
 NOR onlyLU: external_onlyLU used.
 NOR exclLU: external data.
-NPL onlyLU: external_onlyLU used.
+NPL onlyLU: ndc_inclLU - external_exclLU used.
 NPL exclLU: external data.
 NRU onlyLU: external_onlyLU used.
 NRU exclLU: external data.
@@ -731,13 +731,13 @@ PAN onlyLU: external_onlyLU used.
 PAN exclLU: external data.
 PCN onlyLU: external_onlyLU used.
 PCN exclLU: external data.
-PER onlyLU: ndc_onlyLU used.
-PER exclLU: data from NDC.
+PER onlyLU: ndc_inclLU - external_exclLU used.
+PER exclLU: inclLU data from NDC minus onlyLU.
 PHL onlyLU: external_onlyLU used.
 PHL exclLU: external data.
 PLW onlyLU: external_onlyLU used.
 PLW exclLU: external data.
-PNG onlyLU: external_onlyLU used.
+PNG onlyLU: ndc_onlyLU used.
 PNG exclLU: external data.
 POL onlyLU: external_onlyLU used.
 POL exclLU: external data.
@@ -751,16 +751,16 @@ QAT onlyLU: external_onlyLU used.
 QAT exclLU: external data.
 ROU onlyLU: external_onlyLU used.
 ROU exclLU: external data.
-RUS onlyLU: external_onlyLU used.
+RUS onlyLU: ndc_inclLU - external_exclLU used.
 RUS exclLU: external data.
-RWA onlyLU: ndc_inclLU - external_exclLU used.
-RWA exclLU: external data.
+RWA onlyLU: external_onlyLU used.
+RWA exclLU: data from NDC.
 SAU onlyLU: external_onlyLU used.
 SAU exclLU: external data.
 SDN onlyLU: ndc_inclLU - external_exclLU used.
 SDN exclLU: external data.
-SEN onlyLU: ndc_inclLU - external_exclLU used.
-SEN exclLU: inclLU data from NDC minus onlyLU.
+SEN onlyLU: ndc_onlyLU used.
+SEN exclLU: data from NDC.
 SGP onlyLU: external_onlyLU used.
 SGP exclLU: external data.
 SGS onlyLU: external_onlyLU used.
@@ -815,7 +815,7 @@ TKM onlyLU: external_onlyLU used.
 TKM exclLU: data from NDC.
 TLS onlyLU: ndc_inclLU - external_exclLU used.
 TLS exclLU: external data.
-TON onlyLU: external_onlyLU used.
+TON onlyLU: ndc_onlyLU used.
 TON exclLU: external data.
 TTO onlyLU: external_onlyLU used.
 TTO exclLU: external data.
@@ -849,8 +849,8 @@ VEN onlyLU: external_onlyLU used.
 VEN exclLU: external data.
 VGB onlyLU: external_onlyLU used.
 VGB exclLU: external data.
-VNM onlyLU: ndc_inclLU - external_exclLU used.
-VNM exclLU: inclLU data from NDC minus onlyLU.
+VNM onlyLU: ndc_onlyLU used.
+VNM exclLU: data from NDC.
 VUT onlyLU: external_onlyLU used.
 VUT exclLU: external data.
 WSM onlyLU: external_onlyLU used.
@@ -877,10 +877,10 @@ AND onlyLU: external_onlyLU used.
 AND exclLU: data from NDC.
 ANT onlyLU: external_onlyLU used.
 ANT exclLU: external data.
-ARE onlyLU: external_onlyLU used.
-ARE exclLU: external data.
-ARG onlyLU: ndc_inclLU - external_exclLU used.
-ARG exclLU: inclLU data from NDC minus onlyLU.
+ARE onlyLU: ndc_inclLU - external_exclLU used.
+ARE exclLU: inclLU data from NDC minus onlyLU.
+ARG onlyLU: ndc_onlyLU used.
+ARG exclLU: external data.
 ARM onlyLU: external_onlyLU used.
 ARM exclLU: external data.
 ATA onlyLU: external_onlyLU used.
@@ -919,12 +919,12 @@ BLZ onlyLU: ndc_onlyLU used.
 BLZ exclLU: external data.
 BOL onlyLU: external_onlyLU used.
 BOL exclLU: external data.
-BRA onlyLU: ndc_inclLU - external_exclLU used.
+BRA onlyLU: ndc_onlyLU used.
 BRA exclLU: external data.
 BRB onlyLU: ndc_inclLU - external_exclLU used.
 BRB exclLU: inclLU data from NDC minus onlyLU.
-BRN onlyLU: ndc_onlyLU used.
-BRN exclLU: external data.
+BRN onlyLU: external_onlyLU used.
+BRN exclLU: data from NDC.
 BTN onlyLU: ndc_inclLU - external_exclLU used.
 BTN exclLU: external data.
 BVT onlyLU: external_onlyLU used.
@@ -936,7 +936,7 @@ CAF exclLU: data from NDC.
 CAN onlyLU: ndc_inclLU - external_exclLU used.
 CAN exclLU: inclLU data from NDC minus onlyLU.
 CHE onlyLU: external_onlyLU used.
-CHE exclLU: external data.
+CHE exclLU: data from NDC.
 CHL onlyLU: external_onlyLU used.
 CHL exclLU: external data.
 CHN onlyLU: external_onlyLU used.
@@ -951,15 +951,15 @@ COG onlyLU: external_onlyLU used.
 COG exclLU: data from NDC.
 COK onlyLU: external_onlyLU used.
 COK exclLU: external data.
-COL onlyLU: ndc_inclLU - external_exclLU used.
-COL exclLU: inclLU data from NDC minus onlyLU.
+COL onlyLU: ndc_onlyLU used.
+COL exclLU: data from NDC.
 COM onlyLU: ndc_onlyLU used.
 COM exclLU: data from NDC.
 CPV onlyLU: external_onlyLU used.
 CPV exclLU: external data.
-CRI onlyLU: ndc_inclLU - external_exclLU used.
-CRI exclLU: inclLU data from NDC minus onlyLU.
-CUB onlyLU: external_onlyLU used.
+CRI onlyLU: external_onlyLU used.
+CRI exclLU: external data.
+CUB onlyLU: ndc_inclLU - external_exclLU used.
 CUB exclLU: external data.
 CUW onlyLU: external_onlyLU used.
 CUW exclLU: external data.
@@ -975,8 +975,8 @@ DMA onlyLU: external_onlyLU used.
 DMA exclLU: external data.
 DNK onlyLU: external_onlyLU used.
 DNK exclLU: external data.
-DOM onlyLU: external_onlyLU used.
-DOM exclLU: external data.
+DOM onlyLU: ndc_inclLU - external_exclLU used.
+DOM exclLU: inclLU data from NDC minus onlyLU.
 DZA onlyLU: external_onlyLU used.
 DZA exclLU: external data.
 ECU onlyLU: ndc_onlyLU used.
@@ -1021,7 +1021,7 @@ GRD onlyLU: ndc_inclLU - external_exclLU used.
 GRD exclLU: external data.
 GTM onlyLU: ndc_inclLU - external_exclLU used.
 GTM exclLU: inclLU data from NDC minus onlyLU.
-GUY onlyLU: ndc_inclLU - external_exclLU used.
+GUY onlyLU: external_onlyLU used.
 GUY exclLU: external data.
 HKG onlyLU: external_onlyLU used.
 HKG exclLU: external data.
@@ -1051,7 +1051,7 @@ ISR onlyLU: ndc_inclLU - external_exclLU used.
 ISR exclLU: inclLU data from NDC minus onlyLU.
 ITA onlyLU: external_onlyLU used.
 ITA exclLU: external data.
-JAM onlyLU: external_onlyLU used.
+JAM onlyLU: ndc_onlyLU used.
 JAM exclLU: external data.
 JOR onlyLU: ndc_inclLU - external_exclLU used.
 JOR exclLU: inclLU data from NDC minus onlyLU.
@@ -1070,7 +1070,7 @@ KIR exclLU: data from NDC.
 KNA onlyLU: ndc_inclLU - external_exclLU used.
 KNA exclLU: inclLU data from NDC minus onlyLU.
 KOR onlyLU: external_onlyLU used.
-KOR exclLU: data from NDC.
+KOR exclLU: external data.
 KWT onlyLU: external_onlyLU used.
 KWT exclLU: external data.
 LAO onlyLU: ndc_inclLU - external_exclLU used.
@@ -1099,16 +1099,16 @@ MAC onlyLU: external_onlyLU used.
 MAC exclLU: external data.
 MAR onlyLU: ndc_inclLU - external_exclLU used.
 MAR exclLU: inclLU data from NDC minus onlyLU.
-MCO onlyLU: ndc_inclLU - external_exclLU used.
-MCO exclLU: external data.
+MCO onlyLU: ndc_onlyLU used.
+MCO exclLU: data from NDC.
 MDA onlyLU: ndc_onlyLU used.
 MDA exclLU: external data.
 MDG onlyLU: ndc_inclLU - external_exclLU used.
 MDG exclLU: inclLU data from NDC minus onlyLU.
-MDV onlyLU: external_onlyLU used.
-MDV exclLU: data from NDC.
-MEX onlyLU: ndc_inclLU - external_exclLU used.
-MEX exclLU: inclLU data from NDC minus onlyLU.
+MDV onlyLU: ndc_inclLU - external_exclLU used.
+MDV exclLU: inclLU data from NDC minus onlyLU.
+MEX onlyLU: ndc_onlyLU used.
+MEX exclLU: data from NDC.
 MHL onlyLU: external_onlyLU used.
 MHL exclLU: external data.
 MKD onlyLU: external_onlyLU used.
@@ -1121,7 +1121,7 @@ MMR onlyLU: external_onlyLU used.
 MMR exclLU: external data.
 MNE onlyLU: external_onlyLU used.
 MNE exclLU: external data.
-MNG onlyLU: external_onlyLU used.
+MNG onlyLU: ndc_onlyLU used.
 MNG exclLU: data from NDC.
 MOZ onlyLU: external_onlyLU used.
 MOZ exclLU: external data.
@@ -1141,15 +1141,15 @@ NER onlyLU: ndc_inclLU - external_exclLU used.
 NER exclLU: inclLU data from NDC minus onlyLU.
 NGA onlyLU: ndc_inclLU - external_exclLU used.
 NGA exclLU: inclLU data from NDC minus onlyLU.
-NIC onlyLU: external_onlyLU used.
-NIC exclLU: external data.
+NIC onlyLU: ndc_inclLU - external_exclLU used.
+NIC exclLU: inclLU data from NDC minus onlyLU.
 NIU onlyLU: ndc_inclLU - external_exclLU used.
 NIU exclLU: external data.
 NLD onlyLU: external_onlyLU used.
 NLD exclLU: external data.
 NOR onlyLU: external_onlyLU used.
 NOR exclLU: external data.
-NPL onlyLU: external_onlyLU used.
+NPL onlyLU: ndc_inclLU - external_exclLU used.
 NPL exclLU: external data.
 NRU onlyLU: external_onlyLU used.
 NRU exclLU: external data.
@@ -1163,13 +1163,13 @@ PAN onlyLU: external_onlyLU used.
 PAN exclLU: external data.
 PCN onlyLU: external_onlyLU used.
 PCN exclLU: external data.
-PER onlyLU: ndc_onlyLU used.
-PER exclLU: data from NDC.
+PER onlyLU: ndc_inclLU - external_exclLU used.
+PER exclLU: inclLU data from NDC minus onlyLU.
 PHL onlyLU: external_onlyLU used.
 PHL exclLU: external data.
 PLW onlyLU: external_onlyLU used.
 PLW exclLU: external data.
-PNG onlyLU: external_onlyLU used.
+PNG onlyLU: ndc_onlyLU used.
 PNG exclLU: external data.
 POL onlyLU: external_onlyLU used.
 POL exclLU: external data.
@@ -1183,16 +1183,16 @@ QAT onlyLU: external_onlyLU used.
 QAT exclLU: external data.
 ROU onlyLU: external_onlyLU used.
 ROU exclLU: external data.
-RUS onlyLU: external_onlyLU used.
+RUS onlyLU: ndc_inclLU - external_exclLU used.
 RUS exclLU: external data.
-RWA onlyLU: ndc_inclLU - external_exclLU used.
-RWA exclLU: external data.
+RWA onlyLU: external_onlyLU used.
+RWA exclLU: data from NDC.
 SAU onlyLU: external_onlyLU used.
 SAU exclLU: external data.
 SDN onlyLU: ndc_inclLU - external_exclLU used.
 SDN exclLU: external data.
-SEN onlyLU: ndc_inclLU - external_exclLU used.
-SEN exclLU: inclLU data from NDC minus onlyLU.
+SEN onlyLU: ndc_onlyLU used.
+SEN exclLU: data from NDC.
 SGP onlyLU: external_onlyLU used.
 SGP exclLU: external data.
 SGS onlyLU: external_onlyLU used.
@@ -1247,7 +1247,7 @@ TKM onlyLU: external_onlyLU used.
 TKM exclLU: data from NDC.
 TLS onlyLU: ndc_inclLU - external_exclLU used.
 TLS exclLU: external data.
-TON onlyLU: external_onlyLU used.
+TON onlyLU: ndc_onlyLU used.
 TON exclLU: external data.
 TTO onlyLU: external_onlyLU used.
 TTO exclLU: external data.
@@ -1281,8 +1281,8 @@ VEN onlyLU: external_onlyLU used.
 VEN exclLU: external data.
 VGB onlyLU: external_onlyLU used.
 VGB exclLU: external data.
-VNM onlyLU: ndc_inclLU - external_exclLU used.
-VNM exclLU: inclLU data from NDC minus onlyLU.
+VNM onlyLU: ndc_onlyLU used.
+VNM exclLU: data from NDC.
 VUT onlyLU: external_onlyLU used.
 VUT exclLU: external data.
 WSM onlyLU: external_onlyLU used.

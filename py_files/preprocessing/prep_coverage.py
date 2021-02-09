@@ -30,14 +30,14 @@ def prep_coverage(meta, infos_from_ndcs, info_per_country):
     
     Here, matrices on the coverage (Yes: covered, No: not-covered) are created.
     
-    We do not include the information on the EU28, but put the information into each of the member-states.
+    We do not include the information on the EU, but put the information into each of the member-states.
     """
     
     # %%
     def current_coverage(meta, iso3, coverage, info_per_country):
         
-        # Use EU28 info for the single EU28 countries.
-        iso3_ndc = (iso3 if iso3 not in meta.isos.EU28 else 'EU28')
+        # Use EU info for the single EU countries.
+        iso3_ndc = (iso3 if iso3 not in meta.EU_isos else meta.EU)
         
         # Update the 'info_cov' regarding the rules mentioned above.
         info_cov = coverage.used_per_gas_per_sec.loc[iso3_ndc, :]
@@ -121,7 +121,7 @@ def prep_coverage(meta, infos_from_ndcs, info_per_country):
     info_per_country.loc[:, 'NDC'] = 'NO'
     info_per_country.loc[infos_from_ndcs.reindex(index=info_per_country.index).index[
         infos_from_ndcs.reindex(index=info_per_country.index).NDC_INDC.isin(
-            ['NDC', 'INDC', 'See EU'])], 'NDC'] = 'YES'
+            ['NDC', 'INDC', 'See EU', 'See EU27'])], 'NDC'] = 'YES'
     
     info_per_country.loc[:, 'coverage'] = ''
     
@@ -174,10 +174,10 @@ def prep_coverage(meta, infos_from_ndcs, info_per_country):
                 else:
                     coverage.used_per_combi.loc[iso3, check_combi] = 'YES'
     
-    # Delete EU28 info only now.
-    coverage.orig_per_gas_per_sec.drop(index=['EU28'], inplace=True)
-    coverage.calc_per_gas_per_sec.drop(index=['EU28'], inplace=True)
-    coverage.used_per_gas_per_sec.drop(index=['EU28'], inplace=True)
+    # Delete EU info only now.
+    coverage.orig_per_gas_per_sec.drop(index=[meta.EU], inplace=True)
+    coverage.calc_per_gas_per_sec.drop(index=[meta.EU], inplace=True)
+    coverage.used_per_gas_per_sec.drop(index=[meta.EU], inplace=True)
     
     # Write out data.
     # Replace the sectors by categories.

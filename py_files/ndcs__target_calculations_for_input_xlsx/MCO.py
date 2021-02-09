@@ -30,3 +30,17 @@ kyotoghg = hpf.import_table_to_class_metadata_country_year_matrix(
 print(f"Share of F-gases (FGASES_IPCM0EL vs. KYOTOGHG_IPCM0EL):\n{100. * fgases / kyotoghg}")
 
 # %%
+# NDC2020
+
+emi_onlyLU = {1990: 0, 2018: -0.00002}
+emi_exclLU = {1990: 0.10274, 2018: 0.08693}
+for year in [1990, 2018]:
+    print(f"{year} onlyLU: {hpf.rnd(emi_onlyLU[year]+emi_exclLU[year], 5)} MtCO2eq")
+
+tar_rby = -.55
+tar_abs_inclLU = (emi_exclLU[1990] + emi_onlyLU[1990]) * (1+tar_rby)
+tar_abs_exclLU = (emi_exclLU[1990]) * (1+tar_rby)
+print(f"ABS inclLU: {hpf.rnd(tar_abs_inclLU, 5)} MtCO2eq")
+print(f"ABS exclLU: {hpf.rnd(tar_abs_exclLU, 5)} MtCO2eq")
+
+# %%

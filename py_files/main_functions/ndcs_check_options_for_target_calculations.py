@@ -232,11 +232,11 @@ def check_countries(countries, meta):
         countries_save = meta.isos.EARTH
     
     # Only use ISO3s that are in meta.isos.EARTH.
-    countries = [xx for xx in countries if xx in meta.isos.EARTH + ['EU28']]
+    countries = [xx for xx in countries if xx in meta.isos.EARTH + [meta.EU]]
     
-    # If 'EU28' is in countries replace it by the single EU28 countries and remove it from list.
-    if 'EU28' in countries:
-        countries = sorted(list(set(countries + meta.isos.EU28) - set(['EU28'])))
+    # If meta.EU is in countries replace it by the single EU countries and remove it from list.
+    if meta.EU in countries:
+        countries = sorted(list(set(countries + meta.EU_isos) - set([meta.EU])))
     
     # If no ISO3s are left for which targets should be calculated exit the program.
     if len(countries) == 0:
@@ -246,8 +246,8 @@ def check_countries(countries, meta):
     if len(countries) != len(countries_save):
         txt = "Some countries were removed from given list (" + \
             ', '.join(sorted(list(set(set(countries_save) - set(countries))))) + ")."
-        if 'EU28' in countries_save:
-            print(txt + " EU28 was replaced by single countries.")
+        if meta.EU in countries_save:
+            print(txt + f" {meta.EU} was replaced by single countries.")
         else:
             print(txt)
     

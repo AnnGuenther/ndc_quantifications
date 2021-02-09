@@ -45,7 +45,7 @@ def setup_metadata():
     #####################################
     ##### TO BE UPDATED WHEN NEEDED #####
     #####################################
-    meta.path.pc_cov = Path(meta.path.preprocess, 'pc_cov_20201122_0952')
+    meta.path.pc_cov = Path(meta.path.preprocess, 'pc_cov_20210203_1440')
     
     # %%
     """
@@ -60,6 +60,19 @@ def setup_metadata():
     meta.isos.iso3_to_shortname = pd.Series(
         hpf.convert_isos_and_country_names(meta.isos.EARTH_EU28, 'ISO3', 'ShortName'), 
         index=meta.isos.EARTH_EU28).to_dict()
+    meta.isos.EU27 = hpf.get_isos_for_groups('EU27', 'ISO3')
+    meta.isos.EARTH_EU27 = sorted(meta.isos.EARTH + ['EU27'])
+    meta.isos.iso3_to_shortname = pd.Series(
+        hpf.convert_isos_and_country_names(meta.isos.EARTH_EU27, 'ISO3', 'ShortName'), 
+        index=meta.isos.EARTH_EU27).to_dict()
+    
+    # %%
+    """
+    *meta.EU*: current EU (e.g., EU28, or EU27)
+    """
+    meta.EU = 'EU27'
+    meta.EU_isos = meta.isos.EU27
+    meta.EU_EARTH = meta.isos.EARTH_EU27
     
     # %%
     """

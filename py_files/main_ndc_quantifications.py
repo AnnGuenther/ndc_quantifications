@@ -118,8 +118,8 @@ def main_ndc_quantifications(input_file, lulucf_prio):
     
     """
     Read input time series 1990-2050. For all countries in meta.isos.EARTH.
-    For the EU28 countries, the targets are calculated separately (using the EU28 NDC info for each of the countries).
-    In the end, a pathway is calculated for EU28.
+    For the EU countries, the targets are calculated separately (using the EU NDC info for each of the countries).
+    In the end, a pathway is calculated for EU.
     
     Read tables:
         'KYOTOGHG_IPCM0EL_TOTAL_NET_' + meta.ssps.chosen + 'FILLED_PMSSPBIE'

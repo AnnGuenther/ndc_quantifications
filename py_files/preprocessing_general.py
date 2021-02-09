@@ -37,6 +37,11 @@ Includes information on Parties' target types, years, conditionality, range, cov
 """
 infos_from_ndcs = hpf.get_infos_from_ndcs(meta)
 
+"""
+Get the emission data that were retrieved from the NDCs and write them to csv-files.
+"""
+hpf.get_infos_from_ndcs_emi()
+
 # How many years should be used when calculating the mean over the last available years.
 nrvalues = 6
 

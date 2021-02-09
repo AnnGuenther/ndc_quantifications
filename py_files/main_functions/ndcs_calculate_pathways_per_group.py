@@ -39,8 +39,8 @@ def ndcs_calculate_pathways_per_group(
         
         for iso_act in meta.isos.EARTH:
             
-            # Use info for EU28 if country belongs to EU28.
-            iso_ndc = ('EU28' if iso_act in meta.isos.EU28 else iso_act)
+            # Use info for EU if country belongs to EU.
+            iso_ndc = (meta.EU if iso_act in meta.EU_isos else iso_act)
             
             # Get the time series from pathways_per_country for that country (not pc_cov / pc_ncov).
             ts_iso = pathways_per_country.loc[pathways_per_country.iso3 == iso_act, :]. \
@@ -155,18 +155,18 @@ def ndcs_calculate_pathways_per_group(
             [xx + '_IPCM0EL' for xx in condi_rges], 
             columns=ptws_groups.columns)
         
-        # ISO3s for the group. Only use ISO3s that are in meta.isos.EARTH + 'EU28'.
-        # Replace EU28 by single countries, if EU28 is in the list.
-        if group_act == 'EU28':
-            isos_group = meta.isos.EU28
+        # ISO3s for the group. Only use ISO3s that are in meta.isos.EARTH + meta.EU.
+        # Replace EU by single countries, if EU is in the list.
+        if group_act == meta.EU:
+            isos_group = meta.EU_isos
         elif group_act == 'EARTH':
             isos_group = meta.isos.EARTH
         else:
             isos_group = sorted(hpf.get_isos_for_groups(group_act, 'ISO3'))
         
-        isos_group = [xx for xx in isos_group if xx in meta.isos.EARTH + ['EU28']]
-        if 'EU28' in isos_group:
-            isos_group = sorted(set(isos_group + meta.isos.EU28))
+        isos_group = [xx for xx in isos_group if xx in meta.isos.EARTH + [meta.EU]]
+        if meta.EU in isos_group:
+            isos_group = sorted(set(isos_group + meta.EU_isos))
         
         ptws.loc[:, 'iso3s'] = ', '.join(isos_group)
         
@@ -265,7 +265,7 @@ def ndcs_calculate_pathways_per_group(
     
     # Calculate the pathways per group.
     for group_act in sorted(set(meta.groups_for_which_to_calculate_pathways +
-        ['EU28', 'EARTH', 'R5ASIA', 'R5LAM', 'R5MAF', 'R5OECD', 'R5REF'])):
+        [meta.EU, 'EARTH', 'R5ASIA', 'R5LAM', 'R5MAF', 'R5OECD', 'R5REF'])):
         
         # Calculate the group pathways (for un/conditional best/worst).
         ptws_groups = ptws_groups.append(

@@ -113,7 +113,7 @@ def plotting():
     
     XL_emi = [2010, 2030.5]
     XL_tars = [2016, 2037]
-    YL = [42, 70]#[40, 69]
+    YL = [42, 70]
     #for axa, XL, YL in [ax_emi, [2015, 2049.5], [43, 80]], [inax, [1989, 2030], [30, 70]]:
     
     linewdth_all = 1.5
@@ -127,7 +127,7 @@ def plotting():
     ax_tars.set_xlim(XL_tars)
     
     for yy in np.arange(47.5, 66, 2.5):
-        ax_tars.plot([2000, 2070], [yy, yy], 'k:', linewidth=.5)
+        ax_tars.plot([2000, 2070], [yy, yy], 'k:', linewidth=.3)
     
     txt_options = []
     txt_yloc = []
@@ -373,7 +373,7 @@ def plotting():
                 reindex(columns=years_str).values[0]
             handles[ssp], = ax_emi.plot(years_int, data, color=colour_act, linewidth=linewdth, linestyle=linestyle[ssp])
     
-    for axa, txt, XL in [ax_emi, '(a) Baseline emissions', XL_emi], [ax_tars, '(b) Target emissions (2030)', XL_tars]:
+    for axa, txt, XL in [ax_emi, '(a) Baseline emissions', XL_emi], [ax_tars, '(b) Mitigated emissions (2030)', XL_tars]:
         
         axa.set_ylim(YL)
         axa.yaxis.set_ticks(range(45, 70, 5))
@@ -398,11 +398,11 @@ def plotting():
                 rotation=90, ha='center', va='bottom')
             axa.text(2020.4, YL[0] + .01*np.diff(YL), 'estim. cov.', 
                 rotation=90, ha='center', va='bottom')
-            axa.plot([2016.8, 2016.8], [42, 65], 'k:', linewidth=.7)
-            axa.plot([2017.8, 2017.8], [42, 57.5], 'k:', linewidth=.7)
-            axa.plot([2018.8, 2018.8], [42, 65], 'k:', linewidth=.7)
-            axa.plot([2019.8, 2019.8], [42, 55], 'k:', linewidth=.7)
-            axa.plot([2020.8, 2020.8], [42, 65], 'k:', linewidth=.7)
+            axa.plot([2016.8, 2016.8], [42, 65], 'k:', linewidth=.3)
+            axa.plot([2017.8, 2017.8], [42, 57.5], 'k:', linewidth=.3)
+            axa.plot([2018.8, 2018.8], [42, 65], 'k:', linewidth=.3)
+            axa.plot([2019.8, 2019.8], [42, 55], 'k:', linewidth=.3)
+            axa.plot([2020.8, 2020.8], [42, 65], 'k:', linewidth=.3)
     
         axa.set_ylabel('emissions / Gt CO$_2$eq AR4', fontweight='bold')
     

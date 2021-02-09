@@ -10,11 +10,13 @@ Last updated in 03/2020
 #####
 
 # %%
-def get_isos_for_groups(Groups, ISO):
+def get_isos_for_groups(Groups, ISO, **kwargs):
     """
     Give list of Groups for which you need the ISO3s.
     Return dict of Groups, with list of ISO3s.
     If len(Groups) == 1 --> return list instead of dict.
+    
+    if meta=meta in kwargs, use the given meta.EU, else use 'EU27' as default.
     """
     
     # %%
@@ -28,7 +30,12 @@ def get_isos_for_groups(Groups, ISO):
         Groups = [Groups]
     #
     Out = dict.fromkeys(Groups)
-    Path_File = Path(os.path.dirname(os.path.realpath(__file__)), 'iso3_iso2_groups.csv')
+    if 'meta' in kwargs.keys():
+        EU = kwargs['meta'].EU
+    else:
+        EU = 'EU27'
+    
+    Path_File = Path(os.path.dirname(os.path.realpath(__file__)), f'iso3_iso2_groups_with{EU}.csv')
     Data = pd.read_csv(Path_File).astype(str)
     for Group_Act in Out:
         ID = np.where(Data.Group == Group_Act)[0]

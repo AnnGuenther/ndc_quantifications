@@ -54,7 +54,7 @@ def prep_read_in_tables(file, path_to_folder, database, meta):
         table.__name_to_standard__()
         
         # Columns are integers (years). Dismiss all years < 1990 and years > 2050.
-        # Index: all EARTH-iso3s, without EU28.
+        # Index: all EARTH-iso3s, without EU27.
         # For the PRIMAP totals save one version without eliminating the early years (used for the .md-files).
         if file == 'KYOTOGHGAR4_IPCM0EL_TOTAL_NET_HISTCR_' + meta.primap.current_version['emi'] + ".csv":
             hpf.write_table_from_class_metadata_country_year_matrix(

@@ -11,9 +11,9 @@ def ndcs_calculate_targets(database, meta):
     Some NDCs give more than one target type (e.g., they give the absolute value, 
     but say that it is a RBU target and therefore give the % reduction against BAU).
     
-    EU28 countries are calculated separately, using the NDC information from the EU28 NDC.
-    The per-country target emissions for EU28 countries does not equal the 'real' emissions targets 
-    (each of the countries has its own targets to in-sum get to the EU28 total target).
+    EU countries are calculated separately, using the NDC information from the EU NDC.
+    The per-country target emissions for EU countries does not equal the 'real' emissions targets 
+    (each of the countries has its own targets to in-sum get to the EU total target).
     """
         
     # %%
@@ -125,8 +125,8 @@ def ndcs_calculate_targets(database, meta):
 
         quantis_iso = pd.DataFrame(columns=calculated_targets.columns)
         
-        # For EU28 countries: use the ndc info from EU28.
-        iso_ndc = ('EU28' if iso_act in meta.isos.EU28 else iso_act)
+        # For EU countries: use the ndc info from EU.
+        iso_ndc = (meta.EU if iso_act in meta.EU_isos else iso_act)
         
         # Get ndc information.
         ndc_act = meta.ndcs_info.loc[iso_ndc, :]
@@ -759,7 +759,7 @@ def ndcs_calculate_targets(database, meta):
     #     'fyson_2019_lulucf_paper_suppl_quanti.csv'), index_col='country')
     
     """
-    Iterate through the iso3s in meta.ndcs_info (EU28 as single countries, using the EU28 target info).
+    Iterate through the iso3s in meta.ndcs_info (EU as single countries, using the EU target info).
     Calculate 'all available targets' per country (targets as in meta.ndcs_info, in columns 
     ['ABS', 'RBY', 'RBU', 'ABU', 'REI', 'AEI']).
     """
@@ -770,7 +770,7 @@ def ndcs_calculate_targets(database, meta):
     path_txt_targets = Path(meta.path.output_ndcs, 'per_country_info_on_target_calculations')
     Path(path_txt_targets).mkdir(parents=True, exist_ok=True)
     
-    for iso_act in sorted(list(set(set(meta.ndcs_info.index) - set(['EU28'])))):
+    for iso_act in sorted(list(set(set(meta.ndcs_info.index) - set([meta.EU])))):
         
         txt_targets = f"## {hpf.convert_isos_and_country_names(iso_act, 'ISO3', 'ShortName')}"
         

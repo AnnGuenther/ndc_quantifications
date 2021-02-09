@@ -9,9 +9,10 @@ def ndcs_get_pathways_for_matlab(pathways_countries_in, pathways_groups_in, meta
     """
     Write out data for Matlab.
     To be used in the PRIMAP Emissions Module / Climate Module to calculate temperatures 
-    for the emissions pathways).
+    for the emissions pathways.
     
     Creates csv-files with the data, and one .m-file to be used in Matlab for reading in the csv-files.
+    And one .gitignore file.
     """
     
     # %%
@@ -32,7 +33,7 @@ def ndcs_get_pathways_for_matlab(pathways_countries_in, pathways_groups_in, meta
     
     # Only write out certain groups (and all countries).
     ptws_groups_in = ptws_groups_in.loc[ptws_groups_in.group.isin(
-        ['EU28', 'EARTH', 'R5ASIA', 'R5LAM', 'R5MAF', 'R5OECD', 'R5REF']), :]
+        [meta.EU, 'EARTH', 'R5ASIA', 'R5LAM', 'R5MAF', 'R5OECD', 'R5REF']), :]
     
     # Replace column name 'group' by 'iso3'.
     ptws_groups_in.columns = [xx if xx != 'group' else 'iso3' for xx in ptws_groups_in.columns]
@@ -78,6 +79,7 @@ def ndcs_get_pathways_for_matlab(pathways_countries_in, pathways_groups_in, meta
         ptws_groups_in.loc[
             (ptws_groups_in.rge == 'emi_bau') &
             (ptws_groups_in.category == category), columns_matlab], ignore_index=True)
+    # Data need to be sorted alphabetically for MAGICC!!!
     pathways_exclLU = pathways_exclLU.sort_values(['iso3'])
     txt = "BAU emissions for " + meta.ssps.chosen[:4] + " (1990:2030) used during NDC target calculations " + \
         "(" + category + ")."
@@ -162,6 +164,7 @@ data_act.rowcodes_countries = data_load.Properties.RowNames;
 data_act.data = data_load{:, :};
 """ + struct_main + """.""" + sheet_code + """ = data_act;
     """)
+    # Write the pathways to .csv-file.
     file_out_data = open(path_data, 'w')
     file_out_data.write(data_str)
     file_out_data.close()

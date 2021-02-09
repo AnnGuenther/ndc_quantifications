@@ -12,8 +12,11 @@ import helpers_functions as hpf
 BRA
 """
 
+# %%
+# NDC200
+
 """
-"NDC2020: "The reference indicator will be quantified on the basis of the total 
+"The reference indicator will be quantified on the basis of the total 
 net emissions of greenhouse gases (GHG) in the reference year of 2005 reported in 
 the “National Inventory of Anthropogenic Emissions by Sources and Removals by 
 Sinks of Greenhouse Gases not controlled by the Montreal Protocol”. For reference 
@@ -43,7 +46,6 @@ def get_data(inclLU, onlyLU, gwp):
     txt += '}'
     return txt
 
-    # %%
 # GWP SAR
 # Data given as Gg -> convert it to Mt
 emi_gwpsar_inclLU = [1342.909, 2568.872, 1992.520, 2735.898, 1271.399]
@@ -54,5 +56,13 @@ txt_sar = get_data(emi_gwpsar_inclLU, emi_gwpsar_onlyLU, 'SAR')
 emi_gwpar5_inclLU = [1410.434, 2651.780, 2074.399, 2837.956, 1364.197]
 emi_gwpar5_onlyLU = [797.413, 1946.934, 1276.260, 1921.694, 355.002]
 txt_ar5 = get_data(emi_gwpar5_inclLU, emi_gwpar5_onlyLU, 'AR5')
+
+tar_rby = {2025: -.37, 2030: -.43}
+# Assuming the same relative reduction for inclLU/exclLU.
+onlyLU_2005 = 1921.694
+exclLU_2005 = 916.262
+for year in [2025, 2030]:
+    print(f"ABS inclLU {year}: {hpf.rnd((exclLU_2005 + onlyLU_2005)*(1+tar_rby[year]), 3)} MtCO2eq")
+    print(f"ABS exclLU {year}: {hpf.rnd((exclLU_2005)*(1+tar_rby[year]), 3)} MtCO2eq")
 
 # %%

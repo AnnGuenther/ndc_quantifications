@@ -30,17 +30,17 @@ def get_infos_from_ndcs(meta, **kwargs):
     infos_from_ndcs.index = [xx.replace('.mod', '').upper() for xx in infos_from_ndcs.index]
     
     # Check for the base year entries to be integers or NaN. Will give an error if it cannot be converted to int.
-    infos_from_ndcs.loc['BASEYEAR', :] = [int(xx) if xx != 'nan' else np.nan for xx in infos_from_ndcs.loc['BASEYEAR', :]]    
+    infos_from_ndcs.loc['BASEYEAR', :] = [int(xx) if xx != 'nan' else np.nan for xx in infos_from_ndcs.loc['BASEYEAR', :]]
     
     # ISO3s as index.
     infos_from_ndcs.columns = infos_from_ndcs.loc['ISO3', :]
-    infos_from_ndcs = infos_from_ndcs.reindex(columns=meta.isos.EARTH_EU28)
+    infos_from_ndcs = infos_from_ndcs.reindex(columns=meta.EU_EARTH)
     infos_from_ndcs.drop(index=['ISO3'], inplace=True)
     infos_from_ndcs = infos_from_ndcs.transpose()
     
-    # Use EU28 information for all EU28 countries.
+    # Use EU information for all EU countries.
     cols = list(set(set(infos_from_ndcs.columns) - set(['ISO2', 'COUNTRYNAME'])))
-    infos_from_ndcs.loc[meta.isos.EU28, cols] = infos_from_ndcs.loc['EU28', cols].values
+    infos_from_ndcs.loc[meta.EU_isos, cols] = infos_from_ndcs.loc[meta.EU, cols].values
     
     """
     Replace the information on coverage by single entries.
@@ -61,7 +61,7 @@ def get_infos_from_ndcs(meta, **kwargs):
         
         for iso3 in infos_from_ndcs.index:
             cov_act = infos_from_ndcs.loc[iso3, what]
-            if type(cov_act) == str:
+            if (type(cov_act) == str and cov_act.upper() != 'NAN'):
                 cov_json = json.loads(cov_act)
                 for case in cov_json.keys():
                     infos_from_ndcs.loc[iso3, [f"{xx.upper()}_{name}" for xx in cov_json[case]]] = case
@@ -74,7 +74,7 @@ def get_infos_from_ndcs(meta, **kwargs):
     
     for iso3 in infos_from_ndcs.index:
         tars_act = infos_from_ndcs.loc[iso3, 'TARGETS']
-        if type(tars_act) == str:
+        if (type(tars_act) == str and tars_act.upper() != 'NAN'):
             tars_json = json.loads(tars_act)
             for tar in targets:
                 if (type(tars_json[tar]) == float and np.isnan(tars_json[tar])):

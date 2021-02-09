@@ -36,9 +36,9 @@ def prep_chose_covered_gases_and_sectors_if_wanted(meta, coverage, txt_for_logfi
     # %%
     # or: all ANNEX-I parties cover everything, and the rest only Energy and CO2.
     ctrs = hpf.get_isos_for_groups(['ANNEXI'], 'ISO3')
-    if 'EU28' in ctrs:
-        ctrs = sorted(set(ctrs + meta.isos.EU28))
-        ctrs.remove('EU28')
+    if meta.EU in ctrs:
+        ctrs = sorted(set(ctrs + meta.EU_isos))
+        ctrs.remove(meta.EU)
     
     ctrs = [xx for xx in ctrs if xx in meta.isos.EARTH]
     
