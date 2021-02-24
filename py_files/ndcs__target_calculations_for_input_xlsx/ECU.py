@@ -9,6 +9,10 @@ Last updated in 07/2020.
 ECU
 """
 
+exclLU_2025 = 76.904
+onlyLU_2025 = 43.75
+print(f"EMI inclLU 2025: {exclLU_2025 + onlyLU_2025} MtCO2eq")
+
 bau_ipcm0el = 76.904
 ABS_ipcm0el = {'uncondi': 67.774, 'condi': 60.824}
 
