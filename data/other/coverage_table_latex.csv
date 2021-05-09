@@ -1,7 +1,0 @@
-(I)NDC | 'Adapted' & {\bfseries Per sector} & {\bfseries CO$_2$} & {\bfseries CH$_4$} & {\bfseries N$_2$O} & {\bfseries HFCs} & {\bfseries PFCs} & {\bfseries SF$_6$} & {\bfseries NF$_3$} \tabularnewline \hline \hline 
-Per gas & -- | -- & 174 | 193 & 157 | 175 & 147 | 165 & 78 | 79 & 71 | 72 & 71 | 73 & 51 | 53 \tabularnewline \hline 
-Energy & 193 | 193 & 193 & 175 & 165 & -- & -- & -- & -- \tabularnewline 
-IPPU & 123 | 142 & 142 & 135 & 132 & 79 & 72 & 73 & 53 \tabularnewline 
-Agriculture & 139 | 143 & 143 & 137 & 135 & -- & -- & -- & -- \tabularnewline 
-Waste & 149 | 148 & 148 & 142 & 135 & -- & -- & -- & -- \tabularnewline 
-Other & 0 | 124 & 124 & 118 & 117 & -- & -- & -- & -- 

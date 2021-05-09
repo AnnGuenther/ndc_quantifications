@@ -1,1 +1,0 @@
-General output (not from the *ndc_quantification* but from *additional_scripts*).

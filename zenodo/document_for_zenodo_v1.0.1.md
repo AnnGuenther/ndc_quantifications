@@ -2,7 +2,8 @@
 
 **Recommended citation**
 
-The article citation will be added once the article is available.
+This paper citation will be updated once the manuscript is published.
+The discussion paper is available as "Günther, A., Gütschow, J., and Jeffery, M. L.: NDCmitiQ v1.0.0: a tool to quantify and analyse GHG mitigation targets, Geosci. Model Dev. Discuss. [preprint],  https://doi.org/10.5194/gmd-2020-392, in review, 2021."
 
 **Content**
 
@@ -60,8 +61,11 @@ NDCmitiQ contains several quantification options (i.a., regarding the input time
 - **typeReclass**: runs with type_reclass (reclassified target type, e.g., if the country has a base year target, but provides a quantification of the target emissions it can be reclassified as an absolute target), based on emissions data from the NDCs where possible.
 - **pccov100**: runs with an assumed coverage of 100%. Without pccov100: coverage based on estimated %cov (calculated from covered sectors and gases stated in the NDC and emissions data per sector and gas).
 - **constEmiAfterLastTar**: runs with assumed constant emissions after a Party’s last target year. Without constEmiAfterLastTar: instead of the emissions, the relative difference to the baseline is kept constant after the last target year.
+- **constDiffAfterLastTar**: runs with assumed constant absolute difference to baseline emissions after a Party's last target year. Without constDiffAfterLastTar: instead of the emissions, the relative difference to the baseline is kept constant after the last target year.
 - **BLForUCAboveBL**: runs using the baseline emissions as the unconditional pathways for Parties without unconditional targets, even if the baseline is better than the conditional targets. Without BLForUCAboveBL: conditional worst pathway is used in this case instead of the baseline.
+- **BLForTarAboveBL**: runs using the baseline emissions if the mitigated pathway lies above baseline in 2030. Without BLForTarAboveBL: calculated mitigated pathway is used instead of baseline.
 - **UNFCCC / FAO**: runs using LULUCF (Land Use, Land-Use Change and Forestry) data with UNFCCC or FAO chosen as the primary prioritised data source (UNFCCC, CRF, BUR, FAO or FAO, CRF, BUR, UNCFFF). Without UNFCCC / FAO: prioritisation is CRF, BUR, UNFCCC, and FAO.
+- **CAT**: runs using CAT quantifications (Copyright © 2020 Climate Action Tracker by Climate Analytics and NewClimate Institute with all rights reserved) for all countries with data available. Without CAT: using NDCmitiQ quantifications.
 
 Per run, the single per-country targets can be found in `ndc_targets.csv`, the country-pathways are available in `ndc_targets_pathways_per_country_used_for_group_pathways.csv`, and the aggregated pathways are stored in `ndc_targets_pathways_per_group.csv`. Additionally, each of the folders contains the file `log_file.md` (information on the setup for the model run), and the sub-folder `/per_country_info_on_target_calculations/` that provides per-country information on how exactly the national targets were quantified. The input that can easily be modified is: time series of emissions (exclLU and onlyLU), %cov (exclLU), population, and GDP, and information from the NDCs (exclLU: emissions excluding contributions from LULUCF, onlyLU: LULUCF emissions, GDP: Gross Domestic Product).
 
@@ -77,9 +81,20 @@ The following data sources are used in the NDCmitiQ:
 - BUR submissions [data](https://unfccc.int/process/transparency-and-reporting/reporting-and-review-under-convention/biennial-update-reports-0)
 - EDGAR version 4.3.2 [data](https://data.jrc.ec.europa.eu/collection/EDGAR), [paper](https://essd.copernicus.org/preprints/essd-2017-79/)
 - FAOSTAT [data](http://www.fao.org/faostat/en//#data)
+- CAT [webpage, data](https://climateactiontracker.org/)
 
 **Changelog**
 
-Current version: contributions submitted prior to 17th April 2020.
+NDCmitiQ v1.0.1
+
+- Contributions submitted up to 31st December 2020 (generally considering 2016 submission by USA).
+- New quantification options:
+  - constDiffAfterLastTar
+  - BLForTarAboveBL
+  - CAT
+
+NDCmitiQ v1.0.0
+
+- Current version: contributions submitted up to 17th April 2020 (generally not considering 2016 submission by USA).
 
 Note: please do not consider the folder `/data/other/`.

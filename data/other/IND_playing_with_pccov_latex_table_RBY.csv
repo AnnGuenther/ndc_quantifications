@@ -1,9 +1,0 @@
-\textbf{RBY} & \textbf{refyr: 2005} & \textbf{taryr: 2030} & \textbf{A} & \textbf{+} & \textbf{B} & \textbf{-} & \textbf{C} & \textbf{=} & \textbf{D} & \textbf{E} & \textbf{F} \tabularnewline \hline
- Emissions (excl. LULUCF) & 1807 & 3965 & & & & & & & & & \tabularnewline \hline
- pc\_cov (increase) & 66\% & 81\% & 775 & + & 3965 & - & 3212 & = & 1528 & --15\% & --61\% \tabularnewline 
- pc\_cov (decrease) & 81\% & 66\% & 951 & + & 3965 & - & 2617 & = & 2299 & +27\% & --42\% \tabularnewline 
- pc\_cov (100\%) & 100\% & 100\% & 1174 & + & 3965 & - & 3965 & = & 1174 & --35\% & --70\% \tabularnewline 
- pc\_cov (50\%) & 50\% & 50\% & 587 & + & 3965 & - & 1982 & = & 2570 & +42\% & --35\% \tabularnewline \hline
- pc\_cov (edge case, no mitigation) & 0\% & 0\% & 0 & + & 3965 & - & 0 & = & 3965 & +119\% & -0\% \tabularnewline 
- pc\_cov (edge case, unrealistic) & 0\% & 100\% & 0 & + & 3965 & - & 3965 & = & 0 & --100\% & --100\% \tabularnewline 
- pc\_cov (edge case, unrealistic) & 100\% & 0\% & 1174 & + & 3965 & - & 0 & = & 5139 & +184\% & +30\%
