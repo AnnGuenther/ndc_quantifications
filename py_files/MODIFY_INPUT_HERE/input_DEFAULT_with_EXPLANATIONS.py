@@ -9,7 +9,7 @@
 
 UNITS:
 Units for time series: emissions in Mt CO2eq, population in Pers, GDP in 2011GKD.
-Units of NDC input data (infos_from_ndcs_default.xlsx): Mt CO2eq or tCO2eq / cap (all AEI targets are in emissions per capita).
+Units of NDC input data (meta.ndcs.path_to_infos_from_ndcs): Mt CO2eq or tCO2eq / cap (all AEI targets are in emissions per capita).
 
 PREPROCESSING:
 If you want to do the preprocessing of data, run preprocessing.py, and update the 'folder_preprocess' in setup_metadata.py.
@@ -145,6 +145,9 @@ Chose the method for the pathway calculations (per country pathways).
 'constant_percentages':
     The percentage difference to the baseline emissions of the last available target year
     is kept constant.
+'constand_difference':
+    The absolute difference to the baseline emissions of the last available target year
+    is kept constant.
 'constant_emissions':
     The emissions of the last available target year are kept constant.
 
@@ -170,6 +173,23 @@ meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi = False
 """
 
 meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi = False
+
+# %%
+"""
+**meta.use_baseline_if_target_above_bl**
+
+If a country's target emissions (considering pathway in 2030) lies above the 
+baseline, use the baseline. By comparing with a run without this swith, one can
+check how much 'surplus' countries have (that they might want to sell).
+Tests every mitigated pathway individually (so un/conditional best/worst).
+Default:
+    use target even if it is worse than the baseline emissions
+
+Default:
+meta.use_baseline_if_target_above_bl = False
+"""
+
+meta.use_baseline_if_target_above_bl = False
 
 # %%
 """
@@ -224,5 +244,21 @@ meta.groups_for_which_to_calculate_pathways = []
 """
 
 meta.groups_for_which_to_calculate_pathways = []
+
+# %%
+"""
+**meta.use_CAT_targets**
+
+Use the https://climateactiontracker.org/ target quantifications instead of our
+quantifications for all countries that have values available, or for selected
+countries.
+
+Default:
+    meta.use_CAT_targets = {'use_it': False}
+"""
+
+meta.use_CAT_targets = {'use_it': False}
+#meta.use_CAT_targets = {'use_it': True, 'countries': 'all'}
+#meta.use_CAT_targets = {'use_it': True, 'countries': ['EU27', 'CHN', 'IND', 'USA', 'AUS']}
 
 # %%

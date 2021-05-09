@@ -8,8 +8,8 @@ Created on Thu Apr 16 10:17:54 2020
 # %%
 def get_targets_from_json(ndc_values_all_json, tar_type, iso3):
     """
-    Get all the targets for a target type, as stored in infos_from_ndcs_default.xlsx.
-    ndc_values_all_json is what is stored in a cell in infos_from_ndcs_default.xlsx.
+    Get all the targets for a target type, as stored in meta.ndcs.path_to_infos_from_ndcs.
+    ndc_values_all_json is what is stored in a cell in meta.ndcs.path_to_infos_from_ndcs.
     """
     
     # %%

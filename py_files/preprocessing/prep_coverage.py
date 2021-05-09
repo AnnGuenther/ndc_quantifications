@@ -37,7 +37,7 @@ def prep_coverage(meta, infos_from_ndcs, info_per_country):
     def current_coverage(meta, iso3, coverage, info_per_country):
         
         # Use EU info for the single EU countries.
-        iso3_ndc = (iso3 if iso3 not in meta.EU_isos else meta.EU)
+        iso3_ndc = (iso3 if iso3 not in meta.isos.EU else meta.EU)
         
         # Update the 'info_cov' regarding the rules mentioned above.
         info_cov = coverage.used_per_gas_per_sec.loc[iso3_ndc, :]
@@ -121,7 +121,7 @@ def prep_coverage(meta, infos_from_ndcs, info_per_country):
     info_per_country.loc[:, 'NDC'] = 'NO'
     info_per_country.loc[infos_from_ndcs.reindex(index=info_per_country.index).index[
         infos_from_ndcs.reindex(index=info_per_country.index).NDC_INDC.isin(
-            ['NDC', 'INDC', 'See EU', 'See EU27'])], 'NDC'] = 'YES'
+            ['NDC', 'INDC', 'See EU', 'See EU27', 'See EU28'])], 'NDC'] = 'YES'
     
     info_per_country.loc[:, 'coverage'] = ''
     
@@ -185,19 +185,19 @@ def prep_coverage(meta, infos_from_ndcs, info_per_country):
     cov_orig_cols.columns = [meta.sectors.main.sec_to_cat[xx] 
         if xx in meta.sectors.main.sec_to_cat.keys() else xx for xx in cov_orig_cols.columns]
     pd.concat([cov_orig_cols, coverage.orig_per_combi], axis=1). \
-        to_csv(Path(meta.path.preprocess, 'coverage_orig_per_gas_and_per_sector_and_combi.csv'))
+        to_csv(Path(meta.path.pc_cov, 'coverage_orig_per_gas_and_per_sector_and_combi.csv'))
     
     cov_calc_cols = deepcopy(coverage.calc_per_gas_per_sec)
     cov_calc_cols.columns = [meta.sectors.main.sec_to_cat[xx] 
         if xx in meta.sectors.main.sec_to_cat.keys() else xx for xx in cov_calc_cols.columns]
     pd.concat([cov_calc_cols, coverage.calc_per_combi], axis=1). \
-        to_csv(Path(meta.path.preprocess, 'coverage_calc_per_gas_and_per_sector_and_combi.csv'))
+        to_csv(Path(meta.path.pc_cov, 'coverage_calc_per_gas_and_per_sector_and_combi.csv'))
     
     cov_used_cols = deepcopy(coverage.used_per_gas_per_sec)
     cov_used_cols.columns = [meta.sectors.main.sec_to_cat[xx] 
         if xx in meta.sectors.main.sec_to_cat.keys() else xx for xx in cov_used_cols.columns]
     pd.concat([cov_used_cols, coverage.used_per_combi], axis=1). \
-        to_csv(Path(meta.path.preprocess, 'coverage_used_per_gas_and_per_sector_and_combi.csv'))
+        to_csv(Path(meta.path.pc_cov, 'coverage_used_per_gas_and_per_sector_and_combi.csv'))
     
     return coverage, info_per_country
 

@@ -40,7 +40,7 @@ def plotting():
         
         for folder, ssp in zip(folders, meta.ssps.scens.short):
             
-            data = pd.read_csv(Path(meta.path.output, 'output_for_paper', folder, 'ndc_targets_pathways_per_group.csv'))
+            data = pd.read_csv(Path(meta.path.output, 'output_for_paper', 'first_subm_exclUSA', folder, 'ndc_targets_pathways_per_group.csv'))
             ptws[what][ssp] = data
             
             for condi, rge in condi_rge:
@@ -612,10 +612,10 @@ gdp_filled = {}
 for ssp in meta.ssps.scens.long:
     
     pop_filled[ssp] = hpf.import_table_to_class_metadata_country_year_matrix(
-        Path(meta.path.preprocess, 'tables', f'POP_DEMOGR_TOTAL_NET_{ssp}FILLED_PMSSPBIEMISC.csv'))
+        Path(meta.path.preprocess, 'tables_PMH21', f'POP_DEMOGR_TOTAL_NET_PMH21{ssp}FILLED_PMH21SSPBIEMISC.csv'))
     
     gdp_filled[ssp] = hpf.import_table_to_class_metadata_country_year_matrix(
-        Path(meta.path.preprocess, 'tables', f'GDPPPP_ECO_TOTAL_NET_{ssp}FILLED_PMSSPBIEMISC.csv'))
+        Path(meta.path.preprocess, 'tables_PMH21', f'GDPPPP_ECO_TOTAL_NET_PMH21{ssp}FILLED_PMH21SSPBIEMISC.csv'))
 
 annotate = False
 numbers_diff = True

@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 Author: Annika Günther, annika.guenther@pik-potsdam.de
-Last updated in 03/2020
+Last updated in 04/2021
+
+04/2021:
+    Add country pathways (with our methods) for CAT estimates (values for target years).
+    Add option meta.use_baseline_if_target_above_bl.
 """
 
 # %% 
@@ -34,6 +38,7 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
             'gdp': 'gdp'}
         
         for timeseries in input_pathways.keys():
+            
             ts_act = getattr(database, timeseries)
             
             ts_add = pd.DataFrame(index=meta.isos.EARTH, columns=ptws_all.columns)
@@ -62,30 +67,38 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
         
         # If there is a value in unconditional_best in a year, but not in unconditional_worst, put it there.
         yrs_info = []
+        
         for yr_act in meta.years.pathways:
+            
             if (~np.isnan(targets_act.loc['unconditional_best', yr_act]) \
             and np.isnan(targets_act.loc['unconditional_worst', yr_act])):
+                
                 targets_act.loc['unconditional_worst', yr_act] = \
                     targets_act.loc['unconditional_best', yr_act]
                 yrs_info += [yr_act]
         
         # Put information to add_info.
         if len(yrs_info) > 0:
+            
             targets_act.loc['unconditional_worst', 'add_info'] += \
                 "The target value from 'unconditional_best' was used for 'unconditional_worst' in " + \
                 ', '.join([str(xx) for xx in yrs_info]) + ".\n"
         
         # If there is a value in conditional_best in a year, but not in conditional_worst, put it there.
         yrs_info = []
+        
         for yr_act in meta.years.pathways:
+            
             if (~np.isnan(targets_act.loc['conditional_best', yr_act]) \
             and np.isnan(targets_act.loc['conditional_worst', yr_act])):
+                
                 targets_act.loc['conditional_worst', yr_act] = \
                     targets_act.loc['conditional_best', yr_act]
                 yrs_info += [yr_act]
         
         # Put information to add_info.
         if len(yrs_info) > 0:
+            
             targets_act.loc['conditional_worst', 'add_info'] += \
                 "The target value from 'conditional_best' was used for 'conditional_worst' in " + \
                 ', '.join([str(xx) for xx in yrs_info]) + ".\n"
@@ -93,16 +106,21 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
         # If there is a value in unconditional_best in a year, but not in conditional (testing for best), 
         # put it there.
         yrs_info = []
+        
         for yr_act in meta.years.pathways:
+            
             if (~np.isnan(targets_act.loc['unconditional_best', yr_act]) \
             and np.isnan(targets_act.loc['conditional_best', yr_act])):
+                
                 targets_act.loc[['conditional_worst', 'conditional_best'], yr_act] = \
                     targets_act.loc['unconditional_best', yr_act]
                 yrs_info += [yr_act]
         
         # Put information to add_info.
         if len(yrs_info) > 0:
+            
             for case in ['conditional_worst', 'conditional_best']:
+                
                 targets_act.loc['conditional_worst', 'add_info'] += \
                     "The target value from 'unconditional_best' was used for '" + case + "' in " + \
                     ', '.join([str(xx) for xx in yrs_info]) + ".\n"
@@ -110,7 +128,7 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
         return targets_act
     
     # %%
-    def calculate_pathways(ptws_all, emi_bl_act, targets_act, current_tar, curr_tar, iso_act, meta):
+    def calculate_pathways(ptws_all, emi_bl_act, targets_act, curr_tpe, curr_tar, iso_act, meta):
         """
         Calculate the pathways per un/conditional_best/worst, assuming a linear in/decrease of the 
         % difference to the baseline emissions.
@@ -122,9 +140,10 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
         Use the baseline emissions for 2020.
         Calculate the percentage level (how much percent of the baseline emissions do 
         the single target emissions represent).
-        pc_level: interpolate between available values, and keep the last available value of pc_level constant
-        (if meta.method_pathways == 'constant_percentages'), or keep the last emissions level constant
-        (if meta.method_pathways == 'constant_emissions').
+        pc_level: interpolate between available values,
+        and keep the last available value of pc_level constant (if meta.method_pathways == 'constant_percentages'),
+        or keep the absolute difference constant (if meta.method_pathways == 'constant_difference'),
+        or keep the last emissions level constant (if meta.method_pathways == 'constant_emissions').
         
         E.g., 2020 is 100%, 2030 is 80%. For 2025 it is 100% + (80%-100%)/(2030-2020) * (2025-2020) = 90%.
         All values of pc_level are 100% (= baseline emissions) if there are no available_years.
@@ -146,7 +165,7 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
         
         # Add some information.
         ptw_calc.loc[:, ['add_info', 'iso3', 'tar_type_used', 'entity', 'category', 'unit', 'gwp']] = \
-            [targets_act.loc[curr_tar, 'add_info'], iso_act, current_tar] + \
+            [targets_act.loc[curr_tar, 'add_info'], iso_act, curr_tpe] + \
             [getattr(emi_bl_act, xx) for xx in ['ent', 'cat', 'unit', 'gwp']]
         
         # Un/conditiona best/worst?
@@ -179,10 +198,15 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
             ~ptw_calc.loc['pc_level', meta.years.pathways].isnull()]
         # All values of pc_level are 100% (= baseline emissions) if there are no available_years:
         if len(available_years) == 0:
+            
             ptw_calc.loc['pc_level', meta.years.pathways] = 1.
+        
         else:
+            
             available_vals = [ptw_calc.loc['pc_level', xx] for xx in available_years]
+            
             for interp in range(len(available_vals) - 1):
+                
                 interp_vals = [
                     available_vals[interp] + \
                     (available_vals[interp + 1] - available_vals[interp]) / \
@@ -214,6 +238,7 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
         Else, the mitigated pathway can increase a lot.
         """
         if ptw_calc.loc['targets', available_years[-1]] > ptw_calc.loc['baseline', available_years[-1]]:
+            
             years_to_adjust = range(available_years[-1], meta.years.pathways[-1]+1)
             ptw_calc.loc['pathway', years_to_adjust] = \
                 ptw_calc.loc['baseline', years_to_adjust].values + \
@@ -222,22 +247,33 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
         
         """
         Keep the emissions constant after last available target if meta.method_pathways == 'constant_emissions'.
-        Else the pc_level is kept constant.
+        Else the pc_level or the absolute difference is kept constant.
         """
+        yrs_ptw = range(available_years[-1], meta.years.pathways[-1] + 1)
+        
         if meta.method_pathways == 'constant_emissions':
-            ptw_calc.loc['pathway', range(available_years[-1], meta.years.pathways[-1] + 1)] = \
-                ptw_calc.loc['pathway', available_years[-1]]
+            
+            ptw_calc.loc['pathway', yrs_ptw] = ptw_calc.loc['pathway', available_years[-1]]
+        
+        if meta.method_pathways == 'constant_difference':
+            
+            const_diff = ptw_calc.loc['baseline', available_years[-1]] - ptw_calc.loc['pathway', available_years[-1]]
+            ptw_calc.loc['pathway', yrs_ptw] = ptw_calc.loc['baseline', yrs_ptw].add(-const_diff)
         
         """
         If the country has an entry for 'DECLINE_AFTER_YEAR': stop the mitigated emissions from increasing after that year.
         """
         decline_after_year = meta.ndcs_info.loc[iso_act, 'DECLINE_AFTER_YEAR']
+        
         if (type(decline_after_year) != str and not np.isnan(decline_after_year)):
+            
             # Check if pathway already declines after that year.
             decline_after_year = int(decline_after_year)
             does_it_decline = all([False if ptw_calc.loc['pathway', xx+1] >= ptw_calc.loc['pathway', xx] else True
                 for xx in range(decline_after_year, ptw_calc.columns[-1]-1)])
+            
             if not does_it_decline:
+                
                 ptw_calc.loc['pathway', range(decline_after_year+1, ptw_calc.columns[-1]+1)] = ptw_calc.loc['pathway', decline_after_year]
         
         return ptw_calc.loc['pathway', :]
@@ -269,7 +305,7 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
     from pathlib import Path
     from helpers_functions.classes_tables.copy_table import copy_table
     
-    # %%    
+    # %%
     # Set up dataframe 'ptws_all'.
     ptws_all = pd.DataFrame(
         columns = ['add_info', 'iso3', 'tar_type_used', 'condi', 'rge', 
@@ -307,7 +343,7 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
             If nothing is available, use 'baseline_emissions'.
             """
             curr_tars_all = calc_tars_iso.tar_type_used.unique()
-            curr_tars_to_use = [xx for xx in curr_tars_all if xx not in ['NGT']]
+            curr_tars_to_use = [xx for xx in curr_tars_all if xx not in ['NGT', 'ABS_CAT']]
             
             if len(curr_tars_to_use) > 0:
                 curr_tars_to_use = curr_tars_to_use
@@ -318,68 +354,101 @@ def ndcs_calculate_pathways_per_country(database, calculated_targets, meta):
             """
             Calculate pathways per target type.
             """
-            for current_tar in curr_tars_to_use:
+            for curr_tpe in curr_tars_to_use:
                 
-                data_tar_iso = calc_tars_iso.loc[calc_tars_iso.tar_type_used == current_tar, :]
-                
-                # Set up 'targets_act' for the pathways per un/conditional & best/worst.
-                targets_act = pd.DataFrame(
-                    index=['unconditional_worst', 'unconditional_best', 'conditional_worst', 'conditional_best'], 
-                    columns=ptws_all.columns)
-                targets_act.add_info = '' # Info will be added where needed.
-                
-                # Which target type is used for the pathway calculation.
-                targets_act.loc[:, 'tar_type_used'] = current_tar
-                
-                # Per un/conditional_best/worst, put all the target emissions to the correct year in 'targets_act'.
-                for row in data_tar_iso.index:
-                    condi_rge = '_'.join(data_tar_iso.loc[row, ['condi', 'rge']])
-                    targets_act.loc[condi_rge, ['condi', 'rge']] = condi_rge.split('_')
-                    targets_act.loc[condi_rge, int(data_tar_iso.loc[row, 'taryr'])] = \
-                        data_tar_iso.loc[row, target_name]
-                        #str(data_tar_iso.loc[row, target_name])
+                data_curr_tpe = calc_tars_iso.loc[calc_tars_iso.tar_type_used == curr_tpe, :]
                 
                 """
-                If there is a value in unconditional_best in a year, but not in unconditional_worst, put it there.
-                If there is a value in conditional_best in a year, but not in conditional_worst, put it there.
-                If there is a value in unconditional in a year, but not in conditional, put it there (the one 
-                stored in 'unconditional_worst').
+                If there is CAT data for that country and target type (ABS), additionally calculate the CAT pathways
+                following the same methodology as for 'our' pathways.
                 """
-                targets_act = add_targets_from_other_conditionality_if_needed(meta, targets_act)
+                data_curr_tpe_ours = data_curr_tpe.loc[data_curr_tpe.scenario != 'CAT']
+                data_curr_tpe_cat = data_curr_tpe.loc[data_curr_tpe.scenario == 'CAT']
                 
-                """
-                Calculate the pathways per un/conditional_best/worst, assuming a linear in/decrease of the 
-                % difference to the baseline emissions.
-                E.g., if the country has one unconditional_best target that equals a reduction of 20% in 2030 
-                (compared to baseline emissions):
-                the pathway has a 0% reduction in meta.years.pathways[0], and in 2030 the given
-                20% reduction, with a linear increase between meta.years.pathways[0] and 2030.
-                """
-                # Iterate through un/conditional_best/worst.
-                ptws_tars_act = pd.DataFrame(index=targets_act.index, columns=ptws_all.columns)
-                for curr_tar in targets_act.index:
-                    ptws_tars_act.loc[curr_tar, :] = calculate_pathways(
-                        ptws_all, emi_bl_act, targets_act, current_tar, curr_tar, iso_act, meta)
-                
-                """
-                Check for meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi.
-                If it is False and the conditional_worst pathway is worse in 2030 than the baseline
-                put the conditional_worst pathway to the unconditional pathways.
-                """
-                if not meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi:
-                    if targets_act.loc[['unconditional_worst', 'unconditional_best'], meta.years.pathways].isnull().all().all():
-                        if ptws_all.loc[(ptws_all.iso3 == iso_act) & (ptws_all.rge == 'emi_bau') & 
-                            (ptws_all.category == 'IPCM0EL'), 2030].values[0] < ptws_tars_act.loc['conditional_worst', 2030]:
-                            ptws_tars_act.loc[['unconditional_worst', 'unconditional_best'], meta.years.pathways] = \
-                                ptws_tars_act.loc['conditional_worst', meta.years.pathways].values
-                
-                ptws_all = ptws_all.append(ptws_tars_act, ignore_index=True)
-                
+                for data_curr_tpe, which_scen in [data_curr_tpe_ours, ''], [data_curr_tpe_cat, '_CAT']:
+                    
+                    if len(data_curr_tpe) > 0:
+                        
+                        # Set up 'targets_act' for the pathways per un/conditional & best/worst.
+                        targets_act = pd.DataFrame(
+                            index=['unconditional_worst', 'unconditional_best', 'conditional_worst', 'conditional_best'], 
+                            columns=ptws_all.columns)
+                        targets_act.add_info = '' # Info will be added where needed.
+                        
+                        # Which target type is used for the pathway calculation.
+                        targets_act.loc[:, 'tar_type_used'] = curr_tpe
+                        
+                        # Per un/conditional_best/worst, put all the target emissions to the correct year in 'targets_act'.
+                        for row in data_curr_tpe.index:
+                            
+                            condi_rge = '_'.join(data_curr_tpe.loc[row, ['condi', 'rge']])
+                            targets_act.loc[condi_rge, ['condi', 'rge']] = condi_rge.split('_')
+                            targets_act.loc[condi_rge, int(data_curr_tpe.loc[row, 'taryr'])] = \
+                                data_curr_tpe.loc[row, target_name]
+                                #str(data_curr_tpe.loc[row, target_name])
+                        
+                        """
+                        If there is a value in unconditional_best in a year, but not in unconditional_worst, put it there.
+                        If there is a value in conditional_best in a year, but not in conditional_worst, put it there.
+                        If there is a value in unconditional in a year, but not in conditional, put it there (the one 
+                        stored in 'unconditional_worst').
+                        """
+                        targets_act = add_targets_from_other_conditionality_if_needed(meta, targets_act)
+                        
+                        """
+                        Calculate the pathways per un/conditional_best/worst, assuming a linear in/decrease of the 
+                        % difference to the baseline emissions.
+                        E.g., if the country has one unconditional_best target that equals a reduction of 20% in 2030 
+                        (compared to baseline emissions):
+                        the pathway has a 0% reduction in meta.years.pathways[0], and in 2030 the given
+                        20% reduction, with a linear increase between meta.years.pathways[0] and 2030.
+                        """
+                        # Iterate through un/conditional_best/worst.
+                        ptws_tars_act = pd.DataFrame(index=targets_act.index, columns=ptws_all.columns)
+                        
+                        for curr_tar in targets_act.index:
+                            
+                            ptws_tars_act.loc[curr_tar, :] = calculate_pathways(
+                                ptws_all, emi_bl_act, targets_act, f"{curr_tpe}{which_scen}", curr_tar, iso_act, meta)
+                        
+                        """
+                        Check for meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi.
+                        If it is False and the conditional_worst pathway is worse in 2030 than the baseline
+                        put the conditional_worst pathway to the unconditional pathways.
+                        """
+                        bl_2030 = ptws_all.loc[(ptws_all.iso3 == iso_act) & (ptws_all.rge == 'emi_bau') & 
+                            (ptws_all.category == 'IPCM0EL'), 2030].values[0]
+                        
+                        if not meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi:
+                            
+                            if targets_act.loc[['unconditional_worst', 'unconditional_best'], meta.years.pathways].isnull().all().all():
+                                
+                                if bl_2030 < ptws_tars_act.loc['conditional_worst', 2030]:
+                                    
+                                    ptws_tars_act.loc[['unconditional_worst', 'unconditional_best'], meta.years.pathways] = \
+                                        ptws_tars_act.loc['conditional_worst', meta.years.pathways].values
+                        
+                        """
+                        Check for meta.use_baseline_if_target_above_bl.
+                        If it is True and the mitigated value in 2030 is higher than the baseline, use the baseline.
+                        """
+                        if meta.use_baseline_if_target_above_bl:
+                            
+                            for row in ptws_tars_act.index:
+                                
+                                if bl_2030 < ptws_tars_act.loc[row, 2030]:
+                                    
+                                    ptws_tars_act.loc[row, meta.years.pathways] = \
+                                        ptws_all.loc[(ptws_all.iso3 == iso_act) & (ptws_all.rge == 'emi_bau') & 
+                                        (ptws_all.category == 'IPCM0EL'), meta.years.pathways].values[0]
+                        
+                        ptws_all = ptws_all.append(ptws_tars_act, ignore_index=True)
+        
         """
         For each country, even if it does have a different target, also give out 'baseline_emissions'.
         """
         ptws_all = ptws_all.append(
-            add_baseline_emissions(emi_bl_act, meta, iso_act, ptws_all.columns), ignore_index=True)            
+            add_baseline_emissions(emi_bl_act, meta, iso_act, ptws_all.columns), ignore_index=True)
     
     # Sort the rows.
     ptws_all = ptws_all.sort_values(by=['iso3', 'category', 'tar_type_used', 'condi', 'unit'])

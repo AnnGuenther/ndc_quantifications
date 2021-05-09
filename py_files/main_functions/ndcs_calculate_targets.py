@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Author: Annika Günther, annika.guenther@pik-potsdam.de
-Last updated in 03/2020
+Last updated in 04/2021
 """
 
 # %%
@@ -15,7 +15,7 @@ def ndcs_calculate_targets(database, meta):
     The per-country target emissions for EU countries does not equal the 'real' emissions targets 
     (each of the countries has its own targets to in-sum get to the EU total target).
     """
-        
+    
     # %%
     def check_ndc_values(ict, iso_act):
         """
@@ -55,7 +55,7 @@ def ndcs_calculate_targets(database, meta):
         Depends on 'how_to' ('multiply' or 'add').
         
         'add': the reduction is increased by adding the value in 'pc'.
-        'multiply': the reduction is increased by multiplying with (100% + the value in 'pc').        
+        'multiply': the reduction is increased by multiplying with (100% + the value in 'pc').
         If this results in a % reduction that exceeds 100%, it is set to 100% (meaning a total 
         reduction ...).
         
@@ -126,7 +126,7 @@ def ndcs_calculate_targets(database, meta):
         quantis_iso = pd.DataFrame(columns=calculated_targets.columns)
         
         # For EU countries: use the ndc info from EU.
-        iso_ndc = (meta.EU if iso_act in meta.EU_isos else iso_act)
+        iso_ndc = (meta.EU if iso_act in meta.isos.EU else iso_act)
         
         # Get ndc information.
         ndc_act = meta.ndcs_info.loc[iso_ndc, :]
@@ -177,7 +177,7 @@ def ndcs_calculate_targets(database, meta):
             - RBY, RBU, REI: percentage reduction (e.g., -20 stands for 20% reduction).
             - AEI: emissions intensity in target year, e.g., 3.2 stands for 3.2 t/cap or 3.2 t/GDP, when int_ref is POP or GDP, respectively.
 
-            In infos_from_ndcs_default.xlsx, infos_from_ndcs.csv, and meta.ndcs_info, 
+            In meta.ndcs.path_to_infos_from_ndcs, infos_from_ndcs.csv, and meta.ndcs_info, 
             the 'available targets' per target type are stored as nested dictionaries and can be read in using json.
             Targets are also separated in 'inclLU' and 'exclLU'.
             """
@@ -770,6 +770,38 @@ def ndcs_calculate_targets(database, meta):
     path_txt_targets = Path(meta.path.output_ndcs, 'per_country_info_on_target_calculations')
     Path(path_txt_targets).mkdir(parents=True, exist_ok=True)
     
+    """
+    Also write out the CAT (www.climateactiontracker.org) targets for all countries
+    for which we extracted data from their webpage.
+    """
+    cat_targets = pd.read_csv(meta.ndcs.path_to_cat_targets)
+    cat_rows = []
+    
+    # Only use the 'correct' EU (from EU28 and EU27).
+    if meta.EU == 'EU28':
+        
+        cat_targets.drop(index=cat_targets.loc[cat_targets.iso3.isin(['EU27', 'GBR'])].index, inplace=True)
+    
+    elif meta.EU == 'EU27':
+        
+        cat_targets.drop(index=cat_targets.loc[cat_targets.iso3.isin(['EU28'])].index, inplace=True)
+    
+    for iso_act in sorted(cat_targets.iso3.unique()):
+        
+        cat_act = cat_targets.loc[
+            (cat_targets.iso3 == iso_act) & 
+            (cat_targets.submission_date <= meta.ndcs.submissions_until)]
+        cat_act = cat_act.sort_values('submission_date')
+        
+        if len(cat_act) != 0:
+            
+            cat_rows += [cat_act.index[-1]]
+    
+    cat_targets = cat_targets.loc[cat_rows]
+    cat_targets.index = cat_targets.iso3
+    cat_cols = ['add_info', 'iso3', 'tar_type_used', 'condi', 'rge', 'taryr', 'tar_emi_exclLU', 'gwp', 'scenario']
+    cat_info = ['submission_date', 'source', 'update_to_view', 'accessed_on', 'comments']
+    
     for iso_act in sorted(list(set(set(meta.ndcs_info.index) - set([meta.EU])))):
         
         txt_targets = f"## {hpf.convert_isos_and_country_names(iso_act, 'ISO3', 'ShortName')}"
@@ -786,6 +818,7 @@ def ndcs_calculate_targets(database, meta):
         """
         # Check if any tar_exclLU is negative. If so, run it again with other method.
         if any(quantis_iso.tar_emi_exclLU < 0.):
+            
             lulucf_first_try = False
             print_txt = \
                 f'\n- {iso_act} LULUCF: second try as some tar_exclLU values < 0 ' + \
@@ -797,7 +830,9 @@ def ndcs_calculate_targets(database, meta):
             print(print_txt)
             txt_targets += print_txt
             quantis_iso, txt_targets = quantification_per_country(iso_act, meta, lulucf_first_try, calculated_targets, txt_targets)
+            
             if any(quantis_iso.tar_emi_exclLU < 0.):
+                
                 print_txt = "    Second method also didn't work for all targets ... so the negative tar_emi_exclLU are set to 0."
                 print(print_txt)
                 txt_targets += print_txt
@@ -808,6 +843,21 @@ def ndcs_calculate_targets(database, meta):
         calculated_targets = calculated_targets.append(quantis_iso, ignore_index=True)
         
         hpf.write_text_to_file(txt_targets, Path(path_txt_targets, f"{iso_act}.md"))
+        
+        # Add CAT quantifications to each country for which we have extracted data from www.climateactiontracker.org.
+        if iso_act in cat_targets.index:
+            
+            cat_tars = hpf.get_targets_from_json(cat_targets.loc[iso_act, 'targets'], "ABS", iso_act)
+            
+            for row in cat_tars.index:
+                
+                cat_act = cat_tars.loc[row]
+                cat_append = pd.Series(index=calculated_targets.columns, dtype=object)
+                cat_append.loc[cat_cols] = (
+                    ['CAT: ' + '; '.join([f"{xx}: {cat_targets.loc[iso_act, xx]}" for xx in cat_info])] +
+                    [iso_act, 'ABS'] + cat_act[['condi', 'rge', 'taryr']].to_list() +
+                    [hpf.get_numerical_value_from_ndcval(cat_act['exclLU']), 'AR4', 'CAT'])
+                calculated_targets = calculated_targets.append(cat_append, ignore_index=True)
     
     # Write out data.
     calculated_targets.to_csv(Path(meta.path.output_ndcs, 'ndc_targets.csv'), index=False)

@@ -5,7 +5,7 @@ Last updated in 04/2020.
 """
 
 # %%
-def prep_lulucf(database, meta, prios, srce_name, info_per_country, nrvalues, interpolation_method):
+def prep_lulucf(database, meta, prios, srce_name, info_per_country, interpolation_method):
     """
     **Prepare LULUCF data (source prioritisation and gap filling)**
     
@@ -28,15 +28,19 @@ def prep_lulucf(database, meta, prios, srce_name, info_per_country, nrvalues, in
         
         import numpy as np
         
-        # KYOTOGHG/CO2/CH4/N2O_IPCMLULUCF tables.
+        # KYOTOGHG/CO2/CH4/N2OAR4_IPCMLULUCF tables.
         available_tables = all_tables.ent[
-            (all_tables.ent.isin(meta.gases.lulucf + ['KYOTOGHG'])) &
+            (all_tables.ent.isin([xx + meta.gwps.default for xx in meta.gases.lulucf + ['KYOTOGHG']])) &
             (all_tables.cat == 'IPCMLULUCF') & 
+            (all_tables.clss == 'TOTAL') &
+            (all_tables.tpe == 'NET') &
             (all_tables.scen.isin(['HISTORY', 'HISTCR'])) & 
             (all_tables.srce == srce)]
          
         # If KYOTOGHG is available, use it. Else use the sum over CO2 + CH4 + N2O_IPCMLULUCF.
-        gases_to_sum = (['KYOTOGHG'] if 'KYOTOGHG' in available_tables.values else meta.gases.lulucf)
+        gases_to_sum = (['KYOTOGHG' + meta.gwps.default]
+            if 'KYOTOGHG' + meta.gwps.default in available_tables.values
+            else [xx + meta.gwps.default for xx in meta.gases.lulucf])
         
         # Sum up the data.
         sum_srce = pd.DataFrame(index=meta.isos.EARTH, columns=range(1990, 2051))
@@ -71,11 +75,17 @@ def prep_lulucf(database, meta, prios, srce_name, info_per_country, nrvalues, in
                 for iso3 in meta.isos.EARTH:
                     
                     available_years = [xx for xx in table.data.columns if not np.isnan(table.data.loc[iso3, xx])]
+                    
                     if len(available_years) > 0:
+                        
                         period_forward = range((2010 if 2010 in available_years else available_years[-1]), 2031) # Upper limit set to something later than last historical year.
                         period_backward = range(1990, (1998 if 1997 in available_years else available_years[0]))
-                        table.data.loc[iso3, :] = hpf.timeseries_extrapolate(table.data.loc[iso3, :], 'mean', 'forward', period=period_forward).values
-                        table.data.loc[iso3, :] = hpf.timeseries_extrapolate(table.data.loc[iso3, :], 'mean', 'backward', period=period_backward).values
+                        table.data.loc[iso3, :] = hpf.timeseries_extrapolate(table.data.loc[iso3, :], 
+                            'mean', 'forward', period=period_forward).values
+                        table.data.loc[iso3, :] = hpf.timeseries_extrapolate(table.data.loc[iso3, :], 
+                            'mean', 'backward', period=period_backward).values
+                        
+                        i have to fix the proble with IDN!!!
                 
                 # Add the 'filled-table' to sum_srce.
                 sum_srce = sum_srce.add(table.data, fill_value=0)
@@ -116,10 +126,11 @@ def prep_lulucf(database, meta, prios, srce_name, info_per_country, nrvalues, in
             
             use_srce = (
                 [xx for xx in nr_available_years_act.index if nr_available_years_act[xx] > 0]
-                if nr_available_years_act.max() < nrvalues
-                else [xx for xx in nr_available_years_act.index if nr_available_years_act[xx] >= nrvalues])
+                if nr_available_years_act.max() < meta.lulucf.nr_available_values
+                else [xx for xx in nr_available_years_act.index if nr_available_years_act[xx] >= meta.lulucf.nr_available_values])
             
             if len(use_srce) != 0:
+                
                 use_srce = use_srce[0]
                 lulucf_table.loc[iso3, :] = emi_lulucf[use_srce].loc[iso3, :]
                 info_per_country.loc[iso3, 'lulucf_source'] = use_srce
@@ -164,7 +175,7 @@ def prep_lulucf(database, meta, prios, srce_name, info_per_country, nrvalues, in
     
     all_tables = pd.DataFrame([xx.split('_') for xx in hpf.get_all_attributes_of_class(database)],
         index=hpf.get_all_attributes_of_class(database),
-        columns=meta.nomenclature.tablename_from)
+        columns=['ent', 'cat', 'clss', 'tpe', 'scen', 'srce'])
     
     emi_lulucf = {}
     

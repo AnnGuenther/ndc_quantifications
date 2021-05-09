@@ -36,8 +36,12 @@ meta.method_pathways = 'constant_emissions'
 
 meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi = False
 
+meta.use_baseline_if_target_above_bl = True
+
 meta.strengthen_targets = {'use_it': True, 'pc': 50, 'how_to': 'multiply', 'countries': cat_countries}
 
 meta.groups_for_which_to_calculate_pathways = ['ANNEXI']
+
+meta.use_CAT_targets = {'use_it': True, 'countries': 'all'}
 
 # %%

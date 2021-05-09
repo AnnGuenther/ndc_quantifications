@@ -14,6 +14,7 @@ def setup_metadata():
     Returns:
         *meta : class with meta data needed in the quantifications and plotting routines.*
     """
+    
     # %%
     from pathlib import Path
     from copy import deepcopy
@@ -22,12 +23,45 @@ def setup_metadata():
     import helpers_functions as hpf
     
     # %%
+    # Store general information in class meta.
+    meta = hpf.create_class(name='meta')
+    
+    # %%
+    """
+    This part can be modified.
+    """
+    
+    submission_until = 20201231 # yyyymmdd
+    # For the first paper submission: 20200417
+    # For paper revision: 20201231
+    
+    # Which version of the file infos_from_ndcs.xlsx to be used.
+    # For the first paper submission: infos_from_ndcs_xlsx = 'infos_from_ndcs__paper_first_submission_202011.xlsx'
+    # For the paper revision. infos_from_ndcs_xlsx = 'infos_from_ndcs__paper_revision_202104.xlsx'
+    infos_from_ndcs_xlsx = 'infos_from_ndcs__paper_revision_202104.xlsx'
+    
+    # Current PRIMAP-hist
+    current_primap = 'PMH21'
+    current_primap_srcs = {
+        'emi': 'PRIMAPHIST21', 'pop': 'PMHSOCIOECO21', 'gdp': 'PMHSOCIOECO21'}
+    current_primap_last_year = 2017
+    
+    # pc_cov made on yyyymmdd_hhss, smd submissions up to date yyyymmdd, pmh21 PRIMAP-hist v2.1
+    ############################################################################
+    # !!!!! TO BE MODIFIED AFTER RUNNING preprocessing_current_pc_cov.py !!!!! #
+    ############################################################################
+    # For the first paper submission: path_preprocess = 'pc_cov_20210428_0834_SMD20200417_PMH21'
+    # For the paper revision: path_preprocess = 'pc_cov_20210428_1130_SMD20201231_PMH21'
+    path_preprocess = 'pc_cov_20210428_1130_SMD20201231_PMH21'
+    
+    # How many years should be used when calculating the mean over the last available years.
+    meta.average_nrvalues = 6
+
+    # %%
     """
     *meta.path*: paths to different folders.
     """
     
-    # Store general information in class meta.
-    meta = hpf.create_class(name='meta')
     # Paths
     meta.path = hpf.create_class(name='path')
     # Path to model-folder:
@@ -42,10 +76,7 @@ def setup_metadata():
     meta.path.preprocess = Path(meta.path.main, 'data', 'preprocess')
     
     # Path to pc/emi_cov data.
-    #####################################
-    ##### TO BE UPDATED WHEN NEEDED #####
-    #####################################
-    meta.path.pc_cov = Path(meta.path.preprocess, 'pc_cov_20210203_1440')
+    meta.path.pc_cov = Path(meta.path.preprocess, path_preprocess)
     
     # %%
     """
@@ -55,24 +86,41 @@ def setup_metadata():
     # ISO3s of EARTH and EU28.
     meta.isos = hpf.create_class(name='isos')
     meta.isos.EARTH = hpf.get_isos_earth_only_independent()
-    meta.isos.EU28 = hpf.get_isos_for_groups('EU28', 'ISO3')
     meta.isos.EARTH_EU28 = sorted(meta.isos.EARTH + ['EU28'])
-    meta.isos.iso3_to_shortname = pd.Series(
-        hpf.convert_isos_and_country_names(meta.isos.EARTH_EU28, 'ISO3', 'ShortName'), 
-        index=meta.isos.EARTH_EU28).to_dict()
-    meta.isos.EU27 = hpf.get_isos_for_groups('EU27', 'ISO3')
-    meta.isos.EARTH_EU27 = sorted(meta.isos.EARTH + ['EU27'])
-    meta.isos.iso3_to_shortname = pd.Series(
-        hpf.convert_isos_and_country_names(meta.isos.EARTH_EU27, 'ISO3', 'ShortName'), 
-        index=meta.isos.EARTH_EU27).to_dict()
+    meta.isos.EU28 = hpf.get_isos_for_groups('EU28', 'ISO3')
     
-    # %%
+    meta.isos.EARTH_EU27 = sorted(meta.isos.EARTH + ['EU27'])
+    meta.isos.EU27 = hpf.get_isos_for_groups('EU27', 'ISO3')
+    
+    isos_EARTH_EU28_EU27 = sorted(meta.isos.EARTH + ['EU28', 'EU27'])
+    meta.isos.iso3_to_shortname = pd.Series(
+        hpf.convert_isos_and_country_names(isos_EARTH_EU28_EU27, 'ISO3', 'ShortName'), 
+        index=isos_EARTH_EU28_EU27).to_dict()
+    
     """
     *meta.EU*: current EU (e.g., EU28, or EU27)
+    
+    Submission date of GBR NDC a bit earlier (20201212)!
+    Problem in between 20201212 and 20201218?!
+    Not really a problem, as in get_infos_from_ndcs.py, the EU28 info is used for
+    all EU28 countries if meta.EU == EU28, which is the case if the submission was
+    before 20201218. So for the few days, the GBR NDC is neglected, and therefore
+    the data is not double counting anything.
     """
-    meta.EU = 'EU27'
-    meta.EU_isos = meta.isos.EU27
-    meta.EU_EARTH = meta.isos.EARTH_EU27
+    
+    if submission_until < 20201218: # Sumbission date of EU27 NDC.
+        
+        meta.EU = 'EU28'
+        meta.isos.EU = meta.isos.EU28 # former name: meta.EU_isos
+        meta.isos.EARTH_EU = meta.isos.EARTH_EU28 # former name: meta.EU_EARTH
+    
+    else:
+        
+        meta.EU = 'EU27'
+        meta.isos.EU = meta.isos.EU27
+        meta.isos.EARTH_EU = meta.isos.EARTH_EU27
+    
+    meta.EUs = ['EU27', 'EU28']
     
     # %%
     """
@@ -92,14 +140,14 @@ def setup_metadata():
         'SSP4': 'SSP4BLGCAM4', 'SSP5': 'SSP5BLREMMP'}
     meta.ssps.emi = {
         'ent': 'KYOTOGHG', 'cat': 'IPCM0EL', 'clss': 'TOTAL', 'tpe': 'NET', 
-        'scen': meta.ssps.scens, 'srce': 'PMSSPBIE'}
+        'scen': meta.ssps.scens, 'srce': 'PMSSPBIE', 'srcepmh': f'{current_primap}SSPBIE'}
     meta.ssps.pop = {
         'ent': 'POP', 'cat': 'DEMOGR', 'clss': 'TOTAL', 'tpe': 'NET',
-        'scen': meta.ssps.scens, 'srce': 'PMSSPBIEMISC'}
+        'scen': meta.ssps.scens, 'srce': 'PMSSPBIEMISC', 'srcepmh': f'{current_primap}SSPBIE'}
     meta.ssps.gdp = {
         'ent': 'GDPPPP', 'cat': 'ECO', 'clss': 'TOTAL', 'tpe': 'NET',
-        'scen': meta.ssps.scens, 'srce': 'PMSSPBIEMISC'}
-        
+        'scen': meta.ssps.scens, 'srce': 'PMSSPBIEMISC', 'srcepmh': f'{current_primap}SSPBIE'}
+    
     # %%
     """
     *meta.nomenclature*: table meta-data nomenclature.
@@ -125,18 +173,18 @@ def setup_metadata():
     
     # Info on sources / scenarios.
     meta.primap = hpf.create_class(name='primap')
-    meta.primap.current_version = {
-        'emi': 'PRIMAPHIST21', 'pop': 'PMHSOCIOECO21', 'gdp': 'PMHSOCIOECO21'}
-    meta.primap.last_year = 2017
+    meta.primap.current_primap = current_primap
+    meta.primap.current_version = current_primap_srcs
+    meta.primap.last_year = current_primap_last_year
     meta.primap.emi = {
         'ent': 'KYOTOGHG', 'cat': 'IPCM0EL', 'clss': 'TOTAL', 'tpe': 'NET',
-        'scen': 'HISTCR', 'srce': 'PRIMAPHIST21'}
+        'scen': 'HISTCR', 'srce': current_primap_srcs['emi'], 'srcepmh': current_primap}
     meta.primap.pop = {
         'ent': 'POP', 'cat': 'DEMOGR', 'clss': 'TOTAL', 'tpe': 'NET',
-        'scen': 'HISTORY', 'srce': 'PMHSOCIOECO21'}
+        'scen': 'HISTORY', 'srce': current_primap_srcs['pop'], 'srcepmh': current_primap}
     meta.primap.gdp = {
         'ent': 'GDPPPP', 'cat': 'ECO', 'clss': 'TOTAL', 'tpe': 'NET',
-        'scen': 'HISTORY', 'srce': 'PMHSOCIOECO21'}
+        'scen': 'HISTORY', 'srce': current_primap_srcs['gdp'], 'srcepmh': current_primap}
     
     # %%
     """
@@ -164,7 +212,8 @@ def setup_metadata():
     meta.lulucf = hpf.create_class(name='lulucf',
         source_prioritisation = [
             'CRF2019', 'CRF2018', 'BUR3IPCC2006I', 'BUR2IPCC2006I', 'BUR1IPCC2006I',
-            'UNFCCC2019BI', 'FAO2019BI'])
+            'UNFCCC2019BI', 'FAO2019BI'],
+        nr_available_values = 3)
     
     # %%
     """
@@ -224,15 +273,22 @@ def setup_metadata():
         'CRF2019': 'CRF (2019)', 'CRF2018': 'CRF (2018)', 
         'BUR3IPCC2006I': 'BUR (3$^{rd}$)', 'BUR2IPCC2006I': 'BUR (2$^{nd}$)', 'BUR1IPCC2006I': 'BUR (1$^{st}$)',
         'UNFCCC2019BI': 'UNFCCC (2019)', 'FAO2019BI': 'FAO (2019)', 
-        'PRIMAPHIST21': 'PRIMAP-hist v2.1', 'PRIMAPHIST20': 'PRIMAP-hist v2.0'}
+        'PRIMAPHIST22': 'PRIMAP-hist v2.2', 'PRIMAPHIST21': 'PRIMAP-hist v2.1', 'PRIMAPHIST20': 'PRIMAP-hist v2.0',
+        'PMH22': 'PRIMAP-hist v2.2', 'PMH21': 'PRIMAP-hist v2.1', 'PMH20': 'PRIMAP-hist v2.0'}
     
     # %%
     """
-    *meta.ndcs*: NDC types.
+    *meta.ndcs*: NDC types & last submission data to be considered.
     """
     
     meta.ndcs = hpf.create_class(name = 'ndcs')
+    meta.ndcs.submissions_until = submission_until # For the first paper submission: 20200417, yyyymmdd
     meta.ndcs.types = ['ABS', 'RBY', 'RBU', 'ABU', 'REI', 'AEI', 'NGT']
+    
+    meta.ndcs.path_to_infos_from_ndcs = Path(meta.path.main, 'data', 'input', infos_from_ndcs_xlsx) # File with NDC infos
+    
+    meta.ndcs.path_to_cat_targets = Path(meta.path.main, "data", "CAT", "CAT_targets_20210423.csv")
+    
     # %%
     return meta
 

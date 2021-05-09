@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Author: Annika Günther, annika.guenther@pik-potsdam.de
-Last updated in 03/2020.
+Last updated in 03/2021.
+
+03/2021:
+    changed tablename to entgwp_cat_clss_tpe_srce_scen.
 """
 
 # %%
@@ -50,10 +53,32 @@ class create_table():
         Tablename from attributes in 'tablename_from'.
         """
         
+        import sys
+        
         tablename_from = ['ent', 'cat', 'clss', 'tpe', 'scen', 'srce']
         
+        tablename = []
+        
         if all([hasattr(self, xx) for xx in tablename_from]):
-            self.tablename = '_'.join([getattr(self, xx) for xx in tablename_from])
+            
+            for attr in tablename_from:
+                
+                tablename += [getattr(self, attr)]
+                
+                if attr == 'ent':
+                    
+                    try:
+                        
+                        tablename[-1] += getattr(self, 'gwp')
+                    
+                    except:
+                        
+                        pass
+            
+            self.tablename = '_'.join(tablename)
+        
+        else:
+            sys.exit("Not all attributes available to construct tablename.")
         
         return self
     
@@ -64,10 +89,33 @@ class create_table():
         Use the tablename as the __name__.
         """
         
+        import sys
+        
         tablename_from = ['ent', 'cat', 'clss', 'tpe', 'scen', 'srce']
         
+        tablename = []
+        
         if all([hasattr(self, xx) for xx in tablename_from]):
-            self.__name__ = '_'.join([getattr(self, xx) for xx in tablename_from])
+            
+            for attr in tablename_from:
+                
+                tablename += [getattr(self, attr)]
+                
+                if attr == 'ent':
+                    
+                    try:
+                        
+                        tablename[-1] += getattr(self, 'gwp')
+                    
+                    except:
+                        
+                        pass
+            
+            self.tablename = '_'.join(tablename)
+        
+        else:
+            sys.exit("Not all attributes available to construct tablename.")
+        
         return self
     
     # %%
@@ -85,8 +133,10 @@ class create_table():
         attrs = hpf.get_all_attributes_of_class(self)
         
         for attr in attrs:
+            
             if (attr in meta.nomenclature.oldname_to_attr.keys()
                 and attr != meta.nomenclature.oldname_to_attr[attr]):
+                
                 setattr(self, meta.nomenclature.oldname_to_attr[attr], 
                     getattr(self, attr))
                 delattr(self, attr)

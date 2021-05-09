@@ -71,8 +71,8 @@ def prep_covered_emissions_fut(database, meta, coverage, info_per_country, prefe
         for gas in shares_covered_gases.index:
             
             shares_covered_gases.loc[gas, :] = pd.Series(hpf.ratios_w_zeros(
-                deepcopy(getattr(database, f"{gas}_IPCM0EL_TOTAL_NET_{ssp}FILLED_" + 
-                ('PMSSPBIE' if gas in meta.gases.main else 'SSPSPLIT')). \
+                deepcopy(getattr(database, f"{gas}{meta.gwps.default}_IPCM0EL_TOTAL_NET_{meta.primap.current_primap}{ssp}FILLED_" +
+                    f"{meta.primap.current_primap}" + ('SSPBIE' if gas in meta.gases.main else 'SSPSPLIT')). \
                 data.loc[iso3, ssp_kyoto_ipcm0el.index]), ssp_kyoto_ipcm0el, 
                 dtype='pd.DataFrame').transpose().values[0], 
                 name=gas, index=ssp_kyoto_ipcm0el.index)
@@ -247,6 +247,9 @@ def prep_covered_emissions_fut(database, meta, coverage, info_per_country, prefe
         pccov, pcnotcov, emicov, and eminotcov.
         """
         
+        tablename = ('KYOTOGHG' + meta.gwps.default + '_IPCM0EL_TOTAL_NET_' + 
+            meta.primap.current_primap + ssp + 'FILLED_' + meta.primap.current_primap + 'SSPBIE')
+        
         info_attrs = {
             'PCCOV': {
                 'data': ssp_pccov,
@@ -257,11 +260,11 @@ def prep_covered_emissions_fut(database, meta, coverage, info_per_country, prefe
                 'note': "Share of emissions not covered",
                 'clss': 'NOTCOV', 'tpe': 'PC', 'unit': meta.units.default['emi'] + '/' + meta.units.default['emi']},
             'EMICOV': {
-                'data': ssp_pccov.multiply(deepcopy(getattr(database, 'KYOTOGHG_IPCM0EL_TOTAL_NET_' + ssp + 'FILLED_PMSSPBIE').data)), 
+                'data': ssp_pccov.multiply(deepcopy(getattr(database, tablename).data)), 
                 'note': "Emissions covered",
                 'clss': 'COV', 'tpe': 'EMI', 'unit': meta.units.default['emi']},
             'EMINOTCOV': {
-                'data': (1.-ssp_pccov).multiply(deepcopy(getattr(database, 'KYOTOGHG_IPCM0EL_TOTAL_NET_' + ssp + 'FILLED_PMSSPBIE').data)), 
+                'data': (1.-ssp_pccov).multiply(deepcopy(getattr(database, tablename).data)), 
                 'note': "Emissions not covered",
                 'clss': 'NOTCOV', 'tpe': 'EMI', 'unit': meta.units.default['emi']}}
         
@@ -269,7 +272,7 @@ def prep_covered_emissions_fut(database, meta, coverage, info_per_country, prefe
             
             attrs = info_attrs[attr]
             table = hpf.create_table(data=attrs['data'], ent='KYOTOGHG', cat='IPCM0EL', clss=attrs['clss'],
-                tpe=attrs['tpe'], scen=ssp+'FILLED', gwp=meta.gwps.default, unit=attrs['unit'])
+                tpe=attrs['tpe'], scen=f'{meta.primap.current_primap}{ssp}FILLED', gwp=meta.gwps.default, unit=attrs['unit'])
             table.srce = preference_pccov_fut.upper()
             table.note = attrs['note'] + " by an (I)NDC, based on per-country, " + \
                 "per-main-sector and per-kyoto-GHG information from countries' (I)NDCs and their corresponding " + \
@@ -297,14 +300,26 @@ def prep_covered_emissions_fut(database, meta, coverage, info_per_country, prefe
     # Which countries cover 'all sectors', 'all gases', 'everything', or 'nothing'.
     coverage.isos = hpf.create_class(name='isos')
     
-    coverage.isos.all_sectors_covered = coverage.used_per_gas_per_sec.index[
-        (coverage.used_per_gas_per_sec.loc[:, meta.sectors.main.exclLU] == 'YES').all(axis=1)].to_list()
-    coverage.isos.all_gases_covered = coverage.used_per_gas_per_sec.index[
-        (coverage.used_per_gas_per_sec.loc[:, meta.gases.kyotoghg] == 'YES').all(axis=1)].to_list()
-    coverage.isos.everything_covered = coverage.used_per_gas_per_sec.index[
-        (coverage.used_per_gas_per_sec.loc[:, meta.sectors.main.exclLU + meta.gases.kyotoghg] == 'YES').all(axis=1)].to_list()
-    coverage.isos.nothing_covered = coverage.used_per_gas_per_sec.index[
-        (coverage.used_per_gas_per_sec.loc[:, meta.sectors.main.exclLU + meta.gases.kyotoghg] == 'NO').all(axis=1)].to_list()
+    coverage.isos.all_sectors_covered = \
+        coverage.used_per_gas_per_sec.index[
+        (coverage.used_per_gas_per_sec.loc[:, meta.sectors.main.exclLU] == 'YES') \
+        .all(axis=1)].to_list()
+    
+    coverage.isos.all_gases_covered = \
+        coverage.used_per_gas_per_sec.index[
+        (coverage.used_per_gas_per_sec.loc[:, meta.gases.kyotoghg] == 'YES') \
+        .all(axis=1)].to_list()
+    
+    coverage.isos.everything_covered = \
+        coverage.used_per_gas_per_sec.index[
+        (coverage.used_per_gas_per_sec.loc[:, meta.sectors.main.exclLU + meta.gases.kyotoghg] == 'YES') \
+        .all(axis=1)].to_list()
+    
+    coverage.isos.nothing_covered = \
+        coverage.used_per_gas_per_sec.index[
+        (coverage.used_per_gas_per_sec.loc[:, meta.sectors.main.exclLU + meta.gases.kyotoghg] == 'NO') \
+        .all(axis=1)].to_list()
+    
     
     # Also put the information on coverage per iso to 'info_per_country'.
     for attr in hpf.get_all_attributes_of_class(coverage.isos):
@@ -346,8 +361,8 @@ def prep_covered_emissions_fut(database, meta, coverage, info_per_country, prefe
             
             cov_gases = coverage.used_per_gas_per_sec.loc[iso3, meta.gases.kyotoghg]
             
-            ssp_kyoto_ipcm0el = deepcopy(getattr(database, 'KYOTOGHG_IPCM0EL_TOTAL_NET_' + 
-                ssp + 'FILLED_PMSSPBIE').data.loc[iso3, :])
+            ssp_kyoto_ipcm0el = deepcopy(getattr(database, 'KYOTOGHG' + meta.gwps.default + '_IPCM0EL_TOTAL_NET_' + 
+                meta.primap.current_primap + ssp + 'FILLED_' + meta.primap.current_primap + 'SSPBIE').data.loc[iso3, :])
             
             pccov_his = coverage.pccov_his.loc[iso3, :]
             pccov_notnan = ~pccov_his.isnull()

@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Author: Annika Günther, annika.guenther@pik-potsdam.de
-Last updated in 03/2020
+Last updated in 04/2021
+
+04/2021:
+    For the aggregation, include the option to chose CAT quantifications for certain countries.
 """
 
 # %%
@@ -40,7 +43,7 @@ def ndcs_calculate_pathways_per_group(
         for iso_act in meta.isos.EARTH:
             
             # Use info for EU if country belongs to EU.
-            iso_ndc = (meta.EU if iso_act in meta.EU_isos else iso_act)
+            iso_ndc = (meta.EU if iso_act in meta.isos.EU else iso_act)
             
             # Get the time series from pathways_per_country for that country (not pc_cov / pc_ncov).
             ts_iso = pathways_per_country.loc[pathways_per_country.iso3 == iso_act, :]. \
@@ -67,6 +70,7 @@ def ndcs_calculate_pathways_per_group(
                 if not meta.ndcs_type_prioritisations['use_it']:
                     
                     if iso_ndc in list(meta.ndcs_info.index):
+                        
                         tar_used = meta.ndcs_info.loc[iso_ndc, 'TYPE_RECLASS']
                 
                 else:
@@ -74,23 +78,28 @@ def ndcs_calculate_pathways_per_group(
                     if iso_act in meta.ndcs_type_prioritisations['countries']:
                         
                         tar_chosen = []
+                        
                         for type_prio in meta.ndcs_type_prioritisations['ndcs_type_prioritisations']:
                             
                             if type_prio.upper() in ['TYPE_RECLASS', 'TYPE_MAIN']:
+                                
                                 tar_chosen = tar_chosen + [meta.ndcs_info.loc[iso_ndc, type_prio.upper()]]
                                 
                             else:
+                                
                                 tars_available_now = [xx 
                                     for xx in pathways_per_country.loc[pathways_per_country.iso3 == iso_act, 'tar_type_used'].unique()
                                     if xx == type_prio]
                                 
                                 if len(tars_available_now) > 0:
+                                    
                                     tar_chosen += [type_prio]
                         
                         # Choose the prioritised target types if available, else use TYPE_RECLASS or baseline_emissions.
                         tar_used = (tar_chosen[0] if len(tar_chosen) > 0 else meta.ndcs_info.loc[iso_ndc, 'TYPE_RECLASS'])
                     
                     else: # TYPE_RECLASS or baseline_emissions.
+                        
                         tar_used = meta.ndcs_info.loc[iso_ndc, 'TYPE_RECLASS']
                     
                     # If the target type is NGT, try to choose another type.
@@ -98,37 +107,60 @@ def ndcs_calculate_pathways_per_group(
                     # TODO: check that. If the type_main is NGT, we use ABS, RBY, or RBU nevertheless?
                     # Better use type_reclass in that case?
                     if tar_used == 'NGT':
+                        
                         tars_available = [xx 
                             for xx in pathways_per_country.loc[pathways_per_country.iso3 == iso_act, 'tar_type_used'].unique()
                             if xx != 'NGT']
                         
                         if len(tars_available) > 0:
+                            
                             if 'ABS' in tars_available:
                                 tar_used = 'ABS'
+                                
                             elif 'RBY' in tars_available:
                                 tar_used = 'RBY'
+                                
                             elif 'RBB' in tars_available:
                                 tar_used = 'RBU'
+                                
                             else:
                                 tar_used = tars_available[0]
+                        
                         else:
                             tar_used = 'baseline_emissions'
             
             if 'tar_used' not in locals() or tar_used == 'NGT' or type(tar_used) != str:
+                
                 tar_used = 'baseline_emissions'
             
             tars_available = [xx 
                 for xx in pathways_per_country.loc[pathways_per_country.iso3 == iso_act, 'tar_type_used'].unique()
                 if type(xx) == str]
+            
             if tar_used not in tars_available:
                 warn(f"Something went wrong for {iso_act} and a target type was chosen for the group pathways that does not have values.")
             
             tars_to_use[iso_act] = tar_used
-                        
+            
+            """
+            If meta.use_CAT_targets['use_it'] is True, and the iso_act is in
+            meta.use_CAT_targets['countries'], and the pathways_per_country has an
+            entry for that ISO3 for ABS_CAT, use it.
+            """
+            if (meta.use_CAT_targets['use_it'] and iso_act in meta.use_CAT_targets['countries']):
+                
+                ptws_CAT = pathways_per_country.loc[(pathways_per_country.iso3 == iso_act) & (pathways_per_country.tar_type_used == 'ABS_CAT')]
+                
+                if len(ptws_CAT) > 0:
+                    
+                    tars_to_use[iso_act] = 'ABS_CAT'
+            
             # Get the pathways for the chosen target type.
             ptws_chosen_per_country = ptws_chosen_per_country.append(
-                pathways_per_country.loc[(pathways_per_country.iso3 == iso_act) & (pathways_per_country.tar_type_used == tars_to_use[iso_act]), :]. \
-                reindex(columns=ptws_chosen_per_country.columns).reindex(columns=ptws_chosen_per_country.columns), ignore_index=True)
+                pathways_per_country.loc[
+                    (pathways_per_country.iso3 == iso_act) & (pathways_per_country.tar_type_used == tars_to_use[iso_act]), :]. \
+                reindex(columns=ptws_chosen_per_country.columns). \
+                reindex(columns=ptws_chosen_per_country.columns), ignore_index=True)
         
         # Write out the chosen time series.
         file_name = 'ndc_targets_pathways_per_country_used_for_group_pathways.csv'
@@ -158,7 +190,7 @@ def ndcs_calculate_pathways_per_group(
         # ISO3s for the group. Only use ISO3s that are in meta.isos.EARTH + meta.EU.
         # Replace EU by single countries, if EU is in the list.
         if group_act == meta.EU:
-            isos_group = meta.EU_isos
+            isos_group = meta.isos.EU
         elif group_act == 'EARTH':
             isos_group = meta.isos.EARTH
         else:
@@ -166,7 +198,7 @@ def ndcs_calculate_pathways_per_group(
         
         isos_group = [xx for xx in isos_group if xx in meta.isos.EARTH + [meta.EU]]
         if meta.EU in isos_group:
-            isos_group = sorted(set(isos_group + meta.EU_isos))
+            isos_group = sorted(set(isos_group + meta.isos.EU))
         
         ptws.loc[:, 'iso3s'] = ', '.join(isos_group)
         
@@ -225,10 +257,19 @@ def ndcs_calculate_pathways_per_group(
                     ptws.loc[row, additional_info] = data_to_sum_tars.loc[data_to_sum_tars.index[0], additional_info]
             
             # Information on the NDC target types used for the group pathways.
-            ptws.loc[:, 'ndc_types_used'] = \
-                '.\n'.join(zz for zz in 
-                [xx + ": " + ', '.join([yy for yy in tars_to_use.index[tars_to_use == xx] if yy in isos_group])
-                for xx in ['baseline_emissions'] + list(set(set(meta.target_types) - set(['NGT'])))] if len(zz) > 6) + '.'
+            ndc_types_used = ''
+            
+            for tar_tpe in ['baseline_emissions'] + list(set(set(meta.target_types) - set(['NGT']))):
+                
+                txt_act = ('.\n'.join(zz for zz in 
+                    [tar_tpe + ": " + ', '.join(
+                    [yy for yy in tars_to_use.index[tars_to_use == tar_tpe] if yy in isos_group])])) + '.'
+                
+                if txt_act != f'{tar_tpe}: .':
+                    
+                    ndc_types_used += txt_act
+            
+            ptws.loc[:, 'ndc_types_used'] = ndc_types_used
             
             ptws.loc[:, 'group'] = group_act
         

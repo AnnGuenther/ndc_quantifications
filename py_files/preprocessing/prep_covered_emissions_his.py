@@ -35,8 +35,8 @@ def prep_covered_emissions_his(database, coverage, meta, primap):
         # Are there countries for which differences exceed 0.1%?
         test = hpf.ratios_w_zeros(
             100. * new_kyoto_ipcm0el.add(-
-            getattr(database, 'KYOTOGHG_IPCM0EL_TOTAL_NET_HISTCR_' + \
-            meta.primap.current_version['emi']).data, fill_value=0), 
+            getattr(database, 'KYOTOGHG' + meta.gwps.default + '_IPCM0EL_TOTAL_NET_HISTCR_' + \
+            meta.primap.current_primap).data, fill_value=0), 
             new_kyoto_ipcm0el, dtype='pd.DataFrame').abs()
         
         test = test.index[test[test > .1].any(axis=1)]
@@ -56,9 +56,12 @@ def prep_covered_emissions_his(database, coverage, meta, primap):
     
     # Only for non-LULUCF.
     for combi in [xx for xx in meta.combis_gas_cat if 'LULUCF' not in xx]: # E.g., CO2_IPC1
+        
         for case in calc_combis.keys(): # COV or NOTCOV.
             
-            table = hpf.copy_table(getattr(database, combi + '_TOTAL_NET_HISTCR_' + meta.primap.current_version['emi']))
+            table = hpf.copy_table(getattr(database, 
+                combi.split('_')[0] + meta.gwps.default + '_' +
+                combi.split('_')[-1] + '_TOTAL_NET_HISTCR_' + meta.primap.current_primap))
             # All values are 0, and the ones that are covered are then replaced by the PRIMAP-hist emissions for that ent_cat.
             
             cov_act = pd.DataFrame(0., index=table.data.index, columns=table.data.columns)
@@ -74,8 +77,10 @@ def prep_covered_emissions_his(database, coverage, meta, primap):
             # Put cov_act into the database, so that we also have the single tables on coverage per entity_category, 
             # additionally to the table for KYOTOGHG_IPCM0EL that will be added below.
             setattrs = {'data': cov_act, 'clss': case, 'tpe': 'EMI', 'scen': 'HISTORY', 
-                        'srce': meta.primap.current_version['emi'], 'family': 'emi'}
+                        'srce': meta.primap.current_primap, 'family': 'emi'}
+            
             for attr in setattrs.keys():
+                
                 setattr(table, attr, setattrs[attr])
             
             table.__tablename_to_standard__()
@@ -114,7 +119,7 @@ def prep_covered_emissions_his(database, coverage, meta, primap):
     for attr in set_attrs.keys():
         
         table = hpf.create_table(ent='KYOTOGHG', cat='IPCM0EL', clss=set_attrs[attr]['clss'],
-            tpe=set_attrs[attr]['tpe'], scen='HISTORY', srce=meta.primap.current_version['emi'],
+            tpe=set_attrs[attr]['tpe'], scen='HISTORY', srce=meta.primap.current_primap,
             unit=set_attrs[attr]['unit'], gwp=meta.gwps.default)
         table.note = set_attrs[attr]['note'] + " by an (I)NDC, based on per-country, " + \
                 "per-main-sector and per-kyoto-GHG information from countries' (I)NDCs and their corresponding " + \

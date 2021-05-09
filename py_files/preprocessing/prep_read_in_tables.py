@@ -30,13 +30,16 @@ def prep_read_in_tables(file, path_to_folder, database, meta):
     
     # For emissions data in CO2eq, only read in the data if the GWP is given and it equals meta.gwps.default.
     if (table.family == 'emi' and not hasattr(table, 'gwp')):
-        warn("preprocessing.py: " + file + " has no field GWP, even though it is emissions data. It is not read in.")
+        warn(f"preprocessing.py: {file} has no field GWP, even though it is emissions data. It is not read in.")
+    
     elif (hasattr(table, 'gwp') and table.gwp.upper() != meta.gwps.default):
-        warn("preprocessing.py: gwp for " + file + " is not supported (only " + meta.gwps.default + ")! It is not read in.")
+        warn(f"preprocessing.py: gwp for {file} is not supported (only {meta.gwps.default})! It is not read in.")
+    
     else:
         
         # Delete some attributes, and rename the others following the 'new' nomenclature (see meta.nomenclture.oldname_to_attr).
         for attr in hpf.get_all_attributes_of_class(table):
+            
             if attr in meta.nomenclature.oldname_to_attr.keys():
                 setattr(table, meta.nomenclature.oldname_to_attr[attr], getattr(table, attr))
             
@@ -56,7 +59,7 @@ def prep_read_in_tables(file, path_to_folder, database, meta):
         # Columns are integers (years). Dismiss all years < 1990 and years > 2050.
         # Index: all EARTH-iso3s, without EU27.
         # For the PRIMAP totals save one version without eliminating the early years (used for the .md-files).
-        if file == 'KYOTOGHGAR4_IPCM0EL_TOTAL_NET_HISTCR_' + meta.primap.current_version['emi'] + ".csv":
+        if file == 'KYOTOGHG_IPCM0EL_TOTAL_NET_HISTCR_' + meta.primap.current_version['emi'] + ".csv":
             hpf.write_table_from_class_metadata_country_year_matrix(
                     table, Path(meta.path.preprocess, 'tables', table.tablename + "__allYears.csv"))
         

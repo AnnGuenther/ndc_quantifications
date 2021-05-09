@@ -106,8 +106,7 @@ def get_conversion_unit_simple(unitFrom, unitTo, kwargs):
             else:
                 if (entity == '' and ('CO2eq' in unitFrom or 'CO2eq' in unitTo)):
                     multiplier_gwp = 1.
-                    warn("get_conversion_unit.py: assuming that it is a gas. " + 
-                         "As no entity is given, no gwp conversion is performed, even if GWPs are given.")
+                    warn("get_conversion_unit.py: assuming that it is a gas. As no entity is given, no gwp conversion is performed, even if GWPs are given.")
                 else:
                     if 'CO2eq' in unitFrom:
                         gwpFrom = (kwargs['gwpFrom'] if 'gwpFrom' in kwargs.keys() else kwargs['gwp'])

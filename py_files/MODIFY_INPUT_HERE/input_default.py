@@ -34,8 +34,12 @@ meta.method_pathways = 'constant_percentages'
 
 meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi = False
 
+meta.use_baseline_if_target_above_bl = False
+
 meta.strengthen_targets = {'use_it': False}
 
 meta.groups_for_which_to_calculate_pathways = []
+
+meta.use_CAT_targets = {'use_it': False}
 
 # %%

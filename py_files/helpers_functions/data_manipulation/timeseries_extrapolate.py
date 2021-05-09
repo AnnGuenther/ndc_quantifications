@@ -69,10 +69,10 @@ def timeseries_extrapolate(df, method, direction, **kwargs):
             nrvalues = None
     
     # If nothing is calculated, it hands back a pd.DataFrame with the original df
-    # (even if the input was a pd.Series).
+    # (even if the input was a pd.Series ...).
     df_copy = copy.deepcopy(df)
     df_notnan = ~df.isnull()
-
+    
     if calculate:
         
         for row in df.index:
@@ -106,15 +106,21 @@ def timeseries_extrapolate(df, method, direction, **kwargs):
                         if (period != None) and (nrvalues != None):
                             
                             if direction == 'backward':
+                                
+#                                period_extended = range(min([min(period), available_years[0]]), 
+#                                                        max(period)+1)
                                 period_extended = range(min([min(period), available_years[0]]), 
-                                                        max(period)+1)
+                                                        max([max(period)+1, available_years[0]+1])) # !TODO check if that works
                                 available_years_in_period = \
                                     available_years[(available_years >= min(period_extended)) & 
                                                     (available_years <=max(period_extended))]
                                 years_for_mean_or_reg = available_years_in_period[:nrvalues]
                             
                             elif direction == 'forward':
-                                period_extended = range(min(period), 
+                                
+#                                period_extended = range(min(period), 
+#                                                        max([max(period), available_years[-1]])+1)
+                                period_extended = range(min([min(period), available_years[-1]]),  # !TODO check if that works
                                                         max([max(period), available_years[-1]])+1)
                                 available_years_in_period = \
                                     available_years[(available_years >= min(period_extended)) & 
@@ -127,15 +133,17 @@ def timeseries_extrapolate(df, method, direction, **kwargs):
                         elif period != None:
                             
                             if direction == 'backward':
+                                
                                 period_extended = range(min([min(period), available_years[0]]), 
-                                                        max(period)+1)
+                                                        max([max(period)+1, available_years[0]+1])) # !TODO check if that works
                                 available_years_in_period = \
                                     available_years[(available_years >= min(period_extended)) & 
                                                     (available_years <= max(period_extended))]
                                 years_for_mean_or_reg = available_years_in_period
                             
                             elif direction == 'forward':
-                                period_extended = range(min(period), 
+                                
+                                period_extended = range(min([min(period), available_years[-1]]),  # !TODO check if that works
                                                         max([max(period), available_years[-1]])+1)
                                 available_years_in_period = \
                                     available_years[(available_years >= min(period_extended)) & 
@@ -146,8 +154,10 @@ def timeseries_extrapolate(df, method, direction, **kwargs):
                         # nrvalues = 6, if you want to use the last 6 available values.
                         # Do not overwrite available years.
                         elif nrvalues != None:
+                            
                             if direction == 'backward':
                                 years_for_mean_or_reg = available_years[:nrvalues]
+                            
                             elif direction == 'forward':
                                 years_for_mean_or_reg = available_years[-nrvalues:]
                         
@@ -173,6 +183,9 @@ def timeseries_extrapolate(df, method, direction, **kwargs):
                         yy_to_fill = [linreg.slope * xx + linreg.intercept 
                                  for xx in xx_to_fill]
                         df.loc[row, xx_to_fill] = yy_to_fill
+        
+        if len(years_for_mean_or_reg) == 0:
+            print("Warning: no years available for years_for_mean_or_reg!")
         
         return df
     

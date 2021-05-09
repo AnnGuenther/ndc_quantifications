@@ -18,11 +18,11 @@ BRA
 """
 "The reference indicator will be quantified on the basis of the total 
 net emissions of greenhouse gases (GHG) in the reference year of 2005 reported in 
-the “National Inventory of Anthropogenic Emissions by Sources and Removals by 
-Sinks of Greenhouse Gases not controlled by the Montreal Protocol”. For reference 
+the "National Inventory of Anthropogenic Emissions by Sources and Removals by 
+Sinks of Greenhouse Gases not controlled by the Montreal Protocol". For reference 
 purposes, the level of emissions of greenhouse gases for the base year is 
-registered in the current inventory as per the “Third National Communication 
-from Brazil to the United Nations Framework Convention on Climate Change”, 
+registered in the current inventory as per the "Third National Communication 
+from Brazil to the United Nations Framework Convention on Climate Change", 
 submitted on 20 April 2016.
 
 https://unfccc.int/resource/docs/natc/branc3es.pdf

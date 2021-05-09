@@ -29,8 +29,7 @@ def prep_ssps_fill_gaps(database, info_per_country, meta, nrvalues):
         
         # Copy the current datatable.
         ssp_to_fill = hpf.copy_table(
-            getattr(database, '_'.join([ent, info_act['cat'], info_act['clss'], 
-            info_act['tpe'], ssp, info_act['srce']])))
+            getattr(database, '_'.join([ent, info_act['cat'], info_act['clss'], info_act['tpe'], ssp, info_act['srce']])))
         
         # Fill with mean.
         # Which countries need to be filled?
@@ -70,7 +69,7 @@ def prep_ssps_fill_gaps(database, info_per_country, meta, nrvalues):
     # %%
     # ssps_ents: which entities are available from down-scaled SSPs.
     ssps_ents = {
-        'emi': ['CO2', 'CH4', 'N2O', 'FGASES', 'KYOTOGHG'],
+        'emi': [xx + meta.gwps.default for xx in ['CO2', 'CH4', 'N2O', 'FGASES', 'KYOTOGHG']],
         'pop': ['POP'],
         'gdp': ['GDPPPP']}
     
@@ -89,18 +88,18 @@ def prep_ssps_fill_gaps(database, info_per_country, meta, nrvalues):
             for ssp in meta.ssps.scens.long:
                 # Checking for future values only (past is PRIMAP-hist).
                 ssps_test.loc[:, ssp] = \
-                    getattr(database, '_'.join([ent, info_act['cat'], info_act['clss'], 
-                    info_act['tpe'], ssp, info_act['srce']])). \
+                    getattr(database, '_'.join([ent, info_act['cat'], 
+                        info_act['clss'], info_act['tpe'], ssp, info_act['srce']])). \
                     data.loc[:, range(2030, 2051)].isnull().all(axis=1)
             
             # Concatenate all the SSPs to one dataframe and groupby index, then calculate the mean.
             # SSP1.
-            ssps_mean = deepcopy(getattr(database, '_'.join([ent, info_act['cat'], info_act['clss'], 
-                info_act['tpe'], meta.ssps.scens.long[0], info_act['srce']])).data)
+            ssps_mean = deepcopy(getattr(database, '_'.join([ent, info_act['cat'], 
+                info_act['clss'], info_act['tpe'], meta.ssps.scens.long[0], info_act['srce']])).data)
             for ssp in meta.ssps.scens.long[1:]: # SSP2 to SSP5.
                 ssps_mean = pd.concat((
-                    ssps_mean, deepcopy(getattr(database, '_'.join([ent, info_act['cat'], info_act['clss'], 
-                    info_act['tpe'], ssp, info_act['srce']])).data)))
+                    ssps_mean, deepcopy(getattr(database, '_'.join([ent, info_act['cat'], 
+                    info_act['clss'], info_act['tpe'], ssp, info_act['srce']])).data)))
             
             ssps_mean = ssps_mean.groupby(ssps_mean.index).mean()
             
@@ -111,8 +110,8 @@ def prep_ssps_fill_gaps(database, info_per_country, meta, nrvalues):
             data and use the linear regression over the last 6 available years as future estimates.
             """
             
-            primap_act = deepcopy(getattr(database, '_'.join([ent, info_act['cat'], info_act['clss'], 
-                info_act['tpe'], primap_scen, primap_srce])).data)
+            primap_act = deepcopy(getattr(database, '_'.join([ent, info_act['cat'], 
+                info_act['clss'], info_act['tpe'], primap_scen, primap_srce])).data)
             # Reindex to 1990 to 2051 and extrapolate with the mean over the last 6 values.
             primap_act = primap_act.reindex(columns=range(min(primap_act.columns), 2051))
             primap_extrapol = hpf.timeseries_extrapolate(primap_act, 'mean', 'forward', nrvalues=nrvalues)

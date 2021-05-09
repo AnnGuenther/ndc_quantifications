@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 Author: Annika Guenther, annika.guenther@pik-potsdam.de
-Last updated in 06/2020.
+Last updated in 03/2021.
 """
 
 # %%
-def get_infos_from_ndcs_emi():
+def get_infos_from_ndcs_emi(meta):
     """
     Get the NDC emissions data.
     Converted from AR2 to AR4 if necessary.
@@ -17,15 +17,14 @@ def get_infos_from_ndcs_emi():
     from pathlib import Path
     from warnings import warn
     import helpers_functions as hpf
-    from setup_metadata import setup_metadata
     
     # %%
-    meta = setup_metadata()
     
-    ndcs_all = hpf.get_infos_from_ndcs(meta, write_out_data=False)
+    ndcs_all = hpf.get_infos_from_ndcs(meta, write_out_data=False) # Uses the submissions up to meta.ndcs.submissions_until
     ndcs = ndcs_all.loc[:, 'EMI_POP_GDP']
     
     years = range(1990, 2051)
+    
     emi_ndcs = {}
     emi_ndcs['inclLU'] = pd.DataFrame(index=ndcs.index, columns=years)
     emi_ndcs['exclLU'] = pd.DataFrame(index=ndcs.index, columns=years)
@@ -50,14 +49,17 @@ def get_infos_from_ndcs_emi():
                     
                     if ('AR2' in val or 'SAR' in val):
                         conversion_gwp = hpf.get_conversion_gwp_national([iso3], 'SAR', 'AR4').values[0]
+                    
                     else:
                         conversion_gwp = 1.
                     
                     emi_ndcs[case].loc[iso3, int(year)] = hpf.get_numerical_value_from_ndcval(val) * conversion_gwp
     
     for case in emi_ndcs.keys():
+        
         emi_ndcs[case].to_csv(
-            Path(meta.path.preprocess, f'infos_from_ndcs_emi_{case}.csv'))
+            Path(meta.path.pc_cov,
+            f"infos_from_ndcs_emi_{case}_{meta.units.default['emi']}_{meta.gwps.default}_SMD{meta.ndcs.submissions_until}.csv"))
     
     # %%
     return emi_ndcs
