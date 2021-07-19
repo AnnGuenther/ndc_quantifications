@@ -1,3 +1,7 @@
-/other/*
-/magicc_temperatures/*
-/isipedia/*
+*
+!.gitignore
+!/input/*
+!/CAT/*
+!/matlab_tables/*
+!/output/*
+!/preprocess/*

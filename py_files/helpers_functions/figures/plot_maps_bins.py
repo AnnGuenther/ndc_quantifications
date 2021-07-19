@@ -20,6 +20,7 @@ def plot_maps_bins(pd_series, path_to_file, **kwargs):
         val_max (int or float)
         nr_instances (if True, then add the information on how many countries lie in one bin to the legend)
         plot_pdf (if True the figure will additionally be plotted as pdf)
+        transparent (if True plot the figure background transparent)
     """
     # %%
     import pandas as pd
@@ -76,8 +77,10 @@ def plot_maps_bins(pd_series, path_to_file, **kwargs):
     title = ("" if 'title' not in kwargs.keys() else kwargs['title'])
     nr_instances = (True if ('nr_instances' in kwargs.keys() and kwargs['nr_instances']) else False)
     plot_pdf = (True if ('plot_pdf' in kwargs.keys() and kwargs['plot_pdf']) else False)
+    transparent = (True if ('transparent' in kwargs.keys() and kwargs['transparent']) else False)
     
     hpf.plot_maps(pd_series_new, colour_dict, path_to_file, 
-        annotation=annotation, title=title, nr_instances=nr_instances, plot_pdf=plot_pdf)
+        annotation=annotation, title=title, nr_instances=nr_instances, plot_pdf=plot_pdf,
+        transparent=transparent)
 
 # %%

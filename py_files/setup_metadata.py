@@ -31,14 +31,14 @@ def setup_metadata():
     This part can be modified.
     """
     
-    submission_until = 20201231 # yyyymmdd
+    submission_until = 20210531 # yyyymmdd
     # For the first paper submission: 20200417
     # For paper revision: 20201231
     
     # Which version of the file infos_from_ndcs.xlsx to be used.
     # For the first paper submission: infos_from_ndcs_xlsx = 'infos_from_ndcs__paper_first_submission_202011.xlsx'
     # For the paper revision. infos_from_ndcs_xlsx = 'infos_from_ndcs__paper_revision_202104.xlsx'
-    infos_from_ndcs_xlsx = 'infos_from_ndcs__paper_revision_202104.xlsx'
+    infos_from_ndcs_xlsx = 'infos_from_ndcs__20210531.xlsx'
     
     # Current PRIMAP-hist
     current_primap = 'PMH21'
@@ -52,7 +52,7 @@ def setup_metadata():
     ############################################################################
     # For the first paper submission: path_preprocess = 'pc_cov_20210428_0834_SMD20200417_PMH21'
     # For the paper revision: path_preprocess = 'pc_cov_20210428_1130_SMD20201231_PMH21'
-    path_preprocess = 'pc_cov_20210428_1130_SMD20201231_PMH21'
+    path_preprocess = 'pc_cov_20210705_2356_SMD20210531_PMH21'
     
     # How many years should be used when calculating the mean over the last available years.
     meta.average_nrvalues = 6

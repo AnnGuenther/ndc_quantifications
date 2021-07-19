@@ -85,7 +85,7 @@ def prep_lulucf(database, meta, prios, srce_name, info_per_country, interpolatio
                         table.data.loc[iso3, :] = hpf.timeseries_extrapolate(table.data.loc[iso3, :], 
                             'mean', 'backward', period=period_backward).values
                         
-                        i have to fix the proble with IDN!!!
+                        # TODO: fix the bug for IDN!!!
                 
                 # Add the 'filled-table' to sum_srce.
                 sum_srce = sum_srce.add(table.data, fill_value=0)

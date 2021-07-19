@@ -21,7 +21,9 @@ def get_infos_from_ndcs(meta, **kwargs):
     Uses the submissions before a certain submission date (meta.ndcs.submissions_until)
     
     INPUT: meta
-    kwargs: write_out_data (if False nothing is written out)
+    kwargs:
+        write_out_data (if False nothing is written out)
+        get_all_rows (if True not only the ones ending with .mod are used)
     """
     # %%
     import pandas as pd
@@ -35,8 +37,22 @@ def get_infos_from_ndcs(meta, **kwargs):
         sheet_name='Overview', index_col=0, header=None).astype('str')
     
     # Only keep the rows ending with ".mod"
-    infos_from_ndcs = infos_from_ndcs.loc[[xx for xx in infos_from_ndcs.index 
-        if (type(xx) == str and '.mod' in xx)], :]
+    if 'get_all_rows' in kwargs.keys():
+        
+        get_all_rows = kwargs['get_all_rows']
+        
+        if get_all_rows not in [True, False]:
+            
+            print("The given value for get_all_rows is not supported and only rows ending with .mod are used.")
+            get_all_rows = False
+    
+    else:
+        get_all_rows = False
+    
+    if not get_all_rows:
+        infos_from_ndcs = infos_from_ndcs.loc[[xx for xx in infos_from_ndcs.index 
+            if (type(xx) == str and '.mod' in xx)], :]
+    
     infos_from_ndcs.index = [xx.replace('.mod', '').upper() for xx in infos_from_ndcs.index]
     
     # Check for the base year entries to be integers or NaN. Will give an error if it cannot be converted to int.

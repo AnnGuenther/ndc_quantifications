@@ -262,3 +262,19 @@ meta.use_CAT_targets = {'use_it': False}
 #meta.use_CAT_targets = {'use_it': True, 'countries': ['EU27', 'CHN', 'IND', 'USA', 'AUS']}
 
 # %%
+"""
+**meta.lulucf_prio**
+
+Which LULUCF data source prioritisation to use.
+Implemented options are:
+    'CRF' (CRF, BUR, UNFCCC, FAO)
+    'UNFCCC' (UNFCCC, CRF, BUR, FAO)
+    'FAO' (FAO, CRF, BUR, UNFCCC)
+
+Default:
+    meta.lulucf_prio = 'CRF'
+"""
+
+meta.lulucf_prio = 'CRF'
+
+# %%

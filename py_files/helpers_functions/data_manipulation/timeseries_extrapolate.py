@@ -75,6 +75,8 @@ def timeseries_extrapolate(df, method, direction, **kwargs):
     
     if calculate:
         
+        years_for_mean_or_reg = []
+        
         for row in df.index:
             
             df_row = df.loc[row, :]
@@ -184,8 +186,11 @@ def timeseries_extrapolate(df, method, direction, **kwargs):
                                  for xx in xx_to_fill]
                         df.loc[row, xx_to_fill] = yy_to_fill
         
-        if len(years_for_mean_or_reg) == 0:
-            print("Warning: no years available for years_for_mean_or_reg!")
+        #if len(years_for_mean_or_reg) == 0:
+        #    print(row, "Warning: no years available for years_for_mean_or_reg!")
+        
+        #else:
+        #    print(row, "no extrapolation needed (len(years_for_mean_or_reg) == 0).")
         
         return df
     

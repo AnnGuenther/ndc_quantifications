@@ -159,17 +159,15 @@ def ndcs_check_options_for_target_calculations(meta):
         meta.set_pccov_to_100 = {'use_it': False}
         print("\nmeta.set_pccov_to_100 not used, as it is not given!")
     
-    else:
+    elif meta.set_pccov_to_100['use_it']:
         
-        if meta.set_pccov_to_100['use_it']:
+        if ((type(meta.set_pccov_to_100['countries']) == str 
+            and meta.set_pccov_to_100['countries'].lower == 'all') 
+            or meta.set_pccov_to_100['countries'] == ['all']):
             
-            if ((type(meta.set_pccov_to_100['countries']) == str 
-                and meta.set_pccov_to_100['countries'].lower == 'all') 
-                or meta.set_pccov_to_100['countries'] == ['all']):
-                
-                meta.set_pccov_to_100['countries'] = sorted(meta.isos.EARTH)
-            
-            meta.set_pccov_to_100['countries'] = check_countries(meta.set_pccov_to_100['countries'], meta)
+            meta.set_pccov_to_100['countries'] = sorted(meta.isos.EARTH)
+        
+        meta.set_pccov_to_100['countries'] = check_countries(meta.set_pccov_to_100['countries'], meta)
     
     # %%
     if 'method_pathways' not in hpf.get_all_attributes_of_class(meta):
@@ -177,11 +175,9 @@ def ndcs_check_options_for_target_calculations(meta):
         meta.method_pathways = 'constant_percentages'
         print("\nmeta.method_pathways set to constant_percentages as nothing was given!")
     
-    else:
+    elif meta.method_pathways not in ['constant_percentages', 'constant_difference', 'constant_emissions']:
         
-        if meta.method_pathways not in ['constant_percentages', 'constant_difference', 'constant_emissions']:
-            
-            sys.exit("A non-valid value given for method_pathways (input file).")
+        sys.exit("A non-valid value given for method_pathways (input file).")
     
     # %%
     """
@@ -195,13 +191,11 @@ def ndcs_check_options_for_target_calculations(meta):
         meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi = False
         print("\nmeta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi not used, as nothing was given!")
     
-    else:
+    elif meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi not in [True, False]:
         
-        if meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi not in [True, False]:
-            
-            meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi = False
-            print("\nmeta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi was set to False, " +
-                 "as the given input is not supported.")
+        meta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi = False
+        print("\nmeta.use_baseline_for_uncondi_even_if_baseline_is_better_than_condi was set to False, " +
+             "as the given input is not supported.")
     
     # %%
     """
@@ -215,13 +209,11 @@ def ndcs_check_options_for_target_calculations(meta):
         meta.use_baseline_if_target_above_bl = False
         print("\nmeta.use_baseline_if_target_above_bl not used, as nothing was given!")
     
-    else:
+    elif meta.use_baseline_if_target_above_bl not in [True, False]:
         
-        if meta.use_baseline_if_target_above_bl not in [True, False]:
-            
-            meta.use_baseline_if_target_above_bl = False
-            print("\nmeta.use_baseline_if_target_above_bl was set to False, " +
-                 "as the given input is not supported.")
+        meta.use_baseline_if_target_above_bl = False
+        print("\nmeta.use_baseline_if_target_above_bl was set to False, " +
+             "as the given input is not supported.")
     
     # %%
     """
@@ -297,6 +289,20 @@ def ndcs_check_options_for_target_calculations(meta):
                 meta.use_CAT_targets['countries'] = sorted(meta.isos.EARTH)
             
             meta.use_CAT_targets['countries'] = check_countries(meta.use_CAT_targets['countries'], meta)
+    
+    # %%
+    """
+    lulucf_prio
+    """
+    
+    if 'lulucf_prio' not in hpf.get_all_attributes_of_class(meta):
+        
+        meta.lulucf_prio = 'CRF'
+    
+    elif meta.lulucf_prio not in ['CRF', 'UNFCCC', 'FAO']:
+        
+        meta.lulucf_prio = 'CRF'
+        print("\nmeta.lulucf_prio set to 'CRF' as the given value was not supported.")
     
     # %%
     return meta
