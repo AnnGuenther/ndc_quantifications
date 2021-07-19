@@ -1,2 +1,2 @@
-__pycache__/
-archive/
+/__pycache__/*
+/archive/*
