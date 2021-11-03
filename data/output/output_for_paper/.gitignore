@@ -1,1 +1,4 @@
 /archive/*
+!.gitignore
+!/first_subm_exclUSA_SMD20210417/*
+!/updated_ndcs_inclUSA_SMD20201231/*
