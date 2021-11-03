@@ -56,7 +56,7 @@ def setup_metadata():
     ############################################################################
     # For the first paper submission: path_preprocess = 'pc_cov_20210428_0834_SMD20200417_PMH21'
     # For the paper revision: path_preprocess = 'pc_cov_20210428_1130_SMD20201231_PMH21'
-    path_preprocess = 'pc_cov_20210719_1616_SMD20200930_PMH21'
+    path_preprocess = 'pc_cov_20210726_1721_SMD20200930_PMH21'
     
     # How many years should be used when calculating the mean over the last available years.
     meta.average_nrvalues = 6

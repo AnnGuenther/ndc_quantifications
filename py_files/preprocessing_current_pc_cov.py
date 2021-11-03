@@ -63,10 +63,12 @@ _ = hpf.get_infos_from_ndcs_emi(meta)
 
 *Use PRIMAP-hist v2.1 HISTCR up to 2017 and then use given ndcs_emi['exclLU'] when available, 
 with linear interpolation between values.*
+*These pathways are used for type_reclass when creating the mitigated pathways (growth rates),
+and when calculating the targets for countries without ABS as type_reclass.*
 
 *For the countries without exclLU values check if they have inclLU values.*
 *If so use the onlyLU data from the NDC (or other options, as used in the NDC quantifications) 
-to derive onlyLU emissions.*
+to derive exclLU emissions.*
 *Use the given inclLU values and the corresponding onlyLU values to derive exclLU, 
 and then interpolate linearly between them (again, with PRIMAP-hist for KYOTOGHG_IPCM0EL up to 2017).*
 """
@@ -172,10 +174,14 @@ for ssp in meta.ssps.scens.long:
     #            txt += "\nAvailable years: " + ', '.join(available_years)
             
             table_onlyLU.data.loc[iso3, :] = bl_onlyLU
+            """
+            bl_onlyLU can have missing values before 2018 (and is nan if all values in 2010-2017 are nan).
+            It is constantly the average of 2010-2017 for years > 2017.
+            """
             
             """
             EMI exclLU.
-
+            
             Check if there is exclLU data available from the NDC for years > 2017.
             If so, use them with linear interpolation from PRIMAP-hist to the first year, and inbetween.
             After last year: use SSP growth rates.
