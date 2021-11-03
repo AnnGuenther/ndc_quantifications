@@ -2,5 +2,6 @@
 !.gitignore
 !/input/*
 !/CAT/*
+!/output/*
 !/matlab_tables/*
 !/preprocess/*
