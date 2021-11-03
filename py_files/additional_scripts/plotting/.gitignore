@@ -1,8 +1,0 @@
-*
-!.gitignore
-!__init__.py
-!/colours/*
-!/ndcs/*
-!/ne_10m_admin_0_countries/*
-!plot_maps__global_and_national_shares.py
-!plot_maps__paper_ndcmitiq.py
