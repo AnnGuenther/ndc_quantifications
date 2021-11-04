@@ -1,6 +1,6 @@
 ﻿# Ignore
 /archive_*/**
-/to_be_run__UNEP_*.py
-/to_be_run_new.py
+/_to_be_run__UNEP_*.py
+/_to_be_run_new.py
 /main_ndc_quantifications_TODO.py
 /quantification_of_ndcs.py
