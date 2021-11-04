@@ -1,6 +1,3 @@
-﻿# Ignore everything
-*
-
-# Except
-!/.gitignore
-!/output_for_paper/**
+﻿# Ignore
+/archive_*/**
+/SMD*/**
