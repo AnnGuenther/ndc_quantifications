@@ -1,0 +1,21 @@
+﻿# Ignore everything
+*
+
+# Except
+!/.gitignore
+!/__init__.py
+!/additional_scrips/**
+!/helpers_functions/**
+!/main_functions/**
+!/MODIFY_INPUT_HERE/**
+!/ndcs__target_calculations_for_input_xlsx/**
+!/_to_be_run.py
+!/_to_be_run__paper_first_submission_202011.py
+!/_to_be_run__paper_revision_add_runs_202104.py
+!/_to_be_run__paper_revision_updated_runs_202104.py
+!/_to_be_run_inclUSA.py
+!/info_on_runs_for_paper.md
+!/main_ndc_quantifications.py
+!/preprocessing_current_pc_cov.py
+!/preprocessing_general.py
+!/setup_metadata.py

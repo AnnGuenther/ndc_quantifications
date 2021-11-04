@@ -1,12 +1,12 @@
-﻿# Ignore everything in ndc_quantifications:
-*
-
-# Except:
-!.gitignore
-!LICENSE
-!README.md
-!requirements.txt
-!/data/**
-!/docs/**
-!/infos/**
-!/py_files/**
+﻿# Ignore
+/documentation/**
+/infos/**
+/latex_files/**
+/matlab_scripts/**
+/md_files/**
+/paper_*/**
+/plots/**
+/single_targets_*/**
+/zenodo/**
+/todo*.md
+/TODO*.md

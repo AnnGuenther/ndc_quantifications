@@ -1,0 +1,6 @@
+﻿# Ignore everything
+*
+
+# Except
+!/.gitignore
+!/output_for_paper/**
