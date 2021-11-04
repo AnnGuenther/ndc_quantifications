@@ -1,9 +1,12 @@
-﻿*
+﻿# Ignore everything in ndc_quantifications:
+*
+
+# Except:
 !.gitignore
 !LICENSE
 !README.md
 !requirements.txt
-!/data/*
-!/docs/*
-!/infos/*
-!/py_files/*
+!/data/**
+!/docs/**
+!/infos/**
+!/py_files/**
