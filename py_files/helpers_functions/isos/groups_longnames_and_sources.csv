@@ -1,0 +1,46 @@
+Group,LongName,Source
+AG,Arab Group in the UNFCCC,RGieseke_openclimatedata_countrygroups
+AILAC,Association of Independent Latin America and the Caribbean States,AGuenther
+ALBA,Bolivarian Alliance for the Peoples of our America,AGuenther
+ANNEXI,UNFCCC Annex I parties,RGieseke_openclimatedata_countrygroups
+ANNEXI_KAZ,UNFCCC Annex I parties incl. Kazakhstan,RGieseke_openclimatedata_countrygroups
+AOSIS,Alliance of Small Island States,RGieseke_openclimatedata_countrygroups
+APG,Asia-Pacific Group,AGuenther
+AR5,Regional groups for the IPCC AR5 report,RGieseke_openclimatedata_countrygroups
+BASIC,"Brazil, South Africa, China, India",AGuenther
+BRICS,BRICS,RGieseke_openclimatedata_countrygroups
+CACAM,"Group of countries of Central Asia, Caucasus, Albania and Moldova",AGuenther
+CD,Cartagena Dialogue for Progressive Action,AGuenther
+CfRN,Coalition for Rainforest Nations,AGuenther
+CVF,Climate Vulnerable Forum,AGuenther
+EARTH,All countries,AGuenther
+EEG,Eastern European Group,AGuenther
+EIG,Environmental Integrity Group,RGieseke_openclimatedata_countrygroups
+EIT,Economies in Transition,AGuenther
+EU28,European Union,RGieseke_openclimatedata_countrygroups
+EU27,European Union,
+G20,G20 members,RGieseke_openclimatedata_countrygroups
+G7,G7 members,RGieseke_openclimatedata_countrygroups
+G77,G77 members,RGieseke_openclimatedata_countrygroups
+G77+China,Group of 77 and China,AGuenther
+GRADUATED_LDCS,Countries graduated from Least Developed Countries,RGieseke_openclimatedata_countrygroups
+GRULAC,Latin American and Caribbean Group,AGuenther
+IMO,International Maritime Organization,RGieseke_openclimatedata_countrygroups
+KYOTO,Parties to the Kyoto Protocol,AGuenther
+LAS,League of Arab States (Arab Group),AGuenther
+LDC,Least Developed Countries,RGieseke_openclimatedata_countrygroups
+LLDC,Landlocked Developing Countries,RGieseke_openclimatedata_countrygroups
+LMDC,Like-Minded Developing Countries,AGuenther
+NON_ANNEXI,UNFCCC Non-Annex I parties,RGieseke_openclimatedata_countrygroups
+OECD,Organisation for Economic Co-operation and Development,RGieseke_openclimatedata_countrygroups
+OPEC,Organization of the Petroleum Exporting Countries members,RGieseke_openclimatedata_countrygroups
+PA,Parties to the Paris Agreement,AGuenther
+SICA,Central American Integration System,AGuenther
+SIDS,Small Island Developing States,RGieseke_openclimatedata_countrygroups
+SIDS_NON_UN_OR_REGIONAL_COMMISSIONS_ASSOCIATES,Non-UN Members / Associate Members of Regional Commissions of SIDS,RGieseke_openclimatedata_countrygroups
+SSP,Regional groups for the Shared Socioeconomic Pathways,RGieseke_openclimatedata_countrygroups
+UMBRELLA,Umbrella group,RGieseke_openclimatedata_countrygroups
+UN,Parties to the United Nations,RGieseke_openclimatedata_countrygroups
+UN_REGIONAL_GROUPS,United Nations Regional Groups of Member States,RGieseke_openclimatedata_countrygroups
+UNFCCC,Members of the United Nations Framework Convention on Climate Change,RGieseke_openclimatedata_countrygroups
+WEOG,Western European and Others Group,AGuenther

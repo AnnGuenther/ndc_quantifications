@@ -1,0 +1,3 @@
+﻿# Ignore
+/__pycache__/**
+/archive/**

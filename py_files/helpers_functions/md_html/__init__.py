@@ -1,0 +1,4 @@
+from .include_figure_html import include_figure_html
+from .include_figure_md import include_figure_md
+from .include_table_html import include_table_html
+from .include_table_md import include_table_md

@@ -1,0 +1,5 @@
+﻿# Ignore
+/__pycache__/**
+/old_setup/**
+/input_all_runs.csv
+/input_all_runs.xlsx
