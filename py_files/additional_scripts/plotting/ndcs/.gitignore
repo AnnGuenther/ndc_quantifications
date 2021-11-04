@@ -1,0 +1,14 @@
+﻿# Ignore everything
+*
+
+# Ecept
+!/.gitignore
+!/__init__.py
+!/plot_ndcs__difference_between_baseline_in_ndcs_and_ssps.py
+!/plot_circles___ndc_coverage.py
+!/plot_ndcs__IND.py
+!/plot_ndcs__pathways_SSP1to5_inclBL_withRange100pc__paper_revision2.py
+!/plot_tables__ndc_info.py
+!/plot_timeseries__emissions_per_target_type_paper.py
+!/table_ndcs__difference_between_baseline_in_ndcs_and_ssps.py
+!/table_ndcs__difference_between_baseline_in_ndcs_and_ssps_onlyCoveredEmi.py

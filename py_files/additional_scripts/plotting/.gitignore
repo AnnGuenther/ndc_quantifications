@@ -1,0 +1,10 @@
+﻿# Ignore
+/archive/**
+/ne_10m_admin_0_map_units/**
+/plot_correlations__emi_sector__vs__gdp_pop.py
+/plot_correlations__emi_sector_gas__vs__emi_total.py
+/plot_timeseries__emissions.py
+/plot_timeseries__emissions_his_and_fut.py
+/plot_timeseries__gdp_pop.py
+plot_timeseries__lulucf.py
+/plot_timeseries__ssps.py
