@@ -1,0 +1,13 @@
+﻿# Ignore
+/archive/**
+/check_if_still_relevant/**
+/numerical_data_from_ndcs.xlsx
+/python_and_py_files.md
+/relative_targets_and_lulucf_OLD.xlsx
+/tarExclLU_from_tarInclLU.md
+/timeseries_from_ndcs.xlsx
+/IPCC2006_categories.xlsx
+/links_to_interesting_country_info.csv
+/targets_CHN_SSP1_to_SSP5_estimated_coverage_vs_100pc_coverage.xlsx
+/targets_COD_SSP1_to_SSP5_estimated_coverage_vs_100pc_coverage.xlsx
+/targets_IND_SSP1_to_SSP5_estimated_coverage_vs_100pc_coverage.xlsx
